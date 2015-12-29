@@ -1,0 +1,52 @@
+%---------------------------------
+% Titlepage
+%---------------------------------
+\begin{titlepage}
+  \shortdate % Use Short Date
+  \center % Center everything on the page
+
+  %---------------------------------
+  % HEADING SECTIONS
+  %---------------------------------
+  ~\\[2cm]
+  % ~\\[2.5cm]
+  \textsc{\LARGE \MetaInstitute}\\[1.5cm] % Name of your university/college
+  \textsc{\Large \MetaUnit}\\[0.5cm] % Major heading such as course name
+  \textsc{\large \MetaTask}\\[2cm] % Minor heading such as course title
+
+  %---------------------------------
+  % TITLE SECTION
+  %---------------------------------
+  \HRule \\[0.5cm]
+  {
+    \LARGE \bfseries \MetaTitle \\[0.50cm] % Title of your document
+    \par
+  }
+  \HRule \\[1.5cm]
+
+  %---------------------------------
+  % AUTHOR SECTION
+  %---------------------------------
+  \begin{minipage}{0.4\textwidth}
+    \begin{flushleft}
+      \large
+        \emph{Author:}\\
+        \MetaAuthorName~\textsc{\MetaAuthorSurname}\\
+      \small \MetaStudentNumber
+    \end{flushleft}
+  \end{minipage}
+  ~
+  \begin{minipage}{0.4\textwidth}
+    \begin{flushright}
+
+    \end{flushright}
+  \end{minipage}\\[4cm]
+
+  %---------------------------------
+  % DATE SECTION
+  %---------------------------------
+  \vspace*{\fill}
+  {
+    \large \today
+  }
+\end{titlepage}
