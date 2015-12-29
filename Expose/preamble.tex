@@ -183,6 +183,13 @@
   \href{#2}{#1}\footnote{\url{#2}}
 }
 
+
+%---------------------------------
+% Tablel in table for new line
+%---------------------------------
+\newcommand{\specialcell}[2][c]{% acceps t, b and c for vertival alignment
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
 %---------------------------------
 % Meta data and Link Colour
 %---------------------------------
