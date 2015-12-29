@@ -16,7 +16,8 @@
 \usepackage{microtype} % Subliminal refinements towards typographical perfection - eg. Hypernation
 \usepackage{xspace} % set a space if not fullstop / end of sentence
 \usepackage{calc} % for lengh calculation
-\usepackage{enumitem,environ}
+\usepackage{enumitem}
+\usepackage{tabularx}
 
 %---------------------------------
 % Shut up I know
@@ -53,20 +54,68 @@
    \prevdepth=\tpd}
 
 %---------------------------------
-% Roadmap
+% RoadMap
 %---------------------------------
 \newlength{\myRMLength}
-\newcommand\myroadmaptime[2]{
-  {
-    \setlength{\myRMLength}{0.6\textwidth-(\textwidth-\linewidth)}%
-    \noindent\hbox to \myRMLength{#1\hfill}(#2)%
-  }
+\newcommand\myRoadMapTime[2]{%
+    \ifthenelse{\equal{#2}{}}%
+    {% if
+      #1%
+    }{% else
+      \setlength{\myRMLength}{0.63\textwidth-(\textwidth-\linewidth)}%
+      \noindent\hbox to \myRMLength{#1\hfill}(#2)%
+    }%
+}%
+
+%---------------------------------
+% Signatures
+%---------------------------------
+\makeatletter
+\newcommand{\mySignatures}{% We don't consume the args so they stay for the next
+  \@ifnextchar\bgroup{% if we have arguments
+    \mySigTableHead%
+    \mySigGenerateBody%
+  }{% else not a single argument
+    \errmessage{The macro needs at least one argument}%
+  }%
+}%
+\newcommand{\mySigGenerateBody}[1]{%
+  \mySigTableBody{#1}% Make current argument
+  \@ifnextchar\bgroup{% if another argument is present
+    \mySigGenerateBody% apply it
+  }{% else finish the table and figure
+    \mySigTableBottom%
+  }%
+}% Gobble next "argument"
+\newcommand{\mySigTableHead}{%
+  % begin the table
+  \begin{figure}[H]%
+  \centering%
+  \begin{tabular}{ccc}%
 }
+\newcommand{\mySigTableBody}[1]{%
+  % Apply current argument
+  {}%
+    &{}%
+      &{}\\%
+  \makebox[4cm]{\hrulefill}%
+    & \makebox[3cm]{\hrulefill}%
+      & \makebox[6cm]{\hrulefill}\\%
+  Ort%
+    & Datum%
+      & #1\\[1.5em]%
+}
+\newcommand{\mySigTableBottom}{%
+  % end the table
+  \end{tabular}%
+  \end{figure}%
+}
+\makeatother
 
 %---------------------------------
 % Minted Code
 %---------------------------------
-\newcommand\minco[5][cpp]{
+\newcommand\myCMinco[5][cpp]{
   {
     \ifthenelse{\equal{#2}{}}
     {}
@@ -82,7 +131,7 @@
       ]{#1}{#3}
   }
 }
-\newcommand\usminco[5][cpp]{
+\newcommand\myMinco[5][cpp]{
   {
     \ifthenelse{\equal{#2}{}}
     {}
@@ -101,7 +150,7 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\minin}[1]{\mintinline{c++}{#1}}
+\newcommand{\myMinin}[1]{\mintinline{c++}{#1}}
 
 %---------------------------------
 % Meta Variables
@@ -123,14 +172,14 @@
 %---------------------------------
 % href Link as foot note
 %---------------------------------
-\newcommand\fnurl[2]{
+\newcommand\myFnurl[2]{
   \href{#2}{#1}\footnote{\url{#2}}
 }
 
 %---------------------------------
 % Meta data and Link Colour
 %---------------------------------
-\newcommand\myshade{70}
+\newcommand\myShade{70}
 
 \definecolor{mylinkcolor}{RGB}{113, 31, 155}
 \definecolor{mycitecolor}{RGB}{255, 189, 76}
@@ -144,9 +193,9 @@
   % pdfkeywords = {\MetaTitle, \MetaUnit, \MetaInstitute},
   pdfkeywords = {\MetaTitle, \MetaUnit, \MetaTask, \MetaInstitute},
   colorlinks  = true,
-  linkcolor   = mylinkcolor!\myshade!black,
-  citecolor   = mycitecolor!\myshade!black,
-  urlcolor    = myurlcolor!\myshade!black,
+  linkcolor   = mylinkcolor!\myShade!black,
+  citecolor   = mycitecolor!\myShade!black,
+  urlcolor    = myurlcolor!\myShade!black,
 }
 
 %---------------------------------
@@ -312,17 +361,42 @@
   %---------------------------------
   \subsection{Arbeitspakete}
   \label{ssec:arbeitspakete}
-  \begin{itemize}
-    \item \myroadmaptime{Recherche}{ca.1 Woche}
-    \item \myroadmaptime{Konzeption}{ca.1 Woche}
-      \begin{itemize}
-        \item \myroadmaptime{Nested item 1}{ca.1 Woche}
-        \item \myroadmaptime{Nested item 2}{ca.1 Woche}
-      \end{itemize} %
-    \item \myroadmaptime{Implementierung inkl. Dokumentation}{ca.1 Woche}
-    \item \myroadmaptime{Testen}{ca.1 Woche}
-    \item \myroadmaptime{Verfassen der BT}{ca.1 Woche}
-  \end{itemize}
+  \begin{itemize}%
+    \item \myRoadMapTime{Recherche}{ca.1 Woche}%
+    \item \myRoadMapTime{Konzeption}{ca.1 Woche}%
+      \begin{itemize}%
+        \item \myRoadMapTime{Serverarchitektur / Kontrollmechanismen}{}%
+        \item \myRoadMapTime{Mobiler Client}{}%
+        \item \myRoadMapTime{Webclient}{}%
+      \end{itemize}%
+    \item \myRoadMapTime{Implementierung inkl. Dokumentation}{ca.1 Woche}%
+      \begin{itemize}%
+        \item \myRoadMapTime{Serverarchitektur / Kontrollmechanismen}{ca.1 Woche}%
+        \item \myRoadMapTime{Mobiler Client}{ca.1 Woche}%
+        \item \myRoadMapTime{Webclient}{ca.1 Woche}%
+      \end{itemize}%
+    \item \myRoadMapTime{Testen}{ca.1 Woche}%
+    \item \myRoadMapTime{Verfassen der BT}{ca.1 Woche}%
+      \begin{itemize}%
+        \item \myRoadMapTime{Einleitung + Anforderungsanalyse}{ca. 1 Woche, ab 10. Oktober}%
+          \begin{itemize}%
+            \item \myRoadMapTime{Kapitel 1: Allgemeines}{}%
+            \item \myRoadMapTime{Kapitel 2: Einleitung}{}%
+            \item \myRoadMapTime{Kapitel 3: Anforderungsanalyse}{}%
+          \end{itemize}%
+        \item \myRoadMapTime{Hauptteil}{ca. 2,5 Wochen, ab 17. Oktober}%
+          \begin{itemize}%
+            \item \myRoadMapTime{Kapitel 4: Grundlagen und alternative Lösungen}{}%
+            \item \myRoadMapTime{Kapitel 5: Konzeption}{}%
+            \item \myRoadMapTime{Kapitel 6: Exemplarische Realisation}{}%
+          \end{itemize}%
+        \item \myRoadMapTime{Schlussteil}{< 1 Woche, ab 7. November}%
+          \begin{itemize}%
+            \item \myRoadMapTime{Kapitel 7: Zusammenfassung und Ausblick}{}%
+            \item \myRoadMapTime{Kapitel 8: Anhang}{}%
+          \end{itemize}%
+      \end{itemize}%
+  \end{itemize}%
 
   %---------------------------------
   % Meilensteine
@@ -330,11 +404,101 @@
   \subsection{Meilensteine}
   \label{ssec:meilensteine}
 
+    \begin{table}[H]
+      \begin{tabularx}{\textwidth}{lX}%
+        \textbf{22. August:}        & Abschluss der Recherche / Beginn der Konzeption\\%
+        \textbf{29. August:}        & Abschluss der Konzeption / Beginn der Implementierung\\%
+        \textbf{10. Oktober:}        & Abschluss der Implementierung, Dokumentation und Testphase / Beginn der schriftlichen Arbeit\\%
+        \textbf{17. Oktober:}        & Beginn der schriftlichen Arbeit am Hauptteil\\%
+        \textbf{10. November:}        & Abschluss der schriftlichen Arbeit / Beginn der Korrektur, Binden der DA etc.\\%
+        \textbf{15. November:}        & Abgabe der Arbeit\\%
+      \end{tabularx}
+    \end{table}
+
 %---------------------------------
 % Gliederung der Arbeit
 %---------------------------------
 \section{Gliederung der Arbeit}
 \label{sec:gliederung_der_arbeit}
+  \begin{enumerate}[
+    labelindent=*,
+    % style=multiline,
+    leftmargin=\widthof{\textbf{Kapitel~0:~}},
+    label=\arabic*.
+  ]%
+    \item[]%
+      Allgemeines%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item[]%
+            Eidesstattliche Erklärung%
+          \item[]%
+            Danksagung%
+      \end{enumerate}%
+    \setcounter{enumi}{1}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Einleitung%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item Problemfeld%
+          \item Ziele der Arbeit%
+          \item Hintergründe und Entstehung des Themas%
+          \item Struktur der Arbeit, wesentliche Inhalte der Kapitel%
+      \end{enumerate}%
+    \setcounter{enumi}{2}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Anforderungsanalyse%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item Diskussion des Problemfeldes%
+          \item Konkrete Lösung%
+      \end{enumerate}%
+    \setcounter{enumi}{3}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Grundlagen und alternative Lösungen%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item Make or Buy%
+            \begin{enumerate}[label=\theenumi\arabic*.]%
+                \item Nagios%
+                \item ServerGuard24%
+                \item PocketDBA%
+            \end{enumerate}%
+          \item Eigenentwicklung%
+            \begin{enumerate}[label=\theenumi\arabic*.]%
+                \item Vorteile einer Eigenentwicklung%
+                \item Architektur%
+                \item Mobile Kommunikation%
+                \item Programmiersprachen%
+                \item Sicherheitsaspekte%
+            \end{enumerate}%
+      \end{enumerate}%
+    \setcounter{enumi}{4}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Konzeption%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item Client-Server-Architektur%
+          \item HTTPS-Server%
+          \item Mobiler Client%
+          \item Webclient%
+      \end{enumerate}%
+    \setcounter{enumi}{5}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Exemplarische Realisation%
+      \begin{enumerate}[label=\theenumi\arabic*.]%
+          \item Systemvoraussetzungen%
+          \item Hard- und Software%
+          \item HTTPS-Server%
+          \item Mobiler Client%
+          \item Webclient%
+      \end{enumerate}%
+    \setcounter{enumi}{6}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Evaluation%
+    \setcounter{enumi}{7}
+    \item[\textbf{Kapitel~\arabic{enumi}:}]%
+      Zusammenfassung und Ausblick%
+    \item[]%
+      Anhänge%
+
+  \end{enumerate}%
+
 
 %---------------------------------
 % Personen
@@ -388,7 +552,7 @@
     \begin{tabular}{ll}
       Name:
         &\MetaAuthor\\
-      Matrikelnummer:
+      Matrikelnr.:
         &\MetaStudentNumber\\
       E-Mail:
         &\href{mailto:roland@wolfgang-jaeger.de}{roland@wolfgang-jaeger.de}\\
@@ -402,46 +566,10 @@
 \section{Unterschriften}
 \label{sec:unterschriften}
 
-  \begin{figure}[H]
-    \centering
-    \begin{tabular}{ccc}
-      {}
-        &{}
-          &{}\\
-      \makebox[4cm]{\hrulefill}
-        & \makebox[3cm]{\hrulefill}
-          & \makebox[6cm]{\hrulefill}\\
-      Ort
-        & Datum
-          & Mirko Wiechmann\\[3mm]
-      {}
-        &{}
-          &{}\\
-      \makebox[4cm]{\hrulefill}
-        & \makebox[3cm]{\hrulefill}
-          & \makebox[6cm]{\hrulefill}\\
-      Ort
-        & Datum
-          & Prof. Dr. Thorsten Teschke\\[3mm]
-      {}
-        &{}
-          &{}\\
-      \makebox[4cm]{\hrulefill}
-        & \makebox[3cm]{\hrulefill}
-          & \makebox[6cm]{\hrulefill}\\
-      Ort
-        & Datum
-          & Zweiter Gutachter\\[3mm]
-      {}
-        &{}
-          &{}\\
-      \makebox[4cm]{\hrulefill}
-        & \makebox[3cm]{\hrulefill}
-          & \makebox[6cm]{\hrulefill}\\
-      Ort
-        & Datum
-          & Roland Jäger\\
-    \end{tabular}
-  \end{figure}
+  \mySignatures
+  {Mirko Wiechmann}
+  {Prof. Dr. Thorsten Teschke}
+  {Zweiter Gutachter}
+  {Roland Jäger}
 
 \end{document}
