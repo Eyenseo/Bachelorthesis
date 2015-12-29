@@ -11,7 +11,14 @@
 \usepackage{float}
 \usepackage{minted}
 \usepackage{graphicx} % for pdf and other graphics
-\usepackage{cite} % cite
+\usepackage[backend=biber,
+    style=authoryear-icomp,
+    sortlocale=de_DE,
+    natbib=true,
+    url=false,
+    doi=true,
+    eprint=false]{biblatex}%style=numeric-comp,sorting=none,backend=biber
+\usepackage{csquotes}
 \usepackage{anyfontsize} % mute warnings?
 \usepackage{microtype} % Subliminal refinements towards typographical perfection - eg. Hypernation
 \usepackage{xspace} % set a space if not fullstop / end of sentence
@@ -30,9 +37,9 @@
 \pdfsuppresswarningpagegroup=1
 
 %---------------------------------
-% Cite Style
+% Biographie
 %---------------------------------
-\bibliographystyle{plain}
+\addbibresource{lit.bib}
 
 %---------------------------------
 % Make the Part Heading a little bit smaller
