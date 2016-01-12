@@ -39,21 +39,63 @@
 %---------------------------------
 \section{Problemfeld}
 \label{sec:problemfeld}
-  \textit{%
-    \begin{itemize}
+  Makros setzen auf dem Command-Pattern auf und führen durch ihre Modularität und dynamische Natur dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
+
+  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen die fest definiert werden (sollten) bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die, die im Vertrag festgehalten wurde, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst gegebenen falls erweitert werden.
+
+  Wenn frühzeitig ein Makrosystem / -sprache eingeführt ist die Wahrscheinlichkeit das der Kern der Applikation angefasst werden muss wesentlich geringer. Mit einem geeigneten Pluginsystem ist die Wahrscheinlichkeit bei nahezu $0\%$, da einfach ein weiteres Plugin geladen werden kann, was die neuen Grundbausteine der Applikation hinzufügt und die dann in einem neuen Makro genutzt werden können, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine Fehlerfrei durch Integriertestesten sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem wesentlich höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen weg über eine Firma zu gehen -- dies bedeutet auch, dass die Software eine bessere Chance hat, den tot der Herstellerfirma überleben.
+
+  Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die MaKros dadurch, dass sie von den Firmen gemietet werden und nicht nur einmal verkauft werden. Ein Beispiel wäre, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr Komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die genau diese eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
+
+  \textit{% TODO
     \color{DarkSlateGray}%
-      \item Momentan gibt es keine Macros?
-      \item Sollte ich hier auf die Probleme bei C++ (fehlende Reflektieren)eingehen?
-      \item Oder auf die verschiedenen Level und ihre jeweiligen Schwierigkeiten (keine Return werte -- stumpfes abarbeiten,  primitive -- keine eigenen Objekte, und komplexe -- ``eierlegende Wollmilchsau'')?
-    \end{itemize}
+    Mehr fällt mir hier momentan nicht ein \ldots
   }
+
+  Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, das diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, das andere Makros vor ihnen bzw. nach ihnen dran sind.
+
+  \textit{% TODO
+    \color{DarkSlateGray}%
+    Grafik:
+  }
+  \begin{minted}{text}
+    ----->----->----->----->----->----->
+  \end{minted}
+
+  Der erste schritt zu einer Herausforderung -- und zu einer Nützlichen Implementation -- ist Logik. Hierbei biete man an, dass der Makro Entwickler durch Rückgabewerte aus Makros entscheiden kann welche weiteren Makros er ausführen möchte.
+
+  \textit{% TODO
+    \color{DarkSlateGray}%
+    Grafik:
+  }
+  \begin{minted}{text}
+             -->----->----->----->----->
+             | true
+    ----->---
+             | false
+             -->----->----->----->----->
+  \end{minted}
+
+  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das was man zur Verfügung haben will wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{``ja''} oder nein \textit{``nein''} braucht. Was ein Makrosystem/-sprache anbeten muss ist, dass verschiedene Objekte/Klassen/Typs zurückgegeben werden können und beliebig viele Parameter dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++ da C++ keine Reflektion unterstützt. Dies ist -- da es die Zeit die für die Bachelorarbeit bereitsteht mehrfach sprengt -- schon durch das Commandpattern von mir gelöst worden.
+
+  \textit{% TODO
+    \color{DarkSlateGray}%
+    Grafik:
+  }
+  \begin{minted}{text}
+             -->----->-Foo->----->----->
+             | true
+    ----->---
+             | false
+             -->----->--Bar-Foo-->----->
+  \end{minted}
 
 %---------------------------------
 % Lösungsansatz
 %---------------------------------
 \section{Lösungsansatz}
 \label{sec:loesungsansatz}
-  \textit{%
+  \textit{% TODO
     \color{DarkSlateGray}%
     Ähnlich wie beim Problemfeld weiß ich nicht wie weit ich hier auf die Sprache und die damit verbundenen Probleme eingehen darf (fehlende Reflektieren).
   }
@@ -88,6 +130,7 @@
   \subsection{Literatur}
   \label{ssec:literatur}
     \nocite{*}
+    % TODO
     \printbibliography
 
   %---------------------------------
@@ -258,7 +301,7 @@
           \item Konkrete Lösung
       \end{enumerate}
     \setcounter{enumi}{3}
-    \textit{%
+    \textit{% TODO
       \color{DarkSlateGray}%
       \item[\textbf{Kapitel~\arabic{enumi}:}]
         Grundlagen und alternative Lösungen
