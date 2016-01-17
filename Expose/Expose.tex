@@ -25,7 +25,7 @@
 \label{sec:einleitung}
   Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
 
-  Die P3-group arbeitet mit Airbus um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist eng umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass Arbeitsabläufe, die sich wiederholen, zu einem einzigen Schritt werden und so Zeit sparen.
+  Die P3-group arbeitet mit Airbus um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist eng umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
 
   Makros sind die Fließbänder der digitalen Welt und diese Arbeit beschäftigt sich mit der Entwicklung eines Makro Systems bzw. Sprache.
 
@@ -39,13 +39,20 @@
 %---------------------------------
 \section{Problemfeld}
 \label{sec:problemfeld}
-  Makros setzen auf dem Command-Pattern auf und führen durch ihre Modularität und dynamische Natur unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
+  Makros setzen auf dem Command-Pattern\footnote{
+    Das Command-Pattern
+  } auf und führen durch ihre Modularität und dynamischer Natur\footnote{
+    Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert. Eine prominentes Beispiel wäre JavaScript.
+  } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
 
-  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die im Vertrag festgehalten wurden, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst gegebenen falls erweitert werden.
+  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst gegebenen falls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
 
-  Wenn frühzeitig ein Makrosystem/-sprache eingeführt ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Mit einem geeigneten Pluginsystem ist die Wahrscheinlichkeit bei nahezu $0\%$, da einfach ein weiteres Plugin geladen werden kann, was die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine Fehlerfrei durch ausreichendes testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, den tot der Herstellerfirma überleben.
+  Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Durch diese Kombination, kann einfach ein weiteres Modul geladen werden, was die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, den Tod der Herstellerfirma überleben.
 
-  Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die MaKros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr Komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
+  \textit{% TODO
+    \color{DarkSlateGray}%
+    Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr Komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
+  }
 
   \textit{% TODO
     \color{DarkSlateGray}%
@@ -62,7 +69,7 @@
     ----->----->----->----->----->----->
   \end{minted}
 
-  Der erste schritt zu einer Herausforderung -- und zu einer Nützlichen Implementation -- ist Logik. Hierbei biete man an, dass der Makro Entwickler durch Rückgabewerte aus Makros entscheiden kann welche weiteren Makros er ausführen möchte.
+  Der erste Schritt zu einer Herausforderung -- und zu einer nützlichen Implementation -- ist Logik. Hierbei biete man an, dass der Makro Entwickler durch Rückgabewerte aus Makros entscheiden kann welche weiteren Makros er ausführen möchte.
 
   \textit{% TODO
     \color{DarkSlateGray}%
@@ -76,7 +83,16 @@
              -->----->----->----->----->
   \end{minted}
 
-  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{``ja''} oder nein \textit{``nein''} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass verschiedene Objekte/Klassen/Typs zurückgegeben werden können und beliebig viele Parameter dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++ da C++ keine Reflektion unterstützt. Dies ist -- da es die Zeit die für die Bachelorarbeit bereitsteht mehrfach sprengt -- schon durch das Commandpattern von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann und Rückgabewerte in Variablen speicherbar sind.
+  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{``ja''} oder nein \textit{``nein''} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass verschiedene Objekte/Klassen/Typen zurückgegeben werden können und beliebig viele Parameter dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++ da C++ keine Reflektion unterstützt. Dies ist -- da es die Zeit die für die Bachelorarbeit bereitsteht mehrfach sprengt -- schon durch das Commandpattern von mir gelöst worden.\footnote{
+    Das Command-Pattern wurde mit Hilfe des any\tablefootnote{
+      \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
+    }
+    sowie optional\tablefootnote{
+      \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
+    }
+    Types erstellt, womit die Command Klassen ein Interface bereitstellen, mit dem Argumente jeden Types übergeben und zurückgegeben werden können.
+  }\spewnotes{}
+  Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann und Rückgabewerte in Variablen speicherbar sind.
 
   \textit{% TODO
     \color{DarkSlateGray}%
