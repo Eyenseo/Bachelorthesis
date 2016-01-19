@@ -52,11 +52,8 @@
   \textit{% TODO
     \color{DarkSlateGray}%
     Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr Komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
-  }
 
-  \textit{% TODO
-    \color{DarkSlateGray}%
-    Mehr fällt mir hier momentan nicht ein \ldots
+    % Ich finde das bis hierhin als Motivation auch schon ausreichend. Das letzte Beispiel ist für mich schon fast etwas „gezwungen“, auch wenn es absolut sinnvoll ist, Beispiele aus der Welt von P3 zu bringen. Bei Deinem Beispiel habe ich das Gefühl, dass das Problem auch durch dasselbe Makro mit unterschiedlicher Parametrierung der Plugins gelöst werden kann. Vielleicht findest Du ja noch ein besseres, für Außenstehende leichter nachvollziehbares Beispiel.
   }
 
   Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden.
@@ -108,12 +105,6 @@
 
   Letzt endlich kann man also sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
-
-  \textit{% TODO
-    \color{DarkSlateGray}%
-    Das ist verdammt viel für drei Wochen \ldots
-  }
-
 %---------------------------------
 % Lösungsansatz
 %---------------------------------
@@ -123,6 +114,8 @@
     \color{DarkSlateGray}%
     Ähnlich wie beim Problemfeld weiß ich nicht wie weit ich hier auf die Sprache und die damit verbundenen Probleme eingehen darf (fehlende Reflektieren).
   }
+
+  % Hier könntest Du analog zu den von mir im Problemfeld genannten „Stufen“ darstellen, was Deine Lösung leisten soll. Den Lösungsansatz für die aus der Wahl von C++ resultierenden Probleme mit der Reflection dann als Teil Deines Lösungsansatzes darstellen, aber - soweit ich das verstehe - nicht als den eigentlichen, zentralen Beitrag Deiner Arbeit. Der besteht ja darin, eine Makrosprache für ein P3-System zu entwickeln.
 
 %---------------------------------
 % Konkrete Aufgaben
@@ -154,8 +147,9 @@
   \subsection{Literatur}
   \label{ssec:literatur}
     \nocite{*}
-    % TODO
+    % TODO Hier solltest Du mal gucken, ob Du nicht auch was Konzeptionelles zum Thema Makros finden kannst. Mir fällt da zumindest das Command-Pattern ein… Vielleicht gibt es aber auch andere (Foschungs-)Arbeiten, die sich mit Makros im Allgemeinen oder sogar mit Makros in C++ beschäftigt haben.
     \printbibliography
+
 
   %---------------------------------
   % Software
@@ -219,8 +213,12 @@
   \subsection{Arbeitspakete}
   \label{ssec:arbeitspakete}
   \begin{itemize}%
-    \item \myRoadMapTime{Recherche}{ca.1 Woche}
-    \item \myRoadMapTime{Konzeption}{ca.1 Woche}
+    \item \myRoadMapTime{Recherche}{ca.5 Tage}
+    \item \myRoadMapTime{Anforderungsanalyse}{ca.5 Tage}
+    \item \myRoadMapTime{Konzeption}{ca.5 Tage}
+    % TODO Das mit den Levels verstehe ich (noch) nicht. Kern der Konzeption sind ja sicherlich:
+    % 1.) Makrosprache
+    % 2.) Entwurf zur Umsetzung in C++ und Integration der Makrosprache in das P3-System.
       \begin{itemize}
         \item \myRoadMapTime{Level 1 -- Abarbeiten von ``Commands''}{}
         \item \myRoadMapTime{Level 2 -- Logik / primitive Returnwerte}{ca.$\frac{1}{2}$ Woche}
@@ -268,9 +266,9 @@
         \cline{2-3}
         \textbf{1. März:}
           & {}
-            & Recherche\\
+            & \specialcell[t]{Recherche \&\\Anforderungsanalyse}\\
         \textbf{8. März:}
-          & Recherche
+          & \specialcell[t]{Recherche \&\\Anforderungsanalyse}
             & Konzeption\\
         \textbf{22. März:}
           & Konzeption
@@ -322,7 +320,7 @@
       Anforderungsanalyse
       \begin{enumerate}[label=\theenumi\arabic*.]
           \item Diskussion des Problemfeldes
-          \item Konkrete Lösung
+          \item Angestrebte Lösung
       \end{enumerate}
     \setcounter{enumi}{3}
     \textit{% TODO
