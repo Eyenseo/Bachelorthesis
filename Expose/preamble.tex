@@ -27,6 +27,24 @@
 \usepackage{enumitem}
 \usepackage{tabularx}
 \usepackage[all]{hypcap}
+\usepackage{tikz}
+\usepackage{tikzscale}
+
+%---------------------------------
+% TikZ libraries
+%---------------------------------
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+%---------------------------------
+% TikZ scaling support
+%---------------------------------
+\let\OrgPgfTransformScale\pgftransformscale
+\renewcommand*{\pgftransformscale}[1]{%
+  \gdef\ScaleFactor{#1}%
+  \OrgPgfTransformScale{#1}%
+}
+\def\ScaleFactor{1}
+
 
 %---------------------------------
 % Less margin below caption

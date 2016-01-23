@@ -57,27 +57,19 @@
 
   Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden.
 
-  \textit{% TODO sequential graphic
-    \color{DarkSlateGray}%
-    Grafik:
-  }
-  \begin{minted}{text}
-    ----->----->----->----->----->----->
-  \end{minted}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/sequential.tikz}
+    \caption{Sequenzielles abarbeiten von Executables.}
+  \end{figure}
 
   Der erste Schritt zu einer Herausforderung -- und zu einer nützlichen Implementation -- ist Logik. Hierbei biete man an, dass der Makro Entwickler durch Rückgabewerte aus Makros entscheiden kann welche weiteren Makros er ausführen möchte.
 
-  \textit{% TODO logick graphic
-    \color{DarkSlateGray}%
-    Grafik:
-  }
-  \begin{minted}{text}
-             -->----->----->----->----->
-             | true
-    ----->---
-             | false
-             -->----->----->----->----->
-  \end{minted}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/logic.tikz}
+    \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
+  \end{figure}
 
   Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{``ja''} oder nein \textit{``nein''} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass verschiedene Objekte/Klassen/Typen zurückgegeben werden können und beliebig viele Parameter dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++ da C++ keine Reflektion unterstützt. Dies ist -- da es die Zeit die für die Bachelorarbeit bereitsteht mehrfach sprengt -- schon durch das Commandpattern von mir gelöst worden.\footnote{
     Das Command-Pattern wurde mit Hilfe des any\tablefootnote{
