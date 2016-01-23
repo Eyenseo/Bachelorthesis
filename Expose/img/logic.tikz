@@ -11,43 +11,32 @@
       type/.style={
         color={rgb:red,1;green,2;blue,3}
       },
-      % process/.style={
-      %   draw,thick,circle,fill=blue!20
-      % },
-      % sink/.style={
-      %   cmd,fill=green!20
-      % },
-      % datastore/.style={
-      %   draw,very thick,shape=datastore,inner sep=.3cm
-      % },
       logic/.style={
-        draw,fill=templogic,diamond
+        draw,fill=templogic,diamond,
       },
       to/.style={
         ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize
-      },
-      % every node/.style={
-      %   align=center
-      % },
+      }
     ]
 
-    % Position the nodes using a matrix layout
-      \node[cmd] (cmd00) {Exec};
+    % Nodes
+    \node[cmd] (cmd00) {Exec};
 
-      \node[logic] (ifelse) [right of=cmd00] {if/else};
+    \node[logic] (ifelse) [right of=cmd00] {if/else};
 
-      \node[cmd] (cmd02) [above of=ifelse, above=-2cm, right of=ifelse] {Exec};
-      \node[cmd] (cmd03) [right of=cmd02] {Exec};
-      \node[cmd] (cmd04) [right of=cmd03] {Exec};
+    \node[cmd] (cmd02) [above of=ifelse, above=-2cm, right of=ifelse] {Exec};
+    \node[cmd] (cmd03) [right of=cmd02] {Exec};
+    \node[cmd] (cmd04) [right of=cmd03] {Exec};
 
-      \node[cmd] (cmd12) [below of=ifelse, below=-2cm, right of=ifelse] {Exec};
-      \node[cmd] (cmd13) [right of=cmd12] {Exec};
-      \node[cmd] (cmd14) [right of=cmd13] {Exec};
+    \node[cmd] (cmd12) [below of=ifelse, below=-2cm, right of=ifelse] {Exec};
+    \node[cmd] (cmd13) [right of=cmd12] {Exec};
+    \node[cmd] (cmd14) [right of=cmd13] {Exec};
 
-    % Draw the arrows between the nodes and label them.
+    % Arrows
     \draw[to]
       (cmd00)
-        -- node[midway,above,type] {bool}
+        --
+        node[midway,above,type] {bool}
       (ifelse);
     \draw[to]
       (ifelse)
