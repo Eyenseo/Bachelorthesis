@@ -82,17 +82,11 @@
   }\spewnotes{}
   Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann und Rückgabewerte in Variablen speicherbar sind.
 
-  \textit{% TODO loop and custom tpes graphic
-    \color{DarkSlateGray}%
-    Grafik:
-  }
-  \begin{minted}{text}
-             -->----->---Foos---->----->
-             | true    ^       |
-    ----->----         ---------
-             | false
-             -->----->--Bar-Foo-->----->
-  \end{minted}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/loop.tikz}
+    \caption{Schleife, die Anweisungen für ein Element aus der Liste aufrufen.}
+  \end{figure}
 
   Letzt endlich kann man also sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 

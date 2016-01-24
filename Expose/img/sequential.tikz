@@ -11,11 +11,11 @@
   ]
 
   % Nodes
-  \node[cmd] (cmd00) {Exec};
-  \node[cmd] (cmd02) [right of=cmd00] {Exec};
-  \node[cmd] (cmd03) [right of=cmd02] {Exec};
-  \node[cmd] (cmd04) [right of=cmd03] {Exec};
-  \node[cmd] (cmd05) [right of=cmd04] {Exec};
+  \node[cmd] (cmd00) {Exec A};
+  \node[cmd] (cmd02) [right of=cmd00] {Exec B};
+  \node[cmd] (cmd03) [right of=cmd02] {Exec C};
+  \node[cmd] (cmd04) [right of=cmd03] {Exec D};
+  \node[cmd] (cmd05) [right of=cmd04] {Exec E};
 
   % Arrows
   \draw[to]

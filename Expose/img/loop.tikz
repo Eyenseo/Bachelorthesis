@@ -9,7 +9,7 @@
         draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm
       },
       type/.style={
-        color={rgb:red,1;green,2;blue,3}
+        color={rgb:red,1;green,2;blue,3},align=center
       },
       logic/.style={
         draw,thick,fill=templogic,diamond,
@@ -22,29 +22,30 @@
     % Nodes
     \node[cmd] (cmd00) {Exec A};
 
-    \node[logic] (ifelse) [right of=cmd00] {if/else};
+    \node[logic] (foreach) [right of=cmd00] {foreach};
 
-    \node[cmd] (cmd02) [above of=ifelse, above=-2cm*\ScaleFactor, right of=ifelse] {Exec B};
-    \node[cmd] (cmd03) [right of=cmd02] {Exec C};
+    \node[cmd] (cmd02) [above of=foreach] {Exec B};
+    \node[cmd] (cmd03) [right of=foreach] {Exec C};
     \node[cmd] (cmd04) [right of=cmd03] {Exec D};
-
-    \node[cmd] (cmd12) [below of=ifelse, below=-2cm*\ScaleFactor, right of=ifelse] {Exec E};
-    \node[cmd] (cmd13) [right of=cmd12] {Exec F};
-    \node[cmd] (cmd14) [right of=cmd13] {Exec G};
+    \node[cmd] (cmd05) [right of=cmd04] {Exec E};
 
     % Arrows
     \draw[to]
       (cmd00)
         --
-        node[midway,above,type] {bool}
-      (ifelse);
+        node[midway,above,type] {Foos}
+      (foreach);
     \draw[to]
-      (ifelse)
+      (foreach.north east)
         --
-        node[midway,above,type] {true}
-      (cmd02);
+        node[midway,right,type] {Foo$1$\\\vdots\\Foo$N$}
+      (foreach.north east|-cmd02.south);
     \draw[to]
-      (cmd02)
+      (foreach.north west|-cmd02.south)
+        --
+      (foreach.north west);
+    \draw[to]
+      (foreach)
         --
       (cmd03);
     \draw[to]
@@ -52,17 +53,8 @@
         --
       (cmd04);
     \draw[to]
-      (ifelse)
+      (cmd04)
         --
-        node[midway,below,type] {false}
-      (cmd12);
-    \draw[to]
-      (cmd12)
-        --
-      (cmd13);
-    \draw[to]
-      (cmd13)
-        --
-      (cmd14);
+      (cmd05);
   \end{tikzpicture}
 }
