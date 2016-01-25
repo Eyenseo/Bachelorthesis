@@ -40,7 +40,7 @@
 \section{Problemfeld}
 \label{sec:problemfeld}
   Makros setzen auf dem Command-Pattern\footnote{
-    Das Command-Pattern
+    Das Command-Pattern sorgt dafür, dass die Details der Implementierung dem Client(Nutzer z.B. eine Schaltfläche) nicht bekannt sein müssen, da dieser nur einen Invoker nutzt, welcher das Spezielle Command kennt, in dem die konkrete Implementation aufgerufen wird. Durch diese mehrfache Kapselung können viele Probleme in der GUI generisch gelöst werden, was die Komplexität der Anwendung verringert. Außerdem lässt sich die Chronik der Applikation zum Zurück- und Wiederherstellen sehr leicht implementieren.
   } auf und führen durch ihre Modularität und dynamischer Natur\footnote{
     Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert. Eine prominentes Beispiel wäre JavaScript.
   } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
