@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+  \umlemptyclass[x=0,y=0]{Executable}
+  \umlemptyclass[x=0.5,y=-0.5]{Command}
+  \umlemptyclass[x=-0.5,y=-0.5]{Macro}
+
+  \umlinherit[geometry=|-|]{Command}{Executable}
+  \umlinherit[geometry=|-|,anchor1=60]{Macro}{Executable}
+  \umlunicompo[geometry=|-,anchor1=120,mult2=*,align2=left,pos2=1.75]{Macro}{Executable}
+
+  % \umlemptyclass{A1}
+  % \umlemptyclass[x=5]{A2}
+  % \umlassoc[attr1=arg1|mult1,attr2=arg2|mult2]{A1}{A2}
+\end{tikzpicture}

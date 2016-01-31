@@ -25,7 +25,7 @@
 \label{sec:einleitung}
   Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
 
-  Die P3-group arbeitet mit Airbus um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist eng umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
+  Die P3-group arbeitet mit Airbus um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist eng umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird, sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
 
   Makros sind die Fließbänder der digitalen Welt und diese Arbeit beschäftigt sich mit der Entwicklung eines Makro Systems bzw. Sprache.
 
@@ -45,7 +45,7 @@
     Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert. Eine prominentes Beispiel wäre JavaScript.
   } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
 
-  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst gegebenen falls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
+  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenen falls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
 
   Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Durch diese Kombination, kann einfach ein weiteres Modul geladen werden, was die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, den Tod der Herstellerfirma überleben.
 
@@ -54,6 +54,12 @@
     Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr Komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
     % Ich finde das bis hierhin als Motivation auch schon ausreichend. Das letzte Beispiel ist für mich schon fast etwas „gezwungen“, auch wenn es absolut sinnvoll ist, Beispiele aus der Welt von P3 zu bringen. Bei Deinem Beispiel habe ich das Gefühl, dass das Problem auch durch dasselbe Makro mit unterschiedlicher Parametrierung der Plugins gelöst werden kann. Vielleicht findest Du ja noch ein besseres, für Außenstehende leichter nachvollziehbares Beispiel.
   }
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{img/executable_command_macro.tikz}
+    \caption{Erben von \texttt{Command} sind die Grundbausteine, Instanzen von \texttt{Macro} sind Makros, die \texttt{Executable}s ausführen können, also andere Makros oder Grundbausteine.}
+  \end{figure}
 
   Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden.
 
@@ -71,14 +77,14 @@
     \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
   \end{figure}
 
-  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{``ja''} oder nein \textit{``nein''} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass verschiedene Objekte/Klassen/Typen zurückgegeben werden können und beliebig viele Parameter dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++ da C++ keine Reflektion unterstützt. Dies ist -- da es die Zeit die für die Bachelorarbeit bereitsteht mehrfach sprengt -- schon durch das Commandpattern von mir gelöst worden.\footnote{
-    Das Command-Pattern wurde mit Hilfe des any\tablefootnote{
+  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedene Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, da C++ keine Reflexion unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation von dem Command-Pattern von mir gelöst worden.\footnote{
+    Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{
       \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
     }
-    sowie optional\tablefootnote{
+    sowie \texttt{optional}\tablefootnote{
       \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
     }
-    Types erstellt, womit die Command Klassen ein Interface bereitstellen, mit dem Argumente jeden Types übergeben und zurückgegeben werden können.
+    Types erstellt, womit die \texttt{Executable} Klasse ein Interface bereitstellt, mit dem Argumente jeden Types übergeben und zurückgegeben werden können.
   }\spewnotes{}
   Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann und Rückgabewerte in Variablen speicherbar sind.
 
@@ -95,12 +101,23 @@
 %---------------------------------
 \section{Lösungsansatz}
 \label{sec:loesungsansatz}
-  \textit{% TODO Soloution approach
-    \color{DarkSlateGray}%
-    Ähnlich wie beim Problemfeld weiß ich nicht wie weit ich hier auf die Sprache und die damit verbundenen Probleme eingehen darf (fehlende Reflektieren).
-  }
+  Der Makroansatz besteht aus inkrementell kompletteren Lösungen. Diese Lösungen sind in drei Level aufteilbar. Das erste Level beschäftigt sich mit hauptsächlich mit dem Parser\footnote{
+    Ein Parser ist eine Softwarekomponente, die einen Text analysieren und in ein Format bringen, welches von dem Rest der Software verstanden werden kann.
+  }/Tokenizer\footnote{
+    Tokenizer sind ein Bestandteil des parsens, Tokenizer zerteilen Text in sinnvolle Segmente, die von Parsern weiterverarbeitet werden können. Oft werden Tokenizer in kleineren Projekten direkt in den Parser integriert und werden daher selten extra betrachtet.
+  } für den Interpreter\footnote{
+    Interpreter sind Softwarekomponenten, die Befehle ausführen, ohne den Quelltext vorher zu kompilieren. Interpreter machen sich Parser zu nutzen, um den Quelltext in ein Format zu bringen, welches sie nutzen können um Befehle auszuführen.
+  } und soll Makros ausschließlich sequenziell ausführen können. Das zweite Level befasst sich mit der Erweiterung des Interpreters sowie der Einführung oder Implementierung von Argumenten und Rückgabewerten. Das dritte und letzte Level beschäftigt sich damit die Implementierungen von Makros und Interpreter weiter auszunutzen, um Schleifen von \texttt{while} bis \texttt{for-each} zu implementieren.
 
-  % Hier könntest Du analog zu den von mir im Problemfeld genannten „Stufen“ darstellen, was Deine Lösung leisten soll. Den Lösungsansatz für die aus der Wahl von C++ resultierenden Probleme mit der Reflection dann als Teil Deines Lösungsansatzes darstellen, aber - soweit ich das verstehe - nicht als den eigentlichen, zentralen Beitrag Deiner Arbeit. Der besteht ja darin, eine Makrosprache für ein P3-System zu entwickeln.
+  Bevor mit der ersten Iteration begonnen werden kann, muss recherchiert werden, was schon bei ähnlichen Problemen entwickelt wurde, und eine Anforderungsanalyse durchgeführt werden. Auf diesen beiden Ergebnissen wird dann eine Subarchitektur entwickelt, die für alle Level gültig ist und als Grundlage für die Implementierung dienen wird.
+
+  Der Parser für das erste Level bedarf einen Syntax den er parsen kann. Dieser muss für die späteren Iterationen ausreichend flexibel sein. Höchst wahrscheinlich wird der Parser den Makrostring in einen abstrakter Syntaxbaum (AST)\footnote{
+    \textit{Abstract syntax tee} ist eine digitale Darstellung einer Programmiersprache. Diese wird von den Softwarekomponenten nach dem Parser genutzt und sorgt dafür, dass diese den Syntax der eigentlichen Sprache nicht kennen müssen und somit von Veränderungen größtenteils geschützt sind.
+  } überführen. Der Interpreter muss in dieser Iteration nicht viel mehr können als Makro nach Makro aufzurufen und ist somit eine leichte Aufgabe.
+
+  Im zweiten Level wird der Interpreter, durch die Einführung der bedingten Anweisungen, sowie von Argumenten und Rückgabewerte der Makros erweitert. Die Änderungen an dem Parser sollten hier nur noch minimal sein, da dieser nur weitere Tokens erkennen und in den AST überführen muss.
+
+  Die Schleifen sowie Variablen Deklarationen bauen auf die vorherigen Stufen auf und sollten bei einer perfekten Ausführung derer, mit wenig Aufwand zu implementieren sein. Sollte allerdings bei der Planung bzw. der Architektur ein Detail übersehen worden sein, kann dies zu größeren Änderungen führen.
 
 %---------------------------------
 % Konkrete Aufgaben
@@ -111,13 +128,20 @@
   \begin{itemize}
     \item Anforderungsanalyse:
       \begin{itemize}
-        \item Was muss die Macrosprache mindestens leisten um von Nutzen zu sein?
+        \item Was muss die Makrosystem/-sprache mindestens leisten um von Nutzen zu sein?
         \item Machbarkeitsanalyse -- Was gibt C++ her?
       \end{itemize}
-    \item Entwicklung eines Syntax für die Macrosprache.
-    \item Parser bzw. Interpreter für die Sprache.
-    \item Objektrepräsentation von Macros.
-    \item Eine Referenz Implementierung von der Macrosprache.
+    \item Subarchitektur für alle Komponenten, die mit der Arbeit zu tun haben.
+      \begin{itemize}
+        \item AST
+        \item Interpreter
+        \item Makros
+        \item Parser
+        \item Tokenizer
+      \end{itemize}
+    \item Entwicklung eines Syntax für die Makrosystem/-sprache.
+    \item Eine Referenz Implementierung von der Makrosystem/-sprache.
+    \item Die Ergebnisse der Arbeit niederschreiben.
   \end{itemize}
 
 %---------------------------------
@@ -160,7 +184,7 @@
         \end{itemize}
       \item \myFnurl{Git}{http://git-scm.com/} als Versionsverwaltung
       \item \myFnurl{CMake}{https://cmake.org/} als Build-System-Generator
-      \item \myFnurl{Latex}{http://www.latex-project.org/} für Text der kein Code ist
+      \item \myFnurl{Latex}{http://www.latex-project.org/} für Text der kein Code ist und Vektorgrafiken
       \item \myFnurl{Sublime Text 3}{http://www.sublimetext.com/3} mit Plugins von der \myFnurl{Package Control}{https://packagecontrol.io/} als Editor/IDE
       \item \myFnurl{Arch}{https://www.archlinux.org/} und \myFnurl{Ubuntu}{http://www.ubuntu.com/} als Betriebssystem
       \item \myFnurl{Inkscape}{https://inkscape.org/en/} und \myFnurl{Visual Paradigm}{http://www.visual-paradigm.com/} für Grafiken
@@ -201,17 +225,14 @@
     \item \myRoadMapTime{Recherche}{ca.5 Tage}
     \item \myRoadMapTime{Anforderungsanalyse}{ca.5 Tage}
     \item \myRoadMapTime{Konzeption}{ca.5 Tage}
-    % TODO Das mit den Levels verstehe ich (noch) nicht. Kern der Konzeption sind ja sicherlich:
-    % 1.) Makrosprache
-    % 2.) Entwurf zur Umsetzung in C++ und Integration der Makrosprache in das P3-System.
       \begin{itemize}
-        \item \myRoadMapTime{Level 1 -- Abarbeiten von ``Commands''}{}
+        \item \myRoadMapTime{Level 1 -- Abarbeiten von \texttt{Macro}s}{}
         \item \myRoadMapTime{Level 2 -- Logik / primitive Returnwerte}{ca.$\frac{1}{2}$ Woche}
         \item \myRoadMapTime{Level 3 -- Komplexe Returnwerte}{ca.$\frac{1}{2}$ Woche}
       \end{itemize}
     \item \myRoadMapTime{Implementierung}{ca.3 Woche}
       \begin{itemize}
-        \item \myRoadMapTime{Level 1 -- Abarbeiten von ``Commands''}{ca.2 Tage}
+        \item \myRoadMapTime{Level 1 -- Abarbeiten von \texttt{Macro}s}{ca.2 Tage}
         \item \myRoadMapTime{Level 2 -- Logik / primitive Returnwerte}{ca.1 Woche}
         \item \myRoadMapTime{Level 3 -- Komplexe Returnwerte}{ca.$1\frac{1}{2}$ Wochen}
       \end{itemize}
@@ -247,7 +268,7 @@
       \begin{tabularx}{\textwidth}{lXX}
         {}
           & \multicolumn{1}{c}{Abschluss}
-            & \multicolumn{1}{c}{Begin}\\
+            & \multicolumn{1}{c}{Beginn}\\
         \cline{2-3}
         \textbf{1. März:}
           & {}
@@ -367,20 +388,6 @@
 \label{sec:personen}
 
   %---------------------------------
-  % Ansprechpartner
-  %---------------------------------
-  \subsection{Ansprechpartner}
-  \label{ssec:ansprechpartner}
-    \begin{tabular}{ll}
-      Name:
-        &Mirko Wiechmann\\
-      E-Mail:
-        &\href{mailto:Mirko.Wiechmann@p3-group.com}{Mirko.Wiechmann@p3-group.com}\\
-      Tel.:
-        &+49 421 55 83 64 300\\
-    \end{tabular}
-
-  %---------------------------------
   % Erster Gutachter
   %---------------------------------
   \subsection{Erster Gutachter}
@@ -402,6 +409,20 @@
         &{}\\
       E-Mail:
         &{}\\
+    \end{tabular}
+
+  %---------------------------------
+  % Ansprechpartner
+  %---------------------------------
+  \subsection{Ansprechpartner}
+  \label{ssec:ansprechpartner}
+    \begin{tabular}{ll}
+      Name:
+        &Mirko Wiechmann\\
+      E-Mail:
+        &\href{mailto:Mirko.Wiechmann@p3-group.com}{Mirko.Wiechmann@p3-group.com}\\
+      Tel.:
+        &+49 421 55 83 64 300\\
     \end{tabular}
 
   %---------------------------------
@@ -427,9 +448,9 @@
 \label{sec:unterschriften}
 
   \mySignatures
-  {Mirko Wiechmann}
   {Prof. Dr. Thorsten Teschke}
   {Zweiter Gutachter}
+  {Mirko Wiechmann}
   {Roland Jäger}
 
 \end{document}
