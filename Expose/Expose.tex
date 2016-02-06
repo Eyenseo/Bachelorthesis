@@ -39,84 +39,105 @@
 %---------------------------------
 \section{Problemfeld}
 \label{sec:problemfeld}
-  Makros setzen auf dem Command-Pattern\autocite[S.263]{Gamma:1995:DPE:186897} auf und führen durch ihre Modularität und dynamischer Natur\footnote{%
-    Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert. Eine prominentes Beispiel wäre JavaScript.
-  } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
+
 
   Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenen falls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
 
   Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Durch diese Kombination, kann einfach ein weiteres Modul geladen werden, was die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, die Zeit zu überdauern.
 
-  Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Doch manchmal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden. Anstelle, dass hier eine sehr komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind.
+  %---------------------------------
+  % Anwendung in der Wirtschaft
+  %---------------------------------
+  \subsection{Anwendung in der Wirtschaft}
+  \label{ssec:anwendung_in_der_wirtschaft}
+    Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Ein anderes mal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden und deren Preis ermittelt werden. Anstelle, dass hier eine sehr komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind. Die Komplexität der Software wurde durch das zweite Makro nicht sonderlich beeinflusst, da dieses intern auf Funktionalität zurückgreifen kann, die schon vom ersten genutzt wird.
 
-  Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in Abbildung \ref{fig:sequential} zu sehen ist.
+  %---------------------------------
+  % Anforderungen an Makros
+  %---------------------------------
+  \subsection{Anforderungen an Makros}
+  \label{ssec:anforderungen_an_macros}
+    Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in Abbildung \ref{fig:sequential} zu sehen ist.
 
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/sequential.tikz}
-    \caption{Sequenzielles abarbeiten von Prozessschritten.}
-    \label{fig:sequential}
-  \end{figure}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{img/sequential.tikz}
+      \caption{Sequenzielles abarbeiten von Prozessschritten.}
+      \label{fig:sequential}
+    \end{figure}
 
-  Abbildung \ref{fig:logic} zeigt den ersten Schritt zu einer Herausforderung -- und zu einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
+    Abbildung \ref{fig:logic} zeigt den ersten Schritt zu einer Herausforderung -- und zu einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
 
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/logic.tikz}
-    \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
-    \label{fig:logic}
-  \end{figure}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{img/logic.tikz}
+      \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
+      \label{fig:logic}
+    \end{figure}
 
-  Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht. Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedene Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, da C++ keine Reflexion unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation des Command-Patterns\footnote{%
-    Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{%
-      \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
-    }
-    sowie \texttt{optional}\tablefootnote{%
-      \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
-    }
-    Types erstellt.
-  }\spewnotes{}
-  von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbilgung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind
+    Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
 
-  \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/loop.tikz}
-    \caption{Schleife, die Anweisungen für ein Element aus der Liste aufrufen.}
-    \label{fig:loop}
-  \end{figure}
+    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedene Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, da C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation des Command-Patterns\footnote{%
+      Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{%
+        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
+      }
+      sowie \texttt{optional}\tablefootnote{%
+        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
+      }
+      Types erstellt.
+    }\spewnotes{}
+    von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbilgung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
 
-  Letztendlich kann man also sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter\autocite[S.263]{Gamma:1995:DPE:186897} ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.9\textwidth]{img/loop.tikz}
+      \caption{Schleife, die Anweisungen für ein Element aus der Liste aufrufen.}
+      \label{fig:loop}
+    \end{figure}
+
+    Letztendlich kann man also sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter\autocite[S.274]{Gamma:1995:DPE:186897} ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
 %---------------------------------
 % Lösungsansatz
 %---------------------------------
 \section{Lösungsansatz}
 \label{sec:loesungsansatz}
- \begin{figure}[H]
+  Makros setzen auf dem Command-Pattern\autocite[S.263]{Gamma:1995:DPE:186897} auf und führen durch ihre Modularität und dynamischer Natur\footnote{%
+    Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert -- ein prominentes Beispiel wäre JavaScript.
+  } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
+
+  \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{img/executable_command_macro.tikz}
+    \includegraphics[width=0.5\textwidth]{img/executable_command_macro.tikz}
     \caption{Das UML Diagramm zeigt die Beziehungen zwischen den Elementen aus den vorangegangenen Kapiteln.}
     \label{fig:executable_command_macro}
   \end{figure}
-  In Abbildung \ref{fig:executable_command_macro} ist die Highlevel Architektur der Makros zu sehen -- Erben von \texttt{Command} sind die \textit{Grundbausteine} aus dem vorherigen Text, Instanzen von \texttt{Macro} sind \textit{Makro}s, die \texttt{Executable}s ausführen können, also andere Makros oder Grundbausteine.
 
-  Der Makroansatz besteht aus inkrementell kompletteren Lösungen. Diese Lösungen sind in drei Level aufteilbar. Das erste Level beschäftigt sich mit hauptsächlich mit dem Parser\footnote{%
-    Ein Parser ist eine Softwarekomponente, die einen Text analysieren und in ein Format bringen, welches von dem Rest der Software verstanden werden kann.
-  }/Tokenizer\footnote{%
-    Tokenizer sind ein Bestandteil des parsens, Tokenizer zerteilen Text in sinnvolle Segmente, die von Parsern weiterverarbeitet werden können. Oft werden Tokenizer in kleineren Projekten direkt in den Parser integriert und daher selten extra betrachtet.
-  } für den Interpreter\footnote{%
-    Interpreter sind Softwarekomponenten, die Befehle ausführen, ohne den Quelltext vorher zu kompilieren. Interpreter machen sich Parser zu nutzen, um den Quelltext in ein Format zu bringen, welches sie nutzen können um Befehle auszuführen.
-  } und soll Makros ausschließlich sequenziell ausführen können. Das zweite Level befasst sich mit der Erweiterung des Interpreters sowie der Einführung oder Implementierung von Argumenten und Rückgabewerten. Das dritte und letzte Level beschäftigt sich damit die Implementierungen von Makros und Interpreter weiter auszunutzen, um Schleifen von \texttt{while} bis \texttt{for-each} zu implementieren.
+  In Abbildung \ref{fig:executable_command_macro} ist die Komposition der Makros zu sehen -- Erben von \texttt{Command} sind die \textit{Grundbausteine} aus dem vorherigen Text, Instanzen von \texttt{Macro} sind \textit{Makro}s, die \texttt{Executable}s ausführen können, also andere Makros oder Grundbausteine.
 
-  Bevor mit der ersten Iteration begonnen werden kann, muss recherchiert werden, was schon bei ähnlichen Problemen entwickelt wurde, und eine Anforderungsanalyse durchgeführt werden. Auf diesen beiden Ergebnissen wird dann eine Basisarchitektur entwickelt, die für alle Level gültig ist und als Grundlage für die Implementierung dienen wird.
+  Bevor die genanten Probleme gelöst werden können, muss recherchiert werden, was schon bei ähnlichen Problemen entwickelt wurde, und eine Anforderungsanalyse durchgeführt werden. Auf diesen Ergebnissen wird dann eine Basisarchitektur entwickelt, die als Grundlage für die Implementierung dienen wird.
 
-  Der Parser für das erste Level bedarf einer Syntax, die er parsen kann. Diese muss für die späteren Iterationen ausreichend flexibel sein. Höchstwahrscheinlich wird der Parser den Makrostring in einen abstrakter Syntaxbaum (AST)\footnote{%
-    \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache. Diese wird von den Softwarekomponenten nach dem Parser genutzt und sorgt dafür, dass diese die Syntax der eigentlichen Sprache nicht kennen müssen und somit von Veränderungen größtenteils geschützt sind.
-  } überführen. Der Interpreter muss in dieser Iteration nicht viel mehr können als Makro nach Makro aufzurufen.
+  %---------------------------------
+  % Makrolösungsansatz
+  %---------------------------------
+  \subsection{Makrolösungsansatz}
+  \label{ssec:Makroloesungsansatz}
+    Der Makroansatz besteht aus inkrementell kompletteren Lösungen. Diese Lösungen sind in drei Level aufteilbar.
 
-  Im zweiten Level wird der Interpreter durch die Einführung der bedingten Anweisungen sowie von Argumenten und Rückgabewerte der Makros erweitert. Die Änderungen an dem Parser sollten hier nur noch minimal sein, da dieser nur weitere Tokens erkennen und in den AST überführen muss.
+    Das erste Level beschäftigt sich mit hauptsächlich mit dem Parser/Tokenizer für den Interpreter und soll Makros ausschließlich sequenziell ausführen können. Das zweite Level befasst sich mit der Erweiterung des Interpreters sowie der Implementierung von Argumenten und Rückgabewerten. Das dritte und letzte Level beschäftigt sich damit die Implementierungen von Makros und Interpreter weiter auszunutzen, um Schleifen von \texttt{while} bis \texttt{for-each} zu implementieren.
 
-  Die Schleifen sowie Variablendeklarationen bauen auf die vorherigen Stufen auf und sollten bei einer (wider Erwarteten) perfekten Ausführung derer, mit wenig Aufwand zu implementieren sein. Sollte allerdings bei der Planung bzw. der Architektur ein Detail übersehen worden sein, kann dies zu größeren Änderungen führen.
+  %---------------------------------
+  % Mikrolösungsansatz
+  %---------------------------------
+  \subsection{Mikrolösungsansatz}
+  \label{ssec:Mikroloesungsansatz}
+    Der Parser für das erste Level bedarf einer Syntax, die er parsen kann. Diese muss für die späteren Iterationen ausreichend flexibel sein. Höchstwahrscheinlich wird der Parser den Makrostring in einen abstrakter Syntaxbaum (AST)\footnote{%
+      \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
+    } überführen. Der Interpreter muss in dieser Iteration nicht viel mehr können als Makro nach Makro aufzurufen.
+
+    Im zweiten Level wird der Interpreter durch die Einführung der bedingten Anweisungen sowie von Argumenten und Rückgabewerte der Makros erweitert. Die Änderungen an dem Parser sollten hier nur noch minimal sein, da dieser nur weitere Tokens erkennen und in den AST überführen muss.
+
+    Die Schleifen sowie Variablendeklarationen bauen auf die vorherigen Stufen auf und sollten bei einer (wider Erwarteten) perfekten Ausführung derer, mit wenig Aufwand zu implementieren sein. Sollte allerdings bei der Planung bzw. der Architektur ein Detail übersehen worden sein, kann dies zu größeren Änderungen führen.
 
 %---------------------------------
 % Konkrete Aufgaben
