@@ -13,12 +13,21 @@
 \usepackage{minted}
 \usepackage{graphicx} % for pdf and other graphics
 \usepackage[backend=biber,
-    style=authoryear-icomp,
+    % style=authoryear-icomp,
+    % sortlocale=de_DE,
+    % natbib=true,
+    % url=false,
+    % doi=true,
+    % eprint=false
+    backend=biber,
+    % style=authoryear-icomp,
+    style=authortitle-icomp,
     sortlocale=de_DE,
-    natbib=true,
+    % natbib=true,
     url=false,
     doi=true,
-    eprint=false]{biblatex}%style=numeric-comp,sorting=none,backend=biber
+    eprint=false
+    ]{biblatex}%style=numeric-comp,sorting=none,backend=biber
 \usepackage{csquotes}
 \usepackage{anyfontsize} % mute warnings?
 \usepackage{microtype} % Subliminal refinements towards typographical perfection - eg. Hypernation
@@ -201,7 +210,7 @@
 \newcommand{\MetaInstitute}{Hochschule Bremen}
 \newcommand{\MetaUnit}{Bachelorarbeit}
 \newcommand{\MetaTask}{Expos\'e}
-\newcommand{\MetaTitle}{Automatisierung mit Hilfe von Macros}
+\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
 \newcommand{\MetaAuthorName}{Roland}
 \newcommand{\MetaAuthorSurname}{Jäger}
 \newcommand{\MetaStudentNumber}{360956}
@@ -215,10 +224,9 @@
 %---------------------------------
 % href Link as foot note
 %---------------------------------
-\newcommand\myFnurl[2]{
-  \href{#2}{#1}\footnote{ \url{#2}}
+\newcommand\myFnurl[2]{%
+  \href{#2}{#1}\footnote{\url{#2}}%
 }
-
 
 %---------------------------------
 % Tablel in table for new line
