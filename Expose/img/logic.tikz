@@ -2,7 +2,7 @@
   \definecolor{templogic}{RGB}{255, 213, 143}
 
   \begin{tikzpicture}[
-      font=\sffamily,
+      font=\sffamily\small,
       auto,
       node distance=3cm*\ScaleFactor,
       cmd/.style={

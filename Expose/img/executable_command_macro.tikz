@@ -1,4 +1,6 @@
-\begin{tikzpicture}
+\begin{tikzpicture}[
+      font=\sffamily\small,
+  ]
   \umlemptyclass[x=0,y=0]{Executable}
   \umlemptyclass[x=0.5,y=-0.5]{Command}
   \umlemptyclass[x=-0.5,y=-0.5]{Macro}
