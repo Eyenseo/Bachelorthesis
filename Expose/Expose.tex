@@ -23,15 +23,15 @@
 %---------------------------------
 \section{Einleitung}
 \label{sec:einleitung}
-  Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
+  Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen, die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf, und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
 
-  Die P3-group arbeitet mit Airbus um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist hart umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird, sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
+  Die P3-group arbeitet mit Airbus, um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist hart umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld, welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird, sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
 
-  Makros sind die Fließbänder der digitalen Welt und diese Arbeit beschäftigt sich mit der Entwicklung eines Makro Systems bzw. Sprache.
+  Makros sind die Fließbänder der digitalen Welt, und diese Arbeit beschäftigt sich mit der Entwicklung eines Makro Systems bzw. Sprache.
 
   Makros werden durch die Verbindung kleinerer Bausteine erstellt. Diese können andere Makros oder Befehle, die die Anwendungsumgebung bereitstellt, sein. Dies ist mit einem Fließband in der Autoindustrie zu vergleichen. Jede Station ist genau für eine Aufgabe zuständig und kümmert sich um nichts anderes.
 
-  Die Makrosprache ist ein Baukasten, mit dem Makros erstellt -- Fließbänder für spezielle Aufgaben erzeugt werden können.
+  Die Makrosprache ist ein Baukasten, mit dem Makros erstellt -- ``Fließbänder'' für spezielle Aufgaben erzeugt -- werden können.
 
 
 %---------------------------------
@@ -41,28 +41,28 @@
 \label{sec:problemfeld}
 
 
-  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenen falls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
+  Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenenfalls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
 
-  Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Durch diese Kombination, kann einfach ein weiteres Modul geladen werden, was die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keine neuen Grundbausteine bedarf, reicht es sogar nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, da sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, da sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, die Zeit zu überdauern.
+  Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation angefasst werden muss, wesentlich geringer. Durch diese Kombination kann einfach ein weiteres Modul geladen werden, welches die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keiner neuen Grundbausteine bedarf, reicht es sogar, nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes Testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, weil sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, weil sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, die Zeit zu überdauern.
 
   %---------------------------------
   % Anwendung in der Wirtschaft
   %---------------------------------
   \subsection{Anwendung in der Wirtschaft}
   \label{ssec:anwendung_in_der_wirtschaft}
-    Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbietet kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme -- die von ihnen angeboten werden -- Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, dass alle Flugzeugteile ausgewählt werden und dann deren Gewicht ermittelt wird. Ein anderes mal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt werden und deren Preis ermittelt werden. Anstelle, dass hier eine sehr komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind. Die Komplexität der Software wurde durch das zweite Makro nicht sonderlich beeinflusst, da dieses intern auf Funktionalität zurückgreifen kann, die schon vom ersten genutzt wird.
+    Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbieten kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme, die von ihnen angeboten werden, Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, werden alle Flugzeugteile ausgewählt und dann deren Gewicht ermittelt. Ein anderes Mal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt und deren Preis ermittelt werden. Anstelle, dass hier eine sehr komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind. Die Komplexität der Software wurde durch das zweite Makro nicht sonderlich beeinflusst, da dieses intern auf Funktionalität zurückgreifen kann, die schon vom ersten genutzt wird.
 
   %---------------------------------
   % Anforderungen an Makros
   %---------------------------------
   \subsection{Anforderungen an Makros}
   \label{ssec:anforderungen_an_macros}
-    Die Herausforderung ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in Abbildung \ref{fig:sequential} zu sehen ist.
+    Die Herausforderung, ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in Abbildung \ref{fig:sequential} zu sehen ist.
 
     \begin{figure}[H]
       \centering
       \includegraphics[width=0.9\textwidth]{img/sequential.tikz}
-      \caption{Sequenzielles abarbeiten von Prozessschritten.}
+      \caption{Sequenzielles Abarbeiten von Prozessschritten.}
       \label{fig:sequential}
     \end{figure}
 
@@ -77,7 +77,7 @@
 
     Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
 
-    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedene Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, da C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation des Command-Patterns\footnote{%
+    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation des Command-Patterns\footnote{%
       Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{%
         \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
       }
@@ -86,7 +86,7 @@
       }
       Types erstellt.
     }\spewnotes{}
-    von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbilgung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
+    von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbildung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
 
     \begin{figure}[H]
       \centering
@@ -113,31 +113,31 @@
     \label{fig:executable_command_macro}
   \end{figure}
 
-  In Abbildung \ref{fig:executable_command_macro} ist die Komposition der Makros zu sehen -- Erben von \texttt{Command} sind die \textit{Grundbausteine} aus dem vorherigen Text, Instanzen von \texttt{Macro} sind \textit{Makro}s, die \texttt{Executable}s ausführen können, also andere Makros oder Grundbausteine.
+  In Abbildung \ref{fig:executable_command_macro} ist die Komposition\autocite[S.183]{Gamma:1995:DPE:186897} der Makros zu sehen -- Erben von \texttt{Command} sind die \textit{Grundbausteine} aus dem vorherigen Text, Instanzen von \texttt{Macro} sind \textit{Makro}s, die \texttt{Executable}s ausführen können, also andere Makros oder Grundbausteine.
 
-  Bevor die genanten Probleme gelöst werden können, muss recherchiert werden, was schon bei ähnlichen Problemen entwickelt wurde, und eine Anforderungsanalyse durchgeführt werden. Auf diesen Ergebnissen wird dann eine Basisarchitektur entwickelt, die als Grundlage für die Implementierung dienen wird.
+  Bevor die genannten Probleme gelöst werden können, muss recherchiert werden, was schon bei ähnlichen Problemen entwickelt wurde, und eine Anforderungsanalyse durchgeführt werden. Auf diesen Ergebnissen wird dann eine Basisarchitektur entwickelt, die als Grundlage für die Implementierung dienen wird.
 
   %---------------------------------
-  % Makrolösungsansatz
+  % Grober Lösungsansatz
   %---------------------------------
-  \subsection{Makrolösungsansatz}
-  \label{ssec:Makroloesungsansatz}
+  \subsection{Grober Lösungsansatz}
+  \label{ssec:grober_loesungsansatz}
     Der Makroansatz besteht aus inkrementell kompletteren Lösungen. Diese Lösungen sind in drei Level aufteilbar.
 
-    Das erste Level beschäftigt sich mit hauptsächlich mit dem Parser/Tokenizer für den Interpreter und soll Makros ausschließlich sequenziell ausführen können. Das zweite Level befasst sich mit der Erweiterung des Interpreters sowie der Implementierung von Argumenten und Rückgabewerten. Das dritte und letzte Level beschäftigt sich damit die Implementierungen von Makros und Interpreter weiter auszunutzen, um Schleifen von \texttt{while} bis \texttt{for-each} zu implementieren.
+    Das erste Level beschäftigt sich mit hauptsächlich mit dem Parser/Tokenizer für den Interpreter und soll Makros ausschließlich sequenziell ausführen können. Das zweite Level befasst sich mit der Erweiterung des Interpreters sowie der Implementierung von Argumenten und Rückgabewerten. Das dritte und letzte Level beschäftigt sich damit, die Implementierungen von Makros und Interpreter weiter auszunutzen, um Schleifen von \texttt{while} bis \texttt{for-each} zu implementieren.
 
   %---------------------------------
-  % Mikrolösungsansatz
+  % Feiner Lösungsansatz
   %---------------------------------
-  \subsection{Mikrolösungsansatz}
-  \label{ssec:Mikroloesungsansatz}
-    Der Parser für das erste Level bedarf einer Syntax, die er parsen kann. Diese muss für die späteren Iterationen ausreichend flexibel sein. Höchstwahrscheinlich wird der Parser den Makrostring in einen abstrakter Syntaxbaum (AST)\footnote{%
+  \subsection{Feiner Lösungsansatz}
+  \label{ssec:feiner_loesungsansatz}
+    Der Parser für das erste Level bedarf einer Syntax, die er parsen kann. Diese muss für die späteren Iterationen ausreichend flexibel sein. Höchstwahrscheinlich wird der Parser den Makrostring in einen abstrakten Syntaxbaum (AST)\footnote{%
       \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
-    } überführen. Der Interpreter muss in dieser Iteration nicht viel mehr können als Makro nach Makro aufzurufen.
+    } überführen. Der Interpreter muss in dieser Iteration nicht viel mehr können, als Makro nach Makro aufzurufen.
 
-    Im zweiten Level wird der Interpreter durch die Einführung der bedingten Anweisungen sowie von Argumenten und Rückgabewerte der Makros erweitert. Die Änderungen an dem Parser sollten hier nur noch minimal sein, da dieser nur weitere Tokens erkennen und in den AST überführen muss.
+    Im zweiten Level wird der Interpreter durch die Einführung der bedingten Anweisungen sowie von Argumenten und Rückgabewerten der Makros erweitert. Die Änderungen an dem Parser sollten hier nur noch minimal sein, weil dieser nur weitere Tokens erkennen und in den AST überführen muss.
 
-    Die Schleifen sowie Variablendeklarationen bauen auf die vorherigen Stufen auf und sollten bei einer (wider Erwarteten) perfekten Ausführung derer, mit wenig Aufwand zu implementieren sein. Sollte allerdings bei der Planung bzw. der Architektur ein Detail übersehen worden sein, kann dies zu größeren Änderungen führen.
+    Die Schleifen sowie Variablendeklarationen bauen auf den vorherigen Stufen auf und sollten bei einer (wider Erwarteten) perfekten Ausführung derer, mit wenig Aufwand zu implementieren sein. Sollte allerdings bei der Planung bzw. der Architektur ein Detail übersehen worden sein, kann dies zu größeren Änderungen führen.
 
 %---------------------------------
 % Konkrete Aufgaben
@@ -148,7 +148,7 @@
   \begin{itemize}
     \item Anforderungsanalyse:
       \begin{itemize}
-        \item Was muss die Makrosystem/-sprache mindestens leisten um von Nutzen zu sein?
+        \item Was muss die Makrosystem/-sprache mindestens leisten, um von Nutzen zu sein?
         \item Machbarkeitsanalyse -- Was gibt C++ her?
       \end{itemize}
     \item Basisarchitektur für alle Komponenten, die mit der Arbeit zu tun haben.
@@ -247,19 +247,19 @@
     \item \myRoadMapTime{Konzeption}{ca.1 Woche}
       \begin{itemize}
         \item \myRoadMapTime{Level 1 -- Abarbeiten von \texttt{Macro}s}{}
-        \item \myRoadMapTime{Level 2 -- Logik / primitive Returnwerte}{ca.$\frac{1}{2}$ Woche}
-        \item \myRoadMapTime{Level 3 -- Komplexe Returnwerte}{ca.$\frac{1}{2}$ Woche}
+        \item \myRoadMapTime{Level 2 -- Logik / primitive Rückgabewerte}{ca.$\frac{1}{2}$ Woche}
+        \item \myRoadMapTime{Level 3 -- Komplexe Rückgabewerte}{ca.$\frac{1}{2}$ Woche}
       \end{itemize}
     \item \myRoadMapTime{Implementierung}{ca.3 Wochen}
       \begin{itemize}
         \item \myRoadMapTime{Level 1 -- Abarbeiten von \texttt{Macro}s}{ca.$\frac{1}{2}$ Woche}
-        \item \myRoadMapTime{Level 2 -- Logik / primitive Returnwerte}{ca.1 Woche}
-        \item \myRoadMapTime{Level 3 -- Komplexe Returnwerte}{ca.$1\frac{1}{2}$ Wochen}
+        \item \myRoadMapTime{Level 2 -- Logik / primitive Rückgabewerte}{ca.1 Woche}
+        \item \myRoadMapTime{Level 3 -- Komplexe Rückgabewerte}{ca.$1\frac{1}{2}$ Wochen}
       \end{itemize}
     \item \myRoadMapTime{Dokumentation}{ca.$\frac{1}{2}$ Woche}
-    \item \myRoadMapTime{Verfassen der Bachelor-Thesis}{ca.$2\frac{1}{2}$ Woche}
+    \item \myRoadMapTime{Verfassen der Bachelor-Thesis}{ca.$3$ Wochen}
       \begin{itemize}
-        \item \myRoadMapTime{Einleitung + Anforderungsanalyse}{ca.$1\frac{1}{2}$ Woche, ab 14. März}
+        \item \myRoadMapTime{Einleitung + Anforderungsanalyse}{ca.$1$ Woche, ab 14. März}
           \begin{itemize}
             \item \myRoadMapTime{Allgemeines}{}
             \item \myRoadMapTime{Kapitel 1: Einleitung}{}
@@ -297,15 +297,15 @@
             & Konzeption\\
         \textbf{14. März:}
           & Konzeption
-            & \specialcell[t]{Implementierung \&\\Erster schriftliche Teil}\\
+            & \specialcell[t]{Implementierung \&\\Erster schriftlicher Teil}\\
         \textbf{11. April:}
-          & \specialcell[t]{Implementierung \&\\Erster schriftliche Teil}
-            & \specialcell[t]{Dokumentation \&\\Zweiter schriftliche Teil}\\
+          & \specialcell[t]{Implementierung \&\\Erster schriftlicher Teil}
+            & \specialcell[t]{Dokumentation \&\\Zweiter schriftlicher Teil}\\
         \textbf{25. April:}
-          & \specialcell[t]{Dokumentation \&\\Zweiter schriftliche Teil}
-            & Dritter schriftliche Teil\\
+          & \specialcell[t]{Dokumentation \&\\Zweiter schriftlicher Teil}
+            & Dritter schriftlicher Teil\\
         \textbf{28. April:}
-          & Dritter schriftliche Teil
+          & Dritter schriftlicher Teil
             & Korrektur, Binden der DA etc.\\
         \textbf{3. Mai:}
           & Abgabe der Arbeit
@@ -345,18 +345,16 @@
       Anforderungsanalyse
       \begin{enumerate}[label=\theenumi\arabic*.]
           \item Diskussion des Problemfeldes
-          \item Angestrebte Lösung
+          \item Anforderungen an die angestrebte Lösung
       \end{enumerate}
     \stepcounter{enumi}
     \item[\textbf{Kapitel~\arabic{enumi}:}]
       Konzeption
       \begin{enumerate}[label=\theenumi\arabic*.]
           \item Syntax
-          \item Tokenizer
-          \item Abstrakter Syntaxbaum
-          \item Parser
-          \item Interpreter
-          \item Makro
+          \item Level 1 -- Grundarchitektur
+          \item Level 2 -- Logik / primitive Rückgabewerte
+          \item Level 3 -- Komplexe Rückgabewerte
       \end{enumerate}
     \stepcounter{enumi}
     \item[\textbf{Kapitel~\arabic{enumi}:}]
@@ -394,7 +392,7 @@
     \begin{tabular}{ll}
       Name:
         &Prof. Dr. Thorsten Teschke\\
-      E-Mail:
+      E\capitalhyphen{}Mail:
         &\href{mailto:thorsten.teschke@hs-bremen.de}{thorsten.teschke@hs-bremen.de}\\
     \end{tabular}
 
@@ -406,7 +404,7 @@
     \begin{tabular}{ll}
       Name:
         &{}\\
-      E-Mail:
+      E\capitalhyphen{}Mail:
         &{}\\
     \end{tabular}
 
@@ -418,7 +416,7 @@
     \begin{tabular}{ll}
       Name:
         &Mirko Wiechmann\\
-      E-Mail:
+      E\capitalhyphen{}Mail:
         &\href{mailto:Mirko.Wiechmann@p3-group.com}{Mirko.Wiechmann@p3-group.com}\\
       Tel.:
         &+49 421 55 83 64 300\\
@@ -434,7 +432,7 @@
         &\MetaAuthor\\
       Matrikelnr.:
         &\MetaStudentNumber\\
-      E-Mail:
+      E\capitalhyphen{}Mail:
         &\href{mailto:roland@wolfgang-jaeger.de}{roland@wolfgang-jaeger.de}\\
       Tel.:
         &+49 163 636 43 02\\
