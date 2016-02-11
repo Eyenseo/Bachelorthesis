@@ -77,16 +77,16 @@
 
     Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
 
-    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation des Command-Patterns\footnote{%
+    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation\footnote{%
       Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{%
         \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
       }
       sowie \texttt{optional}\tablefootnote{%
         \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
       }
-      Types erstellt.
+      Types implementiert.
     }\spewnotes{}
-    von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbildung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
+    des Command-Patterns\autocite[S.263]{Gamma:1995:DPE:186897} von mir gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann,  siehe Abbildung \ref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
 
     \begin{figure}[H]
       \centering
@@ -102,7 +102,7 @@
 %---------------------------------
 \section{Lösungsansatz}
 \label{sec:loesungsansatz}
-  Makros setzen auf dem Command-Pattern\autocite[S.263]{Gamma:1995:DPE:186897} auf und führen durch ihre Modularität und dynamischer Natur\footnote{%
+  Makros setzen auf dem Command-Pattern auf und führen durch ihre Modularität und dynamischer Natur\footnote{%
     Dynamische Programmiersprachen werden erst zur Laufzeit interpretiert -- ein prominentes Beispiel wäre JavaScript.
   } unter anderem dazu, dass Endbenutzer das Verhalten und sowie Potenzial der Software beeinflussen können.
 
