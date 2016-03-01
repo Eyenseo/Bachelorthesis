@@ -1,0 +1,262 @@
+\documentclass[german,a4paper,12pt,parskip=half]{scrartcl}
+\usepackage[T1]{fontenc} % utf8 <- produce real utf8 characters
+\usepackage[utf8]{inputenc} % utf8 <- accept utf8 input characters
+\usepackage{datetime}
+\usepackage[german]{babel}
+\usepackage[automark,headsepline]{scrlayer-scrpage}
+\usepackage[hscale=0.75,vscale=0.75,vmarginratio={85:100},heightrounded]{geometry} % less margin at bottom
+\usepackage[svgnames]{xcolor}
+\usepackage{tablefootnote}
+\usepackage{hyperref}
+\usepackage[clean]{svg}
+\usepackage{float}
+\usepackage{minted}
+\usepackage{graphicx} % for pdf and other graphics
+\usepackage[backend=biber,
+    backend=biber,
+    % style=numer,
+    % citestyle=authortitle-icomp,
+    sortlocale=de_DE,
+    sortcites=true,
+    url=false,
+    doi=true,
+    eprint=false
+    ]{biblatex}%style=numeric-comp,sorting=none,backend=biber
+\usepackage{csquotes}
+\usepackage{anyfontsize} % mute warnings?
+\usepackage{microtype} % Subliminal refinements towards typographical perfection - eg. Hypernation
+\usepackage{xspace} % set a space if not fullstop / end of sentence
+\usepackage{calc} % for lengh calculation
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage[all]{hypcap}
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usepackage{ifthen}
+\usepackage{xstring}
+\usepackage{calc}
+\usepackage{pgfopts}
+\usepackage[shellescape,latex]{gmp}
+
+%---------------------------------
+% TikZ libraries
+%---------------------------------
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+%---------------------------------
+% TikZ scaling support
+%---------------------------------
+\let\OrgPgfTransformScale\pgftransformscale
+\renewcommand*{\pgftransformscale}[1]{%
+  \gdef\ScaleFactor{#1}%
+  \OrgPgfTransformScale{#1}%
+}
+\def\ScaleFactor{1}
+
+%---------------------------------
+% Less margin below caption
+%---------------------------------
+\makeatletter
+\newcommand{\spewnotes}{%
+  \tfn@tablefootnoteprintout%
+  \global\let\tfn@tablefootnoteprintout\relax%
+  \gdef\tfn@fnt{0}%
+}
+\makeatother
+
+%---------------------------------
+% Less margin below caption
+%---------------------------------
+\setlength{\belowcaptionskip}{-1em}
+
+%---------------------------------
+% Shut up I know
+%---------------------------------
+\pdfsuppresswarningpagegroup=1
+
+%---------------------------------
+% Biographie
+%---------------------------------
+\addbibresource{lit.bib}
+
+%---------------------------------
+% Make the Part Heading a little bit smaller
+%---------------------------------
+\setkomafont{part}{\LARGE}
+
+%---------------------------------
+% SVG image configuration
+%---------------------------------
+\setsvg{inkscape = inkscape -z -C} % better svgs
+
+%---------------------------------
+% No Page break
+%---------------------------------
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty20\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+\newcommand{\capitalhyphen}{%
+  \raisebox{0.24ex}{%
+    \resizebox{0.4em}{%
+      \height%
+    }{-}%
+  }%
+  \kern-0.07em%
+}
+
+%---------------------------------
+% Minted Code
+%---------------------------------
+\newcommand\myCMinco[5][cpp]{
+  {%
+    \ifthenelse{\equal{#2}{}}{%
+    }{%
+      \noindent\texttt{#2}\\[-2em]%
+    }%
+    ~\\[1em]% % BUG?
+    \inputminted[
+        frame=lines,
+        framesep=2mm,
+        bgcolor=LightGray!20!White, % % BUG?
+        fontsize=\footnotesize,
+        linenos,
+        firstline=#4,
+        lastline=#5,
+      ]{#1}{#3}%
+  }
+}
+\newcommand\myMinco[5][cpp]{
+  {%
+    \ifthenelse{\equal{#2}{}}{%
+    }{%
+      \noindent\texttt{#2}\\[-2em]%
+    }%
+    \inputminted[
+        frame=lines,
+        framesep=2mm,
+        fontsize=\footnotesize,
+        linenos,
+        firstline=#4,
+        lastline=#5,
+      ]{#1}{#3}%
+  }
+}
+\newcommand\myCMincoLine[5][cpp]{
+  {%
+    \ifthenelse{\equal{#2}{}}{%
+    }{%
+      \noindent\texttt{#2}\\[-2em]%
+    }%
+    ~\\[1em]% % BUG?
+    \inputminted[
+        frame=lines,
+        framesep=2mm,
+        bgcolor=LightGray!20!White, % % BUG?
+        fontsize=\footnotesize,
+        linenos,
+        firstnumber=#4,
+        firstline=#4,
+        lastline=#5,
+      ]{#1}{#3}%
+  }
+}
+\newcommand\myMincoLine[5][cpp]{
+  {%
+    \ifthenelse{\equal{#2}{}}{%
+    }{%
+      \noindent\texttt{#2}\\[-2em]%
+    }%
+    \inputminted[
+        frame=lines,
+        framesep=2mm,
+        fontsize=\footnotesize,
+        linenos,
+        firstnumber=#4,
+        firstline=#4,
+        lastline=#5,
+      ]{#1}{#3}%
+  }
+}
+
+%---------------------------------
+% Minted inline
+%---------------------------------
+\newcommand{\myMinin}[1]{\mintinline{c++}{#1}}
+
+%---------------------------------
+% Meta Variables
+%---------------------------------
+\newcommand{\MetaInstitute}{Hochschule Bremen}
+\newcommand{\MetaUnit}{Bachelorarbeit}
+\newcommand{\MetaTask}{Thesis}
+\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
+\newcommand{\MetaAuthorName}{Roland}
+\newcommand{\MetaAuthorSurname}{Jäger}
+\newcommand{\MetaStudentNumber}{360956}
+\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
+
+%---------------------------------
+% Horizontal line for title page
+%---------------------------------
+\newcommand{\HRule}{\rule{\linewidth}{0.2mm}}
+
+%---------------------------------
+% href Link as foot note
+%---------------------------------
+\newcommand\myFnurl[2]{%
+  \ifthenelse{\equal{#1}{}}{%
+    \footnote{\url{#2}}%
+  }{%
+    \href{#2}{#1}\footnote{\url{#2}}%
+  }%
+}
+
+%---------------------------------
+% Tablel in table for new line
+%---------------------------------
+\newcommand{\specialcell}[2][c]{% acceps t, b and c for vertival alignment
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+%---------------------------------
+% Meta data and Link Colour
+%---------------------------------
+\newcommand\myShade{70}
+
+\definecolor{mylinkcolor}{RGB}{113, 31, 155}
+\definecolor{mycitecolor}{RGB}{255, 189, 76}
+\definecolor{myurlcolor}{RGB}{62, 106, 171}
+
+\hypersetup{
+  pdfauthor   = {\MetaAuthor},
+  pdftitle    = {\MetaTitle},
+  pdfsubject  = {\MetaUnit, \MetaTask},
+  % pdfsubject  = {\MetaUnit},
+  % pdfkeywords = {\MetaTitle, \MetaUnit, \MetaInstitute},
+  pdfkeywords = {\MetaTitle, \MetaUnit, \MetaTask, \MetaInstitute},
+  colorlinks  = true,
+  linkcolor   = mylinkcolor!\myShade!black,
+  citecolor   = mycitecolor!\myShade!black,
+  urlcolor    = myurlcolor!\myShade!black,
+}
+
+%---------------------------------
+% Minted color scheme
+%---------------------------------
+\usemintedstyle{borland}
+
+%---------------------------------
+% Fancy header
+%---------------------------------
+\clearpairofpagestyles
+\lohead{\headmark}
+\cofoot[\pagemark]{\pagemark}
+\pagestyle{scrheadings}
+
+%---------------------------------
+% Start page count
+%---------------------------------
+\setcounter{page}{0}
