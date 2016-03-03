@@ -39,6 +39,18 @@
 \usepackage[shellescape,latex]{gmp}
 
 %---------------------------------
+% Meta Variables
+%---------------------------------
+\newcommand{\MetaInstitute}{Hochschule Bremen}
+\newcommand{\MetaUnit}{Bachelorarbeit}
+\newcommand{\MetaTask}{Thesis}
+\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
+\newcommand{\MetaAuthorName}{Roland}
+\newcommand{\MetaAuthorSurname}{Jäger}
+\newcommand{\MetaStudentNumber}{360\,956}
+\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
+
+%---------------------------------
 % TikZ libraries
 %---------------------------------
 \usetikzlibrary{arrows}
@@ -66,11 +78,6 @@
 \makeatother
 
 %---------------------------------
-% Less margin below caption
-%---------------------------------
-\setlength{\belowcaptionskip}{-1em}
-
-%---------------------------------
 % Shut up I know
 %---------------------------------
 \pdfsuppresswarningpagegroup=1
@@ -79,11 +86,6 @@
 % Biographie
 %---------------------------------
 \addbibresource{lit.bib}
-
-%---------------------------------
-% Make the Part Heading a little bit smaller
-%---------------------------------
-\setkomafont{part}{\LARGE}
 
 %---------------------------------
 % SVG image configuration
@@ -188,18 +190,6 @@
 \newcommand{\myMinin}[1]{\mintinline{c++}{#1}}
 
 %---------------------------------
-% Meta Variables
-%---------------------------------
-\newcommand{\MetaInstitute}{Hochschule Bremen}
-\newcommand{\MetaUnit}{Bachelorarbeit}
-\newcommand{\MetaTask}{Thesis}
-\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
-\newcommand{\MetaAuthorName}{Roland}
-\newcommand{\MetaAuthorSurname}{Jäger}
-\newcommand{\MetaStudentNumber}{360\,956}
-\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
-
-%---------------------------------
 % Horizontal line for title page
 %---------------------------------
 \newcommand{\HRule}{\rule{\linewidth}{0.2mm}}
@@ -216,7 +206,7 @@
 }
 
 %---------------------------------
-% Tablel in table for new line
+% Table in table for new line
 %---------------------------------
 \newcommand{\specialcell}[2][c]{% acceps t, b and c for vertival alignment
   \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
