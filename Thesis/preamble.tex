@@ -1,3 +1,15 @@
+%---------------------------------
+% Meta Variables
+%---------------------------------
+\newcommand{\MetaInstitute}{Hochschule Bremen}
+\newcommand{\MetaUnit}{Bachelorarbeit}
+\newcommand{\MetaTask}{Thesis}
+\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
+\newcommand{\MetaAuthorName}{Roland}
+\newcommand{\MetaAuthorSurname}{Jäger}
+\newcommand{\MetaStudentNumber}{360\,956}
+\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
+
 \documentclass[german,a4paper,12pt,parskip=half]{scrartcl}
 \usepackage[T1]{fontenc} % utf8 <- produce real utf8 characters
 \usepackage[utf8]{inputenc} % utf8 <- accept utf8 input characters
@@ -26,9 +38,6 @@
 \usepackage{anyfontsize} % mute warnings?
 \usepackage{microtype} % Subliminal refinements towards typographical perfection - eg. Hypernation
 \usepackage{xspace} % set a space if not fullstop / end of sentence
-\usepackage{calc} % for lengh calculation
-\usepackage{enumitem}
-\usepackage{tabularx}
 \usepackage[all]{hypcap}
 \usepackage{tikz}
 \usepackage{tikzscale}
@@ -38,17 +47,26 @@
 \usepackage{pgfopts}
 \usepackage[shellescape,latex]{gmp}
 
+\usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
+
 %---------------------------------
-% Meta Variables
+% Add extra width to the paper for todos
 %---------------------------------
-\newcommand{\MetaInstitute}{Hochschule Bremen}
-\newcommand{\MetaUnit}{Bachelorarbeit}
-\newcommand{\MetaTask}{Thesis}
-\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
-\newcommand{\MetaAuthorName}{Roland}
-\newcommand{\MetaAuthorSurname}{Jäger}
-\newcommand{\MetaStudentNumber}{360\,956}
-\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
+\makeatletter
+  \if@todonotes@disabled
+  \else
+    \usepackage{background}
+
+    % draw rule for real paper width
+    \SetBgScale{1}
+    \SetBgAngle{0}
+    \SetBgColor{lightgray}
+    \SetBgContents{\rule{.4pt}\paperheight}
+    \SetBgHshift{9cm}
+
+    \addtolength{\paperwidth}{3cm}
+  \fi
+\makeatother
 
 %---------------------------------
 % TikZ libraries
@@ -250,3 +268,25 @@
 % Start page count
 %---------------------------------
 \setcounter{page}{0}
+
+\newcommand{\myTodo}[2][NOCAP]{
+  \ifthenelse{\equal{#1}{NOCAP}}{%
+    \todo[color=SandyBrown]{#2}%
+  }{%
+    \todo[color=SandyBrown,caption={#1}]{#2}%
+  }%
+}
+\newcommand{\myFixme}[2][NOCAP]{
+  \ifthenelse{\equal{#1}{NOCAP}}{%
+    \todo[color=FireBrick!80]{#2}%
+  }{%
+    \todo[color=FireBrick!80, caption={#1}]{#2}%
+  }%
+}
+\newcommand{\myQuestion}[2][NOCAP]{
+  \ifthenelse{\equal{#1}{NOCAP}}{%
+    \todo[color=LightBlue]{#2}%
+  }{%
+    \todo[color=LightBlue, caption={#1}]{#2}%
+  }%
+}
