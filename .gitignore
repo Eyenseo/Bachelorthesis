@@ -153,3 +153,11 @@ pythontex-files-*/
 
 
 !**/img/*.tikz
+
+Bundle.Macro/*
+!Bundle.Macro
+!Bundle.Macro/modules
+Bundle.Macro/modules/*
+!Bundle.Macro/modules/Macro
+
+
