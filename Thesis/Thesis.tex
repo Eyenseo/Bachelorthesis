@@ -123,6 +123,12 @@
   %---------------------------------
   \subsection{Level 1 -- Grundarchitektur}
   \label{ssec:Level 1 -- Grundarchitektur}
+    % TODO Architektur
+    % keine Ausführung auf dem AST, da ein separater stack
+    % https://en.wikipedia.org/wiki/Recursive_descent_parser - easiest to maintain, and understand. Slower than LL and LR (scott2010gll)
+    % https://en.wikipedia.org/wiki/LL_parser - not as powerfull as LR, still tidious to implement
+    % https://en.wikipedia.org/wiki/LR_parser - no LR parser as too complex, would be possible with a parser generator. (No option because extra software, more breakage)
+    % http://stackoverflow.com/a/6319216/1935553 gcc clang handwritten parser
 
   %---------------------------------
   % Level 2 -- Logik / primitive Rückgabewerte
