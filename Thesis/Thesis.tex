@@ -57,7 +57,31 @@
   \addcontentsline{toc}{subsection}{Danksagung}
   \label{ssec:Danksagung}
     \myTodo{Danke an Mutter, Vater und alle Profs}
-    \missingfigure{Baby Laptop Bild}
+
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[%
+        spy using outlines={%
+          circle,%
+          Cornsilk,%
+          magnification=2,%
+          size=3.5cm,%
+          connect spies%
+        }%
+      ]
+        \node{
+          \pgfimage[%
+            interpolate=true,%
+            width=.8\linewidth%
+          ]{%
+            img/bb%
+          }
+        };
+        \spy on (.1,-.3) in node [left] at (-2,1.9);
+      \end{tikzpicture}
+
+      \caption{\textit{``Das soll meine Zukunft sein?''}}
+    \end{figure}
 
 \pagebreak
 
