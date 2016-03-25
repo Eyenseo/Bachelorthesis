@@ -1,0 +1,68 @@
+{
+  \definecolor{templogic}{RGB}{255, 213, 143}
+
+  \begin{tikzpicture}[
+      font=\sffamily\small,
+      auto,
+      node distance=3cm,
+      cmd/.style={
+        draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm
+      },
+      type/.style={
+        color={rgb:red,1;green,2;blue,3}
+      },
+      logic/.style={
+        draw,thick,fill=templogic,diamond,
+      },
+      to/.style={
+        ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize
+      }
+    ]
+
+    % Nodes
+    \node[cmd] (cmd00) {Exec A};
+
+    \node[logic] (ifelse) [right of=cmd00] {if/else};
+
+    \node[cmd] (cmd02) [above of=ifelse, above=-2cm, right of=ifelse] {Exec B};
+    \node[cmd] (cmd03) [right of=cmd02] {Exec C};
+    \node[cmd] (cmd04) [right of=cmd03] {Exec D};
+
+    \node[cmd] (cmd12) [below of=ifelse, below=-2cm, right of=ifelse] {Exec E};
+    \node[cmd] (cmd13) [right of=cmd12] {Exec F};
+    \node[cmd] (cmd14) [right of=cmd13] {Exec G};
+
+    % Arrows
+    \draw[to]
+      (cmd00)
+        --
+        node[midway,above,type] {bool}
+      (ifelse);
+    \draw[to]
+      (ifelse)
+        --
+        node[midway,above,type] {true}
+      (cmd02);
+    \draw[to]
+      (cmd02)
+        --
+      (cmd03);
+    \draw[to]
+      (cmd03)
+        --
+      (cmd04);
+    \draw[to]
+      (ifelse)
+        --
+        node[midway,below,type] {false}
+      (cmd12);
+    \draw[to]
+      (cmd12)
+        --
+      (cmd13);
+    \draw[to]
+      (cmd13)
+        --
+      (cmd14);
+  \end{tikzpicture}
+}

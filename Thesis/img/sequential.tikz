@@ -1,0 +1,47 @@
+{
+  \definecolor{templogic}{RGB}{255, 213, 143}
+
+  \begin{tikzpicture}[
+        font=\sffamily\small,
+        auto,
+        node distance=3cm,
+        cmd/.style={
+          draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm
+        },
+        type/.style={
+          color={rgb:red,1;green,2;blue,3}
+        },
+        logic/.style={
+          draw,thick,fill=templogic,diamond,
+        },
+        to/.style={
+          ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize
+        }
+    ]
+
+    % Nodes
+    \node[cmd] (cmd00) {Exec A};
+    \node[cmd] (cmd02) [right of=cmd00] {Exec B};
+    \node[cmd] (cmd03) [right of=cmd02] {Exec C};
+    \node[cmd] (cmd04) [right of=cmd03] {Exec D};
+    \node[cmd] (cmd05) [right of=cmd04] {Exec E};
+
+    % Arrows
+    \draw[to]
+      (cmd00)
+        --
+      (cmd02);
+    \draw[to]
+      (cmd02)
+        --
+      (cmd03);
+    \draw[to]
+      (cmd03)
+        --
+      (cmd04);
+    \draw[to]
+      (cmd04)
+        --
+      (cmd05);
+  \end{tikzpicture}
+}

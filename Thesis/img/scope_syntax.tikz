@@ -1,0 +1,38 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd] (start) {};
+    \node[terminal, right = of start] (bo) {\{};
+    \node[coordinate, right = of bo] (postbo) {};
+    \node[nonterminal, right = of postbo] (fundef) {Funktionsdefinition};
+    \node[coordinate, right = of fundef] (prebc) {};
+    \node[terminal, right = of prebc] (bc) {\}};
+    \node[StartEnd, right = of bc] (end) {};
+
+    \node[nonterminal, above = of fundef] (return){return};
+    \node[nonterminal, above = of return] (for){for};
+    \node[nonterminal, above = of for] (dowhile){do while};
+    \node[nonterminal, above = of dowhile] (while){while};
+    \node[nonterminal, above = of while] (if){if};
+
+    \node[nonterminal, below = of fundef] (vardef){Variablendefinition};
+    \node[nonterminal, below = of vardef] (vpr){Werterzeuger};
+    \node[nonterminal, below = of vpr] (scope){Scope};
+    \node[nonterminal, below = of scope] (literal){Literal};
+
+    \graph[railroad] {
+      (start)->(bo)->(fundef)->(bc)->(end);
+
+      (postbo)->[vh path](for)->[hv path](prebc);
+      (postbo)->[vh path](dowhile)->[hv path](prebc);
+      (postbo)->[vh path](while)->[hv path](prebc);
+      (postbo)->[vh path](if)->[hv path](prebc);
+      (postbo)->[vh path](vardef)->[hv path](prebc);
+      (postbo)->[vh path](vpr)->[hv path](prebc);
+      (postbo)->[vh path](scope)->[hv path](prebc);
+      (postbo)->[vh path](return)->[hv path](prebc);
+      (postbo)->[vh path](literal)->[hv path](prebc);
+
+      (postbo) -> [skip loop=-55mm] (prebc);
+    };
+  \end{tikzpicture}
+}

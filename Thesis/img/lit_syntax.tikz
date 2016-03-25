@@ -1,0 +1,34 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd]     (start) {};
+    \node[coordinate,  right = of start          ] (poststart){};
+    \node[terminal,    right = of poststart            ] (oq)            {\textquotedbl};
+    \node[terminal,    right = of oq      ,   label={[outer sep=-.3em]String}       ] (string)            {ASCII-Zeichen};
+    \node[terminal,    right = of string            ] (cq)            {\textquotedbl};
+    \node[coordinate,    right = of cq] (preend)    {};
+    \node[StartEnd,    right = of preend   ] (end)             {};
+
+    \node[terminal,    above = of string   ,      label={[outer sep=-.3em]Integer}      ] (int)            {0-9};
+
+    \node[terminal,    above = of int ,   label={[outer sep=-.3em]Double}        ] (dot)            {.};
+    \node[terminal      ] (double1)    at (dot-|oq)        {0-9};
+    \node[terminal,          ] (double2)     at (cq|-dot)       {0-9};
+    \node[coordinate,    ] (predot) at ($(double1)!.5!(dot)$)            {};
+
+    \node[terminal,    below = of string  ,   label={[outer sep=-.3em]Bolean}           ] (true)            {true};
+    \node[terminal,    below = of true     ,   label={[outer sep=-.3em]Bolean}        ] (false)            {false};
+
+
+    \graph[railroad] {
+      % main
+      (start)->(oq)->(string)->(cq)->(end);
+
+      (poststart)->[skip loop=30mm](predot);
+      (poststart)->[vh path](double1)->(dot)->(double2)->[hv path](preend);
+      (poststart)->[vh path](double1)->(dot)->(double2)->[hv path](preend);
+      (poststart)->[vh path](int)->[hv path](preend);
+      (poststart)->[vh path](true)->[hv path](preend);
+      (poststart)->[vh path](false)->[hv path](preend);
+    };
+  \end{tikzpicture}
+}

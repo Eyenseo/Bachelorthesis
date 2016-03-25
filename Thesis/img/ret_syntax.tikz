@@ -1,0 +1,13 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd] (start) {};
+    \node[terminal, right = of start] (return) {return};
+    \node[nonterminal, right = of return] (vpr) {Werterzeuger};
+    \node[terminal, right = of vpr] (statementEnd) {;};
+    \node[StartEnd, right = of statementEnd] (end) {};
+
+    \graph[railroad] {
+      (start)->(return)->(vpr)->(statementEnd)->(end);
+    };
+  \end{tikzpicture}
+}

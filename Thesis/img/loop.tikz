@@ -1,0 +1,60 @@
+{
+  \definecolor{templogic}{RGB}{255, 213, 143}
+
+  \begin{tikzpicture}[
+      font=\sffamily\small,
+      auto,
+      node distance=3cm,
+      cmd/.style={
+        draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm
+      },
+      type/.style={
+        color={rgb:red,1;green,2;blue,3},align=center
+      },
+      logic/.style={
+        draw,thick,fill=templogic,diamond,
+      },
+      to/.style={
+        ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize
+      }
+    ]
+
+    % Nodes
+    \node[cmd] (cmd00) {Exec A};
+
+    \node[logic] (foreach) [right of=cmd00] {foreach};
+
+    \node[cmd] (cmd02) [above of=foreach] {Exec B};
+    \node[cmd] (cmd03) [right of=foreach] {Exec C};
+    \node[cmd] (cmd04) [right of=cmd03] {Exec D};
+    \node[cmd] (cmd05) [right of=cmd04] {Exec E};
+
+    % Arrows
+    \draw[to]
+      (cmd00)
+        --
+        node[midway,above,type] {Foos}
+      (foreach);
+    \draw[to]
+      (foreach.north east)
+        --
+        node[midway,right,type] {Foo$1$\\\vdots\\Foo$N$}
+      (foreach.north east|-cmd02.south);
+    \draw[to]
+      (foreach.north west|-cmd02.south)
+        --
+      (foreach.north west);
+    \draw[to]
+      (foreach)
+        --
+      (cmd03);
+    \draw[to]
+      (cmd03)
+        --
+      (cmd04);
+    \draw[to]
+      (cmd04)
+        --
+      (cmd05);
+  \end{tikzpicture}
+}

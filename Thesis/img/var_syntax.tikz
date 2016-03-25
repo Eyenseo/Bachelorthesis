@@ -1,0 +1,21 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd] (start) {};
+    \node[terminal,    right = of start          ] (var)             {var};
+    \node[terminal,    right = of var            ] (name)            {\textit{name}};
+    \node[coordinate,  right = of name           ] (postName)        {};
+    \node[terminal,    right = of postName       ] (assign)          {=};
+    \node[coordinate,  right = of assign         ] (postAssign)      {};
+    \node[nonterminal, right = of postAssign     ] (ValueProducer)        {Werterzeuger};
+    \node[coordinate,  right = of ValueProducer       ] (preStatementEnd) {};
+    \node[terminal,    right = of preStatementEnd] (statementEnd)    {;};
+    \node[StartEnd,    right = of statementEnd   ] (end)             {};
+
+    \graph[railroad] {
+      % main
+      (start)->(var)->(name)->(assign)->(ValueProducer)->(statementEnd)->(end);
+      % no assignment
+      (postName)->[skip loop=-10mm](preStatementEnd);
+    };
+  \end{tikzpicture}
+}

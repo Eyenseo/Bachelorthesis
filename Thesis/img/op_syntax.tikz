@@ -1,0 +1,55 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                                ] (start)                 {};
+    \node[above = 0 of start](startText){Binary};
+    \node[coordinate,      right = of start       ] (poststart)             {};
+    \node[terminal,        right = of poststart   ] (lbo)                   {(};
+    \node[nonterminal,     right = of lbo         ] (lvp1)                  {Werter.};
+    \node[terminal,        right = of lvp1        ] (lbc)                   {)};
+    \node[coordinate,      right = of lbc         ] (postlbc)               {};
+    \node[coordinate,      right = of postlbc     ] (preoperator)           {};
+    \node[terminal,        right = of preoperator ] (operator)              {>=};
+    \node[coordinate,      right = of operator    ] (postoperator)          {};
+    \node[coordinate,      right = of postoperator] (prerbo)                {};
+    \node[terminal,        right = of prerbo      ] (rbo)                   {(};
+    \node[nonterminal,     right = of rbo         ] (rvp1)                  {Werter.};
+    \node[terminal,        right = of rvp1        ] (rbc)                   {)};
+    \node[coordinate,      right = of rbc         ] (postrbc)               {};
+    \node[StartEnd,        right = of postrbc     ] (end)                   {};
+
+    \node[nonterminal,     below = of lvp1        ] (lvp2)                  {Werter.};
+    \node[nonterminal,     below = of rvp1        ] (rvp2)                  {Werter.};
+
+    \node[terminal,        above = of operator    ] (op1)                   {>};
+    \node[terminal,        above = of op1         ] (op2)                   {<=};
+    \node[terminal,        above = of op2         ] (op3)                   {<};
+    \node[terminal,        below = of operator    ] (op5)                   {==};
+    \node[terminal,        below = of op5         ] (op6)                   {!=};
+    \node[terminal,        below = of op6         ] (op7)                   {\&\&};
+    \node[terminal,        below = of op7         ] (op8)                   {||};
+
+    \node[terminal,        below = of op8         ] (op9)                   {!};
+    \node[StartEnd                                ] (unstart) at (lbc|-op9) {};
+    \node[above = 0 of unstart](unstartText){Unary};
+
+
+    \graph[railroad] {
+      % main
+      (start)->(lbo)->(lvp1)->(lbc)->(operator)->(rbo)->(rvp1)->(rbc)->(end);
+
+      (poststart)->[vh path](lvp2)->[hv path](postlbc);
+      (prerbo)->[vh path](rvp2)->[hv path](postrbc);
+
+      (preoperator)->[vh path](op1)->[hv path](postoperator);
+      (preoperator)->[vh path](op2)->[hv path](postoperator);
+      (preoperator)->[vh path](op3)->[hv path](postoperator);
+      (preoperator)->[vh path](op5)->[hv path](postoperator);
+      (preoperator)->[vh path](op6)->[hv path](postoperator);
+      (preoperator)->[vh path](op7)->[hv path](postoperator);
+      (preoperator)->[vh path](op8)->[hv path](postoperator);
+
+      %unary
+      (unstart)->(op9)->[hv path](postoperator);
+    };
+  \end{tikzpicture}
+}

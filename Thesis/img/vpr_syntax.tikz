@@ -1,0 +1,25 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                               ] (start)     {};
+    \node[coordinate,  right = of start          ] (postStart) {};
+    \node[nonterminal, right = of postStart      ] (callable)  {Funktionsaufrufe};
+    \node[coordinate,  right = of callable       ] (preEnd)    {};
+    \node[StartEnd,    right = of preEnd         ] (end)       {};
+
+    \node[nonterminal, above = of callable       ] (operator)        {Operator};
+    \node[terminal, above = of operator          ] (variable)        {Variable};
+    \node[nonterminal, below = of callable       ] (literal)         {Literal};
+
+    \graph[railroad] {
+      % main
+      (start)->(callable)->(end);
+
+      % operator
+      (postStart)->[vh path](operator)->[hv path](preEnd);
+      % variable
+      (postStart)->[vh path](variable)->[hv path](preEnd);
+      % literal
+      (postStart)->[vh path](literal)->[hv path](preEnd);
+    };
+  \end{tikzpicture}
+}

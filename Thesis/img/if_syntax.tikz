@@ -1,0 +1,20 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                           ] (start)     {};
+    \node[terminal,    right = of start      ] (if)        {if};
+    \node[terminal,    right = of if         ] (bo)        {(};
+    \node[nonterminal, right = of bo         ] (vpr)       {Werterzeuger};
+    \node[terminal,    right = of vpr        ] (bc)        {)};
+    \node[nonterminal, right = of bc         ] (truescope) {Scope};
+    \node[coordinate,  right = of truescope  ] (preelse)   {};
+    \node[terminal,    right = of preelse    ] (else)      {else};
+    \node[nonterminal, right = of else       ] (falsescope){Scope};
+    \node[coordinate,  right = of falsescope ] (preend)    {};
+    \node[StartEnd,    right = of preend     ] (end)       {};
+
+    \graph[railroad] {
+      (start)->(if)->(bo)->(vpr)->(bc)->(truescope)->(else)->(falsescope)->(end);
+      (preelse) -> [skip loop=-10mm] (preend);
+    };
+  \end{tikzpicture}
+}

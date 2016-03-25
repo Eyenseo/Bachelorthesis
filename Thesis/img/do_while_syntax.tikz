@@ -1,0 +1,17 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                           ] (start)     {};
+    \node[terminal,    right = of start      ] (do)        {do};
+    \node[nonterminal, right = of do         ] (scope)     {Scope};
+    \node[terminal,    right = of scope      ] (while)     {while};
+    \node[terminal,    right = of while         ] (bo)        {(};
+    \node[nonterminal, right = of bo         ] (vpr)       {Werterzeuger};
+    \node[terminal,    right = of vpr        ] (bc)        {)};
+    \node[terminal,    right = of bc         ] (send)      {;};
+    \node[StartEnd,    right = of send      ] (end)       {};
+
+    \graph[railroad] {
+      (start)->(do)->(scope)->(while)->(bo)->(vpr)->(bc)->(send)->(end);
+    };
+  \end{tikzpicture}
+}

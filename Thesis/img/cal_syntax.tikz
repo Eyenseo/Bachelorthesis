@@ -1,0 +1,25 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd] (start) {};
+    \node[terminal, right = of start] (name) {\textit{name}};
+    \node[terminal, right = of name] (paramOpen1) {(};
+    \node[coordinate, right = of paramOpen1] (paramOpen2) {};
+    \node[coordinate, right = of paramOpen2] (paramOpen3) {};
+    \node[terminal, right = of paramOpen3] (paramname) {\textit{param}};
+    \node[terminal, right = of paramname] (sep) {:};
+    \node[nonterminal, right = of sep] (param) {Werterzeuger};
+    \node[coordinate, right = of param] (paramClose3) {};
+    \node[coordinate, right = of paramClose3] (paramClose2) {};
+    \node[terminal, right = of paramClose2] (paramClose1) {)};
+    \node[terminal, right = of paramClose1] (statementEnd) {;};
+    \node[StartEnd, right = of statementEnd] (end) {};
+
+    \node[terminal, below = of param] (comma){,};
+
+    \graph[railroad] {
+      (start)->(name)->(paramOpen1)->(paramname)->(sep)->(param)->(paramClose1)->(statementEnd)->(end);
+      (paramClose3)->[vh path](comma)->[hv path](paramOpen3);
+      (paramOpen2) -> [skip loop=10mm] (paramClose2);
+    };
+  \end{tikzpicture}
+}

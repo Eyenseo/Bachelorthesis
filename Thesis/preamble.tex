@@ -73,6 +73,9 @@
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
 \usetikzlibrary{spy}
+\usetikzlibrary{graphs}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
 
 %---------------------------------
 % TikZ scaling support
@@ -293,3 +296,61 @@
     \todo[color=LightBlue, caption={#1}]{#2}%
   }%
 }
+
+%---------------------------------
+% Tikz Railroad styles
+%---------------------------------
+\definecolor{nonterminal_color}{RGB}{255, 213, 143}
+\tikzset{
+  nonterminal/.style = {
+    rectangle,
+    minimum size=6mm,
+    very thick,
+    draw=nonterminal_color!90!black!95,
+    top color=white!20!nonterminal_color!30,
+    bottom color=nonterminal_color,
+    text height=1.5ex,
+    text depth=.25ex,
+    font=\ttfamily,
+  },
+  terminal/.style = {
+    rounded rectangle,
+    minimum size=6mm,
+    very thick,
+    draw=black!50,
+    top color=white!30!black!15,
+    bottom color=black!20,
+    text height=1.5ex,
+    text depth=.25ex,
+    font=\ttfamily,
+  },
+  StartEnd/.style = {
+    circle,
+    minimum size=3mm,
+    very thick,
+    draw=black!80,
+    top color=black!50,
+    bottom color=black!80,
+  },
+  skip loop/.style = {
+    to path={-- ++(0,#1) -| (\tikztotarget)}
+  },
+  hv path/.style = {
+    to path={-| (\tikztotarget)}
+  },
+  vh path/.style = {
+    to path={|- (\tikztotarget)}
+  },
+  railroad/.style = {
+    >=stealth',
+    black!50,
+    text=black,
+    thick,
+    node distance = 4mm
+  },
+  graphs/railroad/.style = {
+    edges=rounded corners,
+    simple,
+  }
+}
+
