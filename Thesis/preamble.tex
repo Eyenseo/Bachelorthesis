@@ -78,14 +78,9 @@
 \usetikzlibrary{positioning}
 
 %---------------------------------
-% TikZ scaling support
+% Less space below captions
 %---------------------------------
-\let\OrgPgfTransformScale\pgftransformscale
-\renewcommand*{\pgftransformscale}[1]{%
-  \gdef\ScaleFactor{#1}%
-  \OrgPgfTransformScale{#1}%
-}
-\def\ScaleFactor{1}
+\setlength{\belowcaptionskip}{-10pt}
 
 %---------------------------------
 % footnotes in footnotes helper
