@@ -275,6 +275,9 @@
 %---------------------------------
 \setcounter{page}{0}
 
+%---------------------------------
+% todo notes
+%---------------------------------
 \newcommand{\myTodo}[2][NOCAP]{
   \ifthenelse{\equal{#1}{NOCAP}}{%
     \todo[color=SandyBrown]{#2}%
@@ -298,6 +301,18 @@
 }
 
 %---------------------------------
+% Reference sections by name and number
+%---------------------------------
+\addto\extrasngerman{
+  \def\sectionautorefname{Ka\-pi\-tel}
+  \def\subsectionautorefname{Un\-ter\-ka\-pi\-tel}
+}
+\newcommand{\myNamedRef}[1]{%
+  \hyperref[#1]{%
+    \autoref*{#1} \nameref*{#1}%
+  }%
+}
+
 % Tikz Railroad styles
 %---------------------------------
 \definecolor{nonterminal_color}{RGB}{255, 213, 143}

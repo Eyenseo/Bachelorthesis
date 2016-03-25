@@ -90,46 +90,139 @@
 %---------------------------------
 \section{Einleitung}
 \label{sec:Einleitung}
+  Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen, die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf, und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
+
+  Die P3-group arbeitet mit Airbus, um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist hart umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld, welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird, sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
+
+  Makros sind die Fließbänder der digitalen Welt, und diese Arbeit beschäftigt sich mit der Entwicklung eines Makro Systems bzw. Sprache.
+
+  Makros werden durch die Verbindung kleinerer Bausteine (Anweisungen) erstellt. Diese können andere Makros oder Anweisungen, die die Anwendungsumgebung bereitstellt, sein. Dies ist mit einem Fließband in der Autoindustrie zu vergleichen. Jede Station ist genau für eine Aufgabe zuständig und kümmert sich um nichts anderes.
+
+  Die Makrosprache ist ein Baukasten, mit dem Makros erstellt -- ``Fließbänder'' für spezielle Aufgaben erzeugt -- werden können.
+
   %---------------------------------
   % Problemfeld
   %---------------------------------
   \subsection{Problemfeld}
   \label{ssec:Problemfeld}
+    Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenenfalls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen, oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
+
+    Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation für Erweiterungen angefasst werden muss, wesentlich geringer. Durch diese Kombination kann einfach ein weiteres Modul geladen werden, welches die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen, oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keiner neuen Grundbausteine bedarf, reicht es sogar, nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes Testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, weil sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, weil sie zum Teil, durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, die Zeit zu überdauern.
 
   %---------------------------------
   % Ziele der Arbeit
   %---------------------------------
   \subsection{Ziele der Arbeit}
   \label{ssec:Ziele der Arbeit}
+    Die Ziele der Arbeit sind es ein Makrosystem zu entwickeln, welches \ldots
+    \begin{itemize}
+      \item auf keinem festen \emph{Application Programming Interface (API)} aufbaut.
+
+        Ein Feature der bestehenden Software ist es, dass sie durch \emph{Module}\footnote{
+          Bibliotheken, die zur Laufzeit -- nach den dynamischen Bibliotheken --  nachgeladen werden können, um die Funktionalität der Applikation zu erweitern.
+        } erweitert werden kann. Eines dieser Module wird das Makrosystem sein, welchen in dieser Arbeit entwickelt wird. Durch diese Modularität, gibt es kein festest Interface.
+
+      \item nicht nur Anweisungen abarbeitet.
+
+        Um eine große Bandbreite an Automatisierungsmöglichkeiten anbieten zu können, bedarf es logischer Ausdrücke, die bedingte Anweisungen erlauben. Ebenso ist es wichtig, dass man entscheiden kann, wie oft etwas ausgeführt werden soll.
+
+      \item nicht mehr kann als es können muss.
+
+        Je mächtiger ein System ist, desto komplexer ist es. Zudem sind Features nur etwas wert, wenn sie gewinnbringend verkauft werden können.
+
+      \item wartbar ist.
+
+        Die Implementierung sollte keine komplexen Bestandteile besitzen, über die nicht geschlussfolgert werden kann.
+    \end{itemize}
 
   %---------------------------------
   % Hintergründe und Entstehung des Themas
   %---------------------------------
   \subsection{Hintergründe und Entstehung des Themas}
   \label{ssec:Hintergründe und Entstehung des Themas}
+    Die P3-group ist daran interessiert, dass sie ihren Kunden Lösungen schnell und in hoher Qualität anbieten kann. Um dies zu erreichen arbeiten sie daran, dass alle Softwaresysteme, die von ihnen angeboten werden, Automatisierung über Makros unterstützen. Wirtschaftlich rentieren sich die Makros dadurch, dass sie von den Firmen gemietet und nicht nur einmal verkauft werden. Zum Beispiel, werden alle Flugzeugteile ausgewählt und dann deren Gewicht ermittelt. Ein anderes Mal sollen nur spezielle Teile aus einem bestimmten Werkstoff zusammen gezählt und deren Preis ermittelt werden. Anstelle, dass hier eine sehr komplexe Suchfunktion entwickelt wurde, können hier zwei Makros zum Einsatz kommen, die jeweils eine Aufgabe erfüllen und somit für den Benutzer sicher zu handhaben sind. Die Komplexität der Software wurde durch das zweite Makro nicht sonderlich beeinflusst, da dieses intern auf Funktionalität zurückgreifen kann, die schon vom ersten genutzt wird.
 
   %---------------------------------
   % Struktur der Arbeit, wesentliche Inhalte der Kapitel
   %---------------------------------
   \subsection{Struktur der Arbeit, wesentliche Inhalte der Kapitel}
   \label{ssec:Struktur der Arbeit, wesentliche Inhalte der Kapitel}
+    Die Arbeit ist in drei wesentliche Kapitel aufgeteilt, \myNamedRef{sec:Anforderungsanalyse}, \myNamedRef{sec:Konzeption} und \myNamedRef{sec:Exemplarische Realisierung}. Der Fokus dieser Kapitel geht vom Theoretischen zum Praktischen. Innerlich folgen die Kapitel den Arbeitsabläufen, die zur Entwicklung des Makrosystems genutzt wurden. Zudem gibt es dies \hyperref[sec:Einleitung]{Einleitungs} Kapitel, eine \nameref{sec:Evaluation} und einen \nameref{sec:Ausblick}.
+
+    In dem Kapitel \nameref{sec:Anforderungsanalyse} werden die Anforderungen, sowie deren Probleme analysiert. Das Kapitel \nameref{sec:Konzeption} beschäftigt sich mit den Lösungen für die Anforderungen sowie der Probleme, die im vorherigen Kapitel gefunden wurden. Unter anderem beinhaltet das Kapitel die Software Architektur, sowie den Syntax für die Makrosprache. In dem Kapitel \nameref{sec:Exemplarische Realisierung} wird auf entscheidende Punkte der exemplarischen Realisierung eingegangen.
 
 %---------------------------------
 % Anforderungsanalyse
 %---------------------------------
-\section{Anforderungsanalyse}
+\section{An\-for\-de\-rungs\-ana\-ly\-se}
 \label{sec:Anforderungsanalyse}
+  % TODO
+  \myQuestion{Überschriften ohne Text sind böse, aber was kann ich hier schreiben?}
+
   %---------------------------------
   % Diskussion des Problemfeldes
   %---------------------------------
   \subsection{Diskussion des Problemfeldes}
   \label{ssec:Diskussion des Problemfeldes}
+    Ein Makrosystem ist eine Komponente eines Softwaresystems, welche es erlaubt, die Software über eine Reihenfolge von Zeichen so zu steuern, als ob ein Mensch die Applikation bedient hätte.
+
+    Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die Hardware vorgegeben ist. Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer virtuellen Maschine bedient -- wie Java -- als mit C.
+    Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen System, da dort das \emph{Command-Pattern}\autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet.
+
+    Für
+\myQuestion{Das ist alles ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden, oder ist das `Allgemeinwissen'?}
+    alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen (String), in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer. Meist wird dieser in den Parser integriert, welcher die Stücken des Strings in ein Format bringt, welches der \emph{Interpreter}\autocite[S.274]{Gamma:1995:DPE:186897} verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum (AST)}\footnote{%
+      \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
+    }, welcher den String eindeutig repräsentiert. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt welche Befehle der Interpreter ausführen muss, um das als String angegebene Programm auszuführen.
+
+    Das vorhandene System ist in C++ geschrieben, weswegen es sich größten Teils erübrigt über andere Programmiersprachen nachzudenken. Durch das \emph{name mangling}\footnote{
+      Beim `name mangling' fügt der Compiler den Funktionsnamen weite Informationen hinzu, um eine eindeutige Funktionssignatur zu erhalten.
+    } ist es schwierig eine API von C++ zu anderen Programmiersprachen anzubieten -- meistens geschieht dies über eine C API. Bei dieser verliert man den Vorteil der Objektorientierung und muss meistens auch die Daten zwischen C++$\longleftrightarrow$C und C$\longleftrightarrow$XYZ (z.B Python oder Lua) konvertieren, was langsam ist. Die Makros müssen aber auf Daten arbeiten, welche als Objekte von C++ vorliegen, deswegen müsste der Stack, mit dem der Interpreter arbeitet, in der C++ Ebene bleiben. Damit würde eine Implementierung von Tokenizer, Parser, AST und Interpreter die Wartbarkeit, durch die Teilung und die weitere Programmiersprache deutlich verschlechtern. Zusätzlich ist das Ziel eine Applikation zu automatisieren, und nicht durch komplett neue Funktionen zu erweitern, was die Vorteile von z.B Python größtenteils beseitigt.
 
   %---------------------------------
   % Anforderungen an die angestrebte Lösung
   %---------------------------------
   \subsection{Anforderungen an die angestrebte Lösung}
   \label{ssec:Anforderungen an die angestrebte Lösung}
+    Die Herausforderung, ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics{img/sequential.tikz}
+      \caption{Sequenzielles Abarbeiten von Prozessschritten.}
+      \label{fig:sequential}
+    \end{figure}
+
+    \autoref{fig:logic} zeigt den ersten Schritt zu einer Herausforderung -- einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics{img/logic.tikz}
+      \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
+      \label{fig:logic}
+    \end{figure}
+
+    Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
+
+    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist -- da es die Zeit, die für die Bachelorarbeit bereitsteht, mehrfach sprengt -- schon durch eine Implementation\footnote{%
+      Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{%
+        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
+      }
+      sowie \texttt{optional}\tablefootnote{%
+        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
+      }
+      Types implementiert.
+    }\spewnotes{}
+    des Command-Patterns von gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann, siehe \autoref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics{img/loop.tikz}
+      \caption{Schleife, die Anweisungen für ein Element aus der Liste aufrufen.}
+      \label{fig:loop}
+    \end{figure}
+
+    Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
 %---------------------------------
 % Konzeption
@@ -286,6 +379,7 @@
 %---------------------------------
 \section{Evaluation}
 \label{sec:Evaluation}
+  % TODO compiler bugs
 
 %---------------------------------
 % Zusammenfassung und Ausblick
