@@ -45,6 +45,10 @@
 \usepackage{pgfopts}
 \usepackage[shellescape,latex]{gmp}
 
+\usepackage{listings}
+\usepackage{xinttools}% for expandable and non-expandable loops
+\usepackage{textcomp}
+
 \usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
 
 %---------------------------------
@@ -308,6 +312,106 @@
   }%
 }
 
+%---------------------------------
+% Listings for Macro syntax
+%---------------------------------
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Keywords}{rgb}{0,0,0.6}
+\definecolor{Strings}{rgb}{0,0,1}
+\definecolor{Comments}{rgb}{.5,.5,.5}
+\definecolor{Numbers}{rgb}{0,0,1}
+
+
+\makeatletter
+\newif\iffirstchar\firstchartrue
+\newif\ifstartedbyadigit
+\newif\ifprecededbyequalsign
+
+\lst@AddToHook{OutputOther}%
+{%
+  \lst@IfLastOtherOneOf{=}
+    {\global\precededbyequalsigntrue}
+    {}%
+}
+\lst@AddToHook{Output}%
+{%
+  \ifprecededbyequalsign
+      \ifstartedbyadigit
+        \def\lst@thestyle{\color{Numbers}}%
+      \fi
+    \fi
+  \global\firstchartrue
+  \global\startedbyadigitfalse
+  \global\precededbyequalsignfalse
+}
+\newcommand\processletter
+{%
+  \ifnum\lst@mode=\lst@Pmode
+    \iffirstchar%
+        \global\startedbyadigitfalse
+      \fi
+      \global\firstcharfalse
+    \fi
+}
+\newcommand\processdigit
+{%
+  \ifnum\lst@mode=\lst@Pmode
+      \iffirstchar
+        \global\startedbyadigittrue
+      \fi
+      \global\firstcharfalse
+  \fi
+}
+\newcommand\addtoletterdef[2]
+{%
+  \expandafter\lst@DefSaveDef
+  \expandafter{%
+  \expandafter`%
+  \expandafter#2%
+  \expandafter}%
+  \csname jubobs@#2\expandafter\endcsname
+  \expandafter{\csname jubobs@#2\endcsname #1}%
+}
+\makeatother
+
+\lstdefinelanguage{MyMacro}{
+  keywords={var, def, return, if, while, do, else, break},
+  ndkeywords={true, false},
+  ndkeywordstyle=\color{Numbers},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  morestring=[b]"
+}
+\lstdefinestyle{MyMacroStyle}
+{
+  language=MyMacro,
+  commentstyle=\color{Comments}\slshape,
+  stringstyle=\color{Strings},
+  keywordstyle={\color{Keywords}\bfseries},
+  alsoletter=0123456789,
+  SelectCharTable=%
+      \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
+      % \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+}
+\lstset{
+   backgroundcolor=\color{LightGray!20!White},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\tiny,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b,
+   frame=lines
+}
+
+%---------------------------------
 % Tikz Railroad styles
 %---------------------------------
 \definecolor{nonterminal_color}{RGB}{255, 213, 143}
