@@ -415,13 +415,15 @@
 % Tikz Railroad styles
 %---------------------------------
 \definecolor{nonterminal_color}{RGB}{255, 213, 143}
+\definecolor{terminal_color}{RGB}{210, 210, 210}
 \tikzset{
   nonterminal/.style = {
     rectangle,
+    rounded corners=3pt,
     minimum size=6mm,
     very thick,
-    draw=nonterminal_color!90!black!95,
-    top color=white!20!nonterminal_color!30,
+    draw=nonterminal_color!80!black!95,
+    top color=white!5!nonterminal_color!40,
     bottom color=nonterminal_color,
     text height=1.5ex,
     text depth=.25ex,
@@ -431,9 +433,9 @@
     rounded rectangle,
     minimum size=6mm,
     very thick,
-    draw=black!50,
-    top color=white!30!black!15,
-    bottom color=black!20,
+    draw=terminal_color!80!black!95,
+    top color=white!5!terminal_color!40,
+    bottom color=terminal_color,
     text height=1.5ex,
     text depth=.25ex,
     font=\ttfamily,

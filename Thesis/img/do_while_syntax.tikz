@@ -2,7 +2,7 @@
   \begin{tikzpicture}[railroad]
     \node[StartEnd                           ] (start)     {};
     \node[terminal,    right = of start      ] (do)        {do};
-    \node[nonterminal, right = of do         ] (scope)     {Scope};
+    \node[nonterminal, right = of do         ] (scope)     {LoopScope};
     \node[terminal,    right = of scope      ] (while)     {while};
     \node[terminal,    right = of while         ] (bo)        {(};
     \node[nonterminal, right = of bo         ] (vpr)       {Werterzeuger};

@@ -5,7 +5,7 @@
     \node[terminal,    right = of while      ] (bo)        {(};
     \node[nonterminal, right = of bo         ] (vpr)       {Werterzeuger};
     \node[terminal,    right = of vpr        ] (bc)        {)};
-    \node[nonterminal, right = of bc         ] (scope) {Scope};
+    \node[nonterminal, right = of bc         ] (scope) {LoopScope};
     \node[StartEnd,    right = of scope      ] (end)       {};
 
     \graph[railroad] {
