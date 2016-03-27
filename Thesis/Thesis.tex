@@ -124,7 +124,7 @@
 
       \item nicht nur Anweisungen abarbeitet.
 
-        Um eine große Bandbreite an Automatisierungsmöglichkeiten anbieten zu können, bedarf es logischer Ausdrücke, die bedingte Anweisungen erlauben. Ebenso ist es wichtig, dass man entscheiden kann, wie oft etwas ausgeführt werden soll.
+        Um eine große Bandbreite an Automatisierungsmöglichkeiten anbieten zu können, bedarf es logischer Ausdrücke, die bedingte Anweisungen erlauben. Ebenso ist es wichtig, dass man entscheiden kann, wie oft etwas ausgeführt werden soll, sprich Schleifen. Und die Makros sollen sowohl von dem Programm, als auch von anderen Makros Parameter übergeben bekommen können.
 
       \item nicht mehr kann als es können muss.
 
@@ -166,14 +166,13 @@
   \label{ssec:Diskussion des Problemfeldes}
     Ein Makrosystem ist eine Komponente eines Softwaresystems, welche es erlaubt, die Software über eine Reihenfolge von Zeichen so zu steuern, als ob ein Mensch die Applikation bedient hätte.
 
-    Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die Hardware vorgegeben ist. Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer virtuellen Maschine bedient -- wie Java -- als mit C.
+    Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die Hardware vorgegeben ist. Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer virtuellen Maschine bedient -- wie Java -- als mit C.\\
     Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen System, da dort das \emph{Command-Pattern}\autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet.
 
-    Für
-\myQuestion{Das ist alles ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden, oder ist das `Allgemeinwissen'?}
-    alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen (String), in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer. Meist wird dieser in den Parser integriert, welcher die Stücken des Strings in ein Format bringt, welches der \emph{Interpreter}\autocite[S.274]{Gamma:1995:DPE:186897} verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum (AST)}\footnote{%
+\myQuestion{Das folgende ist ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden, oder ist das `Allgemeinwissen'?}
+    Für alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen (String), in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer. Meist wird dieser in den Parser integriert, welcher die Stücken des Strings in ein Format bringt, welches der \emph{Interpreter}\autocite[S.274]{Gamma:1995:DPE:186897} verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum}\footnote{%
       \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
-    }, welcher den String eindeutig repräsentiert. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt welche Befehle der Interpreter ausführen muss, um das als String angegebene Programm auszuführen.
+    } (AST), welcher den String eindeutig repräsentiert. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt welche Befehle der Interpreter ausführen muss, um das als String angegebene Programm auszuführen.
 
     Das vorhandene System ist in C++ geschrieben, weswegen es sich größten Teils erübrigt über andere Programmiersprachen nachzudenken. Durch das \emph{name mangling}\footnote{
       Beim `name mangling' fügt der Compiler den Funktionsnamen weite Informationen hinzu, um eine eindeutige Funktionssignatur zu erhalten.
@@ -184,7 +183,7 @@
   %---------------------------------
   \subsection{Anforderungen an die angestrebte Lösung}
   \label{ssec:Anforderungen an die angestrebte Lösung}
-    Die Herausforderung, ein Makrosystem/-sprache in C++ zu implementieren fängt dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
+    Die Probleme, ein Makrosystem/-sprache in C++ zu implementieren fangen dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
 
     \begin{figure}[H]
       \centering
@@ -193,7 +192,7 @@
       \label{fig:sequential}
     \end{figure}
 
-    \autoref{fig:logic} zeigt den ersten Schritt zu einer Herausforderung -- einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
+    \autoref{fig:logic} zeigt den ersten Schritt zu einer nützlichen Implementation Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
 
     \begin{figure}[H]
       \centering
@@ -213,7 +212,7 @@
       }
       Types implementiert.
     }\spewnotes{}
-    des Command-Patterns von gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann, siehe \autoref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
+    des Command-Patterns gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann, siehe \autoref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
 
     \begin{figure}[H]
       \centering
@@ -222,7 +221,7 @@
       \label{fig:loop}
     \end{figure}
 
-    Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter ist, deren Laufzeitumgebung eine anderes Softwaresystem ist.
+    Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter sein sollte, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
 %---------------------------------
 % Konzeption

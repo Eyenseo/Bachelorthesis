@@ -38,12 +38,12 @@
     \draw[to]
       (cmd00)
         --
-        node[midway,above,type] {Foos}
+        node[midway,above,type] {foos}
       (foreach);
     \draw[to]
       (foreach.north east)
         --
-        node[midway,right,type] {Foo$1$\\\vdots\\Foo$N$}
+        node[midway,right,type] {foo$1$\\\vdots\\foo$N$}
       (foreach.north east|-cmd02.south);
     \draw[to]
       (foreach.north west|-cmd02.south)
@@ -56,10 +56,12 @@
     \draw[to]
       (cmd03)
         --
+      node[midway,type] {bar}
       (cmd04);
     \draw[to]
       (cmd04)
         --
+      node[midway,type] {bar, baz}
       (cmd05);
   \end{tikzpicture}
 }
