@@ -1,0 +1,36 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.AST("AST")()();
+
+    Class.Parser("Parser")()();
+    Class.Tokenizer("Tokenizer")()();
+    Class.TokenList("TokenList")()();
+    Class.Token("Token")()();
+
+    Package.ast("ast")(AST);
+    Package.parser("parser")(Parser, Tokenizer, TokenList, Token);
+
+    topToBottom(30)(Parser, TokenList);
+    leftToRight(30)(Tokenizer, TokenList, Token);
+    leftToRight(10)(parser, ast);
+
+    drawObjects(parser, ast);
+
+
+    link(compositionUni)
+      (Token.w -- TokenList.e);
+    item(iAssoc)("*")(obj.ne = Token.w + (0, -3));
+
+    link(compositionUni)
+      (rpathManhattanX(Parser.w, Tokenizer.n));
+    item(iAssoc)("1")(obj.ne = Tokenizer.n + (10,8));
+
+    link(dependency)(pathManhattanX(Tokenizer.e, TokenList.w));
+    link(dependency)(pathManhattanX(Parser.s, TokenList.n)));
+    link(dependency)(pathManhattanX(Parser.e, AST.n));
+  \end{mpost}
+}

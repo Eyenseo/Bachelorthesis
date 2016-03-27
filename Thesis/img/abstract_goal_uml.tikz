@@ -1,0 +1,25 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.Executable("Executable")()();
+    Class.Macro("Macro")()();
+    Class.Command("Command")()();
+    .5[Command.nw, Macro.ne] = below(Executable.s, 30);
+
+    leftToRight(80)(Macro, Command);
+
+    drawObjects(Macro, Command, Executable);
+
+    link(inheritance)
+      (Executable.sw -- Macro.ne);
+    link(inheritance)
+      (Executable.se -- Command.nw);
+
+    link(aggregationUni)
+      (pathManhattanX(Executable.w, Macro.n));
+    item(iAssoc)("*")(obj.n = Executable.w + (-3, -3));
+  \end{mpost}
+}

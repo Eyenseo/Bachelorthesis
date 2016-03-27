@@ -188,7 +188,7 @@
 
     \begin{figure}[H]
       \centering
-      \includegraphics{img/sequential.tikz}
+      \input{img/sequential.tikz}
       \caption{Sequenzielles Abarbeiten von Prozessschritten.}
       \label{fig:sequential}
     \end{figure}
@@ -197,7 +197,7 @@
 
     \begin{figure}[H]
       \centering
-      \includegraphics{img/logic.tikz}
+      \input{img/logic.tikz}
       \caption{Logische Ausdrücke um bedingte Anweisungen zuzulassen.}
       \label{fig:logic}
     \end{figure}
@@ -217,7 +217,7 @@
 
     \begin{figure}[H]
       \centering
-      \includegraphics{img/loop.tikz}
+      \input{img/loop.tikz}
       \caption{Schleife, die Anweisungen für ein Element aus der Liste aufrufen.}
       \label{fig:loop}
     \end{figure}
@@ -366,6 +366,57 @@
     % https://en.wikipedia.org/wiki/LR_parser - no LR parser as too complex, would be possible with a parser generator. (No option because extra software, more breakage)
     % http://stackoverflow.com/a/6319216/1935553 gcc clang handwritten parser
     % TODO parser nicht strickt def fun() == def fun      ()
+    %
+    \begin{figure}[H]
+      \centering
+      \input{img/abstract_goal_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:abstract_goal_uml}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \input{img/top_pack_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:top_pack_uml}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \input{img/parser_pack_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:parser_pack_uml}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \input{img/AST_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:AST_uml}
+    \end{figure}
+
+
+    \begin{figure}[H]
+      \centering
+      \input{img/Scope_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:Scope_uml}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \input{img/Condition_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:Condition_uml}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \input{img/interpreter_pack_uml.tikz}
+      % \caption{Syntax von Literals.} TODO
+      \label{fig:interpreter_pack_uml}
+    \end{figure}
+
   %---------------------------------
   % Level 2 -- Logik / primitive Rückgabewerte
   %---------------------------------

@@ -38,7 +38,6 @@
 \usepackage{xspace} % set a space if not fullstop / end of sentence
 \usepackage[all]{hypcap}
 \usepackage{tikz}
-\usepackage{tikzscale}
 \usepackage{ifthen}
 \usepackage{xstring}
 \usepackage{calc}
@@ -414,17 +413,15 @@
 %---------------------------------
 % Tikz Railroad styles
 %---------------------------------
-\definecolor{nonterminal_color}{RGB}{255, 213, 143}
-\definecolor{terminal_color}{RGB}{210, 210, 210}
+\definecolor{nonterminal_color}{RGB}{255, 230, 179}
+\definecolor{terminal_color}{RGB}{230, 230, 230}
 \tikzset{
   nonterminal/.style = {
     rectangle,
     rounded corners=3pt,
     minimum size=6mm,
-    very thick,
     draw=nonterminal_color!80!black!95,
-    top color=white!5!nonterminal_color!40,
-    bottom color=nonterminal_color,
+    fill=nonterminal_color,
     text height=1.5ex,
     text depth=.25ex,
     font=\ttfamily,
@@ -432,10 +429,8 @@
   terminal/.style = {
     rounded rectangle,
     minimum size=6mm,
-    very thick,
     draw=terminal_color!80!black!95,
-    top color=white!5!terminal_color!40,
-    bottom color=terminal_color,
+    fill=terminal_color,
     text height=1.5ex,
     text depth=.25ex,
     font=\ttfamily,
@@ -443,10 +438,8 @@
   StartEnd/.style = {
     circle,
     minimum size=3mm,
-    very thick,
     draw=black!80,
-    top color=black!50,
-    bottom color=black!80,
+    fill=black!60,
   },
   skip loop/.style = {
     to path={-- ++(0,#1) -| (\tikztotarget)}

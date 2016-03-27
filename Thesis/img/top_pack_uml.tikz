@@ -1,0 +1,26 @@
+{
+\begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Package.parser("parser")();
+    Package.ast("ast")();
+    Package.inter("interpreter")();
+
+
+    leftToRight(60)(parser, ast);
+
+    .5[parser.ne, ast.nw] = below(inter.s, 25);
+
+    drawObjects(
+      parser,
+      ast,
+      inter
+    );
+
+    link(dependency)(pathManhattanX(inter.e, ast.n));
+    link(dependency)(pathManhattanX(inter.w, parser.n));
+    link(dependency)(parser.e -- ast.w);
+  \end{mpost}
+}

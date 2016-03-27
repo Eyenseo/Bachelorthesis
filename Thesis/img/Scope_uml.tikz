@@ -1,0 +1,70 @@
+{
+ \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.Scope("Scope")()();
+    Class.Variable("Variable")()();
+    Class.Return("Return")()();
+    Class.Literal("Literal")()();
+    Class.Operator("Operator")()();
+    Class.Define("Define")()();
+    Class.Function("Function")()();
+    Class.Callable("Callable")()();
+    Class.Loop("Loop")()();
+    Class.Condition("Condition")()();
+    Class.If("If")()();
+
+    Package.ast("ast")(Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
+
+    topToBottom(30)(If, Scope);
+    leftToRight(30)(Function, If, Callable);
+
+    topToBottom(30)(Function, Return, Operator, Loop);
+    topToBottom(30)(Callable, Literal, Define, Condition);
+    leftToRight(30)(Loop, Variable, Condition);
+
+    drawObjects(ast);
+
+    link(aggregationUni)
+      (Function.se -- Scope.nw);
+    item(iAssoc)("*")(obj.ne = Function.se + (0, -3));
+    link(aggregationUni)
+      (Callable.sw -- Scope.ne);
+    item(iAssoc)("*")(obj.ne = Callable.sw + (3, -3));
+    link(aggregationUni)
+      (Return.e -- Scope.w);
+    item(iAssoc)("*")(obj.ne = Return.e + (8, -3));
+    link(aggregationUni)
+      (Literal.w -- Scope.e);
+    item(iAssoc)("*")(obj.ne = Literal.w + (0, -3));
+    link(aggregationUni)
+      (Operator.ne -- Scope.sw);
+    item(iAssoc)("*")(obj.ne = Operator.ne + (8, -3));
+    link(aggregationUni)
+      (Variable.n -- Scope.s);
+    item(iAssoc)("*")(obj.ne = Variable.n + (0, 8));
+    link(aggregationUni)
+      (Define.nw -- Scope.se);
+    item(iAssoc)("*")(obj.ne = Define.nw + (0, -3));
+    link(aggregationUni)
+      (Loop.ne -- Scope.sw);
+    item(iAssoc)("*")(obj.ne = Loop.ne + (8, -3));
+    link(aggregationUni)
+      (Condition.nw -- Scope.se);
+    item(iAssoc)("*")(obj.ne = Condition.nw + (0, -3));
+    link(aggregationUni)
+      (If.s -- Scope.n);
+    item(iAssoc)("*")(obj.ne = If.s + (0, -3));
+
+    pair a, b, c, d;
+    a = Scope.sw + (3, 0);
+    b = Scope.sw + (3, -20);
+    c = Scope.se + (-3, -20);
+    d = Scope.se + (-3, 0);
+    link(aggregationUni)
+      (a -- b -- c -- d);
+    item(iAssoc)("*")(obj.ne = a + (8, -3));
+  \end{mpost}
+}

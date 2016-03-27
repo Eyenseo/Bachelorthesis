@@ -1,0 +1,54 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.OperatorProvider("OperatorProvider")()();
+    Interface.OperatorInt("Operator")()();
+    classStereotypes.OperatorInt("<<interface>>");
+    Class.Interpreter("Interpreter")()();
+    Class.Stack("Stack")()();
+    Class.Parser("Parser")()();
+    Class.Scope("Scope")()();
+    Class.Operator("Operator")()();
+
+    Package.ast("ast")(Scope, Operator);
+    Package.parser("parser")(Parser);
+    Package.interpreter("interpreter")(OperatorProvider,OperatorInt,Interpreter,Stack);
+
+    topToBottom(30)(OperatorProvider, Interpreter);
+    leftToRight(30)(OperatorProvider, OperatorInt);
+    topToBottom(30)(OperatorInt, Stack);
+    Stack.top = Interpreter.top;
+
+    topToBottom(30)(Operator, Scope);
+
+    leftToRight(20)(interpreter, ast);
+    topToBottom(30)(Interpreter, parser);
+
+    drawObjects(ast, parser, interpreter);
+
+    link(aggregationUni)
+      (OperatorProvider.s -- Interpreter.n);
+    link(aggregationUni)
+      (Parser.n -- Interpreter.s);
+    link(dependency)
+      (Interpreter.e -- Stack.w);
+    link(compositionUni)
+      (OperatorInt.w -- OperatorProvider.e);
+    item(iAssoc)("*")(obj.ne = OperatorInt.w + (0, -3));
+    link(realization)
+      (Stack.e -- Scope.w);
+    link(realization)
+      (OperatorInt.e -- Operator.w);
+
+    pair a, b, c, d;
+    a = Stack.nw + (3, 0);
+    b = Stack.nw + (3, 20);
+    c = Stack.ne + (-3, 20);
+    d = Stack.ne + (-3, 0);
+    link(aggregationUni)
+      (a -- b -- c -- d);
+  \end{mpost}
+}
