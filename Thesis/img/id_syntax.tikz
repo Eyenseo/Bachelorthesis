@@ -1,0 +1,12 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                           ] (start)      {};
+    \node[terminal, right = of start      ] (identifier) {[a-z][a-z0-9\_]*};
+    \node[StartEnd,    right = of identifier ] (end)        {};
+
+    \graph[railroad] {
+      % main
+      (start)->(identifier)->(end);
+    };
+  \end{tikzpicture}
+}

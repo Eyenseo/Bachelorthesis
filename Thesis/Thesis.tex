@@ -234,12 +234,24 @@
   %---------------------------------
   \subsection{Syntax}
   \label{ssec:Syntax}
+    Der Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil des Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax von Swift \lstinline[style=MyMacroStyle]$fun(foo:gun());$.  \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgen dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was als passieren wird. Das die Makrosprache named parameter unterstützt liegt daran, dass das CommandPattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten.
+
+    \begin{figure}[H]
+      \centering
+      \input{img/id_syntax.tikz}
+      \caption{Bezeichner}
+      \label{fig:id_syntax}
+    \end{figure}
+    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus keinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen verboten.
+    \myTodo{Liste von keywords.}
+
     \begin{figure}[H]
       \centering
       \input{img/vpr_syntax.tikz}
-      \caption{Wertproduzierer.}
+      \caption{Werterzeuger}
       \label{fig:vpr_syntax}
     \end{figure}
+    \autoref{fig:vpr_syntax} zeigt alle Werterzeuger, dass sind Konstrukte, die einen Wert für eine andere Operation bereitstellen.
 
     \begin{figure}[H]
       \centering
@@ -247,6 +259,7 @@
       \caption{Syntax der Variablendeklaration.}
       \label{fig:var_syntax}
     \end{figure}
+    Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyle]$var foo;$. Um nach der Definition einen Wert der Variablen zu zuweisen, ist es erlaubt unter anderem dies zu tun: \lstinline[style=MyMacroStyle]$var foo = fun();$ oder \lstinline[style=MyMacroStyle]$var foo = true == false;$.
 
     \begin{figure}[H]
       \centering
@@ -254,20 +267,21 @@
       \caption{Syntax der Funktionsdeklaration.}
       \label{fig:fun_syntax}
     \end{figure}
-
-    \begin{figure}[H]
-      \centering
-      \input{img/op_syntax.tikz}
-      \caption{Syntax von Operatoren.}
-      \label{fig:op_syntax}
-    \end{figure}
-
+    Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$. Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe zu normalen Funktionen, und erlaubt es daher auch Parameter übergeben zu bekommen. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax aufgerufen werden.
 
     \begin{figure}[H]
       \centering
       \input{img/cal_syntax.tikz}
       \caption{Syntax von Funktionsaufrufen.}
       \label{fig:call_syntax}
+    \end{figure}
+    \autoref{fig:call_syntax} zeigt den Syntax um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen. Das zuweisen verhält sich ähnlich wie bei JavaScript -- die Parameter werden als Referenz übergeben und nicht kopiert. Wenn dem Parameter ein neuer Wert zugewiesen wird, verändert sich, im Gegensatz zu JavaScript, auch der Wert aus dem aufrufendem Scope.
+
+    \begin{figure}[H]
+      \centering
+      \input{img/common_syntax.tikz}
+      \caption{Syntax allgemeiner Strukturen.}
+      \label{fig:common_syntax}
     \end{figure}
 
     \begin{figure}[H]
@@ -283,13 +297,7 @@
       \caption{Syntax vom LoopScope.}
       \label{fig:loop_scope_syntax}
     \end{figure}
-
-    \begin{figure}[H]
-      \centering
-      \input{img/common_syntax.tikz}
-      \caption{Syntax allgemeiner Strukturen.}
-      \label{fig:common_syntax}
-    \end{figure}
+    Abbildungen \ref{fig:common_syntax}, \ref{fig:scope_syntax} und \ref{fig:loop_scope_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Scopes verhalten sich wie C Scopes, das heißt, dass der Syntax \lstinline[style=MyMacroStyle]${var foo; {var foo;}}$ richtig ist, und das erste \lstinline[style=MyMacroStyle]$foo$ von dem zweiten verdeckt wird.
 
     \begin{figure}[H]
       \centering
@@ -297,6 +305,15 @@
       \caption{Syntax von return.}
       \label{fig:return_syntax}
     \end{figure}
+    In \autoref{fig:return_syntax} ist der Syntax von \lstinline[style=MyMacroStyle]$return$ zu sehen.
+
+    \begin{figure}[H]
+      \centering
+      \input{img/op_syntax.tikz}
+      \caption{Syntax von Operatoren.}
+      \label{fig:op_syntax}
+    \end{figure}
+    Der Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie der \lstinline[style=MyMacroStyle]$return$ Syntax, nicht all zu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
 
     \begin{figure}[H]
       \centering
@@ -318,6 +335,7 @@
       \caption{Syntax von do-while.}
       \label{fig:do_while_syntax}
     \end{figure}
+    Die Syntax von \lstinline[style=MyMacroStyle]$if/else$ und \lstinline[style=MyMacroStyle]$do-/while$ aus den Abbildungen \ref{fig:if_syntax}, \ref{fig:while_syntax} und \ref{fig:do_while_syntax} sollten wie erwartet aussehen.
 
     \begin{figure}[H]
       \centering
@@ -325,8 +343,10 @@
       \caption{Syntax von Literals.}
       \label{fig:lit_syntax}
     \end{figure}
+    Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt.
 
 \myTodo{For Schleife}
+\myTodo{For-each Schleife}
 
   %---------------------------------
   % Level 1 -- Grundarchitektur
@@ -339,7 +359,7 @@
     % https://en.wikipedia.org/wiki/LL_parser - not as powerfull as LR, still tidious to implement
     % https://en.wikipedia.org/wiki/LR_parser - no LR parser as too complex, would be possible with a parser generator. (No option because extra software, more breakage)
     % http://stackoverflow.com/a/6319216/1935553 gcc clang handwritten parser
-
+    % TODO parser nicht strickt def fun() == def fun      ()
   %---------------------------------
   % Level 2 -- Logik / primitive Rückgabewerte
   %---------------------------------

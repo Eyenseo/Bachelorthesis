@@ -22,7 +22,7 @@
         diamond
       },
       to/.style={
-        ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize
+        ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize,black!50,
       }
     ]
 

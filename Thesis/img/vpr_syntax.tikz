@@ -7,7 +7,7 @@
     \node[StartEnd,    right = of preEnd         ] (end)       {};
 
     \node[nonterminal, above = of callable       ] (operator)        {Operator};
-    \node[terminal, above = of operator          ] (variable)        {\textit{Variable}};
+    \node[nonterminal, above = of operator          ] (variable)        {Bezeichner};
     \node[nonterminal, below = of callable       ] (literal)         {Literal};
 
     \graph[railroad] {

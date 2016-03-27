@@ -2,11 +2,11 @@
   \begin{tikzpicture}[railroad]
     \node[StartEnd                           ] (start)      {};
     \node[terminal,    right = of start      ] (def)        {def};
-    \node[terminal,    right = of def        ] (name)       {\textit{name}};
+    \node[nonterminal,    right = of def        ] (name)       {Bezeichner};
     \node[terminal,    right = of name       ] (paramOpen1) {(};
     \node[coordinate,  right = of paramOpen1 ] (paramOpen2) {};
     \node[coordinate,  right = of paramOpen2 ] (paramOpen3) {};
-    \node[terminal,    right = of paramOpen3 ] (param)      {\textit{param}};
+    \node[nonterminal,    right = of paramOpen3 ] (param)      {Bezeichner};
     \node[coordinate,  right = of param      ] (paramClose3){};
     \node[coordinate,  right = of paramClose3] (paramClose2){};
     \node[terminal,    right = of paramClose2] (paramClose1){)};

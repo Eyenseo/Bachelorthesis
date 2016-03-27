@@ -4,7 +4,7 @@
     \node[above = 0 of start](startText){Binary};
     \node[coordinate,      right = of start       ] (poststart)             {};
     \node[terminal,        right = of poststart   ] (lbo)                   {(};
-    \node[nonterminal,     right = of lbo         ] (lvp1)                  {Werter.};
+    \node[nonterminal,     right = of lbo         ] (lvp1)                  {Werterz.};
     \node[terminal,        right = of lvp1        ] (lbc)                   {)};
     \node[coordinate,      right = of lbc         ] (postlbc)               {};
     \node[coordinate,      right = of postlbc     ] (preoperator)           {};
@@ -12,13 +12,13 @@
     \node[coordinate,      right = of operator    ] (postoperator)          {};
     \node[coordinate,      right = of postoperator] (prerbo)                {};
     \node[terminal,        right = of prerbo      ] (rbo)                   {(};
-    \node[nonterminal,     right = of rbo         ] (rvp1)                  {Werter.};
+    \node[nonterminal,     right = of rbo         ] (rvp1)                  {Werterz.};
     \node[terminal,        right = of rvp1        ] (rbc)                   {)};
     \node[coordinate,      right = of rbc         ] (postrbc)               {};
     \node[StartEnd,        right = of postrbc     ] (end)                   {};
 
-    \node[nonterminal,     below = of lvp1        ] (lvp2)                  {Werter.};
-    \node[nonterminal,     below = of rvp1        ] (rvp2)                  {Werter.};
+    \node[nonterminal,     below = of lvp1        ] (lvp2)                  {Werterz.};
+    \node[nonterminal,     below = of rvp1        ] (rvp2)                  {Werterz.};
 
     \node[terminal,        above = of operator    ] (op1)                   {>};
     \node[terminal,        above = of op1         ] (op2)                   {<=};

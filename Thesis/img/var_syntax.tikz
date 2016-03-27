@@ -2,7 +2,7 @@
   \begin{tikzpicture}[railroad]
     \node[StartEnd] (start) {};
     \node[terminal,    right = of start          ] (var)             {var};
-    \node[terminal,    right = of var            ] (name)            {\textit{name}};
+    \node[nonterminal,    right = of var            ] (name)            {Bezeichner};
     \node[coordinate,  right = of name           ] (postName)        {};
     \node[terminal,    right = of postName       ] (assign)          {=};
     \node[coordinate,  right = of assign         ] (postAssign)      {};

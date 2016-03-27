@@ -1,11 +1,11 @@
 {
   \begin{tikzpicture}[railroad]
     \node[StartEnd] (start) {};
-    \node[terminal, right = of start] (name) {\textit{name}};
+    \node[nonterminal, right = of start] (name) {Bez.};
     \node[terminal, right = of name] (paramOpen1) {(};
     \node[coordinate, right = of paramOpen1] (paramOpen2) {};
     \node[coordinate, right = of paramOpen2] (paramOpen3) {};
-    \node[terminal, right = of paramOpen3] (paramname) {\textit{param}};
+    \node[nonterminal, right = of paramOpen3] (paramname) {Bez.};
     \node[terminal, right = of paramname] (sep) {:};
     \node[nonterminal, right = of sep] (param) {Werterzeuger};
     \node[coordinate, right = of param] (paramClose3) {};
