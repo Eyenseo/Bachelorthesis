@@ -160,4 +160,6 @@ Bundle.Macro/*
 Bundle.Macro/modules/*
 !Bundle.Macro/modules/Macro
 
-
+*.mp
+*.mps
+*.vpp*
