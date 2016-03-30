@@ -4,7 +4,9 @@
     \node[terminal, right = of start] (bo) {\{};
     \node[coordinate, right = of bo] (postbo) {};
     \node[nonterminal, right = of postbo] (als) {Allgemeine Strukturen};
-    \node[coordinate, right = of als] (prebc) {};
+
+    \node[coordinate, right = of als] (postals) {};
+    \node[coordinate, right = of postals] (prebc) {};
     \node[terminal, right = of prebc] (bc) {\}};
     \node[StartEnd, right = of bc] (end) {};
 
@@ -13,7 +15,7 @@
     \graph[railroad] {
       (start)->(bo)->(als)->(bc)->(end);
       (postbo)->[vh path](break)->[hv path](prebc);
-      (postbo)<->[skip loop=-10mm](prebc);
+      (postbo)<->[skip loop=-10mm](postals);
     };
   \end{tikzpicture}
 }
