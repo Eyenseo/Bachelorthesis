@@ -1,14 +1,14 @@
 {
   \begin{tikzpicture}[railroad]
-    \node[StartEnd                               ] (start)     {};
-    \node[coordinate,  right = of start          ] (postStart) {};
-    \node[nonterminal, right = of postStart      ] (callable)  {Funktionsaufrufe};
-    \node[coordinate,  right = of callable       ] (preEnd)    {};
-    \node[StartEnd,    right = of preEnd         ] (end)       {};
+    \node[StartEnd                                                            ] (start)     {};
+    \node[coordinate,  right = of start                                       ] (postStart) {};
+    \node[nonterminal, right = of postStart                                   ] (callable)  {Funktionsaufrufe};
+    \node[coordinate,  right = of callable                                    ] (preEnd)    {};
+    \node[StartEnd,    right = of preEnd                                      ] (end)       {};
 
-    \node[nonterminal, above = of callable       ] (operator)        {Operator};
-    \node[nonterminal, above = of operator          ] (variable)        {Bezeichner};
-    \node[nonterminal, below = of callable       ] (literal)         {Literal};
+    \node[nonterminal, above = of callable                                    ] (operator)  {Operator};
+    \node[nonterminal, above = of operator, label={[outer sep=-.3em]Variable} ] (variable)  {Bezeichner};
+    \node[nonterminal, below = of callable                                    ] (literal)   {Literal};
 
     \graph[railroad] {
       % main
