@@ -56,7 +56,7 @@
   \subsection*{Danksagung}
   \addcontentsline{toc}{subsection}{Danksagung}
   \label{ssec:Danksagung}
-    \myTodo{Danke an Mutter, Vater und alle Profs}
+\myTodo{Danke an Mutter, Vater und alle Profs}
 
     \begin{figure}[H]
       \centering
@@ -177,14 +177,14 @@
 
     Das vorhandene System ist in C++ geschrieben, weswegen es sich größten Teils erübrigt über andere Programmiersprachen nachzudenken. Durch das \emph{name mangling}\footnote{
       Beim `name mangling' fügt der Compiler den Funktionsnamen weite Informationen hinzu, um eine eindeutige Funktionssignatur zu erhalten.
-    } ist es schwierig eine API von C++ zu anderen Programmiersprachen anzubieten -- meistens geschieht dies über eine C API. Bei dieser verliert man den Vorteil der Objektorientierung und muss meistens auch die Daten zwischen C++$\longleftrightarrow$C und C$\longleftrightarrow$XYZ (z.B Python oder Lua) konvertieren, was langsam ist. Die Makros müssen aber auf Daten arbeiten, welche als Objekte von C++ vorliegen, deswegen müsste der Stack, mit dem der Interpreter arbeitet, in der C++ Ebene bleiben. Damit würde eine Implementierung von Tokenizer, Parser, AST und Interpreter die Wartbarkeit, durch die Teilung und die weitere Programmiersprache deutlich verschlechtern. Zusätzlich ist das Ziel eine Applikation zu automatisieren, und nicht durch komplett neue Funktionen zu erweitern, was die Vorteile von z.B Python größtenteils beseitigt.
+    } ist es schwierig eine API von C++ zu anderen Programmiersprachen anzubieten -- meistens geschieht dies über eine C API. Bei dieser verliert man den Vorteil der Objektorientierung und muss meistens auch die Daten zwischen C++$\longleftrightarrow$C und C$\longleftrightarrow$XYZ (z.B Python oder Lua) konvertieren, was langsam ist. Die Makros müssen aber auf Daten arbeiten, welche als Objekte von C++ vorliegen, deswegen müsste der Stack, mit dem der Interpreter arbeitet, in der C++ Ebene bleiben. Damit würde eine Implementierung von Tokenizer, Parser, AST und Interpreter die Wartbarkeit, durch die Teilung und die weitere Programmiersprache deutlich verschlechtern. Zusätzlich ist das Ziel eine Applikation zu automatisieren, und nicht mit komplett neuen Funktionalitäten zu erweitern, was die Vorteile von z.B Python größtenteils zunichte macht.
 
   %---------------------------------
   % Anforderungen an die angestrebte Lösung
   %---------------------------------
   \subsection{Anforderungen an die angestrebte Lösung}
   \label{ssec:Anforderungen an die angestrebte Lösung}
-    Die Probleme, ein Makrosystem/-sprache in C++ zu implementieren fangen dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
+    Die Probleme, ein Makrosystem/-sprache in C++ zu implementieren, fangen dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
 
     \begin{figure}[H]
       \centering
@@ -193,7 +193,7 @@
       \label{fig:sequential}
     \end{figure}
 
-    \autoref{fig:logic} zeigt den ersten Schritt zu einer nützlichen Implementation Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
+    \autoref{fig:logic} zeigt den ersten Schritt zu einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
 
     \begin{figure}[H]
       \centering
@@ -213,7 +213,7 @@
       }
       Types implementiert.
     }\spewnotes{}
-    des Command-Patterns gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen geben kann, siehe \autoref{fig:loop}, und Rückgabewerte in Variablen speicherbar sind.
+    des Command-Patterns gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen, sowie komplexe Parameter und Rückgabewerte geben kann, siehe \autoref{fig:loop}.
 
     \begin{figure}[H]
       \centering
@@ -231,16 +231,18 @@
 \label{sec:Konzeption}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
-  \autoref{ssec:Syntax} beschreibt den Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Level 1 -- Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. in den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und \nameref{ssec:Level 3 -- Komplexe Rückgabewerte}
-  \myQuestion{Andere Kapitelnamen wären vielleicht sinnvoll?}
-  wird dann weiter auf den Aufbau des Interpreters eingegangen.
+  \autoref{ssec:Syntax} beschreibt den Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Level 1 -- Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. In den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und
+\myQuestion{Andere Kapitelnamen wären vielleicht sinnvoll?}
+  \nameref{ssec:Level 3 -- Komplexe Rückgabewerte} wird genauer auf den Aufbau des Interpreters eingegangen.
 
   %---------------------------------
   % Syntax
   %---------------------------------
   \subsection{Syntax}
   \label{ssec:Syntax}
-    Der Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil des Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax von Swift \lstinline[style=MyMacroStyle]$fun(foo:gun());$.  \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgen dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was als passieren wird. Das die Makrosprache named parameter unterstützt liegt daran, dass das CommandPattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten.
+    Der Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil des Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was als passieren wird. Das die Makrosprache \emph{named parameter}\footnote{
+      TODO % TODO
+    } unterstützt liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind sie named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
 
     \begin{figure}[H]
       \centering
@@ -248,8 +250,7 @@
       \caption{Bezeichner}
       \label{fig:id_syntax}
     \end{figure}
-    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus keinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen verboten.
-    \myTodo{Liste von keywords.}
+    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus keinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen (\lstinline[style=MyMacroStyle]$def, var, if, else, for, do, while, break, return$), einen Booleanwert entsprechen (\lstinline[style=MyMacroStyle]$true, false$), oder \lstinline[style=MyMacroStyle]$main$ gleichen verboten.
 
     \begin{figure}[H]
       \centering
@@ -265,7 +266,7 @@
       \caption{Syntax der Variablendeklaration.}
       \label{fig:var_syntax}
     \end{figure}
-    Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyle]$var foo;$. Um nach der Definition einen Wert der Variablen zu zuweisen, ist es erlaubt unter anderem dies zu tun: \lstinline[style=MyMacroStyle]$var foo = fun();$ oder \lstinline[style=MyMacroStyle]$var foo = true == false;$.
+    Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyle]$var foo;$. Um anschließend der Variablen einen Wert zuzuweisen, ist es unter anderem erlaubt, dies zu tun: \lstinline[style=MyMacroStyle]$var foo = fun();$ oder \lstinline[style=MyMacroStyle]$var foo = true == false;$.
 
     \begin{figure}[H]
       \centering
@@ -273,7 +274,9 @@
       \caption{Syntax der Funktionsdeklaration.}
       \label{fig:fun_syntax}
     \end{figure}
-    Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$. Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe zu normalen Funktionen, und erlaubt es daher auch Parameter übergeben zu bekommen. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax aufgerufen werden.
+    Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$.
+
+    Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
 
     \begin{figure}[H]
       \centering
@@ -281,7 +284,7 @@
       \caption{Syntax von Funktionsaufrufen.}
       \label{fig:call_syntax}
     \end{figure}
-    \autoref{fig:call_syntax} zeigt den Syntax um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen. Das zuweisen verhält sich ähnlich wie bei JavaScript -- die Parameter werden als Referenz übergeben und nicht kopiert. Wenn dem Parameter ein neuer Wert zugewiesen wird, verändert sich, im Gegensatz zu JavaScript, auch der Wert aus dem aufrufendem Scope.
+    \autoref{fig:call_syntax} zeigt den Syntax um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen. Das zuweisen verhält sich ähnlich wie bei JavaScript -- die Parameter werden als Referenz übergeben und nicht kopiert. Wenn dem Parameter ein neuer Wert zugewiesen wird, verändert sich der Wert aus dem aufrufendem Scope nicht.
 
     \begin{figure}[H]
       \centering
@@ -300,10 +303,10 @@
     \begin{figure}[H]
       \centering
       \input{img/loop_scope_syntax.tikz}
-      \caption{Syntax vom LoopScope.}
+      \caption{Syntax vom Loop Scope.}
       \label{fig:loop_scope_syntax}
     \end{figure}
-    Abbildungen \ref{fig:common_syntax}, \ref{fig:scope_syntax} und \ref{fig:loop_scope_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Scopes verhalten sich wie C Scopes, das heißt, dass der Syntax \lstinline[style=MyMacroStyle]${var foo; {var foo;}}$ richtig ist, und das erste \lstinline[style=MyMacroStyle]$foo$ von dem zweiten verdeckt wird.
+    Abbildungen \ref{fig:common_syntax}, \ref{fig:scope_syntax} und \ref{fig:loop_scope_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktion Deklarationsscopes -- die auf ein Loop Scope folgen, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \lstinline[style=MyMacroStyle]$var foo; {var foo;}$ richtig ist. Das erste \lstinline[style=MyMacroStyle]$foo$, wird von dem zweiten verdeckt.
 
     \begin{figure}[H]
       \centering
@@ -319,6 +322,7 @@
       \caption{Syntax von Operatoren.}
       \label{fig:op_syntax}
     \end{figure}
+\myTodo{Wenn implementiert ===, !== und NoneType}
     Der Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie der \lstinline[style=MyMacroStyle]$return$ Syntax, nicht all zu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
 
     \begin{figure}[H]
@@ -349,10 +353,10 @@
       \caption{Syntax von Literals.}
       \label{fig:lit_syntax}
     \end{figure}
-    Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt.
+    Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, ein Zeilenumbruch kann wie in anderen Programmiersprachen mit \lstinline[style=MyMacroStyle]$"\n"$ oder ein Tab mit \lstinline[style=MyMacroStyle]$"\t"$  erzeugt werden.
 
-\myTodo{For Schleife}
-\myTodo{For-each Schleife}
+\myTodo{For Schleife wenn implementiert}
+\myTodo{For-each Schleife wenn implementiert}
 
   %---------------------------------
   % Level 1 -- Grundarchitektur
