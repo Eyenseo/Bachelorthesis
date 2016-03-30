@@ -19,11 +19,12 @@
     Package.ast("ast")(Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
 
     topToBottom(30)(If, Scope);
-    leftToRight(30)(Function, If, Callable);
+    leftToRight(30)(Return, Scope, Literal);
 
     topToBottom(30)(Function, Return, Operator, Loop);
     topToBottom(30)(Callable, Literal, Define, Condition);
-    leftToRight(30)(Loop, Variable, Condition);
+    same.midx(Scope, Variable);
+    same.midy(Loop, Variable);
 
     drawObjects(ast);
 
@@ -59,10 +60,10 @@
     item(iAssoc)("*")(obj.ne = If.s + (0, -3));
 
     pair a, b, c, d;
-    a = Scope.sw + (3, 0);
-    b = Scope.sw + (3, -20);
-    c = Scope.se + (-3, -20);
-    d = Scope.se + (-3, 0);
+    a = Scope.sw + (7, 0);
+    b = Scope.sw + (7, -20);
+    c = Scope.se + (-7, -20);
+    d = Scope.se + (-7, 0);
     link(aggregationUni)
       (a -- b -- c -- d);
     item(iAssoc)("*")(obj.ne = a + (8, -3));

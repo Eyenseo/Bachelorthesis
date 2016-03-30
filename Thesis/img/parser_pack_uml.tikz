@@ -12,13 +12,17 @@
     Class.Token("Token")()();
 
     Package.ast("ast")(AST);
-    Package.parser("parser")(Parser, Tokenizer, TokenList, Token);
+    Package.parser("parser")(Parser, Tokenizer, TokenList);
+    Package.token("token")(Token);
 
-    topToBottom(30)(Parser, TokenList);
-    leftToRight(30)(Tokenizer, TokenList, Token);
-    leftToRight(10)(parser, ast);
+    topToBottom.left(30)(ast, token);
+    leftToRight(30)(Tokenizer, TokenList);
+    leftToRight(40)(TokenList, Token);
+    topToBottom(40)(Parser, Tokenizer);
+    Parser.top = AST.top;
 
-    drawObjects(parser, ast);
+
+    drawObjects(parser, ast, token);
 
 
     link(compositionUni)
@@ -26,11 +30,16 @@
     item(iAssoc)("*")(obj.ne = Token.w + (0, -3));
 
     link(compositionUni)
-      (rpathManhattanX(Parser.w, Tokenizer.n));
+      (Tokenizer.n -- Parser.s);
     item(iAssoc)("1")(obj.ne = Tokenizer.n + (10,8));
 
-    link(dependency)(pathManhattanX(Tokenizer.e, TokenList.w));
-    link(dependency)(pathManhattanX(Parser.s, TokenList.n)));
-    link(dependency)(pathManhattanX(Parser.e, AST.n));
+    pair Parser_e_one, Parser_e_two, AST_w_one;
+    Parser_e_one = Parser.e + (0,2);
+    Parser_e_two = Parser.e + (0,-2);
+    AST_w_one = AST.w + (0,2);
+
+    link(dependency)(Tokenizer.e -- TokenList.w);
+    link(dependency)(Parser_e_one -- AST_w_one);
+    link(dependency)(pathManhattanX(Parser_e_two, TokenList.n));
   \end{mpost}
 }

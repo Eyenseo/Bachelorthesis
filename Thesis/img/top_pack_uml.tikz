@@ -7,20 +7,32 @@
     Package.parser("parser")();
     Package.ast("ast")();
     Package.inter("interpreter")();
+    Package.token("token")();
+    Package.macro("macro")(parser, ast, inter, token);
+    Package.core("core")();
 
 
+    leftToRight(60)(core, inter);
     leftToRight(60)(parser, ast);
 
-    .5[parser.ne, ast.nw] = below(inter.s, 25);
+    .5[parser.ne, ast.nw] = below(inter.s, 20);
+    token.n = .5[parser.s, ast.s] + (0, -20);
 
     drawObjects(
-      parser,
-      ast,
-      inter
+      core,
+      macro
     );
 
+    pair inter_w_one, inter_w_two, core_e_one;
+    inter_w_one = inter.w + (0, -2);
+    inter_w_two = inter.w + (0, 2);
+    core_e_one = core.e + (0, 2);
+
     link(dependency)(pathManhattanX(inter.e, ast.n));
-    link(dependency)(pathManhattanX(inter.w, parser.n));
+    link(dependency)(pathManhattanX(inter_w_one, parser.n));
     link(dependency)(parser.e -- ast.w);
+    link(dependency)(inter_w_two -- core_e_one);
+    link(dependency)(pathManhattanY(parser.s, token.w));
+    link(dependency)(pathManhattanY(ast.s, token.e));
   \end{mpost}
 }

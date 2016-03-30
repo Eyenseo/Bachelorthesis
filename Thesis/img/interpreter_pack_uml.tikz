@@ -12,43 +12,88 @@
     Class.Parser("Parser")()();
     Class.Scope("Scope")()();
     Class.Operator("Operator")()();
+    Class.Callable("Callable")()();
 
-    Package.ast("ast")(Scope, Operator);
+    Package.ast("ast")(Callable, Scope, Operator);
     Package.parser("parser")(Parser);
-    Package.interpreter("interpreter")(OperatorProvider,OperatorInt,Interpreter,Stack);
+    Package.interpreter("interpreter")(OperatorProvider, OperatorInt, Interpreter, Stack);
+    Package.macro("macro")(ast, parser, interpreter);
 
-    topToBottom(30)(OperatorProvider, Interpreter);
+    Class.ExecutableProvider("ExecutableProvider")()();
+    Interface.Executable("Executable")()();
+    classStereotypes.Executable("<<interface>>");
+    Package.core("core")(ExecutableProvider, Executable);
+
+
+    % Packages
+    %%%%%%
+    same.midx(Executable, Callable);
+    core.bottom = macro.top + 30;
+
+    % CORE
+    %%%%%%
+    leftToRight(120)(ExecutableProvider, Executable);
+
+    % Macro
+    %%%%%%
+    leftToRight(40)(Parser, Interpreter);
+
+    ast.left = interpreter.right + 20;
+
+    % ast
+    topToBottom(30)(Scope, Operator);
+    leftToRight(30)(Scope, Callable);
+    same.midx(Scope, Operator);
+    same.midy(Stack, Scope);
+    same.midy(OperatorInt, Operator);
+    ast.top = macro.top - 20;
+    ast.bottom = macro.bottom + 4;
+
+    % interpreter
+    topToBottom(30)(Interpreter, OperatorProvider);
     leftToRight(30)(OperatorProvider, OperatorInt);
-    topToBottom(30)(OperatorInt, Stack);
-    Stack.top = Interpreter.top;
+    same.midx(Stack,OperatorInt);
+    same.midy(Stack,Interpreter);
 
-    topToBottom(30)(Operator, Scope);
-
-    leftToRight(20)(interpreter, ast);
-    topToBottom(30)(Interpreter, parser);
-
-    drawObjects(ast, parser, interpreter);
+    %%%%%%
+    % Draw
+    %%%%%%
+    drawObjects(macro, core);
 
     link(aggregationUni)
-      (OperatorProvider.s -- Interpreter.n);
+      (OperatorProvider.n -- Interpreter.s);
     link(aggregationUni)
-      (Parser.n -- Interpreter.s);
+      (Parser.e -- Interpreter.w);
+
+    pair Interpreter_e_one, Interpreter_e_two, Stack_w_one;
+    Interpreter_e_one = Interpreter.e + (0, -2);
+    Interpreter_e_two = Interpreter.e + (0, 2);
+    Stack_w_one = Stack.w + (0, -2);
     link(dependency)
-      (Interpreter.e -- Stack.w);
+      (Interpreter_e_one -- Stack_w_one);
+    link(compositionUni)
+      (pathManhattanY(ExecutableProvider.s, Interpreter_e_two));
+
+
     link(compositionUni)
       (OperatorInt.w -- OperatorProvider.e);
     item(iAssoc)("*")(obj.ne = OperatorInt.w + (0, -3));
+    link(compositionUni)
+      (Executable.w-- ExecutableProvider.e);
+    item(iAssoc)("*")(obj.ne = Executable.w + (0, -3));
     link(realization)
       (Stack.e -- Scope.w);
     link(realization)
       (OperatorInt.e -- Operator.w);
+    link(realization)
+      (Executable.s -- Callable.n);
 
-    pair a, b, c, d;
-    a = Stack.nw + (3, 0);
-    b = Stack.nw + (3, 20);
-    c = Stack.ne + (-3, 20);
-    d = Stack.ne + (-3, 0);
+    pair stack_a, stack_b, stack_c, stack_d;
+    stack_a = Stack.sw + (3, 0);
+    stack_b = Stack.sw + (3, -20);
+    stack_c = Stack.se + (-3, -20);
+    stack_d = Stack.se + (-3, 0);
     link(aggregationUni)
-      (a -- b -- c -- d);
+      (stack_a -- stack_b -- stack_c -- stack_d);
   \end{mpost}
 }

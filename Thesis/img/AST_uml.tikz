@@ -19,18 +19,15 @@
     Class.Token("Token")()();
 
     Package.ast("ast")(AST, Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
-    Package.parser("parser")(Token);
+    Package.token("token")(Token);
 
+    topToBottom(30)(If, Function, Return, Operator, Loop);
     topToBottom(30)(Scope, AST, Variable);
+    topToBottom(30)(Callable, Literal, Define, Condition);
     leftToRight(30)(Return, AST, Literal);
-    leftToRight(30)(Operator, Variable, Define);
-    leftToRight(30)(Function, Scope, Callable);
-    topToBottom(30)(Operator, Loop);
-    topToBottom(30)(Define, Condition);
-    topToBottom(30)(If, Function);
-    leftToRight(20)(Define, parser);
+    leftToRight(40)(Define, Token);
 
-    drawObjects(parser, ast);
+    drawObjects(token, ast);
 
     link(inheritance)
       (Function.se -- AST.nw);
