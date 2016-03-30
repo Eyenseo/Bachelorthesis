@@ -133,6 +133,10 @@
       \item wartbar ist.
 
         Die Implementierung sollte keine komplexen Bestandteile besitzen, über die nicht geschlussfolgert werden kann.
+
+      \item benutzerfreundlich ist.
+
+        Die Lösung soll benutzerfreundlich sein, das heißt, dass Fehlermeldungen dem Nutzer schnell zu seinem Fehler führen und keine false positives enthalte.
     \end{itemize}
 
   %---------------------------------
@@ -364,62 +368,87 @@
   \subsection{Level 1 -- Grundarchitektur}
   \label{ssec:Level 1 -- Grundarchitektur}
     % TODO Architektur
-    % keine Ausführung auf dem AST, da ein separater stack
-    % https://en.wikipedia.org/wiki/Recursive_descent_parser - easiest to maintain, and understand. Slower than LL and LR (scott2010gll)
-    % https://en.wikipedia.org/wiki/LL_parser - not as powerfull as LR, still tidious to implement
-    % https://en.wikipedia.org/wiki/LR_parser - no LR parser as too complex, would be possible with a parser generator. (No option because extra software, more breakage)
     % http://stackoverflow.com/a/6319216/1935553 gcc clang handwritten parser
-    % TODO parser nicht strickt def fun() == def fun      ()
-    %
+
+    Das Ziel der folgenden Architektur ist die Funktionalität, die in \autoref{fig:abstract_goal_uml} zu sehen ist, zu ermöglichen.
+
     \begin{figure}[H]
       \centering
       \myInput{img/abstract_goal_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
+      \caption{Abstraktes Ziel der resultierenden Architektur.}
       \label{fig:abstract_goal_uml}
     \end{figure}
+    \myMinin{Executable} ist das Interface, welches alle \myMinin{Command}s aus dem Command-Pattern implementieren. Eine weitere Implementation dieses Interfaces ist -- nicht zu verwechseln mit Ma\emph{k}ros -- die \myMinin{Macro} Klasse. Diese erlaubt es Entwicklern ein Makro auszuführen. Im weiteren Verlauf dieser Arbeit geht es hauptsächlich um die Ma\emph{k}ros, da sich die Implementation der \myMinin{Macro} Klasse am Ende aus den Teillösungen ergibt.
+\myTodo{Am Ende erwähnen /\& referenzieren.}
 
+
+    Da das Komplette UML Diagramm sehr unübersichtlich ist, und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem kompletten und spiegeln es zusammen wieder. \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makro Funktionalität anbieten soll. Das \myMinin{ast} Paket beinhaltet alle Klassen, die den abstrakten Syntaxbaum ausmachen und von dem Parser und dem Interpreter verwendet werden. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser. In dem \myMinin{token} Paket befindet sich die \myMinin{Token} Klasse, da diese in kein anderes Paket gehört.
     \begin{figure}[H]
       \centering
       \myInput{img/top_pack_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
+      \caption{Abhängigkeiten von dem Makro Modul.}
       \label{fig:top_pack_uml}
     \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/parser_pack_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
-      \label{fig:parser_pack_uml}
-    \end{figure}
+    \subsubsection{Token, Tokenizer und Parser}
+    \label{sssec:Token, Tokenizer und Parser}
+      Der \myMinin{Parser} aus \autoref{fig:parser_pack_uml} bedient sich dem \myMinin{Tokenizer} um eine \myMinin{TokenList} von \myMinin{Token}s zu bekommen. Diese \myMinin{TokenList} kann er dann parsen, bzw. in einen abstrakten Syntaxbaum umwandeln.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/parser_pack_uml.tikz}
+        \caption{Parser Paket UML}
+        \label{fig:parser_pack_uml}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/AST_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
-      \label{fig:AST_uml}
-    \end{figure}
+      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen die, von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, durch einen Punkt eine
+\myQuestion{Fachwort?}
+      Kommazahl bilden (\lstinline$\d*\.\d+$) oder einen String bilden (\lstinline$\".*?\"$)\footnote{
+        Dieser regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
+      }). Der \myMinin{Tokenizer} ist nicht für das Lexen verantwortlich -- dies wird von dem Parser übernommen.
+
+      \myMinin{Token}s beinhalten die Zeile sowie Spalte als Zahl, und den gesamten Quelltext aus der Zeile, aus der das Token entstanden ist. Dies ist von Nöten, um später gute Fehlermeldungen zu erzeugen, mit denen ein Benutzer schnell weiß, wo er nach dem Fehler suchen muss. Des weiteren enthält die Klasse einen String, der den Teil des Makros enthält, den die Instanz darstellen soll.
+
+      Der \myMinin{Parser} ist dafür verantwortlich, dass die Liste von Tokens in einen AST umgewandelt wird. Es gibt drei `große' Arten Von Parsern \emph{LL}\footnote{
+        LL Parser arbeiten `vorwärts', links nach rechts und probieren auf der linken Seite, des gelesenen bzw. teils geparsten Quelltextes zu reduzieren. Man gelangt am Ende am ende des Baumes an.
+      }, \emph{LR}\footnote{
+        LR Parser arbeiten `rückwärts', links nach rechts und probieren auf der rechten Seite, des ungelesenen Quelltextes zu reduzieren um Terminals auf der linken Seite zu sammeln. Man gelangt am Ende zu dem Anfang des Baumes.\autocite{cs143-stanford}
+      } und \emph{recursive descent}\footnote{
+        Recursive descent Parser bauen durch Funktionsaufrufe einen Stack auf, der den Zweigen des Baumes gleicht.
+      }. LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen (Backus Normal Form) arbeiten. Der Nachteil bei den beiden ist, das LL und umso mehr LR Parser schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen ein wichtiger Punkt auf der Anforderungsliste sind, wurde sich für ein recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel, wie Vorbild, was mit recursive descent Parsern erreicht werden kann.
 
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/Scope_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
-      \label{fig:Scope_uml}
-    \end{figure}
+    \subsubsection{Abstrakter Syntaxbaum}
+    \label{sssec:Abstrakter Syntaxbaum}
+      \begin{figure}[H]
+        \centering
+        \myInput{img/AST_uml.tikz}
+        % \caption{Syntax von Literals.} TODO
+        \label{fig:AST_uml}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/Condition_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
-      \label{fig:Condition_uml}
-    \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/interpreter_pack_uml.tikz}
-      % \caption{Syntax von Literals.} TODO
-      \label{fig:interpreter_pack_uml}
-    \end{figure}
+      \begin{figure}[H]
+        \centering
+        \myInput{img/Scope_uml.tikz}
+        % \caption{Syntax von Literals.} TODO
+        \label{fig:Scope_uml}
+      \end{figure}
+
+      \begin{figure}[H]
+        \centering
+        \myInput{img/Condition_uml.tikz}
+        % \caption{Syntax von Literals.} TODO
+        \label{fig:Condition_uml}
+      \end{figure}
+
+    \subsubsection{Interpreter}
+    \label{sssec:Interpreter}
+      \begin{figure}[H]
+        \centering
+        \myInput{img/interpreter_pack_uml.tikz}
+        % \caption{Syntax von Literals.} TODO
+        \label{fig:interpreter_pack_uml}
+      \end{figure}
 
   %---------------------------------
   % Level 2 -- Logik / primitive Rückgabewerte
@@ -438,6 +467,8 @@
 %---------------------------------
 \section{Exemplarische Realisierung}
 \label{sec:Exemplarische Realisierung}
+  % TODO explain via example, split page in two right data (string ->tokenlist->ast->interpreter) left explanation
+
   %---------------------------------
   % Tokenizer
   %---------------------------------
