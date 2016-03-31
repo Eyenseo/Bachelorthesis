@@ -56,7 +56,7 @@
   \subsection*{Danksagung}
   \addcontentsline{toc}{subsection}{Danksagung}
   \label{ssec:Danksagung}
-\myTodo{Danke an Mutter, Vater und alle Profs}
+\myTodo{Danke an Mutter, Vater und alle Profs} % TODO
 
     \begin{figure}[H]
       \centering
@@ -174,7 +174,7 @@
     Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die Hardware vorgegeben ist. Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer virtuellen Maschine bedient -- wie Java -- als mit C.\\
     Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen System, da dort das \emph{Command-Pattern}\autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet.
 
-\myQuestion{Das folgende ist ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden, oder ist das `Allgemeinwissen'?}
+\myQuestion{Das folgende ist ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden, oder ist das `Allgemeinwissen'?}  % TODO
     Für alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen (String), in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer. Meist wird dieser in den Parser integriert, welcher die Stücken des Strings in ein Format bringt, welches der \emph{Interpreter}\autocite[S.274]{Gamma:1995:DPE:186897} verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum}\footnote{%
       \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
     } (AST), welcher den String eindeutig repräsentiert. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt welche Befehle der Interpreter ausführen muss, um das als String angegebene Programm auszuführen.
@@ -235,8 +235,8 @@
 \label{sec:Konzeption}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
-  \autoref{ssec:Syntax} beschreibt den Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Level 1 -- Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. In den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und
-\myQuestion{Andere Kapitelnamen wären vielleicht sinnvoll?}
+  \autoref{ssec:Syntax} beschreibt den Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. In den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und
+\myQuestion{Andere Kapitelnamen wären vielleicht sinnvoll?} % TODO
   \nameref{ssec:Level 3 -- Komplexe Rückgabewerte} wird genauer auf den Aufbau des Interpreters eingegangen.
 
   %---------------------------------
@@ -245,7 +245,7 @@
   \subsection{Syntax}
   \label{ssec:Syntax}
     Der Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil des Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was als passieren wird. Das die Makrosprache \emph{named parameter}\footnote{
-      TODO % TODO
+      Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die Normale Wertzuweisungsstrategie ist nach der Reihenfolge der Deklaration vor zu gehen.
     } unterstützt liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind sie named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
 
     \begin{figure}[H]
@@ -326,7 +326,7 @@
       \caption{Syntax von Operatoren.}
       \label{fig:op_syntax}
     \end{figure}
-\myTodo{Wenn implementiert ===, !== und NoneType}
+\myTodo{Wenn implementiert ===, !== und NoneType} % TODO
     Der Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie der \lstinline[style=MyMacroStyle]$return$ Syntax, nicht all zu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
 
     \begin{figure}[H]
@@ -359,18 +359,15 @@
     \end{figure}
     Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, ein Zeilenumbruch kann wie in anderen Programmiersprachen mit \lstinline[style=MyMacroStyle]$"\n"$ oder ein Tab mit \lstinline[style=MyMacroStyle]$"\t"$  erzeugt werden.
 
-\myTodo{For Schleife wenn implementiert}
-\myTodo{For-each Schleife wenn implementiert}
+\myTodo{For Schleife wenn implementiert} % TODO
+\myTodo{For-each Schleife wenn implementiert} % TODO
 
   %---------------------------------
-  % Level 1 -- Grundarchitektur
+  % Grundarchitektur
   %---------------------------------
-  \subsection{Level 1 -- Grundarchitektur}
-  \label{ssec:Level 1 -- Grundarchitektur}
-    % TODO Architektur
-    % http://stackoverflow.com/a/6319216/1935553 gcc clang handwritten parser
-
-    Das Ziel der folgenden Architektur ist die Funktionalität, die in \autoref{fig:abstract_goal_uml} zu sehen ist, zu ermöglichen.
+  \subsection{Grundarchitektur}
+  \label{ssec:Grundarchitektur}
+    Das Ziel der folgenden Architektur ist, die Funktionalität, die in \autoref{fig:abstract_goal_uml} zu sehen ist, zu ermöglichen.
 
     \begin{figure}[H]
       \centering
@@ -379,10 +376,12 @@
       \label{fig:abstract_goal_uml}
     \end{figure}
     \myMinin{Executable} ist das Interface, welches alle \myMinin{Command}s aus dem Command-Pattern implementieren. Eine weitere Implementation dieses Interfaces ist -- nicht zu verwechseln mit Ma\emph{k}ros -- die \myMinin{Macro} Klasse. Diese erlaubt es Entwicklern ein Makro auszuführen. Im weiteren Verlauf dieser Arbeit geht es hauptsächlich um die Ma\emph{k}ros, da sich die Implementation der \myMinin{Macro} Klasse am Ende aus den Teillösungen ergibt.
-\myTodo{Am Ende erwähnen /\& referenzieren.}
+\myTodo{Am Ende erwähnen /\& referenzieren.} % TODO
 
 
-    Da das Komplette UML Diagramm sehr unübersichtlich ist, und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem kompletten und spiegeln es zusammen wieder. \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makro Funktionalität anbieten soll. Das \myMinin{ast} Paket beinhaltet alle Klassen, die den abstrakten Syntaxbaum ausmachen und von dem Parser und dem Interpreter verwendet werden. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser. In dem \myMinin{token} Paket befindet sich die \myMinin{Token} Klasse, da diese in kein anderes Paket gehört.
+    Da das Komplette UML Diagramm sehr unübersichtlich ist, und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem kompletten und spiegeln es zusammen wieder.
+
+    \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makro Funktionalität anbieten soll. Das \myMinin{ast} Paket beinhaltet alle Klassen, die den abstrakten Syntaxbaum ausmachen und von dem Parser und dem Interpreter verwendet werden. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser. In dem \myMinin{token} Paket befindet sich die \myMinin{Token} Klasse, da diese in kein anderes Paket gehört.
     \begin{figure}[H]
       \centering
       \myInput{img/top_pack_uml.tikz}
@@ -400,55 +399,73 @@
         \label{fig:parser_pack_uml}
       \end{figure}
 
-      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen die, von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, durch einen Punkt eine
-\myQuestion{Fachwort?}
-      Kommazahl bilden (\lstinline$\d*\.\d+$) oder einen String bilden (\lstinline$\".*?\"$)\footnote{
-        Dieser regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
+      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen die, von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, die durch einen Punkt eine
+\myQuestion{Fachwort?} % TODO
+      Kommazahl bilden (\lstinline$\d*\.\d+$) oder einen String darstellen (\lstinline$".*?"$\footnote{
+        Dieser Regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
       }). Der \myMinin{Tokenizer} ist nicht für das Lexen verantwortlich -- dies wird von dem Parser übernommen.
 
       \myMinin{Token}s beinhalten die Zeile sowie Spalte als Zahl, und den gesamten Quelltext aus der Zeile, aus der das Token entstanden ist. Dies ist von Nöten, um später gute Fehlermeldungen zu erzeugen, mit denen ein Benutzer schnell weiß, wo er nach dem Fehler suchen muss. Des weiteren enthält die Klasse einen String, der den Teil des Makros enthält, den die Instanz darstellen soll.
 
-      Der \myMinin{Parser} ist dafür verantwortlich, dass die Liste von Tokens in einen AST umgewandelt wird. Es gibt drei `große' Arten Von Parsern \emph{LL}\footnote{
-        LL Parser arbeiten `vorwärts', links nach rechts und probieren auf der linken Seite, des gelesenen bzw. teils geparsten Quelltextes zu reduzieren. Man gelangt am Ende am ende des Baumes an.
+      Der \myMinin{Parser} ist dafür verantwortlich, dass die Liste von Tokens in einen AST umgewandelt wird. Es gibt drei Hauptarten von Parsern \emph{LL}\footnote{
+        LL Parser arbeiten `vorwärts', links nach rechts und probieren auf der linken Seite, des gelesenen bzw. teils geparsten Quelltextes zu reduzieren. Man gelangt am Ende, am Ende des Baumes an.
       }, \emph{LR}\footnote{
         LR Parser arbeiten `rückwärts', links nach rechts und probieren auf der rechten Seite, des ungelesenen Quelltextes zu reduzieren um Terminals auf der linken Seite zu sammeln. Man gelangt am Ende zu dem Anfang des Baumes.\autocite{cs143-stanford}
       } und \emph{recursive descent}\footnote{
         Recursive descent Parser bauen durch Funktionsaufrufe einen Stack auf, der den Zweigen des Baumes gleicht.
-      }. LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen (Backus Normal Form) arbeiten. Der Nachteil bei den beiden ist, das LL und umso mehr LR Parser schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen ein wichtiger Punkt auf der Anforderungsliste sind, wurde sich für ein recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel, wie Vorbild, was mit recursive descent Parsern erreicht werden kann.
+      }.
+\myQuestion{Ist es ok, dass ich die Parser nur kurz in den Fußnoten erklärt habe?} % TODO
+      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen (Backus Normal Form) arbeiten. Der Nachteil bei den beiden ist, dass LL, und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für ein recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
 
+      Beim parsen müssen die Literals umgewandelt werden -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einem String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\mintinline[obeytabs]{c++}{"t  t"}). Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden (bei \myMinin{a || b && c} muss \myMinin{a} zuerst ausgewertet werden und dann \myMinin{b && c}). Und Variablen Deklarationen mit Wertzuweisung müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
+        Dies ist valider C Code: \myMinin{const int foo = foo + 1;}
+      }).
+
+      Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang.
 
     \subsubsection{Abstrakter Syntaxbaum}
     \label{sssec:Abstrakter Syntaxbaum}
+      Wie \autoref{fig:AST_uml} zeigt, sind für alle Keywords\footnote{
+        Es wurden einigele Klassen hinter allgemeinen Begriffen -- wie \myMinin{Loop} -- versteckt, um etwas Übersicht zu bewahren.
+      } Klassen von Nöten. Alle Klassen erben von der \myMinin{AST} Klasse, welche ein \myMinin{Token} besitzt, welches die spezielle Klasse beschreibt. Da die Token alle Informationen  über den Makro Quelltext haben und es sich bei der resultierenden Datenstruktur um einen Baum handelt, ist auch der Interpreter in der Lage informative Fehlermeldungen zu generieren.
       \begin{figure}[H]
         \centering
         \myInput{img/AST_uml.tikz}
-        % \caption{Syntax von Literals.} TODO
+        \caption{Stammbaum der AST Klassen.}
         \label{fig:AST_uml}
       \end{figure}
 
-
+      \autoref{fig:Scope_uml} zeigt die \myMinin{Scope} Klasse, diese Klasse kann beliebig viele andere \myMinin{AST} Instanzen aufnehmen.  Da das \myMinin{Scope} Instanzen von allen \myMinin{AST} Klassen aufnehmen kann, und einige Klassen wiederum ein \myMinin{Scope} besitzen, kommt es hier zu einem dependency circle. Da das \myMinin{Scope} eine der meist benutzten Klassen ist, liegt die Auflösung des dependency circles bei den anderen Klassen.
       \begin{figure}[H]
         \centering
         \myInput{img/Scope_uml.tikz}
-        % \caption{Syntax von Literals.} TODO
+        \caption{Verbindungen vom Scope.}
         \label{fig:Scope_uml}
       \end{figure}
 
+      \myMinin{Loop}, \myMinin{Function} und \myMinin{If} müssen den dependency circle mit \myMinin{Scope} auflösen. In \autoref{fig:Condition_uml} sind die restlichen Abhängigkeiten zwischen den \myMinin{AST} Klassen zu sehen.
       \begin{figure}[H]
         \centering
         \myInput{img/Condition_uml.tikz}
-        % \caption{Syntax von Literals.} TODO
+        \caption{Abhängigkeiten der AST Klassen}
         \label{fig:Condition_uml}
       \end{figure}
 
     \subsubsection{Interpreter}
     \label{sssec:Interpreter}
+      Der \myMinin{Interpreter} nutzt den \myMinin{parser::Parser}, um einen \myMinin{ast::Scope} zu bekommen. Diesen Baum interpretiert der \myMinin{Interpreter} in mehreren Schritten. Als erstes werden alle Funktionsdefinitionen interpretiert -- dies sorgt dafür, dass keine Definitionsreihenfolge eingehalten werden muss. Im zweiten Schritt werden die globalen Variablen definiert und initialisiert. Der Letzte Schritt ist die Abarbeitung der Einstiegsfunktion mit allen Deklarationen und Funktionsaufrufen.
+
       \begin{figure}[H]
         \centering
         \myInput{img/interpreter_pack_uml.tikz}
-        % \caption{Syntax von Literals.} TODO
+        \caption{Interpreter Beziehungen.}
         \label{fig:interpreter_pack_uml}
       \end{figure}
+
+      Wenn der \myMinin{Interpreter} einen Funktionsaufruf nicht einer definierten Funktion zuweisen kann, wird der \myMinin{ExecutableProvider} nach einer passenden \myMinin{Executable} gefragt -- siehe \autoref{fig:interpreter_pack_uml}. Bei Operatoraufrufen wird der \myMinin{OperatorProvider} nach einem passenden \myMinin{Operator} gefragt. Durch den \myMinin{OperatorProvider} als Mittelmann, ist es möglich Operatoren auf spezielle Objekte anzuwenden, die über die Datentypen der Literals hinausgehen. Außerdem ist eine primitive Art von operator-overloading möglich.
+
+      Während der Ausführung übernimmt der \myMinin{Stack} die Verwaltung der definierten Funktionen und Variablen sowie deren Werte. Bei jedem \myMinin{Scope}, wird der \myMinin{Stack} um eine Instanz von sich selber erweitert.
+
 
   %---------------------------------
   % Level 2 -- Logik / primitive Rückgabewerte
@@ -468,6 +485,7 @@
 \section{Exemplarische Realisierung}
 \label{sec:Exemplarische Realisierung}
   % TODO explain via example, split page in two right data (string ->tokenlist->ast->interpreter) left explanation
+  % TODO mention test driven
 
   %---------------------------------
   % Tokenizer
