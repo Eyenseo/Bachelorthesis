@@ -50,10 +50,6 @@
 
 \usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
 
-\newcommand{\myInput}[1]{%
-  % \input{#1}%
-}%
-
 %---------------------------------
 % Add extra width to the paper for todos
 %---------------------------------
@@ -467,3 +463,9 @@
   }
 }
 
+%---------------------------------
+% An option to toggle inputs - used for tikz graphics
+%---------------------------------
+\newcommand{\myInput}[1]{%
+  \input{#1}%
+}%
