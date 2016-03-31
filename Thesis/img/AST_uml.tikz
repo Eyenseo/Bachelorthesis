@@ -21,11 +21,17 @@
     Package.ast("ast")(AST, Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
     Package.token("token")(Token);
 
-    topToBottom(30)(If, Function, Return, Operator, Loop);
+    topToBottom(30)(Function, Return, Operator);
     topToBottom(30)(Scope, AST, Variable);
-    topToBottom(30)(Callable, Literal, Define, Condition);
+    topToBottom(30)(Callable, Literal, Define, );
     leftToRight(30)(Return, AST, Literal);
-    leftToRight(40)(Define, Token);
+    leftToRight(30)(Condition, Function, Scope, Callable, If);
+    leftToRight(30)(Loop, Operator);
+    leftToRight(30)(Callable, If);
+    leftToRight(70)(Define, Token);
+
+    same.midx(Loop, Condition);
+
 
     drawObjects(token, ast);
 
@@ -48,12 +54,12 @@
     link(inheritance)
       (Loop.ne -- AST.sw);
     link(inheritance)
-      (Condition.nw -- AST.se);
+      (Condition.se -- AST.nw);
     link(inheritance)
-      (If.se -- AST.nw);
+      (If.sw -- AST.ne);
 
     link(aggregationUni)
       (Token.w -- AST.se);
-    item(iAssoc)("*")(obj.ne = Token.w + (0, -3));
+    item(iAssoc)("1")(obj.ne = Token.w + (0, -3));
   \end{mpost}
 }

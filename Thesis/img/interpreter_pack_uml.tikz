@@ -69,16 +69,16 @@
     Interpreter_e_one = Interpreter.e + (0, -2);
     Interpreter_e_two = Interpreter.e + (0, 2);
     Stack_w_one = Stack.w + (0, -2);
-    link(dependency)
-      (Interpreter_e_one -- Stack_w_one);
-    link(compositionUni)
+    link(aggregationUni)
+      (Stack_w_one -- Interpreter_e_one);
+    link(aggregationUni)
       (pathManhattanY(ExecutableProvider.s, Interpreter_e_two));
 
 
-    link(compositionUni)
+    link(aggregationUni)
       (OperatorInt.w -- OperatorProvider.e);
     item(iAssoc)("*")(obj.ne = OperatorInt.w + (0, -3));
-    link(compositionUni)
+    link(aggregationUni)
       (Executable.w-- ExecutableProvider.e);
     item(iAssoc)("*")(obj.ne = Executable.w + (0, -3));
     link(realization)
