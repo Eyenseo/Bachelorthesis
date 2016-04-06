@@ -10,27 +10,28 @@
     Class.Literal("Literal")()();
     Class.Operator("Operator")()();
     Class.Define("Define")()();
-    Class.Function("Function")()();
+    Class.If("If")()();
     Class.Callable("Callable")()();
     Class.Loop("Loop")()();
     Class.Condition("Condition")()();
     Class.If("If")()();
 
-    Package.ast("ast")(Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
+    Package.ast("ast")(Scope, Variable, Return, Literal, Operator, Define, If, Callable, Loop, Condition);
 
-    topToBottom(30)(If, Scope);
+    % topToBottom(30)(If, Scope);
     leftToRight(30)(Return, Scope, Literal);
 
-    topToBottom(30)(Function, Return, Operator, Loop);
+    topToBottom(30)(If, Return, Operator, Loop);
     topToBottom(30)(Callable, Literal, Define, Condition);
+    % same.midy(If, Callable);
     same.midx(Scope, Variable);
     same.midy(Loop, Variable);
 
     drawObjects(ast);
 
     link(aggregationUni)
-      (Function.se -- Scope.nw);
-    item(iAssoc)("*")(obj.ne = Function.se + (0, -3));
+      (If.se -- Scope.nw);
+    item(iAssoc)("*")(obj.ne = If.se + (0, -3));
     link(aggregationUni)
       (Callable.sw -- Scope.ne);
     item(iAssoc)("*")(obj.ne = Callable.sw + (3, -3));
@@ -55,9 +56,9 @@
     link(aggregationUni)
       (Condition.nw -- Scope.se);
     item(iAssoc)("*")(obj.ne = Condition.nw + (0, -3));
-    link(aggregationUni)
-      (If.s -- Scope.n);
-    item(iAssoc)("*")(obj.ne = If.s + (0, -3));
+    % link(aggregationUni)
+    %   (If.s -- Scope.n);
+    % item(iAssoc)("*")(obj.ne = If.s + (0, -3));
 
     pair a, b, c, d;
     a = Scope.sw + (7, 0);
