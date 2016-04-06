@@ -47,6 +47,10 @@
 \usepackage{listings}
 \usepackage{xinttools}% for expandable and non-expandable loops
 \usepackage{textcomp}
+\usepackage{lipsum}
+
+\usepackage{paracol}
+\usepackage{mdframed}
 
 \usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
 
@@ -137,72 +141,84 @@
 %---------------------------------
 \newcommand\myCMinco[5][cpp]{
   {%
-    \ifthenelse{\equal{#2}{}}{%
-    }{%
-      \noindent\texttt{#2}\\[-2em]%
-    }%
-    ~\\[1em]% % BUG?
-    \inputminted[
-        frame=lines,
-        framesep=2mm,
-        bgcolor=LightGray!20!White, % % BUG?
-        fontsize=\footnotesize,
-        linenos,
-        firstline=#4,
-        lastline=#5,
-      ]{#1}{#3}%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          frame=lines,
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\footnotesize,
+          linenos,
+          firstline=#4,
+          lastline=#5,
+          breaklines,
+          breakanywhere,
+        ]{#1}{#3}%
+    \end{mdframed}
   }
 }
 \newcommand\myMinco[5][cpp]{
   {%
-    \ifthenelse{\equal{#2}{}}{%
-    }{%
-      \noindent\texttt{#2}\\[-2em]%
-    }%
-    \inputminted[
-        frame=lines,
-        framesep=2mm,
-        fontsize=\footnotesize,
-        linenos,
-        firstline=#4,
-        lastline=#5,
-      ]{#1}{#3}%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          frame=lines,
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\footnotesize,
+          linenos,
+          firstline=#4,
+          lastline=#5,
+          breaklines,
+          breakanywhere,
+        ]{#1}{#3}%
+    \end{mdframed}
   }
 }
 \newcommand\myCMincoLine[5][cpp]{
   {%
-    \ifthenelse{\equal{#2}{}}{%
-    }{%
-      \noindent\texttt{#2}\\[-2em]%
-    }%
-    ~\\[1em]% % BUG?
-    \inputminted[
-        frame=lines,
-        framesep=2mm,
-        bgcolor=LightGray!20!White, % % BUG?
-        fontsize=\footnotesize,
-        linenos,
-        firstnumber=#4,
-        firstline=#4,
-        lastline=#5,
-      ]{#1}{#3}%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      ~\\[1em]% % BUG?
+      \inputminted[
+          frame=lines,
+          framesep=2mm,
+          bgcolor=LightGray!20!White, % % BUG?
+          fontsize=\footnotesize,
+          linenos,
+          firstnumber=#4,
+          firstline=#4,
+          lastline=#5,
+        ]{#1}{#3}%
+    \end{mdframed}
   }
 }
 \newcommand\myMincoLine[5][cpp]{
   {%
-    \ifthenelse{\equal{#2}{}}{%
-    }{%
-      \noindent\texttt{#2}\\[-2em]%
-    }%
-    \inputminted[
-        frame=lines,
-        framesep=2mm,
-        fontsize=\footnotesize,
-        linenos,
-        firstnumber=#4,
-        firstline=#4,
-        lastline=#5,
-      ]{#1}{#3}%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          frame=lines,
+          framesep=2mm,
+          fontsize=\footnotesize,
+          linenos,
+          firstnumber=#4,
+          firstline=#4,
+          lastline=#5,
+        ]{#1}{#3}%
+    \end{mdframed}
   }
 }
 
