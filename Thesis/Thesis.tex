@@ -231,6 +231,18 @@
 
     Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter sein sollte, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
+    Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang (siehe Abbildung \autoref{fig:clang_error}).
+    \begin{figure}[H]
+      \begin{lstlisting}[keepspaces,escapechar=°,numbers=none]
+°\textbf{main.cpp:4:42: \textcolor{red}{error}: expected ';' after expression}°
+  std::cout << "Hallo Welt!" << std::endl
+                                         °\textcolor{Green}{\textasciicircum}°
+                                         °\textcolor{Green}{;}
+      °\end{lstlisting}
+      \caption{Clang Fehlermeldung.}
+      \label{fig:clang_error}
+    \end{figure}
+
 %---------------------------------
 % Konzeption
 %---------------------------------
@@ -251,118 +263,149 @@
       Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die Normale Wertzuweisungsstrategie ist nach der Reihenfolge der Deklaration vor zu gehen.
     } unterstützt liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind sie named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/id_syntax.tikz}
-      \caption{Bezeichner}
-      \label{fig:id_syntax}
-    \end{figure}
-    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen (\lstinline[style=MyMacroStyle]$def, var, if, else, for, do, while, break, return$)
-\myTodo{Update der keywords} % TODO
-    , einen Booleanwert entsprechen (\lstinline[style=MyMacroStyle]$true, false$), oder \lstinline[style=MyMacroStyle]$main$ gleichen, verboten.
+    Die folgenden Unterkapitel beschreiben die Syntax, die der Parser parsen muss. Hauptbestandteile sind Definitionen, Kontrollstrukturen, Variablen und Befehlen.
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/vpr_syntax.tikz}
-      \caption{Werterzeuger}
-      \label{fig:vpr_syntax}
-    \end{figure}
-    \autoref{fig:vpr_syntax} zeigt alle Werterzeuger, dass sind Konstrukte, die einen Wert für eine andere Operation bereitstellen.
+    %---------------------------------
+    % Grundlagen
+    %---------------------------------
+    \subsubsection{Grundlagen}
+    \label{sssec:Grundlagen}
+      Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen
+  \myTodo{Update der keywords} % TODO
+      (\lstinline[style=MyMacroStyle]$def$, \lstinline[style=MyMacroStyle]$var$, \lstinline[style=MyMacroStyle]$if$, \lstinline[style=MyMacroStyle]$else$, \lstinline[style=MyMacroStyle]$for$, \lstinline[style=MyMacroStyle]$do$, \lstinline[style=MyMacroStyle]$while$, \lstinline[style=MyMacroStyle]$break$, \lstinline[style=MyMacroStyle]$return$), einen Booleanwert entsprechen (\lstinline[style=MyMacroStyle]$true$, \lstinline[style=MyMacroStyle]$false$), oder \lstinline[style=MyMacroStyle]$main$ gleichen, verboten.
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/var_syntax.tikz}
-      \caption{Syntax der Variablendeklaration.}
-      \label{fig:var_syntax}
-    \end{figure}
-    Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyle]$var foo;$. Um anschließend der Variablen einen Wert zuzuweisen, ist es unter anderem erlaubt, dies zu tun: \lstinline[style=MyMacroStyle]$var foo = fun();$ oder \lstinline[style=MyMacroStyle]$var foo = true == false;$.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/id_syntax.tikz}
+        \caption{Bezeichner}
+        \label{fig:id_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/fun_syntax.tikz}
-      \caption{Syntax der Funktionsdeklaration.}
-      \label{fig:fun_syntax}
-    \end{figure}
-    Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$.
-%TODO kein leerzeichen zwischen funktion und kalmmer
-    Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
+      \autoref{fig:vpr_syntax} zeigt alle Werterzeuger, dass sind Konstrukte, die einen Wert für eine andere Operation bereitstellen.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/vpr_syntax.tikz}
+        \caption{Werterzeuger}
+        \label{fig:vpr_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/cal_syntax.tikz}
-      \caption{Syntax von Funktionsaufrufen.}
-      \label{fig:call_syntax}
-    \end{figure}
-    \autoref{fig:call_syntax} zeigt die Syntax, um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen.
+      In \autoref{fig:return_syntax} ist die Syntax von \lstinline[style=MyMacroStyle]$return$ zu sehen.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/ret_syntax.tikz}
+        \caption{Syntax von return.}
+        \label{fig:return_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/common_syntax.tikz}
-      \caption{Syntax allgemeiner Strukturen.}
-      \label{fig:common_syntax}
-    \end{figure}
+      Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, zum Beispiel kann ein Zeilenumbruch, wie in anderen Programmiersprachen, mit \lstinline[style=MyMacroStyle]$"\n"$ oder ein Tab mit \lstinline[style=MyMacroStyle]$"\t"$, erzeugt werden.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/lit_syntax.tikz}
+        \caption{Syntax von Literals.}
+        \label{fig:lit_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/scope_syntax.tikz}
-      \caption{Syntax vom Scope.}
-      \label{fig:scope_syntax}
-    \end{figure}
+      Abbildungen \ref{fig:scope_syntax}, \ref{fig:loop_scope_syntax} und \ref{fig:common_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktion Deklarationsscopes -- die auf ein Loop Scope folgen, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \lstinline[style=MyMacroStyle]$var foo; {var foo;}$ richtig ist -- das erste \lstinline[style=MyMacroStyle]$foo$, wird von dem zweiten verdeckt.
+      \begin{figure}[H]
+        \centering
+        \begin{minipage}{.5\textwidth}
+          \vspace*{1.45em}
+          \begin{figure}[H]
+            \centering
+            \myInput{img/scope_syntax.tikz}
+            \caption{Syntax vom Scope.}
+            \label{fig:scope_syntax}
+          \end{figure}
+        \end{minipage}%
+        \begin{minipage}{.5\textwidth}
+          \begin{figure}[H]
+            \centering
+            \myInput{img/loop_scope_syntax.tikz}
+            \caption{Syntax vom Loop Scope.}
+            \label{fig:loop_scope_syntax}
+          \end{figure}
+        \end{minipage}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/loop_scope_syntax.tikz}
-      \caption{Syntax vom Loop Scope.}
-      \label{fig:loop_scope_syntax}
-    \end{figure}
-    Abbildungen \ref{fig:common_syntax}, \ref{fig:scope_syntax} und \ref{fig:loop_scope_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktion Deklarationsscopes -- die auf ein Loop Scope folgen, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \lstinline[style=MyMacroStyle]$var foo; {var foo;}$ richtig ist -- das erste \lstinline[style=MyMacroStyle]$foo$, wird von dem zweiten verdeckt.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/common_syntax.tikz}
+        \caption{Syntax allgemeiner Strukturen.}
+        \label{fig:common_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/ret_syntax.tikz}
-      \caption{Syntax von return.}
-      \label{fig:return_syntax}
-    \end{figure}
-    In \autoref{fig:return_syntax} ist die Syntax von \lstinline[style=MyMacroStyle]$return$ zu sehen.
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/op_syntax.tikz}
-      \caption{Syntax von Operatoren.}
-      \label{fig:op_syntax}
-    \end{figure}
-\myTodo{Wenn implementiert ===, !== und NoneType} % TODO
-    Die Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie die \lstinline[style=MyMacroStyle]$return$ Syntax, nicht allzu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
+    %---------------------------------
+    % Definitionen
+    %---------------------------------
+    \subsubsection{Definitionen}
+    \label{sssec:Definitionen}
+      Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyle]$var foo;$. Um anschließend der Variablen einen Wert zuzuweisen, ist es unter anderem erlaubt, dies zu tun: \lstinline[style=MyMacroStyle]$var foo = fun();$ oder \lstinline[style=MyMacroStyle]$var foo = true == false;$.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/var_syntax.tikz}
+        \caption{Syntax der Variablendeklaration.}
+        \label{fig:var_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/if_syntax.tikz}
-      \caption{Syntax von if.}
-      \label{fig:if_syntax}
-    \end{figure}
+      Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$.
+  %TODO kein leerzeichen zwischen funktion und kalmmer
+      Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/fun_syntax.tikz}
+        \caption{Syntax der Funktionsdeklaration.}
+        \label{fig:fun_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/while_syntax.tikz}
-      \caption{Syntax von while.}
-      \label{fig:while_syntax}
-    \end{figure}
+    %---------------------------------
+    % Kontrollstrukturen
+    %---------------------------------
+    \subsubsection{Kontrollstrukturen}
+    \label{sssec:Kontrollstrukturen}
+      Die Syntax von \lstinline[style=MyMacroStyle]$if/else$ und \lstinline[style=MyMacroStyle]$do-/while$ aus den Abbildungen \ref{fig:if_syntax}, \ref{fig:while_syntax} und \ref{fig:do_while_syntax} sollten wie erwartet aussehen.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/if_syntax.tikz}
+        \caption{Syntax von if.}
+        \label{fig:if_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/do_while_syntax.tikz}
-      \caption{Syntax von do-while.}
-      \label{fig:do_while_syntax}
-    \end{figure}
-    Die Syntax von \lstinline[style=MyMacroStyle]$if/else$ und \lstinline[style=MyMacroStyle]$do-/while$ aus den Abbildungen \ref{fig:if_syntax}, \ref{fig:while_syntax} und \ref{fig:do_while_syntax} sollten wie erwartet aussehen.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/while_syntax.tikz}
+        \caption{Syntax von while.}
+        \label{fig:while_syntax}
+      \end{figure}
 
-    \begin{figure}[H]
-      \centering
-      \myInput{img/lit_syntax.tikz}
-      \caption{Syntax von Literals.}
-      \label{fig:lit_syntax}
-    \end{figure}
-    Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, zum Beispiel kann ein Zeilenumbruch, wie in anderen Programmiersprachen, mit \lstinline[style=MyMacroStyle]$"\n"$ oder ein Tab mit \lstinline[style=MyMacroStyle]$"\t"$, erzeugt werden.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/do_while_syntax.tikz}
+        \caption{Syntax von do-while.}
+        \label{fig:do_while_syntax}
+      \end{figure}
+
+    %---------------------------------
+    % Befehle
+    %---------------------------------
+    \subsubsection{Befehle}
+    \label{sssec:Befehle}
+      \autoref{fig:call_syntax} zeigt die Syntax, um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/cal_syntax.tikz}
+        \caption{Syntax von Funktionsaufrufen.}
+        \label{fig:call_syntax}
+      \end{figure}
+
+      Die Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie die \lstinline[style=MyMacroStyle]$return$ Syntax, nicht allzu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b) && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/op_syntax.tikz}
+        \caption{Syntax von Operatoren.}
+        \label{fig:op_syntax}
+      \end{figure}
+  \myTodo{Wenn implementiert ===, !== und NoneType} % TODO
 
 \myTodo{For Schleife wenn implementiert} % TODO
 \myTodo{For-each Schleife wenn implementiert} % TODO
@@ -404,10 +447,9 @@
         \label{fig:parser_pack_uml}
       \end{figure}
 
-      % TODO fix token description fun() are three tokens but not separated!
-      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, die durch einen Punkt, eine
+      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von whitespace (\lstinline[language=MyRegex]$\s*$) getrennt sind, die nicht den Anforderungen als Bezeichner genügen (\lstinline[language=MyRegex]$[^a-zA-Z0-9_]$, siehe \autoref{fig:id_syntax}), die durch einen Punkt eine
 \myQuestion{Fachwort?} % TODO
-      Kommazahl bilden (\lstinline$\d*\.\d+$) oder einen String darstellen (\lstinline$".*?"$\footnote{
+      Kommazahl bilden (\lstinline[language=MyRegex]$\d*\.\d+$) oder einen String darstellen (\lstinline[language=MyRegex]$".*?"$\footnote{
         Dieser Regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
       }). Der \myMinin{Tokenizer} ist nicht für das Lexen verantwortlich -- dies wird von dem Parser übernommen.
 
@@ -427,18 +469,6 @@
         Dies ist valider C Code: \myMinin{const int foo = foo + 1;}
       }).
 
-      Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang (siehe Abbildung \autoref{fig:clang_error}).
-
-      \begin{figure}[H]
-        \begin{lstlisting}[escapechar=°,numbers=none]
-°\textbf{main.cpp:4:42:}° °\textcolor{red}{error}°: expected ';' after expression
-  std::cout << "Hallo Welt!" << std::endl
-                                         °\textcolor{Green}{\textasciicircum}°
-                                         °\textcolor{Green}{;}°
-        \end{lstlisting}
-        \caption{Clang Fehlermeldung.}
-        \label{fig:clang_error}
-      \end{figure}
 
     \subsubsection{Abstrakter Syntaxbaum}
     \label{sssec:Abstrakter Syntaxbaum}
@@ -502,10 +532,6 @@
 \label{sec:Exemplarische Realisierung}
   % TODO explain via example, split page in two right data (string ->tokenlist->ast->interpreter) left explanation
   % TODO mention test driven
-
-  \columnratio{0.6}
-  \columnsep25pt
-
 \myQuestion{Ich hätte hier vor an Hand eines Beispieles die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)}% TODO
 
   \begin{figure}[H]
@@ -515,7 +541,12 @@
   \end{figure}
 
 
+  \columnratio{0.6}
+  \columnsep25pt
   \begin{paracol}{2}[\subsection{Tokenizer}]
+    %---------------------------------
+    % Tokenizer
+    %---------------------------------
     \label{ssec:Tokenizer}
 
       \textcolor{red}{Erklärung}
@@ -523,38 +554,35 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
     \switchcolumn
       \textcolor{red}{Beispiel}
-      \myCMinco[text]{}{code/ex_tok.txt}{0}{20}
+      \begin{figure}[H]
+        \lstinputlisting[lastline=20]{code/ex_tok.txt}
+        \caption{Tokenized Makro}
+        \label{fig:ex_tok}
+      \end{figure}
 
-    \switchcolumn*[\subsection{Abstrakter Syntaxbaum}]
-    \label{ssec:Abstrakter Syntaxbaum}
+
+    %---------------------------------
+    % Parser
+    %---------------------------------
+    \switchcolumn*[\subsection{Parser}]
+    \label{ssec:Parser}
 
     \switchcolumn
-      \myCMinco[text]{}{code/ex_ast.txt}{0}{20}
+      \begin{figure}[H]
+        \lstinputlisting[lastline=20]{code/ex_ast.txt}
+        \caption{Geparsed Makro}
+        \label{fig:ex_ast}
+      \end{figure}
+
+
+    %---------------------------------
+    % Interpreterex_tok
+    %---------------------------------
+    \switchcolumn*[\subsection{Interpreter}]
+    \label{ssec:Interpreter}
+    \switchcolumn
+
   \end{paracol}
-
-  %---------------------------------
-  % Tokenizer
-  %---------------------------------
-  \subsection{Tokenizer}
-  \label{ssec:Tokenizer}
-
-  %---------------------------------
-  % Abstrakter Syntaxbaum
-  %---------------------------------
-  \subsection{Abstrakter Syntaxbaum}
-  \label{ssec:Abstrakter Syntaxbaum}
-
-  %---------------------------------
-  % Parser
-  %---------------------------------
-  \subsection{Parser}
-  \label{ssec:Parser}
-
-  %---------------------------------
-  % Interpreter
-  %---------------------------------
-  \subsection{Interpreter}
-  \label{ssec:Interpreter}
 
   %---------------------------------
   % Makro

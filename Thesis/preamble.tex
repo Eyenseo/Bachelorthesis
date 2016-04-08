@@ -43,6 +43,7 @@
 \usepackage{calc}
 \usepackage{pgfopts}
 \usepackage[shellescape,latex]{gmp}
+\usepackage[justification=centering,format=plain]{caption}
 
 \usepackage[scale=1,ttdefault=true]{AnonymousPro}
 % \usepackage{bold-extra}
@@ -171,7 +172,6 @@
         \noindent\texttt{#2}\\[-2em]%
       }%
       \inputminted[
-          frame=lines,
           numbersep=5pt,
           framesep=2mm,
           fontsize=\small,
@@ -192,7 +192,6 @@
         \noindent\texttt{#2}\\[-2em]%
       }%
       \inputminted[
-          frame=lines,
           numbersep=5pt,
           framesep=2mm,
           fontsize=\small,
@@ -212,7 +211,6 @@
         \noindent\texttt{#2}\\[-2em]%
       }%
       \inputminted[
-          frame=lines,
           numbersep=5pt,
           framesep=2mm,
           fontsize=\small,
@@ -404,20 +402,43 @@
       \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
       \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
 }
+\lstdefinelanguage{MyRegex}{
+  alsoletter={\\,*,\&,^},
+  basicstyle=\color{OliveDrab},
+  keywords={\\,\\.},
+  morekeywords=[2]{\\d,\\s},
+  keywordstyle=*\color{OliveDrab}\bfseries,
+  keywordstyle=[2]\color{DarkOrange}\bfseries,
+  sensitive=false,
+  postbreak=,
+  literate={[}{{\textcolor{DarkOrange}{[}}}{1}
+           {]}{{\textcolor{DarkOrange}{]}}}{1}
+           {*}{{\textcolor{DarkOrange}{*}}}{1}
+           {.}{{\textcolor{DarkOrange}{.}}}{1}
+           {+}{{\textcolor{DarkOrange}{+}}}{1}
+           {?}{{\textcolor{DarkOrange}{?}}}{1}
+           {-}{{\textcolor{DarkOrange}{-}}}{1}
+           {(}{{\textcolor{DarkOrange}{(}}}{1}
+           {)}{{\textcolor{DarkOrange}{)}}}{1}
+           {\^}{{\textcolor{DarkOrange}{\textasciicircum{}}}}{1}
+           {\\.}{{\textcolor{OliveDrab}{\textbackslash.}}}{1}
+}
 \lstset{
-   backgroundcolor=\color{LightGray!20!White},
-   extendedchars=true,
-   basicstyle=\small\ttfamily,
-   showstringspaces=false,
-   showspaces=false,
-   numbers=left,
-   numberstyle=\tiny,
-   numbersep=4pt,
-   tabsize=2,
-   breaklines=true,
-   showtabs=false,
-   captionpos=b,
-   frame=lines
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+  backgroundcolor=\color{LightGray!20!White},
+  extendedchars=true,
+  basicstyle=\small\ttfamily,
+  showstringspaces=false,
+  showspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=4pt,
+  tabsize=2,
+  breaklines=true,
+  showtabs=false,
+  captionpos=b,
+  frame=lines,
+  flexiblecolumns,
 }
 
 %---------------------------------
