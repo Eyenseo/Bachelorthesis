@@ -144,13 +144,13 @@
 %---------------------------------
 \newcommand\myCMinco[5][cpp]{
   {%
-    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
       \ifthenelse{\equal{#2}{}}{%
       }{%
         \noindent\texttt{#2}\\[-2em]%
       }%
       \inputminted[
-          frame=lines,
+          frame=none,
           numbersep=5pt,
           framesep=2mm,
           fontsize=\small,
@@ -165,7 +165,7 @@
 }
 \newcommand\myMinco[5][cpp]{
   {%
-    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false]
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false]
       \ifthenelse{\equal{#2}{}}{%
       }{%
         \noindent\texttt{#2}\\[-2em]%
@@ -186,16 +186,15 @@
 }
 \newcommand\myCMincoLine[5][cpp]{
   {%
-    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
       \ifthenelse{\equal{#2}{}}{%
       }{%
         \noindent\texttt{#2}\\[-2em]%
       }%
-      ~\\[1em]% % BUG?
       \inputminted[
           frame=lines,
+          numbersep=5pt,
           framesep=2mm,
-          bgcolor=LightGray!20!White, % % BUG?
           fontsize=\small,
           linenos,
           firstnumber=#4,
@@ -207,13 +206,14 @@
 }
 \newcommand\myMincoLine[5][cpp]{
   {%
-    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, topline=false, bottomline=false, leftline=false, rightline=false]
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false]
       \ifthenelse{\equal{#2}{}}{%
       }{%
         \noindent\texttt{#2}\\[-2em]%
       }%
       \inputminted[
           frame=lines,
+          numbersep=5pt,
           framesep=2mm,
           fontsize=\small,
           linenos,
@@ -395,6 +395,7 @@
 \lstdefinestyle{MyMacroStyle}
 {
   language=MyMacro,
+  keepspaces,
   commentstyle=\color{Comments}\slshape,
   stringstyle=\color{Strings},
   keywordstyle={\color{Keywords}\bfseries},
@@ -411,7 +412,7 @@
    showspaces=false,
    numbers=left,
    numberstyle=\tiny,
-   numbersep=9pt,
+   numbersep=4pt,
    tabsize=2,
    breaklines=true,
    showtabs=false,
