@@ -232,7 +232,8 @@
     Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter sein sollte, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
     Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang (siehe Abbildung \autoref{fig:clang_error}).
-    \begin{figure}[H]
+
+    \begin{myCodeEnv}
       \centering
       \begin{minipage}{.9\textwidth}
         \begin{lstlisting}[keepspaces,escapechar=°,numbers=none]
@@ -244,7 +245,7 @@
       \end{minipage}
       \caption{Clang Fehlermeldung.}
       \label{fig:clang_error}
-    \end{figure}
+    \end{myCodeEnv}
 
 %---------------------------------
 % Konzeption
@@ -537,14 +538,14 @@
   % TODO mention test driven
 \myQuestion{Ich hätte hier vor an Hand eines Beispieles die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)}% TODO
 
-  \begin{figure}[H]
+  \begin{myCodeEnv}
     \centering
     \begin{minipage}{.9\textwidth}
       \lstinputlisting[style=MyMacroStyle]{code/ex_macro.txt}
     \end{minipage}
     \caption{Interpreter Beziehungen.}
     \label{fig:ex_macro}
-  \end{figure}
+  \end{myCodeEnv}
 
 
   \columnratio{0.6}
@@ -560,11 +561,12 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
     \switchcolumn
       \textcolor{red}{Beispiel}
-      \begin{figure}[H]
+
+      \begin{myCodeEnv}
         \lstinputlisting[lastline=20]{code/ex_tok.txt}
         \caption{Tokenized Makro}
         \label{fig:ex_tok}
-      \end{figure}
+      \end{myCodeEnv}
 
 
     %---------------------------------
@@ -574,11 +576,12 @@
     \label{ssec:Parser}
 
     \switchcolumn
-      \begin{figure}[H]
+
+      \begin{myCodeEnv}
         \lstinputlisting[lastline=20]{code/ex_ast.txt}
         \caption{Geparsed Makro}
         \label{fig:ex_ast}
-      \end{figure}
+      \end{myCodeEnv}
 
 
     %---------------------------------

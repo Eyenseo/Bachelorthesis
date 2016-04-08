@@ -437,7 +437,9 @@
   showtabs=false,
   captionpos=b,
   frame=lines,
-  flexiblecolumns,
+  columns=fixed,
+  basewidth={.56em,.45em},
+  fontadjust=true,
 }
 
 %---------------------------------
@@ -508,3 +510,13 @@
     \input{#1}%
   }%
 }%
+
+%---------------------------------
+% An Environment for code with captions
+%---------------------------------
+\DeclareCaptionType{myCodeEnvType}[Code][List of myCodeEnvType]
+\newenvironment{myCodeEnv}{
+    \vspace{1em}%
+    \captionsetup{type=myCodeEnvType}%
+  }{%
+  }
