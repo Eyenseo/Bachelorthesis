@@ -1,0 +1,12 @@
+def fun(foo){
+  while(!foo){
+    foo = foo + 1;
+  }
+  return foo;
+}
+
+def main() {
+  var foo = 1;
+
+  return fun(foo:foo);
+}
