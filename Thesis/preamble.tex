@@ -44,9 +44,8 @@
 \usepackage{pgfopts}
 \usepackage[shellescape,latex]{gmp}
 \usepackage[justification=centering,format=plain]{caption}
-
+\usepackage{adjustbox}
 \usepackage[scale=1,ttdefault=true]{AnonymousPro}
-% \usepackage{bold-extra}
 
 \usepackage{listings}
 \usepackage{xinttools}% for expandable and non-expandable loops
@@ -407,8 +406,8 @@
   basicstyle=\color{OliveDrab},
   keywords={\\,\\.},
   morekeywords=[2]{\\d,\\s},
-  keywordstyle=*\color{OliveDrab}\bfseries,
-  keywordstyle=[2]\color{DarkOrange}\bfseries,
+  keywordstyle=*\color{OliveDrab},
+  keywordstyle=[2]\color{DarkOrange},
   sensitive=false,
   postbreak=,
   literate={[}{{\textcolor{DarkOrange}{[}}}{1}
@@ -498,5 +497,14 @@
 % An option to toggle inputs - used for tikz graphics
 %---------------------------------
 \newcommand{\myInput}[1]{%
-  \input{#1}%
+  \adjustbox{max width=.9\linewidth}{%
+    \scalebox{.9}{%
+      \input{#1}%
+    }%
+  }%
+}%
+\newcommand{\myInputUnlimited}[1]{%
+  \scalebox{.9}{%
+    \input{#1}%
+  }%
 }%

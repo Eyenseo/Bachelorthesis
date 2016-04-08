@@ -233,12 +233,15 @@
 
     Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang (siehe Abbildung \autoref{fig:clang_error}).
     \begin{figure}[H]
-      \begin{lstlisting}[keepspaces,escapechar=°,numbers=none]
-°\textbf{main.cpp:4:42: \textcolor{red}{error}: expected ';' after expression}°
-  std::cout << "Hallo Welt!" << std::endl
-                                         °\textcolor{Green}{\textasciicircum}°
-                                         °\textcolor{Green}{;}
-      °\end{lstlisting}
+      \centering
+      \begin{minipage}{.9\textwidth}
+        \begin{lstlisting}[keepspaces,escapechar=°,numbers=none]
+°\textbf{ main.cpp:4:42: \textcolor{red}{error}: expected ';' after expression}°
+   std::cout << "Hallo Welt!" << std::endl
+                                          °\textcolor{Green}{\textasciicircum}°
+                                          °\textcolor{Green}{;}
+        °\end{lstlisting}
+      \end{minipage}
       \caption{Clang Fehlermeldung.}
       \label{fig:clang_error}
     \end{figure}
@@ -308,19 +311,19 @@
       Abbildungen \ref{fig:scope_syntax}, \ref{fig:loop_scope_syntax} und \ref{fig:common_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Loops, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyle]$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktion Deklarationsscopes -- die auf ein Loop Scope folgen, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \lstinline[style=MyMacroStyle]$var foo; {var foo;}$ richtig ist -- das erste \lstinline[style=MyMacroStyle]$foo$, wird von dem zweiten verdeckt.
       \begin{figure}[H]
         \centering
-        \begin{minipage}{.5\textwidth}
-          \vspace*{1.45em}
+        \begin{minipage}{.45\textwidth}
+          \vspace*{2.45em}
           \begin{figure}[H]
             \centering
-            \myInput{img/scope_syntax.tikz}
+            \myInputUnlimited{img/scope_syntax.tikz}
             \caption{Syntax vom Scope.}
             \label{fig:scope_syntax}
           \end{figure}
         \end{minipage}%
-        \begin{minipage}{.5\textwidth}
+        \begin{minipage}{.45\textwidth}
           \begin{figure}[H]
             \centering
-            \myInput{img/loop_scope_syntax.tikz}
+            \myInputUnlimited{img/loop_scope_syntax.tikz}
             \caption{Syntax vom Loop Scope.}
             \label{fig:loop_scope_syntax}
           \end{figure}
@@ -385,6 +388,10 @@
         \label{fig:do_while_syntax}
       \end{figure}
 
+
+\myTodo{For Schleife wenn implementiert} % TODO
+\myTodo{For-each Schleife wenn implementiert} % TODO
+
     %---------------------------------
     % Befehle
     %---------------------------------
@@ -406,10 +413,6 @@
         \label{fig:op_syntax}
       \end{figure}
   \myTodo{Wenn implementiert ===, !== und NoneType} % TODO
-
-\myTodo{For Schleife wenn implementiert} % TODO
-\myTodo{For-each Schleife wenn implementiert} % TODO
-
   %---------------------------------
   % Grundarchitektur
   %---------------------------------
@@ -535,7 +538,10 @@
 \myQuestion{Ich hätte hier vor an Hand eines Beispieles die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)}% TODO
 
   \begin{figure}[H]
-    \lstinputlisting[style=MyMacroStyle]{code/ex_macro.txt}
+    \centering
+    \begin{minipage}{.9\textwidth}
+      \lstinputlisting[style=MyMacroStyle]{code/ex_macro.txt}
+    \end{minipage}
     \caption{Interpreter Beziehungen.}
     \label{fig:ex_macro}
   \end{figure}
