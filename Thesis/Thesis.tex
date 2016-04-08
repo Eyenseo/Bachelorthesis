@@ -454,7 +454,7 @@
       Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von whitespace (\lstinline[language=MyRegex]$\s*$) getrennt sind, die nicht den Anforderungen als Bezeichner genügen (\lstinline[language=MyRegex]$[^a-zA-Z0-9_]$, siehe \autoref{fig:id_syntax}), die durch einen Punkt eine
 \myQuestion{Fachwort?} % TODO
       Kommazahl bilden (\lstinline[language=MyRegex]$\d*\.\d+$) oder einen String darstellen (\lstinline[language=MyRegex]$".*?"$\footnote{
-        Dieser Regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
+        Dieser Regex funktioniert nur für einfache Varianten (kein escapen) von Strings und dient deswegen nur der Veranschaulichung.
       }). Der \myMinin{Tokenizer} ist nicht für das Lexen verantwortlich -- dies wird von dem Parser übernommen.
 
       \myMinin{Token}s beinhalten die Zeile sowie Spalte als Zahl, und den gesamten Quelltext aus der Zeile, aus der das Token entstanden ist. Dies ist von Nöten, um später gute Fehlermeldungen zu erzeugen, mit denen ein Benutzer schnell weiß, wo er nach dem Fehler suchen muss. Des weiteren enthält die Klasse einen String, der den Teil des Makros enthält, den die Instanz darstellen soll.
