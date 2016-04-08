@@ -44,6 +44,9 @@
 \usepackage{pgfopts}
 \usepackage[shellescape,latex]{gmp}
 
+\usepackage[scale=1,ttdefault=true]{AnonymousPro}
+% \usepackage{bold-extra}
+
 \usepackage{listings}
 \usepackage{xinttools}% for expandable and non-expandable loops
 \usepackage{textcomp}
@@ -150,7 +153,7 @@
           frame=lines,
           numbersep=5pt,
           framesep=2mm,
-          fontsize=\footnotesize,
+          fontsize=\small,
           linenos,
           firstline=#4,
           lastline=#5,
@@ -171,7 +174,7 @@
           frame=lines,
           numbersep=5pt,
           framesep=2mm,
-          fontsize=\footnotesize,
+          fontsize=\small,
           linenos,
           firstline=#4,
           lastline=#5,
@@ -193,7 +196,7 @@
           frame=lines,
           framesep=2mm,
           bgcolor=LightGray!20!White, % % BUG?
-          fontsize=\footnotesize,
+          fontsize=\small,
           linenos,
           firstnumber=#4,
           firstline=#4,
@@ -212,7 +215,7 @@
       \inputminted[
           frame=lines,
           framesep=2mm,
-          fontsize=\footnotesize,
+          fontsize=\small,
           linenos,
           firstnumber=#4,
           firstline=#4,
@@ -225,7 +228,7 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\myMinin}[1]{\mintinline{c++}{#1}}
+\newcommand{\myMinin}[1][]{\mintinline[fontsize=\small, #1]{c++}}
 
 %---------------------------------
 % Horizontal line for title page
@@ -340,24 +343,14 @@
 \makeatletter
 \newif\iffirstchar\firstchartrue
 \newif\ifstartedbyadigit
-\newif\ifprecededbyequalsign
 
-\lst@AddToHook{OutputOther}%
-{%
-  \lst@IfLastOtherOneOf{=}
-    {\global\precededbyequalsigntrue}
-    {}%
-}
 \lst@AddToHook{Output}%
 {%
-  \ifprecededbyequalsign
-      \ifstartedbyadigit
-        \def\lst@thestyle{\color{Numbers}}%
-      \fi
-    \fi
+  \ifstartedbyadigit
+    \def\lst@thestyle{\color{Numbers}}%
+  \fi
   \global\firstchartrue
   \global\startedbyadigitfalse
-  \global\precededbyequalsignfalse
 }
 \newcommand\processletter
 {%
@@ -408,12 +401,12 @@
   alsoletter=0123456789,
   SelectCharTable=%
       \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
-      % \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+      \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
 }
 \lstset{
    backgroundcolor=\color{LightGray!20!White},
    extendedchars=true,
-   basicstyle=\footnotesize\ttfamily,
+   basicstyle=\small\ttfamily,
    showstringspaces=false,
    showspaces=false,
    numbers=left,

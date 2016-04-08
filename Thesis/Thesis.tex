@@ -90,6 +90,7 @@
 %---------------------------------
 \section{Einleitung}
 \label{sec:Einleitung}
+\myQuestion{Text Größe, Zeilenabstand?} %TODO
   Die Einführung von Automatisierung in ein Softwaresystem ist vergleichbar mit den Maschinen, die in der industrielle Revolution auftauchten. Anstelle, dass Menschen arbeiten müssen, um ein gewünschtes Ergebnis zu bekommen, drücken sie auf einen Knopf, und ein anderes System nimmt ihnen die aufwändige Arbeit ab. Dies führt dazu, dass Produkte schneller, mit weniger Arbeitsaufwand erstellt werden können. Zudem ist die entstehende Qualität immer auf einem gleichbleibenden Level und hängt nicht von dem Befinden der Arbeiter ab.
 
   Die P3-group arbeitet mit Airbus, um Lösungen für den Flugzeugbau zu entwickeln. Dieser Markt ist hart umkämpft, wodurch minimale Gewinne einen großen Unterschied machen können. Ein Feld, welches seit Jahren immer weiter durch wissenschaftliche und technische Durchbrüche optimiert wird, sind die menschlichen Ressourcen. Automatisierung sorgt dafür, dass sich wiederholende Arbeitsabläufe -- aus der Sicht des Nutzers -- zu einem einzigen Schritt werden und so Zeit sparen.
@@ -160,9 +161,7 @@
 %---------------------------------
 \section{An\-for\-de\-rungs\-ana\-ly\-se}
 \label{sec:Anforderungsanalyse}
-  Dieses Kapitel beschäftigt sich mit dem Problemfeld und den Anforderungen an die entstehende Lösung. In der \hyperref[ssec:Diskussion des Problemfeldes]{
-    diskussion des Problemfeldes
-  } geht es vor allem darum, das Problemfeld zu analysieren und die Unterprobleme ausfindig zu machen, um abstrakte Lösungsansätze für diese zu entwickeln. Bei den \nameref{ssec:Anforderungen an die angestrebte Lösung} ist das Ziel die Anforderungen, die die Problemlösung erfüllen sollte zu definieren.
+  Dieses Kapitel beschäftigt sich mit dem Problemfeld und den Anforderungen an die entstehende Lösung. In der \nameref{ssec:Diskussion des Problemfeldes} geht es vor allem darum, das Problemfeld zu analysieren und die Unterprobleme ausfindig zu machen, um abstrakte Lösungsansätze für diese zu entwickeln. Bei den \nameref{ssec:Anforderungen an die angestrebte Lösung} ist das Ziel die Anforderungen, die die Problemlösung erfüllen sollte zu definieren.
 
   %---------------------------------
   % Diskussion des Problemfeldes
@@ -237,7 +236,7 @@
 \label{sec:Konzeption}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
-  \autoref{ssec:Syntax} beschreibt den Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. In den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und
+  \autoref{ssec:Syntax} beschreibt die Syntax, welcher von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Grundarchitektur} wird hauptsächlich die Architektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst die grobe Architektur des gesamten Makrosystems. In den Kapiteln \nameref{ssec:Level 2 -- Logik / primitive Rückgabewerte} und
 \myQuestion{Andere Kapitelnamen wären vielleicht sinnvoll?} % TODO
   \nameref{ssec:Level 3 -- Komplexe Rückgabewerte} wird genauer auf den Aufbau des Interpreters eingegangen.
 
@@ -246,7 +245,7 @@
   %---------------------------------
   \subsection{Syntax}
   \label{ssec:Syntax}
-    Der Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil des Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was als passieren wird. Das die Makrosprache \emph{named parameter}\footnote{
+    Die Syntax ist an C, Python, JavaScript und Swift angelegt. C liefert den größten Anteil der Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was der Folgende Code machen wird. Das die Makrosprache \emph{named parameter}\footnote{
       Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die Normale Wertzuweisungsstrategie ist nach der Reihenfolge der Deklaration vor zu gehen.
     } unterstützt liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind sie named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
 
@@ -256,7 +255,7 @@
       \caption{Bezeichner}
       \label{fig:id_syntax}
     \end{figure}
-    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus keinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen (\lstinline[style=MyMacroStyle]$def, var, if, else, for, do, while, break, return$)
+    Bezeichner müssen dem Regex aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen (\lstinline[style=MyMacroStyle]$def, var, if, else, for, do, while, break, return$)
 \myTodo{Update der keywords} % TODO
     , einen Booleanwert entsprechen (\lstinline[style=MyMacroStyle]$true, false$), oder \lstinline[style=MyMacroStyle]$main$ gleichen, verboten.
 
@@ -283,7 +282,7 @@
       \label{fig:fun_syntax}
     \end{figure}
     Funktionen können über \lstinline[style=MyMacroStyle]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \lstinline[style=MyMacroStyle]$def fun(foo, bar){...}$.
-
+%TODO kein leerzeichen zwischen funktion und kalmmer
     Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyle]$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
 
     \begin{figure}[H]
@@ -292,7 +291,7 @@
       \caption{Syntax von Funktionsaufrufen.}
       \label{fig:call_syntax}
     \end{figure}
-    \autoref{fig:call_syntax} zeigt den Syntax um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen.
+    \autoref{fig:call_syntax} zeigt die Syntax, um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyle]$fun(foo:gun(), bar:foo);$ weißt dem \lstinline[style=MyMacroStyle]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyle]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyle]$bar$ wird der Wert von \lstinline[style=MyMacroStyle]$foo$ aus dem Scope zugewiesen.
 
     \begin{figure}[H]
       \centering
@@ -322,7 +321,7 @@
       \caption{Syntax von return.}
       \label{fig:return_syntax}
     \end{figure}
-    In \autoref{fig:return_syntax} ist der Syntax von \lstinline[style=MyMacroStyle]$return$ zu sehen.
+    In \autoref{fig:return_syntax} ist die Syntax von \lstinline[style=MyMacroStyle]$return$ zu sehen.
 
     \begin{figure}[H]
       \centering
@@ -331,7 +330,7 @@
       \label{fig:op_syntax}
     \end{figure}
 \myTodo{Wenn implementiert ===, !== und NoneType} % TODO
-    Der Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie der \lstinline[style=MyMacroStyle]$return$ Syntax, nicht all zu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
+    Die Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie die \lstinline[style=MyMacroStyle]$return$ Syntax, nicht allzu überraschend sein. Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyle]$(a || b)  && c$ folgender Weise interpretiert wird. \lstinline[style=MyMacroStyle]$a$ oder \lstinline[style=MyMacroStyle]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyle]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyle]$a || b && c$ zuerst \lstinline[style=MyMacroStyle]$a$, und dann \lstinline[style=MyMacroStyle]$b$ und \lstinline[style=MyMacroStyle]$c$ ausgewertet.
 
     \begin{figure}[H]
       \centering
@@ -383,7 +382,7 @@
 \myTodo{Am Ende erwähnen /\& referenzieren.} % TODO
 
 
-    Da das Komplette UML Diagramm sehr unübersichtlich ist, und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem kompletten und spiegeln es zusammen wieder.
+    Da das komplette UML Diagramm sehr unübersichtlich ist und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem Kompletten und spiegeln es zusammen wieder.
 
     \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makro Funktionalität anbieten soll. Das \myMinin{ast} Paket beinhaltet alle Klassen, die den abstrakten Syntaxbaum ausmachen und von dem Parser und dem Interpreter verwendet werden. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser. In dem \myMinin{token} Paket befindet sich die \myMinin{Token} Klasse, da diese in kein anderes Paket gehört.
     \begin{figure}[H]
@@ -395,7 +394,7 @@
 
     \subsubsection{Token, Tokenizer und Parser}
     \label{sssec:Token, Tokenizer und Parser}
-      Der \myMinin{Parser} aus \autoref{fig:parser_pack_uml} bedient sich dem \myMinin{Tokenizer} um eine \myMinin{TokenList} von \myMinin{Token}s zu bekommen. Diese \myMinin{TokenList} kann er dann parsen, bzw. in einen abstrakten Syntaxbaum umwandeln.
+      Der \myMinin{Parser} aus \autoref{fig:parser_pack_uml} bedient sich dem \myMinin{Tokenizer}, um eine \myMinin{TokenList} von \myMinin{Token}s zu bekommen. Diese \myMinin{TokenList} kann er dann parsen, bzw. in einen abstrakten Syntaxbaum umwandeln.
       \begin{figure}[H]
         \centering
         \myInput{img/parser_pack_uml.tikz}
@@ -403,7 +402,8 @@
         \label{fig:parser_pack_uml}
       \end{figure}
 
-      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen die, von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, die durch einen Punkt eine
+      % TODO fix token description fun() are three tokens but not separated!
+      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von zwei Zeichen getrennt sind die dem Regex \lstinline$[^a-zA-Z0-9_]$ entsprechen. Oder die Zeichen, die durch einen Punkt, eine
 \myQuestion{Fachwort?} % TODO
       Kommazahl bilden (\lstinline$\d*\.\d+$) oder einen String darstellen (\lstinline$".*?"$\footnote{
         Dieser Regex funktioniert nur für einfache Varianten von Strings und dient deswegen nur der Veranschaulichung.
@@ -419,13 +419,24 @@
         Recursive descent Parser bauen durch Funktionsaufrufe einen Stack auf, der den Zweigen des Baumes gleicht.
       }.
 \myQuestion{Ist es ok, dass ich die Parser nur kurz in den Fußnoten erklärt habe (Grundlagen Kapitel?)} % TODO
-      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL, und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für ein recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
+      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL, und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für einen recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
 
-      Beim parsen müssen die Literals umgewandelt werden -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einem String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\mintinline[obeytabs]{c++}{"t  t"}). Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden (bei \myMinin{a || b && c} muss \myMinin{a} zuerst ausgewertet werden und dann \myMinin{b && c}). Und Variablen Deklarationen mit Wertzuweisung müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
+      Beim Parsen müssen die Literals umgewandelt werden -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einm String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}). Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden (bei \myMinin{a || b && c} muss \myMinin{a} zuerst ausgewertet werden und dann \myMinin{b && c}). Und Variablen Deklarationen mit Wertzuweisung müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
         Dies ist valider C Code: \myMinin{const int foo = foo + 1;}
       }).
 
-      Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang.
+      Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten den Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier definitiv Clang (siehe Abbildung \autoref{fig:clang_error}).
+
+      \begin{figure}[H]
+        \begin{lstlisting}[escapechar=°,numbers=none]
+°\textbf{main.cpp:4:42:}° °\textcolor{red}{error}°: expected ';' after expression
+  std::cout << "Hallo Welt!" << std::endl
+                                         °\textcolor{Green}{\textasciicircum}°
+                                         °\textcolor{Green}{;}°
+        \end{lstlisting}
+        \caption{Clang Fehlermeldung.}
+        \label{fig:clang_error}
+      \end{figure}
 
     \subsubsection{Abstrakter Syntaxbaum}
     \label{sssec:Abstrakter Syntaxbaum}
@@ -495,13 +506,28 @@
 
 \myQuestion{Ich hätte hier vor an Hand eines Beispieles die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)}% TODO
 
-  \begin{paracol}{2}[\subsection{Tokenizer}]
-    \textcolor{red}{Erklärung}
+  \begin{figure}[H]
+    \lstinputlisting[style=MyMacroStyle]{code/ex_macro.txt}
+    \caption{Interpreter Beziehungen.}
+    \label{fig:ex_macro}
+  \end{figure}
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+  \begin{paracol}{2}[\subsection{Tokenizer}]
+    \label{ssec:Tokenizer}
+
+      \textcolor{red}{Erklärung}
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
     \switchcolumn
-    \textcolor{red}{Beispiel}
-    \myCMinco{}{code/Parser.cpp}{0}{29}
+      \textcolor{red}{Beispiel}
+      \myCMinco[text]{}{code/ex_tok.txt}{0}{20}
+
+    \switchcolumn*[\subsection{Abstrakter Syntaxbaum}]
+    \label{ssec:Abstrakter Syntaxbaum}
+
+    \switchcolumn
+      \myCMinco[text]{}{code/ex_ast.txt}{0}{20}
   \end{paracol}
 
   %---------------------------------
