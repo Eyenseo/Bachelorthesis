@@ -46,6 +46,7 @@
 \usepackage[justification=centering,format=plain]{caption}
 \usepackage{adjustbox}
 \usepackage[scale=1,ttdefault=true]{AnonymousPro}
+\usepackage{enumitem}
 
 \usepackage{listings}
 \usepackage{xinttools}% for expandable and non-expandable loops
@@ -225,7 +226,7 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\myMinin}[1][]{\mintinline[fontsize=\small, #1]{c++}}
+\newcommand{\myMinin}[1][]{\mintinline[#1]{c++}}
 
 %---------------------------------
 % Horizontal line for title page
