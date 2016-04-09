@@ -212,14 +212,8 @@
     Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit objektorientierten Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
 
     Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt. Dies ist durch eine Implementation\footnote{
-      Das Command-Pattern wurde mit Hilfe des \texttt{any}\tablefootnote{
-        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3804.html}
-      }
-      sowie \texttt{optional}\tablefootnote{
-        \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3793.html}
-      }
-      Typs implementiert.
-    }\spewnotes{}
+      Das Command-Pattern wurde mit Hilfe des \texttt{any}\autocite{cpp-fundamentals} sowie \texttt{optional}\autocite{cpp-fundamentals} Typs implementiert.
+    }
     des Command-Patterns gelöst worden. Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen, sowie komplexe Parameter und Rückgabewerte geben kann, siehe \autoref{fig:loop}.
 
     \begin{figure}[H]
@@ -261,7 +255,7 @@
   %---------------------------------
   \subsection{Syntax}
   \label{ssec:Syntax}
-    Die Syntax ist an \myFnurl{C}{http://www.open-std.org/jtc1/sc22/wg14/}, \myFnurl{Python}{https://www.python.org/}, \myFnurl{JavaScript}{http://www.ecmascript.org/} und \myFnurl{Swift}{https://developer.apple.com/swift/} angelegt. C liefert den größten Anteil der Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was der Folgende Code machen wird. Das die Makrosprache \emph{named parameter}\footnote{
+    Die Syntax ist an C\autocite{C-std}, Python\autocite{Python-std}, JavaScript und Swift\autocite{Swift-std} angelegt. C liefert den größten Anteil der Syntax, von Python wurde \lstinline[style=MyMacroStyle]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyle]$var$ und der named parameter Syntax \lstinline[style=MyMacroStyle]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyle]$def$ und \lstinline[style=MyMacroStyle]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was der Folgende Code machen wird. Das die Makrosprache \emph{named parameter}\footnote{
       Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die Normale Wertzuweisungsstrategie ist nach der Reihenfolge der Deklaration vor zu gehen.
     } unterstützt liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind sie named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
 
@@ -462,7 +456,7 @@
         Recursive descent Parser bauen durch Funktionsaufrufe einen Stack auf, der den Zweigen des Baumes gleicht.
       }.
 \myQuestion{Ist es ok, dass ich die Parser nur kurz in den Fußnoten erklärt habe (Grundlagen Kapitel?)} % TODO
-      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL, und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für einen recursive descent Parser entschieden. Zudem sind die gelungenen Parser von \myFnurl{Clang}{http://clang.llvm.org/features.html} und \myFnurl{GCC}{https://gcc.gnu.org/wiki/New_C_Parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
+      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL, und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für einen recursive descent Parser entschieden. Zudem sind die gelungenen Parser von Clang\autocite{clang-feat} und GCC\autocite{gcc-new-parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
 
       Beim Parsen müssen die Literals umgewandelt werden -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einm String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}). Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden (bei
 \myQuestion{Gibt es ein besseres Beispiel?} % TODO
@@ -638,22 +632,19 @@
         \label{fig:ex_tok}
       \end{myCodeEnv}
 
-
+% ~\\ % BUG FIXME
     %---------------------------------
     % Parser
     %---------------------------------
     \switchcolumn*[\subsection{Parser}]
     \label{ssec:Parser}
       Lorem ipsum dolor sit amet \ldots
-
     \switchcolumn
-
       \begin{myCodeEnv}
         \lstinputlisting[lastline=20]{code/ex_ast.txt}
         \caption{Geparsed Makro}
         \label{fig:ex_ast}
       \end{myCodeEnv}
-
 
     %---------------------------------
     % Interpreterex_tok
@@ -664,6 +655,7 @@
     \switchcolumn
       Lorem ipsum dolor sit amet \ldots
   \end{paracol}
+
 
 %---------------------------------
 % Evaluation
@@ -702,15 +694,20 @@
 %---------------------------------
 % Literatur
 %---------------------------------
-\section{Literatur}
+% \section*{Literatur}
 \label{sec:Literatur}
-  \nocite{*} % TODO remove
-  \printbibliography[heading=none]
+  % \nocite{*} % TODO remove
+  \printbibliography[heading=bibintoc]
+
+\listoffigures
+\listofmyCodeEnvTypes
+
 
 %---------------------------------
 % Anhänge
 %---------------------------------
-\section{Anhänge}
+\section*{Anhänge}
 \label{sec:Anhänge}
+\addcontentsline{toc}{section}{Anhänge}
 
 \end{document}
