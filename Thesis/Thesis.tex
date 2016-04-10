@@ -18,7 +18,9 @@
 %---------------------------------
 % table of contents
 %---------------------------------
+\microtypesetup{protrusion=false} % disables protrusion locally in the document
 \tableofcontents
+\microtypesetup{protrusion=true} % disables protrusion locally in the document
 \newpage
 
 %---------------------------------
@@ -460,6 +462,7 @@
 
       Beim Parsen müssen die Literals umgewandelt werden -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einm String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}). Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden (bei
 \myQuestion{Gibt es ein besseres Beispiel?} % TODO
+% TODO operator precedence -  ! * / % + - == ...
       \myMinin{a || b && c} muss \myMinin{a} zuerst ausgewertet werden und dann \myMinin{b && c}, was das Baum wiedergeben muss). Und Variablen Deklarationen mit Wertzuweisung müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
         Dies ist valider C Code: \myMinin{const int foo = foo + 1;}
       }).
@@ -632,7 +635,7 @@
         \label{fig:ex_tok}
       \end{myCodeEnv}
 
-% ~\\ % BUG FIXME
+~\\ % BUG FIXME
     %---------------------------------
     % Parser
     %---------------------------------
@@ -699,8 +702,10 @@
   % \nocite{*} % TODO remove
   \printbibliography[heading=bibintoc]
 
+\microtypesetup{protrusion=false} % disables protrusion locally in the document
 \listoffigures
 \listofmyCodeEnvTypes
+\microtypesetup{protrusion=true} % disables protrusion locally in the document
 
 
 %---------------------------------
