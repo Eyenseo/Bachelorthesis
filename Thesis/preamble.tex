@@ -407,6 +407,19 @@
       \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
       \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
 }
+\lstdefinestyle{MyMacroStyleIn}
+{
+  language=MyMacro,
+  keepspaces,
+  postbreak=,
+  commentstyle=\color{Comments}\slshape,
+  stringstyle=\color{Strings},
+  keywordstyle={\color{Keywords}\bfseries},
+  alsoletter=0123456789,
+  SelectCharTable=%
+      \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
+      \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+}
 \lstdefinelanguage{MyRegex}{
   alsoletter={\\,*,\&,^},
   basicstyle=\color{OliveDrab},
@@ -520,7 +533,7 @@
 %---------------------------------
 % An Environment for code with captions
 %---------------------------------
-\DeclareCaptionType{myCodeEnvType}[Code][Quell\-code\-ver\-zei\-chnis]
+\DeclareCaptionType{myCodeEnvType}[List\-ing][List\-ing\-ver\-zei\-chnis]
 \newenvironment{myCodeEnv}{
     \vspace{1em}%
     \captionsetup{type=myCodeEnvType}%
