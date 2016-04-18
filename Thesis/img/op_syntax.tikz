@@ -1,37 +1,172 @@
 {
   \begin{tikzpicture}[railroad]
-    \node[StartEnd                                ] (start)                 {};
-    \node[above = 0 of start](startText){Binary};
-    \node[coordinate,      right = of start       ] (poststart)             {};
-    \node[terminal,        right = of poststart   ] (lbo)                   {(};
-    \node[nonterminal,     right = of lbo         ] (lvp1)                  {Werterz.};
-    \node[terminal,        right = of lvp1        ] (lbc)                   {)};
-    \node[coordinate,      right = of lbc         ] (postlbc)               {};
-    \node[coordinate,      right = of postlbc     ] (preoperator)           {};
-    \node[terminal,        right = of preoperator ] (operator)              {>=};
-    \node[coordinate,      right = of operator    ] (postoperator)          {};
-    \node[coordinate,      right = of postoperator] (prerbo)                {};
-    \node[terminal,        right = of prerbo      ] (rbo)                   {(};
-    \node[nonterminal,     right = of rbo         ] (rvp1)                  {Werterz.};
-    \node[terminal,        right = of rvp1        ] (rbc)                   {)};
-    \node[coordinate,      right = of rbc         ] (postrbc)               {};
-    \node[StartEnd,        right = of postrbc     ] (end)                   {};
+    \node[
+      StartEnd
+    ] (start)
+    {};
+    \node[
+      above = 0 of start
+    ] (startText)
+    {Binary};
+    \node[
+      coordinate,
+      right = of start
+    ] (poststart)
+    {};
+    \node[
+      terminal,
+      right = of poststart
+    ] (lbo)
+    {(};
+    \node[
+      nonterminal,
+      right = of lbo
+    ] (lvp1)
+    {Werterz.};
+    \node[
+      terminal,
+      right = of lvp1
+    ] (lbc)
+    {)};
+    \node[
+      coordinate,
+      right = of lbc
+    ] (postlbc)
+    {};
+    \node[
+      coordinate,
+      right = of postlbc
+    ] (preoperator)
+    {};
+    \node[
+      terminal,
+      node distance = 8mm,
+      right = of preoperator,
+      label={[outer sep=-.3em]5}
+    ] (operator)
+    {>=};
+    \node[
+      coordinate,
+      node distance = 8mm,
+      right = of operator
+    ] (postoperator)
+    {};
+    \node[
+      coordinate,
+      right = of postoperator
+    ] (prerbo)
+    {};
+    \node[
+      terminal,
+      right = of prerbo
+    ] (rbo)
+    {(};
+    \node[
+      nonterminal,
+      right = of rbo
+    ] (rvp1)
+    {Werterz.};
+    \node[
+      terminal,
+      right = of rvp1
+    ] (rbc)
+    {)};
+    \node[
+      coordinate,
+      right = of rbc
+    ] (postrbc)
+    {};
+    \node[
+      StartEnd,
+      right = of postrbc
+    ] (end)
+    {};
 
-    \node[nonterminal,     below = of lvp1        ] (lvp2)                  {Werterz.};
-    \node[nonterminal,     below = of rvp1        ] (rvp2)                  {Werterz.};
+    \node[
+      nonterminal,
+      below = of lvp1
+    ] (lvp2)
+    {Werterz.};
+    \node[
+      nonterminal,
+      below = of rvp1
+    ] (rvp2)
+    {Werterz.};
 
-    \node[terminal,        above = of operator    ] (op1)                   {>};
-    \node[terminal,        above = of op1         ] (op2)                   {<=};
-    \node[terminal,        above = of op2         ] (op3)                   {<};
-    \node[terminal,        below = of operator    ] (op5)                   {==};
-    \node[terminal,        below = of op5         ] (op6)                   {!=};
-    \node[terminal,        below = of op6         ] (op7)                   {\&\&};
-    \node[terminal,        below = of op7         ] (op8)                   {||};
+    \node[
+      terminal,
+      above = of operator,
+      label={[outer sep=-.3em]4}
+    ] (op1)
+    {>};
+    \node[
+      terminal,
+      above = of op1,
+      label={[outer sep=-.3em]3}
+    ] (op2)
+    {<=};
+    \node[
+      terminal,
+      above = of op2,
+      label={[outer sep=-.3em]2}
+    ] (op3)
+    {<};
+    \node[
+      terminal,
+      below = of operator,
+      label={[outer sep=-.3em]6}
+    ] (op5)
+    {==};
+    \node[
+      terminal,
+      below = of op5,
+      label={[outer sep=-.3em]7}
+    ] (op6)
+    {!=};
+    \node[
+      terminal,
+      below = of op6,
+      label={[outer sep=-.3em]8}
+    ] (op7)
+    {\&\&};
+    \node[
+      terminal,
+      below = of op7,
+      label={[outer sep=-.3em]9}
+    ] (op8)
+    {||};
 
-    \node[terminal,        below = of op8         ] (op9)                   {!};
-    \node[StartEnd                                ] (unstart) at (lbc|-op9) {};
-    \node[above = 0 of unstart](unstartText){Unary};
-
+    \node[
+      terminal,
+      below = of op8,
+      label={[outer sep=-.3em]1}
+    ] (op9)
+    {!};
+    \node[
+      terminal,
+      below = of op9,
+      label={[outer sep=-.3em]10}
+    ] (op10)
+    {typeof};
+    \node[
+      terminal,
+      below = of op10,
+      label={[outer sep=-.3em]11}
+    ] (op11)
+    {print};
+    \node[
+      StartEnd
+    ] (unstart) at (lbc|-op9)
+    {};
+    \node[
+      coordinate
+    ] (postunstart)
+    at (unstart-|preoperator)
+    {};
+    \node[
+      above = 0 of unstart
+    ] (unstartText)
+    {Unary};
 
     \graph[railroad] {
       % main
@@ -49,7 +184,10 @@
       (preoperator)->[vh path](op8)->[hv path](postoperator);
 
       %unary
-      (unstart)->(op9)->[hv path](postoperator);
+      (unstart)--(postunstart);
+      (postunstart)->(op9)->[hv path](postoperator);
+      (postunstart)->[vh path](op10)->[hv path](postoperator);
+      (postunstart)->[vh path](op11)->[hv path](postoperator);
     };
   \end{tikzpicture}
 }

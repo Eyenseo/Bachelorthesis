@@ -11,13 +11,12 @@
     \node[coordinate, right = of param] (paramClose3) {};
     \node[coordinate, right = of paramClose3] (paramClose2) {};
     \node[terminal, right = of paramClose2] (paramClose1) {)};
-    \node[terminal, right = of paramClose1] (statementEnd) {;};
-    \node[StartEnd, right = of statementEnd] (end) {};
+    \node[StartEnd, right = of paramClose1] (end) {};
 
     \node[terminal, below = of param] (comma){,};
 
     \graph[railroad] {
-      (start)->(name)->(paramOpen1)->(paramname)->(sep)->(param)->(paramClose1)->(statementEnd)->(end);
+      (start)->(name)->(paramOpen1)->(paramname)->(sep)->(param)->(paramClose1)->(end);
       (paramClose3)->[vh path](comma)->[hv path](paramOpen3);
       (paramOpen2) -> [skip loop=10mm] (paramClose2);
     };

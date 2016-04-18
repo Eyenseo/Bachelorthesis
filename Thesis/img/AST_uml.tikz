@@ -19,7 +19,10 @@
     Class.Token("Token")()();
 
     Package.ast("ast")(AST, Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
-    Package.token("token")(Token);
+    Package.pod("pod")(ast, Token);
+
+    ast.top  = pod.top - 20;
+    pod.bottom =  ast.bottom - 10;
 
     topToBottom(30)(Function, Return, Operator);
     topToBottom(30)(Scope, AST, Variable);
@@ -32,8 +35,7 @@
 
     same.midx(Loop, Condition);
 
-
-    drawObjects(token, ast);
+    drawObjects(pod);
 
     link(inheritance)
       (Function.se -- AST.nw);

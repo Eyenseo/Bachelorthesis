@@ -12,18 +12,18 @@
     Class.Token("Token")()();
 
     Package.ast("ast")(AST);
-    Package.parser("parser")(Parser, Tokenizer, TokenList);
-    Package.token("token")(Token);
+    Package.parser("parser")(Parser, Tokenizer);
+    Package.pod("pod")(Token, TokenList, ast);
 
-    topToBottom.left(30)(ast, token);
-    leftToRight(30)(Tokenizer, TokenList);
-    leftToRight(40)(TokenList, Token);
-    topToBottom(40)(Parser, Tokenizer);
+    leftToRight(30)(Tokenizer, TokenList, Token);
+    topToBottom(30)(Parser, Tokenizer);
+    same.midx(AST, Token);
+    same.midy(Tokenizer, Token);
     Parser.top = AST.top;
+    pod.top = parser.top + 15;
+    pod.bottom = parser.bottom;
 
-
-    drawObjects(parser, ast, token);
-
+    drawObjects(parser, pod, token);
 
     link(compositionUni)
       (Token.w -- TokenList.e);

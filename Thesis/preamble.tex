@@ -57,6 +57,7 @@
 \usepackage{xinttools} % for expandable and non-expandable loops
 \usepackage{textcomp} % calculate support
 \usepackage{lipsum}
+\usepackage{array} % for better tables
 
 \usepackage{paracol} % paralell collumns
 \usepackage{mdframed} % Frames for text - used for breakable minted with background
@@ -231,7 +232,8 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\myMinin}[1][]{\mintinline[#1]{c++}}
+\newcommand{\myMinin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{c++}}
+\newcommand{\myMin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{text}}
 
 %---------------------------------
 % Horizontal line for title page
@@ -326,6 +328,7 @@
 \addto\extrasngerman{
   \def\sectionautorefname{Ka\-pi\-tel}
   \def\subsectionautorefname{Un\-ter\-ka\-pi\-tel}
+  \def\subsubsectionautorefname{Un\-ter\-un\-ter\-ka\-pi\-tel}
 }
 \newcommand{\myNamedRef}[1]{%
   \hyperref[#1]{%
@@ -386,7 +389,7 @@
 \makeatother
 
 \lstdefinelanguage{MyMacro}{
-  keywords={var, def, return, if, while, do, else, break, for},
+  keywords={var, def, return, if, while, do, else, break, for, print, typeof},
   ndkeywords={true, false},
   ndkeywordstyle=\color{Numbers},
   sensitive=false,
@@ -399,19 +402,6 @@
 {
   language=MyMacro,
   keepspaces,
-  commentstyle=\color{Comments}\slshape,
-  stringstyle=\color{Strings},
-  keywordstyle={\color{Keywords}\bfseries},
-  alsoletter=0123456789,
-  SelectCharTable=%
-      \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
-      \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
-}
-\lstdefinestyle{MyMacroStyleIn}
-{
-  language=MyMacro,
-  keepspaces,
-  postbreak=,
   commentstyle=\color{Comments}\slshape,
   stringstyle=\color{Strings},
   keywordstyle={\color{Keywords}\bfseries},
@@ -460,6 +450,12 @@
   basewidth={.56em,.45em},
   fontadjust=true,
 }
+
+%---------------------------------
+% listings inline
+%---------------------------------
+\newcommand{\myMIn}{\lstinline[style=MyMacroStyle,postbreak=]}
+\newcommand{\myRIn}{\lstinline[language=MyRegex]}
 
 %---------------------------------
 % Tikz Railroad styles
@@ -564,3 +560,18 @@
 % New page for new section
 %---------------------------------
 \addtokomafont{section}{\clearpage}
+
+%---------------------------------
+% Fixed width tabular
+%---------------------------------
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%---------------------------------
+% Tikz mark
+%---------------------------------
+\newcommand{\tikzmark}[2]{%
+  \tikz[overlay,remember picture]%
+  \node[text=black,yshift=.25\baselineskip] (#1) {#2};%
+}

@@ -4,22 +4,22 @@
     iInterface.foreColor := (1, 0.9, 0.7);
     iPackage.foreColor := (0.9, 0.9, 0.9);
 
-    Class.Executable("Executable")()();
-    Class.Macro("Macro")()();
     Class.Command("Command")()();
-    .5[Command.nw, Macro.ne] = below(Executable.s, 30);
+    Class.Macro("Macro")()();
+    Class.ConcreteCommand("ConcreteCommand")()();
+    .5[ConcreteCommand.nw, Macro.ne] = below(Command.s, 30);
 
-    leftToRight(80)(Macro, Command);
+    leftToRight(80)(Macro, ConcreteCommand);
 
-    drawObjects(Macro, Command, Executable);
+    drawObjects(Macro, ConcreteCommand, Command);
 
     link(inheritance)
-      (Executable.sw -- Macro.ne);
+      (Macro.ne -- Command.sw);
     link(inheritance)
-      (Executable.se -- Command.nw);
+      (ConcreteCommand.nw -- Command.se);
 
     link(aggregationUni)
-      (pathManhattanX(Executable.w, Macro.n));
-    item(iAssoc)("*")(obj.n = Executable.w + (-3, -3));
+      (pathManhattanX(Command.w, Macro.n));
+    item(iAssoc)("*")(obj.n = Command.w + (-3, -3));
   \end{mpost}
 }

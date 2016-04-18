@@ -2,7 +2,7 @@
   \begin{tikzpicture}[railroad]
     \node[StartEnd                                                            ] (start)     {};
     \node[coordinate,  right = of start                                       ] (postStart) {};
-    \node[nonterminal, right = of postStart                                   ] (callable)  {Funktionsaufrufe};
+    \node[nonterminal, right = of postStart                                   ] (callable)  {Funktionsaufruf};
     \node[coordinate,  right = of callable                                    ] (preEnd)    {};
     \node[StartEnd,    right = of preEnd                                      ] (end)       {};
 

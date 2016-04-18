@@ -11,10 +11,11 @@
     \node[StartEnd, right = of bc] (end) {};
 
     \node[nonterminal, above = of als] (break){break};
+    \node[terminal, right = of break]  (postbr) {;};
 
     \graph[railroad] {
       (start)->(bo)->(als)->(bc)->(end);
-      (postbo)->[vh path](break)->[hv path](prebc);
+      (postbo)->[vh path](break)->(postbr)->[hv path](prebc);
       (postbo)<->[skip loop=-10mm](postals);
     };
   \end{tikzpicture}

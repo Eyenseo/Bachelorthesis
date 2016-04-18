@@ -1,0 +1,59 @@
+{
+  \begin{tikzpicture}[
+      font=\sffamily\small,
+      auto,
+      cmd/.style={
+        nonterminal,
+        draw,
+        thick,
+        rounded corners,
+        inner sep=0,
+        ellipse,
+      },
+      type/.style={
+        color={rgb:red,1;green,2;blue,3},align=center
+      },
+      logic/.style={
+        terminal,
+        draw,
+        thick,
+        diamond
+      },
+      to/.style={
+        ->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize,black!50,
+      }
+    ]
+
+    % Nodes
+    \node[StartEnd] (start) {};
+
+    \node[cmd] (cmd00) [right = 1.5cm of start] {\texttt{Tokenizer}};
+
+    \node[cmd] (cmd01) [right = 2cm of cmd00] {\texttt{Parser}};
+    \node[cmd] (cmd02) [right = 1cm of cmd01] {\texttt{Interpreter}};
+
+    \node[StartEnd] (end) [right = 2cm of cmd02] {};
+
+    % Arrows
+    \draw[to]
+      (start)
+        --
+        node[midway,above,type] {\texttt{String}}
+      (cmd00);
+    \draw[to]
+      (cmd00)
+        --
+        node[midway,above,type] {\texttt{TokenList}}
+      (cmd01);
+    \draw[to]
+      (cmd01)
+        --
+        node[midway,above,type] {\texttt{AST}}
+      (cmd02);
+    \draw[to]
+      (cmd02)
+        --
+        node[midway,above,type] {\texttt{Command}}
+      (end);
+  \end{tikzpicture}
+}

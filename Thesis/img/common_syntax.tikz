@@ -1,34 +1,35 @@
 {
   \begin{tikzpicture}[railroad]
     \node[StartEnd] (start) {};
-    \node[coordinate, right = of start] (postbo) {};
-    \node[nonterminal, right = of postbo] (fundef) {Funktionsdefinition};
-    \node[coordinate, right = of fundef] (prebc) {};
-    \node[StartEnd, right = of prebc] (end) {};
+    \node[coordinate, right = of start] (poststart) {};
+    \node[nonterminal,node distance = 18mm, right = of poststart] (return) {return};
+    \node[coordinate,node distance = 18mm, right = of return] (preend) { };
+    \node[StartEnd, right = of preend] (end) {};
 
-    \node[nonterminal, above = of fundef] (return){return};
+    % \node[nonterminal, above = of fundef] (return){return};
     \node[nonterminal, above = of return] (for){for};
     \node[nonterminal, above = of for] (dowhile){do while};
     \node[nonterminal, above = of dowhile] (while){while};
     \node[nonterminal, above = of while] (if){if};
 
+    \node[nonterminal, below = of return] (scope){Scope};
+    \node[nonterminal, below = of scope] (fundef){Funktionsdefinition};
     \node[nonterminal, below = of fundef] (vardef){Variablendefinition};
     \node[nonterminal, below = of vardef] (vpr){Werterzeuger};
-    \node[nonterminal, below = of vpr] (scope){Scope};
-    \node[nonterminal, below = of scope] (literal){Literal};
+
+    \node[terminal, right = of vpr]  (postvpr) {;};
 
     \graph[railroad] {
-      (start)->(fundef)->(end);
+      (start)->(return)->(end);
 
-      (postbo)->[vh path](for)->[hv path](prebc);
-      (postbo)->[vh path](dowhile)->[hv path](prebc);
-      (postbo)->[vh path](while)->[hv path](prebc);
-      (postbo)->[vh path](if)->[hv path](prebc);
-      (postbo)->[vh path](vardef)->[hv path](prebc);
-      (postbo)->[vh path](vpr)->[hv path](prebc);
-      (postbo)->[vh path](scope)->[hv path](prebc);
-      (postbo)->[vh path](return)->[hv path](prebc);
-      (postbo)->[vh path](literal)->[hv path](prebc);
+      (poststart)->[vh path](for)->[hv path](preend);
+      (poststart)->[vh path](dowhile)->[hv path](preend);
+      (poststart)->[vh path](while)->[hv path](preend);
+      (poststart)->[vh path](if)->[hv path](preend);
+      (poststart)->[vh path](vardef)->[hv path](preend);
+      (poststart)->[vh path](scope)->[hv path](preend);
+      (poststart)->[vh path](fundef)->[hv path](preend);
+      (poststart)->[vh path](vpr)->(postvpr)->[hv path](preend);
     };
   \end{tikzpicture}
 }

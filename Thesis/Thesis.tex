@@ -85,8 +85,6 @@
     %   \caption{\textit{``Das soll meine Zukunft sein?''}}
     % \end{figure}
 
-\pagebreak
-
 %---------------------------------
 % Einleitung
 %---------------------------------
@@ -171,36 +169,71 @@
   \label{ssec:Diskussion des Problemfeldes}
     Ein Makrosystem ist eine Komponente eines Softwaresystems, welche es erlaubt, die Software über eine Reihenfolge von Zeichen so zu steuern, als ob ein Mensch die Applikation bedient hätte.
 
-    Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die
-    Hardware % FIXME Nein, durch die Spezifikation der Sprache!
-    vorgegeben ist.
-    Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer virtuellen Maschine bedient -- wie Java -- als mit C. % FIXME Den Vergleich finde ich nicht geeignet. Ein Makrosystem ist doch nichts anderes als eine Sprache, in der ich (zumindest) Prozeduren (Makros) aufrufen und Kontrolllogik definieren kann. Das geht sowohl bei Java als auch bei C.
-    \\
-    Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen
-    System % FIXME Ich denke, Du solltest _vorher_ (z.B. als erstem Abschnitt in diesem Kapitel) das „System“ einführen und dabei auch darauf eingehen, wie die „Prozeduren“ / Module als Kommandos entworfen sind.
-    , da dort das \emph{Command-Pattern} \autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet.
+    %---------------------------------
+    % Was ist ein Makrosystem?
+    %---------------------------------
+    \subsubsection{Was ist ein Makrosystem?}
+    \label{sssec:Was ist ein Makrosystem?}
+      Die Funktionalität eines Makrosystems ist vergleichbar mit Programmiersprachen -- dort wird, durch eine Ansammlung von Zeichen, der Computer veranlasst, eine bestimmte Abfolge von Hardwareanweisungen auszuführen. Der Unterschied von einem Makrosystem zu zum Beispiel C ist, dass bei einem Makrosystem der Befehlssatz durch die Anwendung vorgegeben wird, wohingegen der Befehlssatz von C durch die Hardware vorgegeben ist und nicht durch eine weitere Ebene übersetzt werden muss (C ist eine native Programmiersprache). Somit ist ein Makrosystem eher mit einer Sprache zu vergleichen, die sich einer \emph{virtuellen Maschine} (VM) bedient -- wie Java -- als mit C.
 
-\myFixme{Das folgende ist ziemlich komprimiert -- muss das noch ausführlicher durchgekaut werden (Kapitel Grundlagen?), oder ist das `Allgemeinwissen'?}  % FIXME Weiß nicht. Ist schon sehr minimalistisch… Wenn Du kannst, kannst Du ja noch ein bisschen mehr Hintergrund einführen (ggf. mit kleinen Beispielen zur Arbeit von Tokenizer und Parser (Kette darstellen: String -> Tokenfolge -> AST)).
-                                                                                                                                                             %
-    % FIXME Die folgenden drei Absätze gehen für meine Begriffe schon zu sehr in Richtung Entwurf / Konzeption. Verschieben?
-    Für alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen (\myMinin{string}), in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer. Meist wird dieser in den Parser\autocite[S.46]{eirund2013formale} integriert, welcher die Stücken des Strings in ein Format bringt, welches der \emph{Interpreter} \autocite[S.274]{Gamma:1995:DPE:186897} verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum}\footnote{
-      \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
-    } (AST), welcher den String eindeutig repräsentiert. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt welche Befehle der Interpreter ausführen muss, um das als String angegebene Programm auszuführen.
+      Bei Java gibt die VM den Befehlssatz vor und muss bei der Ausführung des Programms diese Befehle, in die entsprechenden Hardwarebefehle, übersetzen (write once, run anywhere). Ähnlich verhält es sich mit dem Makrosystem, das Makro nutzt die vorhandenen Befehle der Applikation, um einen Arbeitsvorgang zu automatisieren. Da die Befehle jedoch nur als Zeichenketten vorliegen, müssen diese zu den richtigen Funktion übersetzt werden. Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen System, da dort das Command-Pattern \autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet. \autoref{sssec:Das vorhandene System} geht auf die Architektur des vorhandenen Systems ein, die für diese Arbeit wichtig ist.
 
-    Das vorhandene System ist in C++ geschrieben, weswegen es sich größten Teils erübrigt über andere Programmiersprachen nachzudenken. Durch das \emph{name mangling}\footnote{
-      Beim `name mangling' fügt der Compiler den Funktionsnamen weite Informationen hinzu, um eine eindeutige Funktionssignatur zu erhalten.
-    } ist es schwierig eine API von C++ zu anderen Programmiersprachen anzubieten -- meistens geschieht dies über eine C API. Bei dieser verliert man den Vorteil der Objektorientierung und muss meistens auch die Daten zwischen C++$\longleftrightarrow$C und C$\longleftrightarrow$XYZ (z.B Python oder Lua) konvertieren, was langsam ist. Die Makros müssen aber auf Daten arbeiten, welche als Objekte von C++ vorliegen, deswegen müsste der Stack, mit dem der Interpreter arbeitet, in der C++ Ebene bleiben. Damit würde eine Implementierung von Tokenizer, Parser, AST und Interpreter die Wartbarkeit, durch die Teilung und die weitere Programmiersprache deutlich verschlechtern. Zusätzlich ist das Ziel eine Applikation zu automatisieren, und nicht mit komplett neuen Funktionalitäten zu erweitern, was die Vorteile von z.B Python größtenteils zunichte macht.
+      Für alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen, in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer, siehe \autoref{fig:abstract_arch}. Meist wird dieser in den Parser \autocite[S.46]{eirund2013formale} integriert, welcher die Stücken des der Zeichenkette (String) in ein Format bringt, welches der Interpreter verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum}\footnote{
+        \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
+      } (AST), welcher den String eindeutig repräsentiert. Einer Typen aus dem AST nennt sich Literal. Literals sind Daten, die der Programmierer durch Quelltext erstellen kann (zum Beispiel ist \myMinin{"foo"} ein String und \myMinin{1.1} ist eine Dezimalzahl). Literals müssen aus dem Format des Quelltextes in die echte Datenstruktur verwandelt werden, was ein Lexer übernimmt. Lexer sind wie Tokenizer meist ein ein Teil des Parsers. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt, welche Befehle der Interpreter ausführen muss, um das, als String angegebene, Programm auszuführen. Ein Interpreter arbeitet die AST Elemente sequentiell ab, das heißt, dass ein Interpreter \myMinin{a} ausführt ohne zu `wissen', dass er im Anschluss \myMinin{b} ausführen wird.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/abstrakt_arch.tikz}
+        \caption{Abstraktes Ziel der resultierenden Architektur.}
+        \label{fig:abstract_arch}
+      \end{figure}
+      Anstelle eines Interpreters, wird bei C ein Compiler genutzt, der, vor der Ausführung, das gesamte Programm in Maschinencode verwandelt. Dies hat den Vorteil, dass während der Ausführung nur das Programm ausgeführt wird und nicht noch eine weitere Komponente (Interpreter) die CPU in Anspruch nimmt. Ein Kompromiss zwischen beiden Welten ist ein \emph{just in time compiler} (JIT), dieser probiert das beste aus beiden Welten, die Dynamik vom Interpretieren und die Geschwindigkeit von compilierten Programmen, zu vereinen.
 
-    Die vorhandene Software ist Cross-Plattform (Windows und Linux) entwickelt. Im Rahmen dieser Bachelorarbeit wird die Software nur auf Linux entwickelt, da die \emph{Standard} Implementation von Microsoft
-    unberechenbar % FIXME Solche Bemerkungen bitte streichen bzw. nicht in dieser unwissenschaftlichen Form bringen.
-    ist und bei der Fehlersuche meist viel Zeit in Anspruch nimmt. Bei der Entwicklung wird daher darauf geachtet, dass keine Linux spezifischen Bibliotheken in Anspruch genommen werden. Das schließt leider nicht aus, dass die entstehende Software, ohne Anpassungen, auf Windows ausgeführt werden kann.
+    %---------------------------------
+    % Parser
+    %---------------------------------
+    \subsubsection{Parser}
+    \label{sssec:Parser}
+      Einer der zeitaufwändigsten Schritte ist es, die Quelltext Zeichenkette in einen AST umzuwandeln. Dieser Schritt wird von dem Parser übernommen, von dem es drei Hauptgruppen gibt.
+      \begin{itemize}
+        \item Links nach rechts, links Auflösung (LL) \autocite[S.77\,f.]{eirund2013formale}\\
+          LL Parser arbeiten `vorwärts', links nach rechts und probieren auf der linken Seite, des gelesenen (teils geparsten Quelltextes) zu reduzieren. Man gelangt zum Schluss, am Ende des Baumes an.
+        \item Links nach rechts, rechts Auflösung (LR) \autocite[S.77\,f.]{eirund2013formale}\\
+          LR Parser arbeiten `rückwärts', links nach rechts und probieren auf der rechten Seite, des ungelesenen Quelltextes zu reduzieren um Terminals auf der linken Seite zu sammeln. Man gelangt zum Schluss am Anfang des Baumes an. \autocite{cs143-stanford}
+        \item Rekursiv Absteigend (recursive descent)\\
+          Recursive descent Parser arbeiten wie LR Parser `rückwärts' und gelangen am Ende auch am Anfang des Baumes an. Im Gegensatz zu LL und LR Parsern arbeiten sie nicht mit Zustandstabellen sondern mit Rekursion. Für jedes Konstrukt, welches geparsed werden soll, gibt es eine Methode. In dieser werden all die Methoden aufgerufen, die ein Element produzieren, welches sich in dem der äußeren Methode befinden darf.
+      \end{itemize}
+
+    %---------------------------------
+    % Das vorhandene System
+    %---------------------------------
+    \subsubsection{Das vorhandene System}
+    \label{sssec:Das vorhandene System}
+      Das vorhandene Softwaresystem ist eine C++ Anwendung, die mit Hilfe von Modulen ihre Funktionalität erweitern kann. Ein Teil des zentralen Herzstückes ist eine Implementation des Command-Patterns, siehe \autoref{fig:command_uml}.
+
+      Der \myMinin{Reciver} stellt alle Objekte dar, die das \myMinin{ConcreteCommand} braucht, um seine Aufgabe zu erfüllen und ist -- so wie der \myMinin{Client}, der die Objekte darstellt, die ein \myMinin{Command} ausführen -- nicht Teil der Architektur. \myMinin{Client}s sind über den \myMinin{CommandProvider} in der Lage einen \myMinin{Invoker} zu bekommen, der ein konkretes \myMinin{Command} wrapped. Der \myMinin{Invoker} bekommt bei der Erzeugung über den Konstruktor den momentanen \myMinin{HistoryStack}. Wenn der \myMinin{Invoker} durch einen Aufruf aus einem \myMinin{Command} (auf den \myMinin{CommandProvider}) entstanden ist, ist es der \myMinin{HistoryStack} des \myMinin{Commands}. Ansonsten ist es der \myMinin{HistoryStack} des \myMinin{CommandProvider}s. Durch den \myMinin{HistoryStack} ist es möglich die Veränderungen von ausgeführten \myMinin{Command}s rückgängig zu machen oder wiederherzustellen. Dies wird zum Beispiel von dem \myMinin{Invoker} genutzt, wenn das aufgerufene \myMinin{Command} einen Fehler verursacht. An dem \myMinin{CommandProvider} können sich alle \myMinin{Command}s registrieren, die in anderen Teilen der Anwendung genutzt werden können.
+
+      \begin{figure}[H]
+        \centering
+        \myInput{img/command_uml.tikz}
+        \caption{Abstrakte Command-PatterImplementation.}
+        \label{fig:command_uml}
+      \end{figure}
+
+      Da C++ keine Reflexion \autocites{vinoski2005time}{ferber1989computational} unterstützt, ist die Signatur, der \myMinin{any execute(map<string, any> arguments)} Methode, ein wichtiger Punkt der Architektur. Durch den \texttt{any} \autocite{cpp-fundamentals} Typ, in der Implementation des Command-Patterns, wurde die fehlende Reflektion umgangen\footnote{
+         Diese Veränderung ist als Vorbereitung auf die Bachelorarbeit entstanden, da diese Anpassung den Zeitrahmen der Bachelorarbeit überschritten hätte.
+      }. \myMinin{any} ist in der Lage, jeglichen Typ aufzunehmen und typsicher\footnote{
+        Typsicher bedeutet das ein \myMinin{int} nicht zu einem \myMinin{char} gecastet werden kann -- es bedeutet nicht, dass \myMinin{any} implizit zu \myMinin{int} gecastet wird -- es ist also mit einem \myMinin{void *} zu vergleichen.
+      } aufzubewahren bzw. weiterzugeben. Diese Funktionalität, kombiniert mit der \myMinin{map<T1, T2>}, erlaubt es, beliebig viele Parameter, mit beliebigen Typsignaturen als Parameter für das \myMinin{Command} zu nutzen, ohne dass die Funktionssignatur angepasst werden muss.
+
+      Der Wert von einer \myMinin{any} Variable kann entweder invalid (keine Daten) oder valid (Daten) sein -- dies ist zu vergleichen mit den Variablen von Python. Dies provoziert Fehler, wenn die \myMinin{ConcreteCommand}s aufgerufen werden und der erwartete Typ nicht übereinstimmt. Allerdings ist dieses Problem durch eine Prüfung, ob die richtigen Typen in den \myMinin{any} Parametern stecken minimiert. Die Prüfung findet in dem \myMinin{Invoker} statt, bevor das \myMinin{ConcreteCommand} mit den parametern aufgerufen wird.
 
   %---------------------------------
   % Anforderungen an die angestrebte Lösung
   %---------------------------------
   \subsection{Anforderungen an die angestrebte Lösung}
   \label{ssec:Anforderungen an die angestrebte Lösung}
-    Die Probleme, ein Makrosystem/-sprache in C++ zu implementieren, fangen dann an, wenn man von den Makros will, dass diese nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere Makros vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
+    Die Probleme, ein Makrosystem/-sprache zu implementieren, fangen dann an, wenn man von den Makros will, dass die \myMinin{Command}s nicht nur hintereinander abgearbeitet werden, ohne dass sie wissen, dass andere \myMinin{Command}s vor ihnen bzw. nach ihnen ausgeführt werden -- wie in \autoref{fig:sequential} zu sehen ist.
 
     \begin{figure}[H]
       \centering
@@ -209,7 +242,7 @@
       \label{fig:sequential}
     \end{figure}
 
-    \autoref{fig:logic} zeigt den ersten Schritt zu einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus Makros entscheiden kann, welche weiteren Makros er ausführen möchte.
+    \autoref{fig:logic} zeigt den ersten Schritt zu einer nützlichen Implementation -- Logik. Hierbei bietet man an, dass der Makro-Entwickler durch Rückgabewerte aus \myMinin{Command}s entscheiden kann, welche weiteren \myMinin{Command}s er ausführen möchte.
 
     \begin{figure}[H]
       \centering
@@ -218,17 +251,7 @@
       \label{fig:logic}
     \end{figure}
 
-    Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit
-    objektorientierten % FIXME Objektorientiert ist hieran ja gar nichts - das Wort kannst Du also streichen (und vielleicht statt von „Sprachen“ eher von „vollständigen Programmiersprachen“ sprechen?).
-
-    Sprachen arbeitet bzw. mehr als ein \textit{`ja'} oder nein \textit{`nein'} braucht.
-
-    Was ein Makrosystem/-sprache anbieten muss ist, dass Instanzen von verschiedenen Klassen/Typen zurückgegeben und beliebig viele Parameter (unterschiedlicher Klassen/Typen) dem Makro mitgegeben werden können. Leider sind gerade diese Punkte ein Problem in C++, weil C++ keine Reflexion\autocites{vinoski2005time}{ferber1989computational} unterstützt.
-    Dies ist durch eine Implementation\footnote{
-      Das Command-Pattern wurde mit Hilfe des \texttt{any} \autocite{cpp-fundamentals} sowie \texttt{optional} \autocite{cpp-fundamentals} Typs implementiert.
-    }
-    des Command-Patterns gelöst worden. % FIXME Inwieweit ist das Wiederholung? Das Command-Pattern hast Du ja vorher schon mal erwähnt? Vielleicht wird mir auch nur nicht auf Anhieb klar, wie das Command-Pattern das Problem der Reflexion löst.
-    Somit kommt in diesem Schritt `nur' noch hinzu, dass es Schleifen, sowie komplexe Parameter und Rückgabewerte geben kann, siehe \autoref{fig:loop}.
+    Obwohl man mit solchen Makros schon einige Probleme lösen kann, ist es nicht das, was man zur Verfügung haben will, wenn man mit Datenstrukturen arbeitet, die normalerweise an Funktionen und Objekte geben werden, um sie zu modifizieren. Somit kommt in diesem Schritt hinzu, dass es Schleifen, sowie komplexe Parameter und Rückgabewerte geben kann, siehe \autoref{fig:loop}.
 
     \begin{figure}[H]
       \centering
@@ -237,7 +260,7 @@
       \label{fig:loop}
     \end{figure}
 
-    Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter sein sollte, deren Laufzeitumgebung eine anderes Softwaresystem ist.
+    Letztendlich kann man sagen, dass ein solches Makrosystem/-sprache eine Programmiersprache mit Interpreter \autocite[S.274]{Gamma:1995:DPE:186897} sein sollte, deren Laufzeitumgebung eine anderes Softwaresystem ist.
 
     Die Fehlermeldungen, die bei Syntaxfehlern auftreten, sollten dem Nutzer möglichst viele sinnvolle Informationen liefern -- als Vorbild dient hier Clang (siehe \autoref{fig:clang_error}).
 
@@ -254,6 +277,7 @@
       \caption{Clang Fehlermeldung.}
       \label{fig:clang_error}
     \end{myCodeEnv}
+\myFixme{Ref Section in implementation / architekture} % FIXME
 
 %---------------------------------
 % Konzeption
@@ -262,28 +286,37 @@
 \label{sec:Konzeption}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
-  \autoref{ssec:Syntax} beschreibt die Syntax, welche von dem Tokenizer und Parser umgewandelt werden soll. Im \autoref{ssec:Grundarchitektur} wird die Grundarchitektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst nur die grobe Architektur des Makrosystems, da in dem \autoref{ssec:Detaillierte Teilarchitekturen} auf die komplexeren Teile der Architektur eingegangen wird.
+  \myNamedRef{ssec:Syntax} beschreibt die Syntax, welche von dem Tokenizer und Parser umgewandelt werden soll. Im \myNamedRef{ssec:Grundarchitektur} wird die Grundarchitektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst nur die grobe Architektur des Makrosystems, da in dem \myNamedRef{ssec:Detaillierte Teilarchitekturen} auf die komplexeren Teile der Architektur eingegangen wird.
 
   %---------------------------------
   % Syntax
   %---------------------------------
   \subsection{Syntax}
   \label{ssec:Syntax}
-    Die Syntax ist an C\autocite{C-std}, Python\autocite{Python-std}, JavaScript \autocite{Ecma-std} und Swift\autocite{Swift-std} angelegt. C liefert den größten Anteil der Syntax, von Python wurde \lstinline[style=MyMacroStyleIn]$def$ übernommen, von JavaScript \lstinline[style=MyMacroStyleIn]$var$ und die \emph{named parameter}\footnote{
-      Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die Normale Wertzuweisungsstrategie ist nach der Reihenfolge der Deklaration vor zu gehen.
+    Die Syntax ist an C \autocite{C-std}, Python \autocite{Python-std}, JavaScript \autocite{Ecma-std} und Swift \autocite{Swift-std} angelegt. C liefert den größten Anteil der Syntax, von Python wurde \myMIn$def$ übernommen, von JavaScript \myMIn$var$ und die \emph{named parameter}\footnote{
+      Named Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die normale Wertzuweisungsstrategie ist, nach der Reihenfolge der Deklaration vorzugehen.
     }
-    Syntax \lstinline[style=MyMacroStyleIn]$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \lstinline[style=MyMacroStyleIn]$def$ und \lstinline[style=MyMacroStyleIn]$var$ sorgt dafür, dass der Programmierer nach den ersten drei Zeichen weiß, was der folgende Code machen wird. Das die Makrosprache named parameter unterstützt, liegt daran, dass das
-    Command-Pattern % FIXME Schon wieder ;-) Dass Du Dich darauf immer wieder beziehst, macht deutlich, wie wichtig es ist, dass Du die Realisierung der Prozeduren/Module und das Command-Pattern vorher umfassend einführst!
-    so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind die named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben.
+    Syntax \myMIn$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \myMIn$def$ und \myMIn$var$ sorgt dafür, dass die Programmierer nach den ersten drei Zeichen wissen, was der folgende Code machen wird. Das die Makrosprache named parameter unterstützt, liegt daran, dass das Command-Pattern so implementiert wurde, dass Parameter alias Bezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nicht so einfach möglich, somit sind die named parameter der bestmögliche Kompromiss, da diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben, was durch die Nutzung von \myMinin{map<T1, T2>} von Nöten ist.
 
     %---------------------------------
     % Syntax Grundlagen
     %---------------------------------
     \subsubsection{Syntax Grundlagen}
     \label{sssec:Syntax Grundlagen}
-      Bezeichner müssen dem regulären Ausdruck (Regex) aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword entsprechen
-  \myFixme{Update der keywords} % TODO
-      (\lstinline[style=MyMacroStyleIn]$def$, \lstinline[style=MyMacroStyleIn]$var$, \lstinline[style=MyMacroStyleIn]$if$, \lstinline[style=MyMacroStyleIn]$else$, \lstinline[style=MyMacroStyleIn]$for$, \lstinline[style=MyMacroStyleIn]$do$, \lstinline[style=MyMacroStyleIn]$while$, \lstinline[style=MyMacroStyleIn]$break$, \lstinline[style=MyMacroStyleIn]$return$), einen Booleanwert entsprechen (\lstinline[style=MyMacroStyleIn]$true$, \lstinline[style=MyMacroStyleIn]$false$), oder \lstinline[style=MyMacroStyleIn]$main$ gleichen -- abgesehen von der einen \lstinline[style=MyMacroStyleIn]$main$ Methode -- verboten.
+      Bezeichner müssen dem regulären Ausdruck (Regex) aus \autoref{fig:id_syntax} entsprechen. Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert, was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword
+      (%
+        \myMIn$break$,
+        \myMIn$def$,
+        \myMIn$do$,
+        \myMIn$else$,
+        \myMIn$for$,
+        \myMIn$if$,
+        \myMIn$print$,
+        \myMIn$return$,
+        \myMIn$typeof$,
+        \myMIn$var$,
+        \myMIn$while$%
+      ), einen Booleanwert (\myMIn$true$, \myMIn$false$), oder \myMIn$main$ entsprechen -- abgesehen von der einen \myMIn$main$ Methode -- verboten.
 
       \begin{figure}[H]
         \centering
@@ -291,9 +324,14 @@
         \caption{Bezeichner}
         \label{fig:id_syntax}
       \end{figure}
-      % FIXME Variable:  Was macht das Wörtchen hier? Ach so, habe ich nach Abbildung 7 verstanden…
-      % TODO Tauschen?
-      % FIXME FunktionsaufrufEEEEEE: Singular!?
+
+      Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, zum Beispiel kann ein Zeilenumbruch, wie in anderen Programmiersprachen, mit \myMIn$"\n"$ oder ein Tab mit \myMIn$"\t"$, erzeugt werden.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/lit_syntax.tikz}
+        \caption{Syntax von Literals.}
+        \label{fig:lit_syntax}
+      \end{figure}
 
       \autoref{fig:vpr_syntax} zeigt alle Werterzeuger, dass sind Konstrukte, die einen Wert für eine andere Operation bereitstellen.
       \begin{figure}[H]
@@ -303,7 +341,7 @@
         \label{fig:vpr_syntax}
       \end{figure}
 
-      In \autoref{fig:return_syntax} ist die Syntax von \lstinline[style=MyMacroStyleIn]$return$ zu sehen.
+      In \autoref{fig:return_syntax} ist die Syntax von \myMIn$return$ zu sehen.
       \begin{figure}[H]
         \centering
         \myInput{img/ret_syntax.tikz}
@@ -311,21 +349,10 @@
         \label{fig:return_syntax}
       \end{figure}
 
-      Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:lit_syntax} zeigt. In Strings ist es möglich besondere Zeichen zu escapen, zum Beispiel kann ein Zeilenumbruch, wie in anderen Programmiersprachen, mit \lstinline[style=MyMacroStyleIn]$"\n"$ oder ein Tab mit \lstinline[style=MyMacroStyleIn]$"\t"$, erzeugt werden.
+      Abbildungen \ref{fig:scope_syntax}, \ref{fig:loop_scope_syntax} und \ref{fig:common_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \myMIn$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarationsscopes -- die sich in einem Loop Scope befinden, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \myMIn$var foo; {var foo;}$ richtig ist -- das erste \myMIn$foo$, wird von dem zweiten verdeckt.
       \begin{figure}[H]
         \centering
-        \myInput{img/lit_syntax.tikz}
-        \caption{Syntax von Literals.}
-        \label{fig:lit_syntax}
-      \end{figure}
-      % FIXME __Double__ Funktioniert das so? Wenn ich das richtig lese, kannst Du nur Doubles wie 5.9 erzeugen, aber nicht 123.456. Wiederholung des Ziffer-Ausdrucks? Analog bei Integer und String…
-
-      Abbildungen \ref{fig:scope_syntax}, \ref{fig:loop_scope_syntax} und \ref{fig:common_syntax} zeigen den Syntax von einem Scope. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \lstinline[style=MyMacroStyleIn]$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarationsscopes --
-      die auf ein Loop Scope folgen % FIXME Meinst Du wirklich folgen? Verstehe ich dann nicht. Oder meinst Du geschachtelte Scopes?
-      , sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \lstinline[style=MyMacroStyleIn]$var foo; {var foo;}$ richtig ist -- das erste \lstinline[style=MyMacroStyleIn]$foo$, wird von dem zweiten verdeckt.
-      \begin{figure}[H]
-        \centering
-        \begin{minipage}{.45\textwidth}
+        \begin{minipage}{.45\linewidth}
           \vspace*{2.45em}
           \begin{figure}[H]
             \centering
@@ -334,7 +361,7 @@
             \label{fig:scope_syntax}
           \end{figure}
         \end{minipage}%
-        \begin{minipage}{.45\textwidth}
+        \begin{minipage}{.45\linewidth}
           \begin{figure}[H]
             \centering
             \myInputUnlimited{img/loop_scope_syntax.tikz}
@@ -350,15 +377,13 @@
         \caption{Syntax allgemeiner Strukturen.}
         \label{fig:common_syntax}
       \end{figure}
-\myFixme{Fehlende Semikolons - Literal, Werterzeuger, break} % TODO
-
 
     %---------------------------------
     % Definitionen
     %---------------------------------
     \subsubsection{Definitionen}
     \label{sssec:Definitionen}
-      Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \lstinline[style=MyMacroStyleIn]$var foo;$. Um anschließend der Variablen einen Wert zuzuweisen, ist es unter anderem erlaubt, dies zu tun: \lstinline[style=MyMacroStyleIn]$var foo = fun();$ oder \lstinline[style=MyMacroStyleIn]$var foo = true == false;$.
+      Variablen können, wie in \autoref{fig:var_syntax} zu sehen ist, definiert werden: \myMIn$var foo;$. Um anschließend der Variablen einen Wert zuzuweisen, ist es unter anderem erlaubt, dies zu tun: \myMIn$var foo = fun();$ oder \myMIn$var foo = true == false;$. Dieser Syntax erlaubt es nicht den Variablen einen Typ zuzuweisen -- dieser Teil der Sprache ähnelt deswegen Python und JavaScript sehr.
       \begin{figure}[H]
         \centering
         \myInput{img/var_syntax.tikz}
@@ -366,31 +391,27 @@
         \label{fig:var_syntax}
       \end{figure}
 
-      Funktionen können über \lstinline[style=MyMacroStyleIn]$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an:
-      \lstinline[style=MyMacroStyleIn]$def fun(foo, bar){...}$. % FIXME Hast Du schon irgendwo genannt, dass Du ungetypte Parameter verwendest?
-      Es ist nicht erlaubt, ein Whitespace zwischen dem Bezeichner und der Klammer zu haben.
-
-      Der Einstiegspunkt eines jeden Makros ist eine \lstinline[style=MyMacroStyleIn]$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
+      Funktionen können über \myMIn$def fun(){...}$ definiert werden, was \autoref{fig:fun_syntax} zeigt. Um eine parametrisierte Funktion zu definieren, gibt man die Parameternamen, Komma getrennt, nach dem Funktionsnamen an: \myMIn$def fun(foo, bar){...}$ (\myMIn$def fun(bar, foo){...}$ definiert die gleiche Funktion und würde zu einem Fehler führen, wenn beide Funktionen in dem selben Scope definiert werden). Zudem ist es nicht erlaubt, ein Whitespace zwischen dem Bezeichner und der Klammer zu haben.
       \begin{figure}[H]
         \centering
         \myInput{img/fun_syntax.tikz}
         \caption{Syntax der Funktionsdeklaration.}
         \label{fig:fun_syntax}
       \end{figure}
+      Der Einstiegspunkt eines jeden Makros ist eine \myMIn$def main(){...}$ Funktion. Der Syntax ist der selbe wie bei den normalen Funktionen und erlaubt es daher auch Parameter anzugeben. Deswegen können die Makros aus anderen Makros, oder aus der C++ Ebene über einen äquivalenten Syntax mit Parametern aufgerufen werden.
 
     %---------------------------------
     % Kontrollstrukturen
     %---------------------------------
     \subsubsection{Kontrollstrukturen}
     \label{sssec:Kontrollstrukturen}
-      Die Syntax von \lstinline[style=MyMacroStyleIn]$if/else$ und \lstinline[style=MyMacroStyleIn]$do-/while$ aus den Abbildungen \ref{fig:if_syntax}, \ref{fig:while_syntax} und \ref{fig:do_while_syntax} sollten wie erwartet aussehen.
+      Die Syntax von \myMIn$if/else$ und \myMIn$do-/while$ aus den Abbildungen \ref{fig:if_syntax}, \ref{fig:while_syntax} und \ref{fig:do_while_syntax} sollten wie erwartet aussehen.
       \begin{figure}[H]
         \centering
         \myInput{img/if_syntax.tikz}
         \caption{Syntax von if.}
         \label{fig:if_syntax}
       \end{figure}
-      % FIXME Werterzeuger: Reicht das hier? Was ist, wenn der Werterzeuger den Wert 5 oder „Test“ liefert? Müsstest Du nicht einen booleschen Werterzeuger verwenden?
 
       \begin{figure}[H]
         \centering
@@ -412,102 +433,68 @@
     %---------------------------------
     \subsubsection{Befehle}
     \label{sssec:Befehle}
-      \autoref{fig:call_syntax} zeigt die Syntax, um eine definierte Funktion aufzurufen. \lstinline[style=MyMacroStyleIn]$fun(foo:gun(), bar:foo);$ weist dem \lstinline[style=MyMacroStyleIn]$foo$ Parameter den Wert von \lstinline[style=MyMacroStyleIn]$gun()$ zu und dem Parameter \lstinline[style=MyMacroStyleIn]$bar$ wird der Wert von \lstinline[style=MyMacroStyleIn]$foo$ aus dem Scope zugewiesen.
+      \autoref{fig:call_syntax} zeigt die Syntax, um eine definierte Funktion aufzurufen. \myMIn$fun(foo:gun(), bar:foo);$ weist dem \myMIn$foo$ Parameter den Wert von \myMIn$gun()$ zu und dem Parameter \myMIn$bar$ wird der Wert von \myMIn$foo$ aus dem Scope zugewiesen. Wie auch bei der Definition der Funktion, ist es nicht erlaubt einen Whitespace zwischen dem Bezeichner und er Klammer zu haben.
       \begin{figure}[H]
         \centering
         \myInput{img/cal_syntax.tikz}
         \caption{Syntax von Funktionsaufrufen.}
         \label{fig:call_syntax}
       \end{figure}
-\myFixme{Kein Semikolon} % TODO
 
-      Die Operator Syntax aus \autoref{fig:op_syntax} sollte, ähnlich wie die \lstinline[style=MyMacroStyleIn]$return$ Syntax,
-      nicht allzu überraschend sein. % FIXME Das ist auch so ein Null-Aussage-Satz. Streichen!
-      Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \lstinline[style=MyMacroStyleIn]$(a || b) && c$ folgender Weise interpretiert wird.
-\myFixme{Das geht leider nicht so ganz aus dem Diagramm hervor -- Ideen?} % FIXME Das kann auch aus dem Diagramm nicht hervorgehen, weil in den Diagrammen ja nur Syntax steht und die Auswertung eine Frage der Semantik ist. Da Du die Semantik sicherlich nicht formal (mit Formeln) definieren willst: Text schreiben! Und vielleicht dann auch explizit sagen, dass Du von links nach rechts auswertest, dass Du Klammerung berücksichtigst und dass es - vermutlich - keine „Kurzschlusssemantik“ gibt, also alle Ausdrücke ausgewertet werden.
-      \lstinline[style=MyMacroStyleIn]$a$ oder \lstinline[style=MyMacroStyleIn]$b$ wird zuerst ausgewertet und deren Ergebnis wird mit \lstinline[style=MyMacroStyleIn]$c$ genutzt. Entgegen dessen wird bei \lstinline[style=MyMacroStyleIn]$a || b && c$ zuerst \lstinline[style=MyMacroStyleIn]$a$, und dann \lstinline[style=MyMacroStyleIn]$b$ und \lstinline[style=MyMacroStyleIn]$c$ ausgewertet.
+      Die Operator Syntax aus \autoref{fig:op_syntax} folgt, wie die \myMIn$return$ Syntax, den Vorbildern dieser Syntax (C, Python, Javascript, Swift).
+
       \begin{figure}[H]
         \centering
         \myInput{img/op_syntax.tikz}
         \caption{Syntax von Operatoren.}
         \label{fig:op_syntax}
       \end{figure}
-\myTodo{Wenn implementiert ===, !==, typeof, print} % TODO
+
+      Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \myMIn$(a || b) && c$ folgender Weise interpretiert wird. Als erstes wird \myMIn$a$ ausgewertet. Wenn a \myMIn$false$ war, wird \myMIn$b$ ausgewertet, wenn eins der beiden \myMIn$true$ ergibt, wird \myMIn$c$ ausgewertet. Entgegen dessen wird bei \myMIn$a || b && c$ zuerst \myMIn$a$, und wenn \myMIn$a$ \myMIn$false$ war \myMIn$b$ und \myMIn$c$ ausgewertet. Es wird also von links nach rechts ausgewertet und es gibt eine Kurzschlusssemantik. Die Präzedenz der Operatoren ist -- abgesehen von \myMIn$!$ (der die höchste Priorität hat) die Reihenfolge aus der Grafik (siehe Nummerierung).
+
+      Zu den `normalen' Operatoren aus C, gibt es zudem noch den \myMIn$typeof$ Operator aus JavaScript. Dieser Operator wandelt den Typ der variable in einen \myMIn$string$ um (\myMinin{1}$\rightarrow$\myMinin{"int"}). Zudem gibt es den \myMIn$print$ Operator, der den Wert einer Variable ausgibt (zB. auf die Konsole) und als \myMIn$string$ zurückgibt.
 
   %---------------------------------
   % Grundarchitektur
   %---------------------------------
   \subsection{Grundarchitektur}
   \label{ssec:Grundarchitektur}
-    Das Ziel der folgenden Architektur ist,
-    die Funktionalität, die in \autoref{fig:abstract_goal_uml} zu sehen ist, % FIXME 1.) Da ist keine Funktionalität zu sehen! 2.) Du solltest _erst_ einmal beschreiben, was Du erreichen möchtest (ohne Klassen zu nennen!!) und _dann_ den dazugehörigen Entwurf darstellen / beschreiben. 3.) Vererbungspfeile sind falsch herum. Gibt nachträgliche Abzüge in Deiner SWT-Note!!!
-    zu ermöglichen.
-
-    \begin{figure}[H]
-      \centering
-      \myInput{img/abstract_goal_uml.tikz}
-      \caption{Abstraktes Ziel der resultierenden Architektur.}
-      \label{fig:abstract_goal_uml}
-    \end{figure}
-    \myMinin{Executable} ist das Interface, welches alle \myMinin{Command}s aus dem Command-Pattern implementieren. % FIXME Mir ist die Verbindung zu den Prozeduren/Modulen, die im Makro aufgerufen werden sollen, nicht klar.
-    Eine weitere Implementation dieses Interfaces ist --
-    nicht zu verwechseln mit Ma\emph{k}ros -- die \myMinin{Macro} Klasse. % FIXME Mir ist der Unterschied gerade nicht klar. Bitte deutlicher machen!
-    Diese erlaubt es Entwicklern ein Makro auszuführen. Im weiteren Verlauf dieser Arbeit geht es hauptsächlich um die Ma\emph{k}ros, da sich die Implementation der \myMinin{Macro} Klasse am Ende aus den Teillösungen ergibt.
-
     Da das komplette UML Diagramm sehr unübersichtlich ist und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem Kompletten und spiegeln es zusammen wieder.
 
-    \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makrofunktionalität anbieten soll. Das \myMinin{ast} Paket beinhaltet alle Klassen, die den abstrakten Syntaxbaum ausmachen und von dem Parser und dem Interpreter verwendet werden. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser. In dem \myMinin{token} Paket befindet sich die Token, da diese in kein anderes Paket gehört.
+    \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makrofunktionalität anbieten soll. \myMinin{core} ist das Paket, indem das Command-Pattern aus dem \autoref{ssec:Diskussion des Problemfeldes} implementiert ist. Das \myMinin{pod} Paket enthält alle Klassen, die die nur zur Verwaltung von Daten dienen (separation of concerns) und deswegen \emph{plain old data} (POD), oder auch \emph{passive data structure} (PDS) genannt werden. In dem \myMinin{pod} Paket befindet sich die \myMinin{Token} Klasse und das \myMinin{ast} Paket, welches alle Klassen, die den abstrakten Syntaxbaum ausmachen, beinhaltet. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser.
     \begin{figure}[H]
       \centering
       \myInput{img/top_pack_uml.tikz}
       \caption{Abhängigkeiten von dem Makro Modul.}
       \label{fig:top_pack_uml}
     \end{figure}
-    % FIXME Kein Tokenizer-Paket? Das wundert mich aber sehr…
 
     %---------------------------------
     % Token und Parser Paket
     %---------------------------------
-    \subsubsection{Token und Parser Paket} % FIXME Noch mal zu Deiner Frage auf Seite 8: ja, führ das Thema (dort) bitte mal etwas weiter aus, da Du hier ja auch keine konzeptionellen Details zum Thema Parsing bringst.
+    \subsubsection{Token und Parser Paket}
     \label{sssec:Token und Parser Paket}
-      Der \myMinin{Parser} aus \autoref{fig:parser_pack_uml} bedient sich des \myMinin{Tokenizer}, um eine \myMinin{TokenList} von \myMinin{Token}s zu bekommen. Diese \myMinin{TokenList} kann er dann parsen, bzw. in einen abstrakten Syntaxbaum umwandeln.
+      Der \myMinin{Parser} aus \autoref{fig:parser_pack_uml} bedient sich des \myMinin{Tokenizer}, um eine \myMinin{TokenList} von \myMinin{Token}s zu bekommen. Diese \myMinin{TokenList} kann der \myMinin{Parser} dann parsen, bzw. in einen abstrakten Syntaxbaum umwandeln. Die \myMinin{TokenList} Klasse dient nur der Erklärung und wird sich nicht in der Implementation wiederfinden, da sie nur ein Array beschreibt.
       \begin{figure}[H]
         \centering
         \myInput{img/parser_pack_uml.tikz}
         \caption{Parser Paket UML}
         \label{fig:parser_pack_uml}
       \end{figure}
-      % FIXME Ich verstehe noch immer nicht, warum es kein Paket Tokenizer mit den Klassen Tokenizer, TokenList und ggf. Token gibt…
 
-      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von whitespace (\lstinline[language=MyRegex]$\s*$) getrennt sind, die nicht den Anforderungen als Bezeichner genügen (\lstinline[language=MyRegex]$[^a-zA-Z0-9_]$, siehe \autoref{fig:id_syntax}), die durch einen Punkt eine Dezimalzahl bilden (\lstinline[language=MyRegex]$\d*\.\d+$) oder einen String darstellen (\lstinline[language=MyRegex]$".*?"$\footnote{
+      Der \myMinin{Tokenizer} wandelt den String, der das Makro beschreibt, in eine Reihenfolge von \myMinin{Token}s um. Tokens sind alle Zeichen, die von whitespace (\myRIn$\s*$) getrennt sind, die nicht den Anforderungen als Bezeichner genügen (\myRIn$[^a-zA-Z0-9_]$, siehe \autoref{fig:id_syntax}), die durch einen Punkt eine Dezimalzahl bilden (\myRIn$\d*\.\d+$) oder einen String darstellen\penalty-1000000(\myRIn$".*?"$\footnote{
         Dieser Regex funktioniert nur für einfache Varianten (kein escapen) von Strings und dient deswegen nur der Veranschaulichung.
-      }). Der \myMinin{Tokenizer} ist nicht für das
-      Lexen % FIXME Dieser Begriff muss auch erläutert werden (Kapitel 2?).
-      verantwortlich -- dies wird von dem Parser übernommen.
+      }). Der \myMinin{Tokenizer} ist nicht für das Lexen verantwortlich -- dies wird von dem Parser übernommen.
 
-      \myMinin{Token}s beinhalten die Zeile sowie Spalte als Zahl, und den gesamten Quelltext aus der Zeile, aus der das \myMinin{Token} entstanden ist. Dies ist von Nöten, um später gute Fehlermeldungen zu erzeugen, mit denen ein Benutzer schnell weiß, wo er nach dem Fehler suchen muss. Des weiteren enthält die Klasse einen String, der den Teil des Makros enthält, den die Instanz darstellen soll (zB. \lstinline[style=MyMacroStyleIn]$if$).
+      \myMinin{Token}s beinhalten die Zeile sowie Spalte als Zahl, und den gesamten Quelltext aus der Zeile, aus der das \myMinin{Token} entstanden ist. Dies ist von Nöten, um später gute Fehlermeldungen zu erzeugen, mit denen ein Benutzer schnell weiß, wo er nach dem Fehler suchen muss. Des weiteren enthält die Klasse einen String, der den Teil des Makros enthält, den die Instanz darstellen soll (zB. \myMIn$if$).
 
-      Der \myMinin{Parser} ist dafür verantwortlich, dass die \myMinin{TokenList} in einen AST umgewandelt wird. Es gibt drei Hauptarten von Parsern\autocite[S.77\,f.]{eirund2013formale}
-      \emph{LL} % FIXME Abkürzungen immer mindestens bei der ersten Verwendung ausschreiben.
-      \footnote{
-        LL Parser arbeiten `vorwärts', links nach rechts und probieren auf der linken Seite, des gelesenen bzw. teils geparsten Quelltextes zu reduzieren. Man gelangt zum Schluss, am Ende des Baumes an.
-      },
-      \emph{LR} % FIXME Abkürzungen immer mindestens bei der ersten Verwendung ausschreiben.
-      \footnote{
-        LR Parser arbeiten `rückwärts', links nach rechts und probieren auf der rechten Seite, des ungelesenen Quelltextes zu reduzieren um Terminals auf der linken Seite zu sammeln. Man gelangt zum Schluss an dem Anfang des Baumes an. \autocite{cs143-stanford}
-      } und
-      \emph{recursive descent} % FIXME Bei allen drei Varianten müsstest Du mal die Grundidee erläutern, damit Deine Wahl nachvollziehbar wird. Ggf. auch in Kapitel 2.
-      \footnote{
-        Recursive descent Parser bauen durch Funktionsaufrufe einen Stack auf, der den Zweigen des Baumes gleicht.
-      }.
-\myFixme{Ist es ok, dass ich die Parser nur kurz in den Fußnoten erklärt habe (Grundlagen Kapitel?)} % FIXME Nein, siehe Kommentar beim „descent“.
-      LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für einen recursive descent Parser entschieden. Zudem sind die gelungenen Parser von Clang\autocite{clang-feat} und GCC\autocite{gcc-new-parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
+      Der \myMinin{Parser} ist dafür verantwortlich, dass die \myMinin{TokenList} in einen AST umgewandelt wird. Wie in \autoref{sssec:Parser} beschrieben, gibt es drei Hauptarten von Parsern \emph{LL}, \emph{LR} und \emph{recursive descent}. LL und LR Parser sind meistens schneller als recursive descent, da sie mit Hilfe von Zustandstabellen arbeiten, die meist aus der Backus-Naur-Form heraus entstehen. Der Nachteil bei den beiden ist, dass LL und umso mehr LR Parser, schwer zu warten sind, weswegen meist Parser-Generatoren genutzt werden, um den Quelltext für den Parser zu generieren. Außerdem sind die Fehlermeldungen, die LL und LR Parser erzeugen meistens schlechter als die, die recursive descent Parser von Natur aus mit sich bringen\autocite{scott2010gll}. Da die Wartbarkeit und Fehlermeldungen wichtige Punkte auf der Anforderungsliste sind, wurde sich für einen recursive descent Parser entschieden. Zudem sind die gelungenen Parser von Clang\autocite{clang-feat} und GCC\autocite{gcc-new-parser} ein gutes Beispiel und Vorbild, was mit recursive descent Parsern erreicht werden kann.
 
-      Beim Parsen müssen die Literals umgewandelt  werden (Lexen) -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einem String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}).
-      Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden % FIXME Das hat jetzt aber nichts mehr mit dem Lexen zu tun, oder? Macht nämlich den Eindruck…
-      (bei
-\myFixme{Gibt es ein besseres Beispiel?} % FIXME Bestimmt ;-) Was mir auffällt: Du scheinst doch nicht (nur) von links nach rechts auszuwerten, sondern eine Präzedenz der Operatoren zu haben (&& vor ||). Das musst Du auch aufschreiben (da, wo Du die Operatoren einführst).
-      \myMinin{a || b && c} muss \myMinin{a} zuerst ausgewertet werden und dann \myMinin{b && c}, was das Baum wiedergeben muss). Und Variablendeklarationen, mit anschließender Wertzuweisung, müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
+      Beim Parsen müssen die Literals umgewandelt werden (Lexen) -- aus dem Token \myMinin{"1.01"} muss der Double \myMinin{1.01} werden, escapete Symbole in einem String müssen umgewandelt werden (z.B.: \myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}).
+
+      Die Operatoren müssen in der richtigen Reihenfolge zusammengestellt werden. Das heißt, dass bei \myMinin{!a || b} zuerst \myMinin{!a} ausgewertet werden muss und im Anschluss daran \myMinin{x || c} (\myMinin{x} sei das Ergebnis von \myMinin{!a}). Der Baum muss so aufgebaut sein, das diese Reihenfolge eindeutig und korrekt ist.
+
+      Variablendeklarationen mit anschließender Wertzuweisung müssen in zwei Schritte aufgeteilt werden (erst deklarieren und dann der Variablen den Wert zuweisen\footnote{
         Dies ist valider C Code: \myMinin{const int foo = foo + 1;}
       }).
 
@@ -516,16 +503,9 @@
     %---------------------------------
     \subsubsection{Abstrakter Syntaxbaum Paket}
     \label{sssec:Abstrakter Syntaxbaum Paket}
-      Wie \autoref{fig:AST_uml} zeigt, sind für alle
-      Keywords % FIXME Sehe ich so direkt nicht. „do“ zum Beispiel finde ich nicht. Umformulieren?
-      \footnote{
+      Wie \autoref{fig:AST_uml} zeigt\footnote{
         Es wurden einigele Klassen hinter allgemeinen Begriffen -- wie \myMinin{Loop} -- versteckt, um etwas Übersicht zu bewahren.
-      } Klassen von Nöten. Alle Klassen erben von der \myMinin{AST} Klasse,
-      welche ein \myMinin{Token} besitzt. % FIXME nur eins???
-                                          % TODO Attribut?
-      Da die \myMinin{Token} alle Informationen über den Makro Quelltext haben und es sich bei der resultierenden Datenstruktur um einen
-      Baum % FIXME Seltsamerweise kann man den Baum in der Abbildung gar nicht erkennen…
-      handelt, ist auch der Interpreter in der Lage informative Fehlermeldungen zu generieren.
+      }, sind für alle Konstrukte, die das Scope (siehe \autoref{fig:common_syntax}) aufnehmen kann, Klassen von Nöten. Alle Klassen erben von der \myMinin{AST} Klasse, welche ein \myMinin{Token} als Attribut besitzt. Da die \myMinin{Token} alle Informationen über den Makro Quelltext haben, und es sich bei der resultierenden Datenstruktur um einen Baum handelt (der Baum ist rekursiv -- siehe \autoref{fig:Scope_uml}), ist auch der Interpreter in der Lage informative Fehlermeldungen zu generieren.
       \begin{figure}[H]
         \centering
         \myInput{img/AST_uml.tikz}
@@ -533,9 +513,7 @@
         \label{fig:AST_uml}
       \end{figure}
 
-      \autoref{fig:Scope_uml} zeigt die \myMinin{Scope} Klasse,
-      diese Klasse kann beliebig viele andere \myMinin{AST} Instanzen aufnehmen. % FIXME Ach so, ein AST ist rekursiv definiert. Sag das doch!!
-      Da das \myMinin{Scope} Instanzen von allen \myMinin{AST} Klassen aufnehmen kann, und einige Klassen wiederum ein \myMinin{Scope} besitzen, kommt es hier zu einem dependency circle. Weil das \myMinin{Scope} eine der meist benutzten Klassen ist, liegt die Auflösung des dependency circles bei den anderen Klassen.
+      \autoref{fig:Scope_uml} zeigt die \myMinin{Scope} Klasse, diese Klasse kann beliebig viele andere \myMinin{AST} Instanzen aufnehmen.
       \begin{figure}[H]
         \centering
         \myInput{img/Scope_uml.tikz}
@@ -543,7 +521,6 @@
         \label{fig:Scope_uml}
       \end{figure}
 
-      \myMinin{Loop}, \myMinin{Function} und \myMinin{If} müssen den dependency circle mit \myMinin{Scope} auflösen. % FIXME 1.) Was ist das Problem bei Dependency Circle? 2.) Wie wird der aufgelöst?
       In \autoref{fig:Condition_uml} sind die restlichen Abhängigkeiten zwischen den \myMinin{AST} Klassen zu sehen.
       \begin{figure}[H]
         \centering
@@ -555,7 +532,7 @@
     %---------------------------------
     % Interpreter Paket
     %---------------------------------
-    \subsubsection{Interpreter Paket} % FIXME Ich denke, das solltest Du insgesamt etwas detaillierter betrachten. Da steckt ja doch mehr drin, als man in 9 Zeilen plus Abbildung verstehen kann.
+    \subsubsection{Interpreter Paket}
     \label{sssec:Interpreter Paket}
       Der \myMinin{Interpreter} nutzt den \myMinin{parser::Parser}, um einen \myMinin{ast::Scope} zu erzeugen, wie in \autoref{fig:interpreter_pack_uml} zu sehen ist.
 
@@ -566,35 +543,65 @@
         \label{fig:interpreter_pack_uml}
       \end{figure}
 
-      Durch den \myMinin{OperatorProvider} als Mittelmann, ist es möglich Operatoren auf spezielle Objekte anzuwenden, die über die Datentypen der Literals hinausgehen.
+      Durch den \myMinin{OperatorProvider} als Mittelmann, ist es möglich Operatoren auf spezielle Datentypen anzuwenden, die über die der Literals hinausgehen (siehe \autoref{sssec:OperatorProvider Architektur}). Die Trennung von \myMinin{OperatorProvider} und \myMinin{Interpreter} beruht darauf, dass es nur einen \myMinin{OperatorProvider} geben muss, aber es viele \myMinin{Interpreter} geben kann. Zudem müssen so die Operatoren nur ein einziges mal registriert werden.
 
-      Während der Ausführung übernimmt der \myMinin{Stack} die Verwaltung der definierten Funktionen und Variablen sowie deren Werte. Bei jedem \myMinin{Scope}, wird der \myMinin{Stack} um eine Instanz von sich selber erweitert.
+      Während der Ausführung des Makros, durch den \myMinin{Interpreter}, übernimmt der \myMinin{Stack} die Verwaltung der definierten Funktionen und Variablen sowie deren Werte. Dadurch repräsentiert der \myMinin{Stack} die \myMinin{ast::Scope}s. Wenn ein neues \myMinin{Scope} in dem \myMinin{AST} geöffnet wird, wird ein neuer \myMinin{Stack} erzeugt, der als vorherigen \myMinin{Stack} den aktiven \myMinin{Stack} bekommt. Durch diese Verkettung wird eine Verketteteliste aufgebaut, bei der man nur den Kopf entfernen muss, um ein \myMinin{ast::Scope} zu beenden, siehe \autoref{fig:stack_ex}.In \autoref{sssec:Stack Architektur} wird die Architektur weiter ausgeführt.
+      \begin{figure}[H]
+        \centering
+        \myInput{code/stack_ex.tikz}
+        \caption{Stack Beispiel.}
+        \label{fig:stack_ex}
+      \end{figure}
 
-      Sollte der \myMinin{Stack} keine passende Funktion haben, wird der \myMinin{ExecutableProvider} gefragt, wodurch ein C++ \myMinin{Command} ausgeführt wird.
+      Sollte der \myMinin{Stack} keine passende Funktion haben, wird der \myMinin{CommandProvider} nach einem passendem \myMinin{core::Command} gefragt, wonach dieses in der C++ Ebene ausgeführt wird. Damit realisieren \myMinin{core::Command}s die \myMinin{ast::Callable} Funktionen. Funktionen, die in der Makrosprache definiert sind, realisieren ebenso die \myMinin{ast::Callable}.
+
+      Der Interpreter selber läuft den AST ab, erweitert den \myMinin{Stack} bei \myMinin{ast::Scope}s, fügt dem \myMinin{Stack} Variablen und Funktionen bei deren Definition (durch \myMinin{ast::Define}) zu und poped den \myMinin{Stack} wenn er fertig ist, ein \myMinin{ast::Scope} zu interpretieren. \myMinin{ast::Condition}s werden mit Hilfe das \myMinin{OperatorProvider}s ausgewertet und der Rest der \myMinin{ast} Klassen, lässt sich durch eine Verknüpfung der vorherigen Vorgehensweisen lösen.
 
   %---------------------------------
   % Detaillierte Teilarchitekturen
   %---------------------------------
   \subsection{Detaillierte Teilarchitekturen}
   \label{ssec:Detaillierte Teilarchitekturen}
-    In diesem Abschnitt werden die komplexeren Bestandteile der Architektur beschrieben. Der \myMinin{Tokenizer} hat keinen Zustand, da er nur einen stream von Zeichen aufteilen muss, und sollte daher nicht weiter beschrieben werden müssen. Dies gilt auch für alle \myMinin{ast} Klassen, da diese \emph{plain old data} (POD) Klassen sind und somit nur Daten verwalten.
+    Dieser Abschnitt bildet den Übergang vom theoretischen zum praktischen Teil, in dem hier die komplexeren Bestandteile der Architektur beschrieben werden. Um diese Teilarchitekturen beschreiben zu können, wird in \autoref{sssec:Die Programmiersprache} die Programmiersprache gewählt, in welcher das Makrosystem entwickelt wird. In den darauffolgenden Kapiteln wird die Architektur des \myMinin{Parser}s, \myMinin{OperatorProvider}s, \myMinin{Stack} und des \myMinin{Interpreter}s genauer betrachtet.
+
+    %---------------------------------
+    % Die Programmiersprache
+    %---------------------------------
+    \subsubsection{Die Programmiersprache}
+    \label{sssec:Die Programmiersprache}
+      Da das vorhandene System in C++ geschrieben ist, ist es größten Teils überflüssig über andere Programmiersprachen nachzudenken.
+
+      Durch das \emph{name mangling}\footnote{
+        Beim `name mangling' fügt der Compiler den Funktionsnamen weite Informationen hinzu, um eine eindeutige Funktionssignatur zu erhalten.
+      } ist es schwierig, eine API von C++ zu anderen Programmiersprachen anzubieten. Meistens wird eine C API aus der C++ Welt von den Entwicklern angeboten, um mit anderen Programmiersprachen zu kommunizieren. Bei dieser verliert man den Vorteil der Objektorientierung und muss meistens auch die Daten zwischen C++$\longleftrightarrow$C und C$\longleftrightarrow$XYZ (z.B Python oder Lua) konvertieren, was langsam ist. Die Makros müssen aber auf Daten arbeiten, welche als Objekte von C++ vorliegen. Deswegen müsste der \myMinin{Stack}, mit dem der \myMinin{Interpreter} arbeitet, in der C++ Ebene bleiben. Damit würde eine Implementierung von \myMinin{Tokenizer}, \myMinin{Parser}, \myMinin{ast} und \myMinin{Interpreter} die Wartbarkeit, durch die Teilung und die weitere Programmiersprache deutlich verschlechtern. Zusätzlich ist das Ziel eine Applikation zu automatisieren, und nicht mit komplett neuen Funktionalitäten zu erweitern, was die Vorteile von z.B Python größtenteils zunichte macht. Aufgrund dessen wurde C++ als Programmiersprache gewählt.
+
+      Die vorhandene Software ist Cross-Plattform (Windows und Linux) entwickelt. Im Rahmen dieser Bachelorarbeit wird die Software nur auf Linux entwickelt, da die Implementation des C++ Standards von Microsoft zum Teil unvollständig oder auch falsch ist und bei der Fehlersuche meist viel Zeit in Anspruch nimmt \autocite{new-ms-compiler}. Bei der Entwicklung wird daher darauf geachtet, dass keine Linux spezifischen Bibliotheken in Anspruch genommen werden. Das schließt leider nicht aus, dass die entstehende Software, ohne Anpassungen, auf Windows ausgeführt werden kann.
+
+      Dinge die zu berücksichtigen sind:
+      \begin{itemize}
+        \item dependency circle\\
+          Ein dependency circle entsteht, wenn in C oder C++ zwei (oder mehr) Datenstrukturen sich gegenseitig brauchen.\\
+          Beispiel: \myMinin{class A} braucht \myMinin{class B} und \myMinin{class B} braucht \myMinin{class A} um sich zu definieren. Eine Lösung besteht darin, eine Klasse so zu definieren, dass sie nur von dem Pointer der anderen Klasse abhängt.
+
+          Da das \myMinin{Scope} Instanzen von allen \myMinin{AST} Klassen aufnehmen kann, und einige Klassen wiederum ein \myMinin{Scope} besitzen, kommt es hier zu einem dependency circle. Weil das \myMinin{Scope} eine der meist benutzten Klassen ist, liegt die Auflösung des dependency circles bei den anderen Klassen.
+        \item plain old data\\
+          In C++ sind nur Klassen PODs, die trivial sind und standard-layout haben \autocite[9 Classes §10]{C++14-std}. Da die \myMinin{Token}s \myMinin{std::string} benutzen, sind alle Klassen die von \myMinin{Token} ein Attribut haben, genauso wenig POD wie \myMinin{std::string}. Somit ist das \myMinin{pod} Paket nur ein Hinweis darauf, dass die Klassen keine Logik haben, aber nicht POD Klassen nach dem C++Standard sind.
+      \end{itemize}
 
     %---------------------------------
     % Parser Architektur
     %---------------------------------
     \subsubsection{Parser Architektur}
     \label{sssec:Parser Architektur}
-      Da der \myMinin{Parser} recursive decent implementiert wird, kann der \myMinin{Parser} ohne einen Zustand -- sprich Attribute -- auskommen. In diesem Fall kann darauf verzichtet werden, den \myMinin{Parser} als Klasse zu implementieren und anstelle dessen eine paketglobale Funktion anzubieten. Dies hat den Vorteil, dass der \myMinin{Parser} garantiert Thread-Safe ist, da alle Daten von dem nativen Funktionsstack verwaltet werden.
+      Der \myMinin{Tokenizer} hat keinen Zustand, da er nur einen stream von Zeichen aufteilen muss, und sollte daher nicht weiter beschrieben werden müssen. Dies gilt auch für alle \myMinin{ast} Klassen, da diese POD Klassen sind und somit nur Daten verwalten.
+
+      Da der \myMinin{Parser} recursive decent implementiert wird, kann der \myMinin{Parser} ohne einen Zustand -- sprich Attribute -- auskommen. In diesem Fall kann darauf verzichtet werden, den \myMinin{Parser} als Klasse zu implementieren und anstelle dessen eine \myMinin{static} Funktion anzubieten. Dies hat den Vorteil, dass der \myMinin{Parser} garantiert Thread-Safe ist, da alle Daten von dem nativen Funktionsstack verwaltet werden.
 
       Für nahezu alle \myMinin{ast} Klassen bzw. keywords sollte der \myMinin{Parser} eine Methode zum parsen haben. Diese Modularität erlaubt es später den \myMinin{Parser} leichter zu erweitern, bzw. Fehler lokalisieren zu können. Da jede Methode genau für einen Teil der Syntax zuständig ist und es keinen Objekt Zustand gibt, können die Methoden für sich betrachtet und überprüft werden.
 
-      Die Einstiegsmethode des \myMinin{Parser}s muss zusätzlich, zu dem zu parsenden \myMinin{string}, den Namen des Makros bzw. der Datei übergeben bekommen. Dies sorgt dafür, dass die Fehlermeldungen für den Benutzer eindeutig zuzuordnen sind.
+      Die Einstiegsmethode des \myMinin{Parser}s muss zusätzlich, zu dem zu parsenden String, den Namen des Makros bzw. der Datei übergeben bekommen. Dies sorgt dafür, dass die Fehlermeldungen für den Benutzer eindeutig zuzuordnen sind.
 
-      Die Fehlermeldungen sollten so viel Informationen wie möglich an den Nutzer liefern, ohne dass es sich um nutzlose Informationen handelt. So ist es für den Nutzer nicht nur wichtig, in welcher Zeile und Spalte der Fehler liegt, sondern auch in welchem Kontext. Das bedeutet, dass es einen Stack gibt (siehe
-      \ref{enum:Mehr Fehler} % FIXME Hier bitte auf „Kapitel X“ verweisen, weil man später im gedruckten Dokument ja keinen Link verfolgen kann und die Nummer des Kapitels daher schon interessant ist.
-      ), der dem Nutzer gezeigt werden kann. Sinnvoll ist es zB. alle Scopeanfänge anzugeben (Funktionen/Kontrollstrukturen). Durch diese Informationen ist der Nutzer sofort mit dem Kontext des Fehlers versorgt und kann über den Grund des Fehlers, oder die Lösung  nachdenken, während er zu der Zeile und Spalte navigiert.
-
-\myTodo{operator precedence -  ! * / \% + - == ...}
+      Die Fehlermeldungen sollten so viel Informationen wie möglich an den Nutzer liefern, ohne dass es sich um nutzlose Informationen handelt. So ist es für den Nutzer nicht nur wichtig, in welcher Zeile und Spalte der Fehler liegt, sondern auch in welchem Kontext. Das bedeutet, dass es einen Stack gibt (siehe \ref{enum:Mehr Fehler}), der dem Nutzer gezeigt werden kann. Sinnvoll ist es zB. alle Scopeanfänge anzugeben (Funktionen/Kontrollstrukturen). Durch diese Informationen ist der Nutzer sofort mit dem Kontext des Fehlers versorgt und kann über den Grund des Fehlers, oder die Lösung  nachdenken, während er zu der Zeile und Spalte navigiert.
 
 % TODO Analyser
 
@@ -608,9 +615,8 @@
       }, müssen die \myMinin{Operatoren} nur ein einziges mal registriert werden. Die \myMinin{Operatoren} für die \myMinin{ast::Literal} Klassen werden von dem \myMinin{OperatorProvider} automatisch registriert.
 
       Die Überladung von \myMinin{Operatoren} ist ausgeschlossen, ebenso ist nicht vorgesehen, dass Datentypen implizit konvertiert werden. Das heißt, dass ein \myMinin{char} \emph{nicht} zu einem \myMinin{int} promoted\footnote{
-        Promoted bedeutet, dass ein kleinerer, primitiver Datentyp zu einem größeren implizit konvertiert werden kann. Dies ist immer dann möglich wenn kein Datenverlust auftritt.
-      } werden kann, wie es in den meisten typisierten Programmiersprachen der Fall ist.
-\myTodo{implizite convert operatoren? oder auch explizite?} % TODO
+        Promoted bedeutet, dass ein kleinerer, primitiver Datentyp zu einem größeren implizit konvertiert werden kann. Dies ist immer dann möglich, wenn kein Datenverlust auftritt.
+      } werden kann, wie es in den meisten typisierten Programmiersprachen der Fall ist. Eine Ausnahme ist der \myMinin{bool} und \myMinin{!} Operator. Wenn eine Variable als Ausdruck für Logik (\myMIn$for$, \myMIn$if$, \myMIn$while$ oder Operatoren) ist, und nicht Bestandteil eines anderen Vergleichsoperators ist, probiert der \myMinin{Interpreter} den \myMinin{bool} Operator für die Variable anzuwenden. Der \myMinin{bool} Operator existiert nur für diese Fälle und kann nicht explizit aufgerufen werde. In dem Kontext \myMIn$i && a == b$ wird für \myMIn$i$ der \myMinin{bool} Operator aufgerufen aber nicht für \myMIn$a$ und \myMIn$b$;
 
     %---------------------------------
     % Stack Architektur
@@ -623,11 +629,7 @@
 
       Die Funktionen brauchen nur als konstante Referenzen auf die Funktionsdefinitionen in dem \myMinin{ast} gespeichert werden. Diese Objekte werden nicht verändert und dienen nur als Vorlage, welche der \myMinin{Interpreter} interpretieren muss.
 
-      Letztlich haben die \myMinin{Stack} Instanzen einen Pointer auf den
-      \myMinin{Stack} `über' ihnen. % FIXME Das scheint schon wieder der rekursive Stack zu sein… Mach doch mal deutlich, wie der Stack aufgebaut ist!
-      Diesen Pointer werden dann genutzt, um nach Variablen und Funktionsdeklarationen zu fragen. Im Fall, dass der \myMinin{Interpreter} nach einer Funktion fragt, kann der \myMinin{Stack} durch die verkettete Liste (siehe
-      \ref{enum:linkedlist} % FIXME Hier bitte auf „Kapitel X“ verweisen, weil man später im gedruckten Dokument ja keinen Link verfolgen kann und die Nummer des Kapitels daher schon interessant ist.
-      ) nicht nur die Funktionsdefinition zurückgeben, sondern auch gleich den Pointer auf den \myMinin{Stack}, in dem die Funktion definiert wurde. Es ist also nicht nötig, die Funktionen einem \myMinin{Stack} Pointer zuzuordnen, da dies automatisch geschieht.
+      Letztlich haben die \myMinin{Stack} Instanzen einen Pointer auf den \myMinin{Stack} über ihnen, siehe \autoref{fig:stack_ex} und \autoref{fig:interpreter_pack_uml}. Diese Pointer werden dann genutzt, um nach Variablen und Funktionsdeklarationen zu fragen. Im Fall, dass der \myMinin{Interpreter} nach einer Funktion fragt, kann der \myMinin{Stack} durch die verkettete Liste (siehe \ref{enum:linkedlist}) nicht nur die Funktionsdefinition zurückgeben, sondern auch gleich den Pointer auf den \myMinin{Stack}, in dem die Funktion definiert wurde. Es ist also nicht nötig, die Funktionen zu dem \myMinin{Stack} Pointer zuzuordnen, in dem sie deklariert worden sind, da dies automatisch geschieht.
 
 
     %---------------------------------
@@ -635,24 +637,41 @@
     %---------------------------------
     \subsubsection{Interpreter Architektur}
     \label{sssec:Interpreter Architektur}
-      Die Architektur des \myMinin{Interpreter}s ist durch den \myMinin{ast} und \myMinin{Parser} relativ simpel. Außerdem lösen \myMinin{OperatorProvider} und \myMinin{Stack} die komplexesten Teile des \myMinin{Interpreter}s. Der \myMinin{Interpreter} ist ähnlich wie der \myMinin{Parser} recursive decent implementiert.
+      Die Architektur des \myMinin{Interpreter}s ist durch den AST und \myMinin{Parser} relativ simpel. Außerdem lösen \myMinin{OperatorProvider} und \myMinin{Stack} die komplexesten Teile des \myMinin{Interpreter}s.
 
-      Den AST interpretiert der \myMinin{Interpreter} in mehreren Schritten. Als erstes werden alle Funktionsdefinitionen interpretiert -- dies sorgt dafür, dass keine Definitionsreihenfolge eingehalten werden muss. Im zweiten Schritt wird das globale `root' \myMinin{ast::Scope} abgearbeitet -- das `root' \myMinin{ast::Scope} wird normal behandelt, was heißt, dass Funktionsaufrufe vor der \myMinin{main()} Methode erlaubt sind. Der letzte Schritt ist die Abarbeitung der Einstiegsfunktion \myMinin{main} mit allen Deklarationen und Funktionsaufrufen.
+      Ähnlich wie der \myMinin{Parser} ist der \myMinin{Interpreter} recursive decent implementiert. Das heißt, dass für jede \myMinin{ast} Klasse eine \myMinin{interpret()} Methode existiert. Durch den Aufbau des ASTs, endet der \myMinin{Interpreter} `immer' an einem Werterzeuger (Funktionsaufruf, Variable, \ldots), der von Kontrollstrukturen (\myMinin{if}, \myMinin{while}, \ldots) konsumiert wird.
 
-      Für jede \myMinin{ast} Klasse braucht der \myMinin{Interpreter} eine \myMinin{interpret()} Methode. Durch den Aufbau der \myMinin{ast} Klassen, endet der \myMinin{Interpreter} `immer' an einem Werterzeuger (Funktionsaufruf, Variable, \ldots), der von Kontrollstrukturen (\myMinin{if}, \myMinin{while}, \ldots) konsumiert wird.
+      Der \myMinin{Interpreter} interpretiert den AST in mehreren Schritten:
+      \begin{enumerate}
+        \item Alle Funktionsdefinitionen aus dem aktuellen \myMinin{ast::Scope} werden interpretiert.\\
+          Das sorgt dafür, dass keine Definitionsreihenfolge eingehalten werden muss -- \myMIn$fun() def fun() {...}$ ist kein Fehler.
+        \item Das das aktuelle \myMinin{ast::Scope} wird abgearbeitet.\\
+          Das `root' \myMinin{ast::Scope} wird normal behandelt, was heißt, dass \myMinin{if}, \myMinin{while}, Funktionsaufrufe, \ldots{} erlaubt sind. Eine Ausnahme ist die \myMinin{main()} Methode, diese darf niemals aufgerufen werden.
+        \item Die Abarbeitung der Einstiegsfunktion \myMinin{main()}.\\
+          Hier werden wieder die ersten zwei Schritte durchgeführt, welche sich in jedem folgenden \myMinin{ast::Scope}, sowie Funktionsaufrufen wiederholen.
+      \end{enumerate}
 
-      Wenn eine Funktion interpretiert werden soll, muss der \myMinin{Interpreter} Variablen, die als Parameter übergeben werden, dem \myMinin{Stack} der Funktion als Referenzen hinzufügen und anschließend das Scope der Funktion interpretieren. % FIXME Dieser Satz ist schwer lesbar; vermutlich auch, weil (wahrscheinlich) 1++ Kommafehler enthalten sind ;-)
-      Das Zuweisen von Parametern verhält sich ähnlich wie bei JavaScript -- die Parameter werden als Referenz übergeben und nicht kopiert.
-      Wenn dem Parameter ein neuer Wert zugewiesen wird, verändert sich der Wert aus dem aufrufendem Scope nicht. % FIXME Hä? Widerspricht das nicht dem Satz vorher?
-      Wenn die aufzurufende Funktion allerdings von dem \myMinin{ExecutableProvider} kommt, werden die Parameter kopiert -- dies ist durch die C++ Ebene vorgegeben und wird normalerweise durch Pointer beschleunigt. Da die Parameternamen zu der Funktionssignatur gehören, ist es möglich mehrere Funktionen mit dem selben Namen anzulegen -- \myMinin{fun()} und \myMinin{fun(foo)} stehen also nicht in Konflikt. Wenn der \myMinin{Stack} keine entsprechende Funktion besitzt, wird der \myMinin{ExecutableProvider} nach einer Funktion gefragt.
+      Wenn eine Funktion interpretiert werden soll, muss der \myMinin{Interpreter} Variablen, die als Parameter übergeben werden, dem neuen \myMinin{Stack} als Referenzen hinzufügen. Und im Anschluss daran, kann er dann das \myMinin{ast::Scope}, der Funktion interpretieren. Das Zuweisen von Parametern verhält sich ähnlich wie bei JavaScript -- die Parameter werden als (konstante) Referenz übergeben und nicht kopiert. Wenn dem Parameter ein neuer Wert zugewiesen wird, verändert sich der Wert aus dem aufrufendem Scope nicht. Stattdessen wird die Referenz aus dem \myMinin{Stack} gelöscht und eine Variable, mit dem neuen Wert, angelegt.
 
+      Die Besonderheiten des Interpreters:
+      \begin{itemize}
+        \item Wenn der \myMinin{Stack} keine entsprechende Funktion besitzt, wird der \myMinin{ExecutableProvider} nach einer Funktion gefragt.\\
+          Das heißt, dass die nativen Funktionen von Funktionsdefinitionen in dem Makro überschrieben und auch unerreichbar werden können.
+        \item Wenn eine Funkion interpretiert werden muss und diese von dem \myMinin{ExecutableProvider} kommt, werden die Parameter kopiert.\\
+          Es ist durch die C++ Ebene vorgegeben und wird normalerweise durch Pointer beschleunigt. In der C++ Ebene ist es auch möglich die move-semantics aus C++11 anstelle von Pointern anzuwenden, das ist allerdings nicht aus der Makro Ebene möglich.
+        \item Da die Parameternamen zu der Funktionssignatur gehören, ist es möglich mehrere Funktionen mit dem selben Namen anzulegen.\\ % FIXME move to analyser
+          \myMinin{def fun() {...}} und \myMinin{def fun(foo) {...}} stehen also nicht in Konflikt. Die Reihenfolge der Parameter ist allerdings nicht Bestandteil der Signatur und somit ist \myMinin{def fun(a, b) {...}} und \myMinin{def fun(b, a) {...}} nicht im selben \myMinin{ast::Scope} zulässig.
+        \item Wenn eine Variable aus einem \myMinin{ast::Scope} returned wird, also ein Funktionsrückgabewert ist, kann dies ohne eine Kopie passieren.\\
+          Dies ist dann möglich, wenn die Variable, die returned wird in dem \myMinin{Stack} angelegt wurde und keine Referenz ist.
+      \end{itemize}
 
-      Wenn der \myMinin{Interpreter} einen \myMinin{Operator} zu interpretieren hat, kann dies in drei einfachen Schritten geschehen. Operatoren sind die kompliziertesten Strukturen und dienen daher als Beispiel, wie
-      simple % FIXME
-      der \myMinin{Interpreter} letztendlich geworden ist. % FIXME 1.) Simpel klingt hier nach Selbstlob ;-) Das machen wir dann schon… 2.) Nicht in der Vergangenheit / zurückblickend schreiben! Du schreibst immer über die Gegenwart, also so, als würdest Du den Interpreter in diesem Moment entwerfen.
-      Im ersten Schritt interpretiert er den \myMinin{Operator} soweit, dass er einen/zwei Werterzeuger und einen Operatortyp (zB. \myMinin{==}) hat. Im zweiten Schritt wird der Werterzeuger zu einem Wert ausgewertet, mit dem im dritten Schritt, dann der \myMinin{Operator} vom \myMinin{OperatorProvider} aufgerufen wird.
-
-      Wenn der \myMinin{Interpreter} eine Variable braucht, muss er nur den \myMinin{Stack} fragen.
+      Um einen \myMinin{ast::Operator} zu interpretieren geht der \myMinin{Interpreter} durch folgende Schritte:
+      \begin{enumerate}
+        \item Interpretiert er den  \myMinin{ast::Operator} soweit, dass er einen/zwei Werterzeuger und einen Operatortyp (zB. \myMinin{==}) hat.
+        \item Erzeugt der \myMinin{Interpreter} den/die Wert/e des/der Werterzeuger/s.\\
+          Im Falle, dass es sich um den Operatorentyp \myMinin{&&} oder \myMinin{||} handelt, kann der Interpreter auch schon durch die Kurzschlusssemantik früher aufhören.
+        \item Nutzt er den \myMinin{OperatorProvider} um die beiden Werte mit einem registrierten Opteratoren zu vergleichen.
+      \end{enumerate}
 
       Da die \myMinin{ast} Instanzen das \myMinin{Token} besitzen, durch welches sie entstanden sind, ist der \myMinin{Interpreter} -- im Falle, dass kein passender \myMinin{Operator} oder Funktion gefunden werden können -- in der Lage genau so gute Fehlermeldungen zu produzieren, wie der \myMinin{Parser}.
 
@@ -663,16 +682,13 @@
     %---------------------------------
     \subsubsection{Komplexe Rückgabewerte}
     \label{sssec:Komplexe Rückgabewerte}
-      Der Übergang von der C++ Ebene zu der Makro Ebene schien %FIXME Vergangenheit
-      am Anfang nahe zu unmöglich, doch durch die Nutzung von dem \myMinin{any} Typ ist es erstaunlich `einfach'. % FIXME Bla bla… Sachlicher formulieren! -> Die Nutzung des any-Typs gestattet den Übergang von …
+      Die komplexen Rückgabewerte, aus der Makro Ebene in die C++ Ebene sind durch den \myMinin{any} Typ kein Problem, da sich diese durch den Stack schon von Anfang an in der C++ Ebene befinden. An dieser Stelle muss es sich um eine \myMinin{ast::Variable} handeln, die angelegt wurde und kann deswegen ohne eine Kopie anzulegen aus der C++ Funktion des Interpreters returned werden.
 
-      Die \myMinin{interpret()} Methoden von dem \myMinin{Interpreter} geben alle einen \myMinin{any} Wert zurück. Dieser kann entweder
-      invalid (keine Daten) oder valid (Daten) % FIXME Klingt schon wieder nach Swift (-> „Optionals“) ;-)
-      sein. Der \myMinin{Interpreter} selber hat keine Ahnung, was sich in dem \myMinin{any} Typ befindet -- das ist nicht gut, aber der Preis, der gezahlt werden muss (da es keine Reflektion gibt). Dies provoziert Fehler, wenn die \myMinin{Executable}s aufgerufen werden und der erwartete Typ nicht übereinstimmt. Allerdings ist dieses Problem nicht `neu' -- die \myMinin{Executable}s sind von dem Problem ebenso geplagt -- was zur Folge hat, dass die \myMinin{any} Parameter für die \myMinin{Executable}s geprüft werden, bevor mit diesen gearbeitet wird.
+      Um die Makros auch aus der C++ Ebene aufzurufen, bedarf es einen Wrapper für den Interpreter, der das \myMinin{core::Command} Interface implementiert. Da die \myMinin{interpret()} Methoden von dem \myMinin{Interpreter} alle einen \myMinin{any} Wert zurückgeben, ist der Rückgabewert kein Problem. Der \myMinin{Interpreter} selber hat keine Ahnung, was sich in dem \myMinin{any} Typ befindet -- das ist nicht gut aber die selbe Situation, mit der die \myMinin{core::ConcreteCommand}s klarkommen müssen, womit es nur ein kleines Problem ist.
 
-      Die bis hier her beschriebene Architektur lässt sich sehr einfach in das Ziel (siehe \autoref{fig:abstract_goal_uml}) konvertieren. % FIXME Da staune ich aber! Die ganzen letzten Seiten willst / kannst Du auf drei Klassen abbilden??
-      Der \myMinin{Interpreter} hat als Rückgabewert \myMinin{any}, so wie \myMinin{Executable}. Als Parameter kann der \myMinin{Interpreter} eine Liste von \myMinin{any} Werten -- die einem \myMinin{string} zugewiesen sind -- annehmen, sowie zwei \myMinin{string}s (Makro und Makro Name). \myMinin{Executable} können nur eine Liste von \myMinin{any} Werten, die einem \myMinin{string} zugeweisen sind, annehmen. Zwei \myMinin{any} Werte mehr in der Liste, als Makro und Makro Name löst das Problem der verschiedenen Anzahl von Parametern. Also muss ein \myMinin{Interpreter} nur von einem Wrapper (\myMinin{Marco}), der das \myMinin{Executable} Interface implementiert, umschlossen werden und das anfängliche Ziel ist erreicht.
-\myFixme{Ist der letzte Absatz zu abstrakt?} % FIXME Wenn Du mit abstrakt unverständlich meinst: ja ;-)
+      Als Parameter kann der \myMinin{Interpreter} eine Liste von \myMinin{any} Werten -- die einem \myMinin{string} zugewiesen sind -- annehmen, sowie zwei \myMinin{string}s (Makro und Makro Name). \myMinin{core::Command}s können nur eine Liste von \myMinin{any} Werten, die einem \myMinin{string} zugewiesen sind, annehmen. Drei \myMinin{any} Werte mehr in der Liste, als Makro, Makro Name und Datei löst das Problem der verschiedenen Anzahl von Parametern.
+
+      Da Makros \myMinin{core::Command}s aufrufen können, sind sie auch in der Lage andere Makros aufzurufen (siehe \autoref{enum:astbuffer}). Dadurch könnten Makros nicht nur zur Automatisierung genutzt werden, sondern auch zur internen Erweiterung der Applikation, dies ist allerdings eine schlechte Nutzung, da Makros langsamer sind, als reine C++ Funktionen oder \myMinin{Command}s. Allerdings ist ein wertvoller Vorteil dieser Kombinierbarkeit, dass Makros durch C++ Test-Frameworks ausgiebig getestet werden können.
 
 %---------------------------------
 % Exemplarische Realisierung
@@ -681,7 +697,7 @@
 \label{sec:Exemplarische Realisierung}
   % TODO explain via example, split page in two right data (string ->tokenlist->ast->interpreter) left explanation
   % TODO mention test driven
-\myFixme{Ich hätte hier vor, an Hand eines Beispieles, die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)} % FIXME Ja, hört sich gut an. Ein einfaches, durchgehendes Beispiel hat mir übrigens in Kapitel 3 gefehlt…
+\myFixme{Ich hätte hier vor, an Hand eines Beispieles, die ``Knackpunkte'' der einzelnen Klassen zu erklären, bzw. den Ablauf wieder zu spiegeln (String->Tokens->Parser/AST->Interpreter). Hört sich das gut an? (Code wäre getrimmt oder Pseudo-Code)} % FIXME Ja, hört sich gut an. Ein einfaches, durchgehendes Beispiel hat mir übrigens in Kapitel 3 gefehlt… % FIXME
 
   \begin{myCodeEnv}
     \centering
@@ -738,11 +754,11 @@
   \end{paracol}
 
   %---------------------------------
-  % Interpreterex_tok
+  % Fehlermeldungen
   %---------------------------------
   \subsection{Fehlermeldungen}
   \label{ssec:Fehlermeldungen}
-\myFixme{Ich vermute das ich in diesem Kapitel 6-8 Seiten zu schreiben habe, wenn es Vorschläge gibt, was noch niedergeschrieben werden sollte, bzw. ausführlicher erklärt werden muss, nur zu. Ich habe wie immer eher das Problem das ich zu wenig Text produziere.} % FIXME  Klingt vom Umfang her ok.
+\myFixme{Ich vermute das ich in diesem Kapitel 6-8 Seiten zu schreiben habe, wenn es Vorschläge gibt, was noch niedergeschrieben werden sollte, bzw. ausführlicher erklärt werden muss, nur zu. Ich habe wie immer eher das Problem das ich zu wenig Text produziere.} % FIXME  Klingt vom Umfang her ok. % FIXME
 %---------------------------------
 % Evaluation
 %---------------------------------
@@ -751,7 +767,7 @@
   % TODO compiler bugs
   % TODO ChaiScript http://chaiscript.com/ --- May 25, 2009 23fc75c  --- schlechte Fehlermeldungen
 
-\myFixme{Ich habe \href{http://chaiscript.com/}{http://chaiscript.com/} gefunden. Quasi das was ich hier mache, bloß das die 9 Jahre Zeit hatten -- ich habe also einen Referenzpunkt! :)} % FIXME Das solltest Du gleich am Anfang (Einleitung oder Problemstellung) nennen und darstellen, warum Du einen eigenen Ansatz entwickelst. „Related Work“ fehlt in Deiner Arbeit ja leider völlig (habe ich zugegebenermaßen auch aus den Augen verloren).
+\myFixme{Ich habe \href{http://chaiscript.com/}{http://chaiscript.com/} gefunden. Quasi das was ich hier mache, bloß das die 9 Jahre Zeit hatten -- ich habe also einen Referenzpunkt! :)} % FIXME Das solltest Du gleich am Anfang (Einleitung oder Problemstellung) nennen und darstellen, warum Du einen eigenen Ansatz entwickelst. „Related Work“ fehlt in Deiner Arbeit ja leider völlig (habe ich zugegebenermaßen auch aus den Augen verloren). % FIXME
 
 %---------------------------------
 % Zusammenfassung und Ausblick
@@ -764,19 +780,24 @@
   %---------------------------------
   \subsection{Ausblick}
   \label{ssec:Ausblick}
-    \begin{enumerate}[ref=Ausblick: Punkt \arabic*]
-      \item Ausnutzung des ASTs\\
+    \begin{enumerate}[ref=\autoref{ssec:Ausblick}: Punkt \arabic*]
+      \item Threading\\
         Sofern alle Funktionen die ausgeführt werden sollen als thread-safe gekennzeichnet sind, kann das gesamte Macro parallel ausgeführt werden.
       \item Debugger / Stepping\\
         Es könnte ein Interface angeboten werde, mit dem man durch die Ausführung eines Macros Schritt für Schritt gehen kann.
       \item C++17 std::string\_view\\
         Um weniger Speicher zu verbrauchen und durch weniger Memory Allokationen schneller beim Tokenizen zu sein.
       \item Mehr Fehler von dem Parser\label{enum:Mehr Fehler}\\
-        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört zu parsen, ist es möglichen einen Stack von Fehlermeldungen zu produzieren. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang ({), Scopeende(}) oder Semikolon(;) -- je nach dem wo der Fehler aufgetreten ist -- die Tokens verworfen werden und dann weiter geparst werden.
-      \item Verkettete Stack Liste in ein Array umwandeln\label{enum:linkedlist}\\
-        Wenn sich herausstellt, dass die verkettete Liste von dem Stack zu langsam ist, kann der Interpreter ein Array nutzen um die Stacks zu speichern, und die Stacks Nutzen anstelle eines Pointers einen Offset, von dem sie aus die anderen Stack fragen können.
+        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört zu parsen, ist es möglichen einen Stack von Fehlermeldungen zu produzieren -- wie es in dem \myMinin{Analyser} gemacht wird. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang ({), Scopeende(}) oder Semikolon(;) -- je nach dem wo der Fehler aufgetreten ist -- die Tokens verworfen werden und dann weiter geparst werden.\\
+        Eine weitere Variante ist es, AST Elemente als poisoned zu kennzeichnen, was alle Fehler, die in Verbindung mit dem Element auftreten, verworfen werden, da es sehr wahrscheinlich eine Folgefehler ist.
 
-        Dies Hätte zur Folge das der Nutzer mehr Fehler auf einmal beseitigen kann.
+        Dies hätte zur Folge, dass der Nutzer mehr Fehler auf einmal beseitigen kann.
+      \item Verkettete Stack Liste in ein Array umwandeln\label{enum:linkedlist}\\
+        Wenn sich herausstellt, dass die verkettete Liste von dem Stack zu langsam ist, kann der Interpreter ein Array nutzen um die Stacks zu speichern, und die Stacks Nutzen anstelle eines Pointers einen Offset, von dem sie aus die anderen Stack fragen können. Der Vorteil von Arrays gegen LinktLists ist die wesentlich höhere Cache-Locality
+      \item Einen Makro AST Buffer bereitstellen.\label{enum:astbuffer}\\
+        Da das parsen und validieren der Makros ziemlich langsam ist, ist es ratsam einen Provider zu implementieren, der den Namen des Makros mit dem geparsten AST assoziiert. Der AST wird von dem \myMinin{Interpreter} nicht verändert, weswegen das Makro nur geparsed werden muss, wenn es sich verändert hat.
+
+        Ein weiterer Vorteil wäre, dass das Makro nicht als String einem anderen Makro bekannt sein muss oder als \myMinin{core::ConcreteCommand} implementiert sein muss, da der \myMinin{Interpreter} im den AST des anderen Makros weiter parsen würde. Dafür müsste der \myMinin{Interpreter} natürlich ein wenig angepasst werden, da er nun den `\myMinin{MakroProvider}' vor dem \myMinin{CommandProvider} nach einem passenden Makro fragen müsste.
     \end{enumerate}
 
 

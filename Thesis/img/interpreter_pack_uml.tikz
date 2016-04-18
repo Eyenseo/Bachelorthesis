@@ -15,30 +15,31 @@
     Class.Callable("Callable")()();
 
     Package.ast("ast")(Callable, Scope, Operator);
+    Package.pod("pod")(ast);
     Package.parser("parser")(Parser);
     Package.interpreter("interpreter")(OperatorProvider, OperatorInt, Interpreter, Stack);
-    Package.macro("macro")(ast, parser, interpreter);
+    Package.macro("macro")(pod, parser, interpreter);
 
-    Class.ExecutableProvider("ExecutableProvider")()();
-    Interface.Executable("Executable")()();
-    classStereotypes.Executable("<<interface>>");
-    Package.core("core")(ExecutableProvider, Executable);
+    Class.CommandProvider("CommandProvider")()();
+    Interface.Command("Command")()();
+    classStereotypes.Command("<<interface>>");
+    Package.core("core")(CommandProvider, Command);
 
 
     % Packages
     %%%%%%
-    same.midx(Executable, Callable);
+    same.midx(Command, Callable);
     core.bottom = macro.top + 30;
 
     % CORE
     %%%%%%
-    leftToRight(120)(ExecutableProvider, Executable);
+    leftToRight(120)(CommandProvider, Command);
 
     % Macro
     %%%%%%
     leftToRight(40)(Parser, Interpreter);
 
-    ast.left = interpreter.right + 20;
+    pod.left = interpreter.right + 20;
 
     % ast
     topToBottom(30)(Scope, Operator);
@@ -46,8 +47,10 @@
     same.midx(Scope, Operator);
     same.midy(Stack, Scope);
     same.midy(OperatorInt, Operator);
-    ast.top = macro.top - 20;
-    ast.bottom = macro.bottom + 4;
+    pod.top = macro.top - 20;
+    ast.top = pod.top - 20;
+    pod.bottom = ast.bottom - 5;
+    macro.bottom = pod.bottom - 5;
 
     % interpreter
     topToBottom(30)(Interpreter, OperatorProvider);
@@ -72,21 +75,20 @@
     link(aggregationUni)
       (Stack_w_one -- Interpreter_e_one);
     link(aggregationUni)
-      (pathManhattanY(ExecutableProvider.s, Interpreter_e_two));
-
+      (pathManhattanY(CommandProvider.s, Interpreter_e_two));
 
     link(aggregationUni)
       (OperatorInt.w -- OperatorProvider.e);
     item(iAssoc)("*")(obj.ne = OperatorInt.w + (0, -3));
     link(aggregationUni)
-      (Executable.w-- ExecutableProvider.e);
-    item(iAssoc)("*")(obj.ne = Executable.w + (0, -3));
+      (Command.w-- CommandProvider.e);
+    item(iAssoc)("*")(obj.ne = Command.w + (0, -3));
     link(realization)
       (Stack.e -- Scope.w);
     link(realization)
       (OperatorInt.e -- Operator.w);
     link(realization)
-      (Executable.s -- Callable.n);
+      (Command.s -- Callable.n);
 
     pair stack_a, stack_b, stack_c, stack_d;
     stack_a = Stack.sw + (3, 0);
