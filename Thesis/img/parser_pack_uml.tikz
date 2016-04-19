@@ -6,21 +6,22 @@
 
     Class.AST("AST")()();
 
+    Class.Analyser("Analyser")()();
     Class.Parser("Parser")()();
     Class.Tokenizer("Tokenizer")()();
     Class.TokenList("TokenList")()();
     Class.Token("Token")()();
 
     Package.ast("ast")(AST);
-    Package.parser("parser")(Parser, Tokenizer);
+    Package.parser("parser")(Analyser,Parser, Tokenizer);
     Package.pod("pod")(Token, TokenList, ast);
 
     leftToRight(30)(Tokenizer, TokenList, Token);
-    topToBottom(30)(Parser, Tokenizer);
+    topToBottom(30)(Analyser, Parser, Tokenizer);
     same.midx(AST, Token);
     same.midy(Tokenizer, Token);
     Parser.top = AST.top;
-    pod.top = parser.top + 15;
+    pod.top = ast.top + 20;
     pod.bottom = parser.bottom;
 
     drawObjects(parser, pod, token);
@@ -32,6 +33,9 @@
     link(compositionUni)
       (Tokenizer.n -- Parser.s);
     item(iAssoc)("1")(obj.ne = Tokenizer.n + (10,8));
+    link(compositionUni)
+      (Analyser.s -- Parser.n);
+    item(iAssoc)("1")(obj.ne = Analyser.s + (10,-1));
 
     pair Parser_e_one, Parser_e_two, AST_w_one;
     Parser_e_one = Parser.e + (0,2);
