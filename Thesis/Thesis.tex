@@ -179,7 +179,7 @@
       Bei Java gibt die VM den Befehlssatz vor und muss bei der Ausführung des Programms diese Befehle, in die entsprechenden Hardwarebefehle, übersetzen (write once, run anywhere). Ähnlich verhält es sich mit dem Makrosystem, das Makro nutzt die vorhandenen Befehle der Applikation, um einen Arbeitsvorgang zu automatisieren. Da die Befehle jedoch nur als Zeichenketten vorliegen, müssen diese zu den richtigen Funktion übersetzt werden. Der Befehlssatz dieses Makrosystems kommt aus dem vorhandenen System, da dort das Command-Pattern \autocite[S.263]{Gamma:1995:DPE:186897} eingesetzt wird und somit ein ideales Interface für Automatisierung bietet. \autoref{sssec:Das vorhandene System} geht auf die Architektur des vorhandenen Systems ein, die für diese Arbeit wichtig ist.
 
       Für alle Programmiersprachen ist es von Nöten, die Reihenfolge von Zeichen, in sinnvolle Stücke zu zerteilen -- dies übernimmt ein Tokenizer, siehe \autoref{fig:abstract_arch}. Meist wird dieser in den Parser \autocite[S.46]{eirund2013formale} integriert, welcher die Stücken des der Zeichenkette (String) in ein Format bringt, welches der Interpreter verstehen kann. Das Format ist meist ein \emph{abstrakter Syntaxbaum}\footnote{
-        \textit{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
+        \myMinin{Abstract syntax tree} ist eine digitale Darstellung einer Programmiersprache.
       } (AST), welcher den String eindeutig repräsentiert. Einer Typen aus dem AST nennt sich Literal. Literals sind Daten, die der Programmierer durch Quelltext erstellen kann (zum Beispiel ist \myMinin{"foo"} ein String und \myMinin{1.1} ist eine Dezimalzahl). Literals müssen aus dem Format des Quelltextes in die echte Datenstruktur verwandelt werden, was ein Lexer übernimmt. Lexer sind wie Tokenizer meist ein ein Teil des Parsers. Der Interpreter arbeitet dann nur noch mit dem AST, welcher vorgibt, welche Befehle der Interpreter ausführen muss, um das, als String angegebene, Programm auszuführen. Ein Interpreter arbeitet die AST Elemente sequentiell ab, das heißt, dass ein Interpreter \myMinin{a} ausführt ohne zu `wissen', dass er im Anschluss \myMinin{b} ausführen wird.
       \begin{figure}[H]
         \centering
@@ -220,7 +220,7 @@
         \label{fig:command_uml}
       \end{figure}
 
-      Da C++ keine Reflexion \autocites{vinoski2005time}{ferber1989computational} unterstützt, ist die Signatur, der \myMinin{any execute(map<string, any> arguments)} Methode, ein wichtiger Punkt der Architektur. Durch den \texttt{any} \autocite{cpp-fundamentals} Typ, in der Implementation des Command-Patterns, wurde die fehlende Reflektion umgangen\footnote{
+      Da C++ keine Reflexion \autocites{vinoski2005time}{ferber1989computational} unterstützt, ist die Signatur, der \myMinin{any execute(map<string, any> arguments)} Methode, ein wichtiger Punkt der Architektur. Durch den \myTIn$any$ \autocite{cpp-fundamentals} Typ, in der Implementation des Command-Patterns, wurde die fehlende Reflektion umgangen\footnote{
          Diese Veränderung ist als Vorbereitung auf die Bachelorarbeit entstanden, da diese Anpassung den Zeitrahmen der Bachelorarbeit überschritten hätte.
       }. \myMinin{any} ist in der Lage, jeglichen Typ aufzunehmen und typsicher\footnote{
         Typsicher bedeutet das ein \myMinin{int} nicht zu einem \myMinin{char} gecastet werden kann -- es bedeutet nicht, dass \myMinin{any} implizit zu \myMinin{int} gecastet wird -- es ist also mit einem \myMinin{void *} zu vergleichen.
@@ -285,6 +285,7 @@
 %---------------------------------
 \section{Konzeption}
 \label{sec:Konzeption}
+\myFixme{Durchgängiges Beispiel?!?!!?}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
   \myNamedRef{ssec:Syntax} beschreibt die Syntax, welche von dem Tokenizer und Parser umgewandelt werden soll. Im \myNamedRef{ssec:Grundarchitektur} wird die Grundarchitektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst nur die grobe Architektur des Makrosystems, da in dem \myNamedRef{ssec:Detaillierte Teilarchitekturen} auf die komplexeren Teile der Architektur eingegangen wird.
@@ -466,6 +467,7 @@
   %---------------------------------
   \subsection{Grundarchitektur}
   \label{ssec:Grundarchitektur}
+\myFixme{Durchgängiges Beispiel?!?!!?}
     Da das komplette UML Diagramm sehr unübersichtlich ist und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem Kompletten und spiegeln es zusammen wieder.
 
     \autoref{fig:top_pack_uml} zeigt die Abhängigkeiten der Pakete (namespaces) in dem Modul, welches die Makrofunktionalität anbieten soll. \myMinin{core} ist das Paket, indem das Command-Pattern aus dem \autoref{ssec:Diskussion des Problemfeldes} implementiert ist. Das \myMinin{pod} Paket enthält alle Klassen, die die nur zur Verwaltung von Daten dienen (separation of concerns) und deswegen \emph{plain old data} (POD), oder auch \emph{passive data structure} (PDS) genannt werden. In dem \myMinin{pod} Paket befindet sich die \myMinin{Token} Klasse und das \myMinin{ast} Paket, welches alle Klassen, die den abstrakten Syntaxbaum ausmachen, beinhaltet. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser.
@@ -580,6 +582,7 @@
   %---------------------------------
   \subsection{Detaillierte Teilarchitekturen}
   \label{ssec:Detaillierte Teilarchitekturen}
+\myFixme{Durchgängiges Beispiel?!?!!?}
     Dieser Abschnitt bildet den Übergang vom theoretischen zum praktischen Teil, in dem hier die komplexeren Bestandteile der Architektur beschrieben werden. Um diese Teilarchitekturen beschreiben zu können, wird in \autoref{sssec:Die Programmiersprache} die Programmiersprache gewählt, in welcher das Makrosystem entwickelt wird. In den darauffolgenden Kapiteln wird die Architektur des \myMinin{Parser}s, \myMinin{OperatorProvider}s, \myMinin{Stack} und des \myMinin{Interpreter}s genauer betrachtet.
 
     %---------------------------------
@@ -814,7 +817,7 @@
       \item C++17 std::string\_view\\
         Um weniger Speicher zu verbrauchen und durch weniger Memory Allokationen schneller beim Tokenizen zu sein.
       \item Mehr Fehler von dem Parser\label{enum:Mehr Fehler}\\
-        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört zu parsen, ist es möglichen einen Stack von Fehlermeldungen zu produzieren -- wie es in dem \myMinin{Analyser} gemacht wird. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang ({), Scopeende(}) oder Semikolon(;) -- je nach dem wo der Fehler aufgetreten ist -- die Tokens verworfen werden und dann weiter geparst werden.\\
+        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört zu parsen, ist es möglichen einen Stack von Fehlermeldungen zu produzieren -- wie es in dem \myMinin{Analyser} gemacht wird. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang (\myTIn${$) , Scopeende(\myTIn$}$) oder Semikolon(\myTIn$;$) -- je nach dem wo der Fehler aufgetreten ist -- die Tokens verworfen werden und dann weiter geparst werden.\\
         Eine weitere Variante ist es, AST Elemente als poisoned zu kennzeichnen, was alle Fehler, die in Verbindung mit dem Element auftreten, verworfen werden, da es sehr wahrscheinlich eine Folgefehler ist.
 
         Dies hätte zur Folge, dass der Nutzer mehr Fehler auf einmal beseitigen kann.
