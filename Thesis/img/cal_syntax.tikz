@@ -18,7 +18,7 @@
     \graph[railroad] {
       (start)->(name)->(paramOpen1)->(paramname)->(sep)->(param)->(paramClose1)->(end);
       (paramClose3)->[vh path](comma)->[hv path](paramOpen3);
-      (paramOpen2) -> [skip loop=10mm] (paramClose2);
+      (paramOpen2) -> [skip loop=7mm] (paramClose2);
     };
   \end{tikzpicture}
 }

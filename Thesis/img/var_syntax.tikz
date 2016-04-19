@@ -15,7 +15,7 @@
       % main
       (start)->(var)->(name)->(assign)->(ValueProducer)->(statementEnd)->(end);
       % no assignment
-      (postName)->[skip loop=-10mm](preStatementEnd);
+      (postName)->[skip loop=-7mm](preStatementEnd);
     };
   \end{tikzpicture}
 }

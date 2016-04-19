@@ -14,7 +14,7 @@
 
     \graph[railroad] {
       (start)->(if)->(bo)->(vpr)->(bc)->(truescope)->(else)->(falsescope)->(end);
-      (preelse) -> [skip loop=-10mm] (preend);
+      (preelse) -> [skip loop=-7mm] (preend);
     };
   \end{tikzpicture}
 }

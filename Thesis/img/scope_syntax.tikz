@@ -10,7 +10,7 @@
 
    \graph[railroad] {
       (start)->(bo)->(als)->(bc)->(end);
-      (postbo)<->[skip loop=-10mm](prebc);
+      (postbo)<->[skip loop=-7mm](prebc);
     };
   \end{tikzpicture}
 }

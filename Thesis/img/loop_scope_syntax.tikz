@@ -16,7 +16,7 @@
     \graph[railroad] {
       (start)->(bo)->(als)->(bc)->(end);
       (postbo)->[vh path](break)->(postbr)->[hv path](prebc);
-      (postbo)<->[skip loop=-10mm](postals);
+      (postbo)<->[skip loop=-7mm](postals);
     };
   \end{tikzpicture}
 }
