@@ -305,7 +305,7 @@
     %---------------------------------
     \subsubsection{Syntax Grundlagen}
     \label{sssec:Syntax Grundlagen}
-      Bezeichner müssen dem regulären Ausdruck (Regex) aus \autoref{fig:idsyntax} entsprechen. \myTIn$*$ bedeutet Null, \myTIn$+$ bedeutet Eins, oder mehr vom vorausgehenden Zeichen. \myTIn$[]$ ist eine Sammlung von Zeichen, bei dem alle Zeichen einzeln verglichen werden -- \myTIn$[^]$ enthält alle Zeichen, die nicht genannt sind. In einer Sammlung kann \myTIn$-$ genutzt werden, um eine Reihe von Zeichen zu bestimmen. \myTIn$.$ kann jedes Zeichen sein, \myTIn$\s$ sind Whitespaces und \myTIn$\d$ sind Zahlen. \myTIn$|$ bedeutet oder und letztlich escaped \myTIn$\$ das folgende Zeichen.
+      Bezeichner müssen dem regulären Ausdruck (Regex) aus \autoref{fig:idsyntax} entsprechen. \myTIn$*$ bedeutet null, \myTIn$+$ bedeutet ein, oder mehr vom vorausgehenden Zeichen. \myTIn$?$ bedeutet null oder ein Mal, in Verbindung mit \myTIn$*?$ wird beim ersten validen Regex abgebrochen. \myTIn$[]$ ist eine Sammlung von Zeichen, bei dem alle Zeichen einzeln verglichen werden -- \myTIn$[^]$ enthält alle Zeichen, die nicht genannt sind. In einer Sammlung kann \myTIn$-$ genutzt werden, um eine Reihe von Zeichen zu bestimmen. \myTIn$.$ kann jedes Zeichen sein, \myTIn$\s$ sind Whitespaces und \myTIn$\d$ sind Zahlen. \myTIn$|$ bedeutet oder und letztlich escaped \myTIn$\$ das folgende Zeichen.
 
       Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert, was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vorn herein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword
       (%
@@ -729,15 +729,15 @@
 \label{sec:Exemplarische Realisierung}
   Um schnell Resultate zu sehen, wird die Implementierung nicht nur inkrementell, sondern auch test-driven \autocite{beck2003test} vorgenommen. Inkrementell bedeutet, dass nicht komplett vollständige Teile der Software genutzt werden, um Abhängige Elemente zu entwickeln. Die Inkrementelle Entwicklung von Software kommt aus der Agile Softwareentwicklung \autocite{cohen2003agile}. Dabei werden schnell Resultate gesehen und zB. fallen Architektur Fehler schneller auf -- wodurch grundlegende Probleme frühzeitig beseitigen werden können.
 
-  Test-driven bedeutet, dass es für `alle' Funktionen einen Test gibt, den sie bestehen müssen. Das hat zur Folge, dass wenn eine neue Softwarekomponente entwickelt wird, diese schon `ausprobiert' werden kann, ohne dass die Teile der Software existieren, die diese Komponente benutzten. Zudem sind Fehler leicht zu lösen, da diese erstens früh gefunden werden und zweitens deren Lösung durch Regressionstests auch auf Korrektheit überprüft werden können und in den seltensten Fällen zu weiteren Fehlern führen. Test-driven bedeutet allerdings nicht, dass die Software am ende komplett ausgetestet ist. Es bedeutet nur das tests früher geschrieben werden und das es, im Vergleich zu anderen Entwicklungsmethoden, meistens mehr Tests gibt, die die Software auf Korrektheit überprüfen.
+  Test-driven bedeutet, dass es für `alle' Funktionen einen Test gibt den sie bestehen müssen. Das hat zur Folge, dass wenn eine neue Softwarekomponente entwickelt wird, diese schon `ausprobiert' werden kann, ohne dass die Teile der Software existieren, die diese Komponente benutzten. Zudem sind Fehler leicht zu lösen, da diese erstens früh gefunden werden und zweitens deren Lösung durch Regressionstests auch auf Korrektheit überprüft werden können. Dadurch werden in den seltensten Fällen weitere Fehler durch Fehlerlösungen eingeführt. Test-driven bedeutet allerdings nicht, dass die Software am Ende komplett ausgetestet ist. Es bedeutet nur das Tests früher geschrieben werden, und dass es, im Vergleich zu anderen Entwicklungsmethoden, meistens mehr Tests gibt, die die Software auf Korrektheit überprüfen.
 
-  In den folgenden Unterkapiteln der Ablauf für das Makro aus \autoref{fig:exmacro} durchgegangen. Die Reihenfolge ist die, die in \autoref{fig:abstractarch} schon beschrieben wurde.
+  In den folgenden Unterkapiteln wird der Ablauf für das Makro aus \autoref{fig:exmacro} durchgegangen. Die Reihenfolge ist die, die in \autoref{fig:abstractarch} schon beschrieben wurde.
   \begin{myCodeEnv}
     \centering
     \begin{myInvBox}[width=.9\linewidth]
       \lstinputlisting[style=MyMacroStyle]{code/exmacro.txt}
     \end{myInvBox}
-    \caption{Interpreter Beziehungen}
+    \caption{Beispiel für die exemplarische Realisierung}
     \label{fig:exmacro}
   \end{myCodeEnv}
 
@@ -754,16 +754,17 @@
       Um die \myMinin{Token}s zu erstellen, geht der \myMinin{Tokenizer} Zeichen für Zeichen vor.
 
       \paragraph{Whitespace}
-        Zum Beginn, liest der \myMinin{Tokenizer} alle Whitespace und verwirft diese. Wenn es sich bei dem Whitespace um einen Zeilenumbruch handelt, wird der Zähler für die momentane Zeile hochgezählt und der Spalten Zähler zurückgesetzt. Ansonsten wird nur der Spalten Zähler hochgezählt.
+        Zum Beginn, liest der \myMinin{Tokenizer} alle Whitespaces und verwirft diese. Wenn es sich bei dem Whitespace um einen Zeilenumbruch handelt, wird der Zähler für die momentane Zeile hochgezählt und der Spalten Zähler zurückgesetzt. Ansonsten wird nur der Spalten Zähler hochgezählt.
 
       \paragraph{Dezimalzahl}
-        Wenn das Zeichen eine Zahl ist, probiert der \myMinin{Tokenizer} den Regex \myRIn$\d*\.\d+$ auf das aktuelle und die folgenden Zeichen anzuwenden.
+        Wenn das Zeichen eine Zahl ist, probiert der \myMinin{Tokenizer} den Regex \myRIn$\d*\.\d+$ auf das aktuelle und die folgenden Zeichen anzuwenden. Integer werden als normale Token geparst. Siehe \ref{enum:lexnumber} für Verbesserungen.
+        % TODO revisit after negative numbers
 
       \paragraph{String}
-        Wenn das momentane Zeichen ein \myRIn$"$ ist, werden alle Zeichen gelesen, bis ein weiteres \myRIn$"$ gefunden wird. Um das escapen von \myRIn$"$ zu unterstützen, wird die Anzahl, der aufeinander folgenden \myRIn$\\$ gezählt. Wenn es sich um eine ungerade Zahl handelt, ist das \myRIn$"$ escaped und wird nicht als String Ende angesehen. Das Ergebnis dieses Verfahrens ist in \autoref{fig:extok} Zeile 32 zu sehen. Ohne dieses Verfahren würde es drei \myMinin{Token}s geben, und der Whitespace wäre ``verloren'' gegangen.
+        Wenn das momentane Zeichen ein \myRIn$"$ ist, werden alle Zeichen gelesen, bis ein weiteres \myRIn$"$ gefunden wird. Um das escapen von \myRIn$"$ zu unterstützen, wird die Anzahl, der aufeinander folgenden \myRIn$\\$ gezählt. Wenn es sich um eine ungerade Zahl handelt, ist das \myRIn$"$ escaped und wird nicht als String Ende angesehen. Das Ergebnis dieses Verfahrens ist in \autoref{fig:extok} Zeile 34 zu sehen. Ohne dieses Verfahren würde es drei \myMinin{Token}s geben, und der Whitespace wäre ``verloren'' gegangen.
 
       \paragraph{Besondere Token}
-        Besondere Token sind zum Beispiel: \myMIn$==$ oder \myMIn$!=$. Für diese Token ist es nötig das folge Zeichen zu kennen, um zu entscheiden, was für ein Token die Zeichen darstellen sollen.
+        Besondere Token sind zum Beispiel: \myRIn$==$ oder \myRIn$!=$. Für diese Token ist es nötig das folge Zeichen zu kennen, um zu entscheiden, was für ein Token die Zeichen darstellen sollen.
 
       \paragraph{Normale Token}
         Normale Token sind all die Zeichenketten, die dem Regex \myRIn$[a-zA-Z0-9_]$ genüge tun. Diese werden an dem Zeichen beendet, welche dem Regex nicht gleichen (also \myRIn$[^a-zA-Z0-9_]$).
@@ -772,23 +773,25 @@
       \begin{myCodeEnv}
         \begin{myInvBox}[width=.9\linewidth]
           \lstinputlisting[]{code/extok.txt}
-        \caption{Tokenized Makro}
+        \caption{Tokenized Makro / TokenList}
         \label{fig:extok}
         \end{myInvBox}
       \end{myCodeEnv}
   \end{paracol}
 
   \paragraph{Token Erstellung}
-    Ein \myMinin{Token} wird mit der Zeile und Spalte, in der es beginnt, und dem Token (zB. \myMIn$"1 "$) initialisiert. Ebenso wird dem \myMinin{Token} ein Pointer auf einen (momentan) leeren string mitgegeben. Am Ende einer Zeile wird diesem, leeren String, dann die gesamte Zeile zugewiesen. Da es sich um einen Pointer handelt, wird die Zeile allen \myMinin{Token} aus der Zeile gleichzeitig zugewiesen. Der Pointer, den der \myMinin{Tokenizer} hat, wird durch einen neuen Pointer auf einen leeren String ersetzt, um diesen den nächsten Tokens zu geben.
+    Ein \myMinin{Token} wird mit der Zeile und Spalte, in der es beginnt, und dem Token (zB. \myMIn$"1 "$) initialisiert. Ebenso wird dem \myMinin{Token} ein Pointer auf einen (momentan) leeren String mitgegeben. Am Ende einer Zeile wird diesem, leeren String, dann die gesamte Zeile zugewiesen. Da es sich um einen Pointer handelt, wird die Zeile allen \myMinin{Token}s, aus der Zeile, gleichzeitig zugewiesen. Der Pointer, den der \myMinin{Tokenizer} hat, wird durch einen neuen Pointer, auf einen leeren String ersetzt, um diesen den nächsten \myMinin{Token}s zu geben.
 
   %---------------------------------
   % Parser
   %---------------------------------
   \subsection{Parser}
   \label{ssec:Parser}
-    Der \myMinin{Parser} arbeitet intern mit der \myMinin{TokenList} und gibt den einzelnen Funktionen diese, sowie den aktuellen Index(\myMinin{size_t}/\myMinin{unsigned int}). In den einzelnen Methoden wird von dem Index eine Kopie erstellt, bevor diese anfangen zu arbeiten, da der Index so wie die \myMinin{TokenList} nur als Referenz übergeben wird. Die Kopie des Indexes sorgt dafür, dass wenn ein Fehler in einem Unter-UnterFunktionsaufruf auftritt, die Aufrufenden Funktionen noch `wissen' welches \myMinin{ast::Token} sie am Anfang bekommen haben und so gute Fehlermeldungen produzieren können. Das die Indexe als Referenz übergeben wurden, liegt daran, dass es zwar möglich ist mehrere Rückgabewerte unterschiedlichen Typs zu haben (\myMinin{std::pair<T1,T2>} oder \myMinin{std::tuple<T1, T2, ... Tn>}), dies aber ein schlechteres Interface bieten würde.
+    Der \myMinin{Parser} arbeitet intern mit der \myMinin{TokenList} und gibt den einzelnen Funktionen diese, sowie den aktuellen Index(\myMinin{size_t}/\myMinin{unsigned int}). Da der Index so wie die \myMinin{TokenList} nur als Referenz übergeben wird, erstellen die einzelnen Methoden eine Kopie von dem Index, bevor sie anfangen zu arbeiten. Die Kopie des Indexes sorgt dafür, dass wenn ein Fehler, in einem Unter-UnterFunktionsaufruf auftritt, die aufrufenden Funktionen noch `wissen', welches \myMinin{Token} sie am Anfang bekommen haben und so gute Fehlermeldungen produzieren können. Das die Indexe als Referenz übergeben wurden, liegt daran, dass es zwar möglich ist mehrere Rückgabewerte unterschiedlichen Typs zu haben (\myMinin{std::pair<T1,T2>} oder \myMinin{std::tuple<T1, T2, ... Tn>}), dies aber ein schlechteres Interface bieten würde.
 
-    Der \myMinin{Parser} fängt mit einem \myMinin{ast::Scope} als root Node des Baumes an. Im Anschluss daran, werden die \myMinin{Token}s nach einander geparst. Die Funktionen, die das Parsen übernehmen, implementieren die Syntax aus \autoref{ssec:Syntax}. Die erzeugte AST Struktur ist in \autoref{fig:exastroot} zu sehen. Diese, wie alle folgenden AST Strukturen, sind von dem Parser und durch den Stream (Bit-Shift) Operator, von den AST Elementen generiert worden. Das ausgeben der Datenstruktur wurde den POD Elementen hinzugefügt, um diese leichter entwickeln und debuggen zu können. Da der AST zu viel eingerückt und zu lang für eine Seite ist, werden nur Ausschnitte gezeigt, die aus dem Beispiel (\autoref{fig:exmacro}) generiert wurden.
+    Der \myMinin{Parser} fängt mit einem \myMinin{ast::Scope} als root Node des Baumes an. Im Anschluss daran, werden die \myMinin{Token}s nach einander geparst. Die Funktionen, die das Parsen übernehmen, implementieren die Syntax aus \autoref{ssec:Syntax}.
+
+    Die erzeugte AST Struktur -- von dem root \myMinin{ast::Scope} -- ist in \autoref{fig:exastroot} zu sehen. Diese, wie alle folgenden AST Strukturen, sind von dem Parser und durch den Stream (Bit-Shift) Operator, von den AST Elementen generiert worden. Das Ausgeben der Datenstruktur wurde den \myMinin{pod} Klassen hinzugefügt, um diese leichter entwickeln und debuggen zu können. Da der AST zu viel eingerückt und zu lang für eine Seite ist, werden nur Ausschnitte gezeigt, die aus dem Beispiel (\autoref{fig:exmacro}) generiert wurden.
     \begin{paracol}{2}
       \begin{myCodeEnv}
         \centering
@@ -814,12 +817,12 @@
     %---------------------------------
     \subsubsection{Definition}
     \label{sssec:Definition}
-      Um ein \myMinin{ast::Define} zu erzeugen, erwartet die \myMinin{Parser} Methode, dass das momentane \myMinin{Token} entweder als Token \myRIn$def$ entspricht, oder \myRIn$var$.
+      Um ein \myMinin{ast::Define} Objekt zu erzeugen, erwartet die \myMinin{Parser} Methode, dass das momentane \myMinin{Token} entweder \myRIn$def$ entspricht, oder \myRIn$var$.
 
-      Um \myMinin{ast::Funktion} zu parsen, erwartet die Methode, dass das momentane \myMinin{Token} \myRIn$def$ entspricht -- \myRIn$var$ um eine \myMinin{ast::Variable} zu parsen. Wenn keiner der beiden Fälle eintritt, wird \myMinin{false} zurückgegeben. Das \myMinin{false} anstelle von einem \myMinin{ast::Define} Objekt zurückgeben werden kann, wird durch den \myMinin{optional<T>} Typ erreicht \autocite{cpp-fundamentals}.
+      Um \myMinin{ast::Funktion} zu parsen, erwartet die Methode, dass das momentane \myMinin{Token} \myRIn$def$ entspricht -- \myRIn$var$ um eine \myMinin{ast::Variable} zu parsen. Wenn keiner der beiden Fälle eintritt, wird \myMinin{false} zurückgegeben -- alle Methoden zum Parsen verhalten sich so. Das \myMinin{false} anstelle von einem \myMinin{ast::Define} Objekt zurückgeben werden kann, wird durch den \myMinin{optional<T>} Typ erreicht \autocite{cpp-fundamentals}.
 
       \paragraph{Funktion}
-        Wenn \myRIn$def$ geparst wurde, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Funtion} übergeben. Diese erwartet, als aktuelles \myMinin{Token} einen Bezeichner (siehe \autoref{fig:idsyntax}) und, dass das nächste eine offene Klammer \myRIn$\($ ist. Nach der Klammer kann eine beliebige Anzahl von komagetrennten Bezeichnern angegeben werden. Diese werden dem \myMinin{ast::Function} Objekt als Array von \myMinin{ast::Variable} Objekten übergeben. Nach den Parametern wird eine geschlossene Klammer \myRIn$\)$ erwartet. Zuletzt wird die Funktion zum parsen von \myMinin{ast::Scope} aufgerufen und das Ergebnis in dem \myMinin{ast::Function} Objekt gesetzt.
+        Wenn \myRIn$def$ geparst wurde, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Funtion} übergeben. Diese erwartet, als aktuelles \myMinin{Token} einen Bezeichner (siehe \autoref{fig:idsyntax}) und, dass das nächste eine offene Klammer \myRIn$\($ ist. Nach der Klammer kann eine beliebige Anzahl von Komma getrennten Bezeichnern angegeben werden. Diese werden dem \myMinin{ast::Function} Objekt als Array von \myMinin{ast::Variable} Objekten übergeben. Nach den Parametern wird eine geschlossene Klammer \myRIn$\)$ erwartet. Zuletzt wird die Funktion zum parsen von \myMinin{ast::Scope} aufgerufen und das Ergebnis in dem \myMinin{ast::Function} Objekt gesetzt.
 
         Wenn Fehler beim parsen auftreten -- zum Beispiel, dass kein Bezeichner oder das \myMinin{ast::Scope} fehlt -- schmeißt die Methode eine Exception, die bis zu der \myMinin{static} globalen Methode hoch wandert. Das parsen der Funktion ist von einem \myMinin{try-catch} Block umschlossen -- sollte also eine Exception geworfen werden, wird diese gefangen, und mit dem Dateinamen, Zeile, Spalte und Quellcode der Zeile erweitert, um dann wieder geworfen zu werden.
 
@@ -845,9 +848,9 @@
         \end{paracol}
 
       \paragraph{Variable}
-        Wenn das geparste \myMinin{Token} \myRIn$var$ war, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Variable} übergeben. Diese erwartet, als aktuelles \myMinin{Token} einen Bezeichner ist. Es ist also wichtig, dass zuerst probiert wird, eine \myMinin{ast::Funktion} zu parsen und erst im Anschluss eine \myMinin{ast::Variable}.
+        Wenn das geparste \myMinin{Token} \myRIn$var$ war, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Variable} übergeben. Diese erwartet, als aktuelles \myMinin{Token}, nur einen Bezeichner. Es ist also wichtig, dass zuerst probiert wird eine \myMinin{ast::Funktion} zu parsen und erst im Anschluss eine \myMinin{ast::Variable}.
 
-        Vermutlich, entgegen die Erwartungshaltung des Lesers, wird hier nicht die Zuweisung behandelt. Dies geschieht bei der \myMinin{ast::Operator} Funktion, im Verlauf der Erklärung, wie Operatoren geparst werden, sollte es offensichtlich werden, wieso dies so ist.
+        Vermutlich, entgegen der Erwartungshaltung des Lesers, wird hier nicht die Zuweisung behandelt, dies geschieht bei der \myMinin{ast::Operator} Funktion. Im Verlauf der Erklärung, wie Operatoren geparst werden, sollte es offensichtlich werden, wieso dies so ist.
 
         Wie bei der Methode zum parsen von \myMinin{ast::Function}, befindet sich die Logik dieser Methode in einem \myMinin{try-catch} Block.
 
@@ -856,15 +859,15 @@
     %---------------------------------
     \subsubsection{Scope}
     \label{sssec:Scope}
-      Die \myMinin{ast::Scope} Klasse ist eine der meist verwendeten Klassen aus dem \myMinin{ast} Paket. Die \myMinin{ast::Scope} Klasse macht sich \myMinin{variant<T1, T2, ..., Tn>} \autocite{cpp-variant} zu Nutze -- Variant ist eine typsichere Union. Der Varianttyp des \myMinin{ast::Scope}s hat, als Template Parameter, alle AST Typen, die in einem Loop Scope auftreten können (\autoref{fig:loopscopesyntax}).
+      Die \myMinin{ast::Scope} Klasse ist eine der meist verwendeten Klassen aus dem \myMinin{ast} Paket. Die \myMinin{ast::Scope} Klasse macht sich \myMinin{variant<T1, T2, ..., Tn>} \autocite{cpp-variant} zu Nutze -- Variant ist eine typsichere Union. Der Varianttyp des \myMinin{ast::Scope}s hat, als Template Parameter, alle \myMinin{ast} Typen, die in einem Loop Scope auftreten können (\autoref{fig:loopscopesyntax}).
 
-      Die \myMinin{Parser} Methode erwartet, dass das aktuelle \myMinin{Token} \myRIn$\{$ entspricht. Wenn dem so ist, werden so lange alle \myMinin{ast} Klassen probiert geparst zu werden, bis ein \myMinin{Token} nicht aufgelöst werden kann. Dies ist entweder der Fall, wenn das Token \myRIn$\}$ ist -- somit dieses \myMinin{ast::Scope} schließt -- oder ein Unerwartetes Token ist. Im letzteren Fall wird eine Excpetion geschmissen. Wenn eine Methode ein validen Wert zurück gibt, wird ein Objekt erzeugt und zu dem Array des \myMinin{ast::Scope}s als Node hinzugefügt.
+      Die \myMinin{Parser} Methode erwartet, dass das aktuelle \myMinin{Token} \myRIn$\{$ entspricht. Wenn dem so ist, werden so lange alle \myMinin{ast} Klassen probiert geparst zu werden, bis ein \myMinin{Token} nicht aufgelöst werden kann. Dies ist entweder der Fall, wenn das Token \myRIn$\}$ -- somit dieses \myMinin{ast::Scope} schließt -- oder ein unerwartetes Token ist. Im letzteren Fall wird eine Excpetion geschmissen. Wenn eine Methode ein validen Wert zurück gibt, wird das Objekt dem Array des \myMinin{ast::Scope}s als Node hinzugefügt.
 
-      Ähnlich wie in dem Railroad Diagramm \autoref{fig:commonsyntax}, müssen einige \myMinin{ast} Elemente mit einem \myRIn$;$ gefolgt werden, da sie auch in einem Kontext eingesetzt werden können, in dem kein \myRIn$;$ benötigt ist.
+      Ähnlich wie in dem Railroad Diagramm aus \autoref{fig:commonsyntax}, müssen einige \myMinin{ast} Elemente mit einem \myRIn$;$ gefolgt werden, da sie auch in einem Kontext eingesetzt werden können, in dem kein \myRIn$;$ benötigt ist. Diese Token werden durch das Scope gelesen und finden sich nicht im AST wieder, da sie keinen weiteren Wert haben. Sollten sie fehlen, wodurch Statements nicht zuverlässig geparst werden können, wird eine Exception geschmissen.
 
-      Die parse Methode des \myMinin{ast::Scope}s ist eine einfache, da hier nur die richtige Reihenfolge der Methoden eingehalten werden muss und bei bestimmten \myMinin{ast} Elementen ein \myRIn$;$ gelesen werden muss.
+      Die parse Methode des \myMinin{ast::Scope}s ist relativ simpel, da hier nur die richtige Reihenfolge der Methoden eingehalten und bei bestimmten \myMinin{ast} Elementen ein \myRIn$;$ gelesen werden muss. \myMinin{ast::Variable} muss zum Beispiel als letztes probiert geparst zu werden, da diese nur einen Bezeichner brauchen, welcher auch zu einem Funktionsaufruf gehören kann.
 
-      Das geparste \myMinin{ast::Scope} der \myMIn$fun(foo)$ Methode ist in \autoref{fig:exastfunscope} zu sehen.
+      Das geparste \myMinin{ast::Scope} der \myMIn$def fun(foo) {$ Methode ist in \autoref{fig:exastfunscope} zu sehen.
 
       \begin{paracol}{2}
         \begin{myCodeEnv}
@@ -879,7 +882,7 @@
         \begin{myCodeEnv}
           \centering
           \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[firstline=6,lastline=14]{code/extok.txt}
+            \lstinputlisting[firstnumber=6,firstline=6,lastline=14]{code/extok.txt}
           \caption*{Aktuelle TokenList}
           \end{myInvBox}
         \end{myCodeEnv}
@@ -890,7 +893,7 @@
     %---------------------------------
     \subsubsection{do-while}
     \label{sssec:do-while}
-      In Zeile 2, des Beispiels, wird ein \myMinin{do-while} Schleife definiert. Der \myMinin{Parser} guckt bei \myMinin{ast::Loop} nach dem \myRIn$do$, erwartet im Anschluss ein Scope, das wiederum von einem \myRIn$while$, einer Condition und \myRIn$;$ gefolgt wird.
+      In Zeile 2 des Beispiels, wird ein \myMinin{do-while} Schleife definiert. Der \myMinin{Parser} guckt bei \myMinin{ast::Loop} nach dem \myRIn$do$, erwartet im Anschluss ein Scope, das wiederum von einem \myRIn$while$, einer Condition und \myRIn$;$ gefolgt wird.
 
       Ähnlich wie bei der Funktionsdeklaration, befindet sich die Logik dieser Methode in einem \myMinin{try-catch} Block.
 
@@ -908,7 +911,7 @@
         \begin{myCodeEnv}
           \centering
           \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[firstline=7,lastline=20]{code/extok.txt}
+            \lstinputlisting[firstnumber=7,firstline=7,lastline=20]{code/extok.txt}
           \end{myInvBox}
           \caption*{Aktuelle TokenList}
         \end{myCodeEnv}
@@ -920,12 +923,16 @@
     %---------------------------------
     \subsubsection{Operator und Condition}
     \label{sssec:Operator und Condition}
-      Der Unterschied zwischen dem Parsen, von einem Operator und einer Condition ist, dass Operatoren geparst werden, wenn der linke Teil des Operators (im Fall, dass es sich um einen binären Operator handelt), schon geparst ist. Die Logik der \myMinin{ast::Operator} parse Methode muss dies berücksichtigen, die \myMinin{ast::Condition} parse Methode nutzt intern die \myMinin{ast::Operator} Methode um solche Fälle zu unterstützen. Abgesehen von diesem Unterschied, können die beiden Methoden gleich behandelt werden.
+      Der Unterschied zwischen dem Parsen, von einem Operator und einer Condition ist, dass Operatoren geparst werden, wenn der linke Teil des Operators (im Fall, dass es sich um einen binären Operator handelt), schon geparst ist. Die Logik der \myMinin{ast::Operator} parse Methode muss dies berücksichtigen, die \myMinin{ast::Condition} parse Methode nutzt intern die \myMinin{ast::Operator} Methode um Operatoren zu unterstützen. Abgesehen von diesem Unterschied, können die beiden Methoden gleich behandelt werden.
 
-      Wenn der \myMinin{Parser} Operatoren parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente erstellt, die der \myMinin{Paser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem parsen allerdings nur in einer Liste, da der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammen zu setzen hat. Die Liste wird dann in dem zweiten Schritt in einen Baum verwandelt. Das geschieht, in dem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist eingehalten bzw. erstellt.
+      Wenn der \myMinin{Parser} \myMinin{ast::Operator}en parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente (Operatoren und Werterzeuger) erstellt, die der \myMinin{Paser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem parsen allerdings nur als eine Liste angeordnet, da der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammenzusetzen hat. Die Liste wird dann, in dem zweiten Schritt, in einen Baum verwandelt. Das geschieht, in dem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist angewendet bzw. erstellt.
+
+      Beide Methode umschließen ihre Logik mit einem \myMinin{try-catch} Block, um Informationen zu dem Kontext des Fehlers zu liefern.
 
       \paragraph{Binäroperator}
-        In Zeile 3, des Beispieles (\myMIn$foo = foo + 1.1;$), sieht man den Fall, in dem der linke Operand von dem Operator schon geparst ist. \myMinin{foo} wurde als Variable geparst, da dieser Parser ohne Vorausschauen implementiert wurde. Als nächstes Token ist \myTIn$=$ in der Liste, was das parsen von einem binären Operator indiziert. Die \myMinin{ast::Operator} Methode erwartet, dass  -- in dem Fall, dass es sich um einen binären Operatoren handelt -- das zuletzt geparste Element ein Werterzeuger ist (\autoref{fig:vprsyntax}). Dieses wird als linkes Element des \myMinin{ast::Operator} gesetzt. Als nächstes erwartet die Methode, dass das nächste \myMinin{Token} auch ein Werterzeuger ist.
+        In Zeile 3, des Beispieles (\myMIn$foo = foo + 1.1;$), sieht man den Fall, in dem der linke Operand von dem \myMinin{ast::Operator} schon geparst ist. \myMinin{foo} wurde als Variable geparst, da dieser Parser ohne Vorausschauen implementiert wurde. Als nächstes Token ist \myTIn$=$ in der Liste, was das parsen von einem binären Operator indiziert.
+
+        Die \myMinin{ast::Operator} Methode erwartet, dass -- in dem Fall, dass es sich um einen binären Operatoren handelt -- das zuletzt geparste Element ein Werterzeuger ist (\autoref{fig:vprsyntax}). Dieses wird als linkes Element des \myMinin{ast::Operator} gesetzt. Als nächstes erwartet die Methode, dass das nächste \myMinin{Token} auch ein Werterzeuger ist.
 
         Werterzeuger werden in dem \myMinin{ast::Operator}, sowie in anderen Klassen, die Werterzeuger als Attribute haben, als \myMinin{variant} gespeichert. Das die Werterzeuger, in einem \myMinin{variant} gespeichert werden, spiegelt sich nicht in dem generierten Text des AST wieder.
 
@@ -943,18 +950,17 @@
           \begin{myCodeEnv}
             \centering
             \begin{myInvBox}[width=.9\linewidth]
-              \lstinputlisting[firstline=9,lastline=29]{code/extok.txt}
+              \lstinputlisting[firstnumber=9,firstline=9,lastline=29]{code/extok.txt}
             \end{myInvBox}
             \caption*{Aktuelle TokenList}
           \end{myCodeEnv}
         \end{paracol}
 
       \paragraph{Unäroperator}
-        Im Fall, dass es sich um einen Unärenoperator handelt, wird der Operator gelesen (\myRIn$!|print|typeof$) und im Anschluss ein Werterzeuger.
+        Im Fall, dass es sich um einen Unärenoperator handelt, wird der Operator gelesen (\myRIn$!|print|typeof$) und im Anschluss ein Werterzeuger erwartet.
 
-        Auch diese Methode umschließt die Logik mit einem \myMinin{try-catch} Block, um Informationen zu dem Kontext des Fehlers zu liefern.
 
-        Die \autoref{fig:exastdowhilecon} zeigt die geparste \myMinin{ast::Condition} aus Zeile 4, des Beispiels (\myMIn$} while(!foo);$).
+        Die \autoref{fig:exastdowhilecon} zeigt die geparste \myMinin{ast::Condition} aus Zeile 4 des Beispiels (\myMIn$} while(!foo);$).
         \begin{paracol}{2}
           \begin{myCodeEnv}
             \centering
@@ -968,7 +974,7 @@
           \begin{myCodeEnv}
             \centering
             \begin{myInvBox}[width=.9\linewidth]
-              \lstinputlisting[firstline=17,lastline=25]{code/extok.txt}
+              \lstinputlisting[firstnumber=17,firstline=17,lastline=25]{code/extok.txt}
             \end{myInvBox}
             \caption*{Aktuelle TokenList}
           \end{myCodeEnv}
@@ -983,14 +989,14 @@
       Um Literals zu parsen, wendet der \myMinin{Parser} für Integer \myRIn$\d+$, Doubles \myRIn$\d*\.\d+$ und Booleans \myRIn$true|false$ als Regex an, um zu erkennen, ob ein \myMinin{Token} ein Literal beschreibt. Für einen String muss der \myMinin{Parser} nur das erste Zeichen des Tokens auf Gleichheit mit \myRIn$"$ überprüfen, da der \myMinin{Tokenizer} den String als ein \myMinin{Token} produziert hat.
 
       \begin{lrbox}{\myMinSavBox}
-        \myMinin{"t\\tt"}$\rightarrow$\myMinin{"t\t"}
+        \myMinin{"t\\tt"}$\rightarrow$\myMinin{"t\tt"}
       \end{lrbox}
 
-      Um die Nummerischen Tokens zu Werten zu konvertieren, nutzt der \myMinin{Parser} die C++ Funktionen. Für die Booleanwerte reicht die Überprüfung, ob das \myMinin{ast::Token} ein Boolean darstellt. Und der String wird kopiert und anschließend werden alle escapeden Zeichen unescaped (\myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}\footnote{
+      Um die nummerischen Tokens zu Werten zu konvertieren (lexen), nutzt der \myMinin{Parser} die C++ Funktionen \myMinin{std::stod(...)} und \myMinin{std::stoi(...)}. Für die Booleanwerte reicht die Überprüfung, ob das \myMinin{Token} ein Boolean darstellt. Und der String wird kopiert und anschließend werden alle escapeden Zeichen unescaped (\myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}\footnote{
         In C++ sieht es so aus: \usebox{\myMinSavBox}.
       }).
 
-      Der Double aus Zeile 3, des Beispiels, ist in \autoref{fig:exastdowhilescopedouble} zu sehen.
+      Der Double aus Zeile 3 des Beispiels, ist in \autoref{fig:exastdowhilescopedouble} zu sehen.
       \begin{paracol}{2}
         \begin{myCodeEnv}
           \centering
@@ -1004,7 +1010,7 @@
         \begin{myCodeEnv}
           \centering
           \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[firstline=13,lastline=17]{code/extok.txt}
+            \lstinputlisting[firstnumber=13,firstline=13,lastline=17]{code/extok.txt}
           \end{myInvBox}
           \caption*{Aktuelle TokenList}
         \end{myCodeEnv}
@@ -1019,7 +1025,7 @@
 
       Wie einige andere Methoden zuvor, umschließt die \myMin{ast::return} Methode die Logik mit einem \myMinin{try-catch} Block.
 
-      \autoref{fig:exastreturn} zeigt Zeile 6, des Beispiels.
+      \autoref{fig:exastreturn} zeigt Zeile 6 des Beispiels.
       \begin{paracol}{2}
         \begin{myCodeEnv}
           \centering
@@ -1033,7 +1039,7 @@
         \begin{myCodeEnv}
           \centering
           \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[firstline=22,lastline=27]{code/extok.txt}
+            \lstinputlisting[firstnumber=22,firstline=22,lastline=27]{code/extok.txt}
           \end{myInvBox}
           \caption*{Aktuelle TokenList}
         \end{myCodeEnv}
@@ -1044,11 +1050,11 @@
     %---------------------------------
     \subsubsection{Funktionsaufruf}
     \label{sssec:Funktionsaufruf}
-      Um den Funktionsaufruf in Zeile 12 zu parsen, erwartet die \myMinin{ast::Callable} Funktion, dass das erste \myMinin{Token} ein Bezeichner ist und darauf folgend (ohne Abstand) sich ein \myRIn$\($ befindet. Anschließend wird eine Komma getrennte Liste von Parameternamen zu Werterzeugern erwartet. Dabei ist der Name von dem Werterzeuger durch ein\myRIn$:$ getrennt. Auf diese Liste muss eine \myRIn$\)$ folgen, sowie ein \myRIn$;$.
+      Um den Funktionsaufruf in Zeile 12 des Beispieles zu parsen, erwartet die \myMinin{ast::Callable} Funktion, dass das erste \myMinin{Token} ein Bezeichner ist und darauf folgend (ohne Abstand) sich ein \myRIn$\($ befindet. Anschließend wird eine Komma getrennte Liste von Parameternamen zu Werterzeugern erwartet. Dabei ist der Name von dem Werterzeuger durch ein \myRIn$:$ getrennt. Auf diese Liste muss eine \myRIn$\)$ folgen, sowie ein \myRIn$;$.
 
       Auch diese Methode umschließt die Logik mit einem \myMinin{try-catch} Block.
 
-      \autoref{fig:exastcall} zeigt das Ergebnis aus der Zeile 12, des Beispieles (\myMIn$return fun(foo:foo);$).
+      \autoref{fig:exastcall} zeigt das Ergebnis aus der Zeile 12 des Beispieles (\myMIn$return fun(foo:foo);$).
       \begin{paracol}{2}
         \begin{myCodeEnv}
           \centering
@@ -1062,7 +1068,7 @@
         \begin{myCodeEnv}
           \centering
           \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[firstline=36,lastline=45,showlines=true]{code/extok.txt}
+            \lstinputlisting[firstnumber=36,firstline=36,lastline=45,showlines=true]{code/extok.txt}
           \end{myInvBox}
           \caption*{Aktuelle TokenList}
         \end{myCodeEnv}
@@ -1130,6 +1136,8 @@
         Da das parsen und validieren der Makros ziemlich langsam ist, ist es ratsam einen Provider zu implementieren, der den Namen des Makros mit dem geparsten AST assoziiert. Der AST wird von dem \myMinin{Interpreter} nicht verändert, weswegen das Makro nur geparst werden muss, wenn es sich verändert hat.
 
         Ein weiterer Vorteil wäre, dass das Makro nicht als String einem anderen Makro bekannt sein muss oder als \myMinin{core::ConcreteCommand} implementiert sein muss, da der \myMinin{Interpreter} im den AST des anderen Makros weiter parsen würde. Dafür müsste der \myMinin{Interpreter} natürlich ein wenig angepasst werden, da er nun den `\myMinin{MakroProvider}' vor dem \myMinin{CommandProvider} nach einem passenden Makro fragen müsste.
+      \item Besseres tokenizen und lexen von Zahlen.\label{enum:lexnumber}\\
+        Momentan werden Zahlen sehr primitiv getokenized und gelext. C++ unterstützt Zahlen mit Wissenschaftlicher zu lexen -- dies wird nicht vom Tokenizer wie Parser unterstützt.
     \end{enumerate}
 
 
