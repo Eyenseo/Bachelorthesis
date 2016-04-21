@@ -982,8 +982,12 @@
     \label{sssec:Literals}
       Um Literals zu parsen, wendet der \myMinin{Parser} für Integer \myRIn$\d+$, Doubles \myRIn$\d*\.\d+$ und Booleans \myRIn$true|false$ als Regex an, um zu erkennen, ob ein \myMinin{Token} ein Literal beschreibt. Für einen String muss der \myMinin{Parser} nur das erste Zeichen des Tokens auf Gleichheit mit \myRIn$"$ überprüfen, da der \myMinin{Tokenizer} den String als ein \myMinin{Token} produziert hat.
 
+      \begin{lrbox}{\myMinSavBox}
+        \myMinin{"t\\tt"}$\rightarrow$\myMinin{"t\t"}
+      \end{lrbox}
+
       Um die Nummerischen Tokens zu Werten zu konvertieren, nutzt der \myMinin{Parser} die C++ Funktionen. Für die Booleanwerte reicht die Überprüfung, ob das \myMinin{ast::Token} ein Boolean darstellt. Und der String wird kopiert und anschließend werden alle escapeden Zeichen unescaped (\myMinin{"t\tt"}$\rightarrow$\myMinin{"t  t"}\footnote{
-        In C++ sieht es so aus: \myMinin{"t\\tt"}$\rightarrow$\myMinin{"t\tt"}.
+        In C++ sieht es so aus: \usebox{\myMinSavBox}.
       }).
 
       Der Double aus Zeile 3, des Beispiels, ist in \autoref{fig:exastdowhilescopedouble} zu sehen.
