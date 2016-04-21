@@ -1,0 +1,6 @@
+@Return {
+  line: 6 column: 3 token: return
+  @Variable {
+    line: 6 column: 10 token: foo
+  }
+}

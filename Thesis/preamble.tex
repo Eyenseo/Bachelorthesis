@@ -20,7 +20,7 @@
 \usepackage[svgnames]{xcolor} % svg colors
 \usepackage{tablefootnote} % footnotes in tables
 \usepackage{hyperref} % hyper ref "addon"
-\usepackage[clean]{svg} % svg as images
+% \usepackage[clean]{svg} % svg as images % BUG no trancparency
 \usepackage{float} % better figure placement
 \usepackage{minted} % code highlighting
 \usepackage{graphicx} % for pdf and other graphics
@@ -63,6 +63,8 @@
 \usepackage{mdframed} % Frames for text - used for breakable minted with background
 
 \usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
+
+\usepackage[many]{tcolorbox} % used to wrapp listings invisible - can produce nice colored boxes thou
 
 %---------------------------------
 % Add extra width to the paper for todos
@@ -123,7 +125,7 @@
 %---------------------------------
 % SVG image configuration
 %---------------------------------
-\setsvg{inkscape = inkscape -z -C} % better svgs
+% \setsvg{inkscape = inkscape -z -C} % better svgs
 
 %---------------------------------
 % No Page break
@@ -232,8 +234,8 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\myMinin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{c++}}
-\newcommand{\myMin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{text}}
+\newcommand{\myMinin}[1][breaklines,breakanywhere,breakanywheresymbolpre=]{\mintinline[#1]{c++}}
+\newcommand{\myMin}[1][breaklines,breakanywhere,breakanywheresymbolpre=]{\mintinline[#1]{text}}
 
 %---------------------------------
 % Horizontal line for title page
@@ -405,17 +407,17 @@
   commentstyle=\color{Comments}\slshape,
   stringstyle=\color{Strings},
   keywordstyle={\color{Keywords}\bfseries},
-  alsoletter=0123456789,
+  alsoletter=0123456789.,
   SelectCharTable=%
       \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
       \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
 }
 \lstdefinelanguage{MyRegex}{
   alsoletter={\\,*,\&,^},
-  basicstyle=\color{OliveDrab},
-  keywords={\\,\\.},
+  basicstyle=\color{DarkGreen},
+  keywords={\\,\\.,\\(,\\)},
   morekeywords=[2]{\\d,\\s},
-  keywordstyle=*\color{OliveDrab},
+  keywordstyle=*\color{DarkGreen},
   keywordstyle=[2]\color{DarkOrange},
   sensitive=false,
   postbreak=,
@@ -428,8 +430,16 @@
            {-}{{\textcolor{DarkOrange}{-}}}{1}
            {(}{{\textcolor{DarkOrange}{(}}}{1}
            {)}{{\textcolor{DarkOrange}{)}}}{1}
+           {\{}{{\textcolor{DarkOrange}{\{}}}{1}
+           {\}}{{\textcolor{DarkOrange}{\}}}}{1}
+           {|}{{\textcolor{DarkOrange}{|}}}{1}
            {\^}{{\textcolor{DarkOrange}{\textasciicircum{}}}}{1}
-           {\\.}{{\textcolor{OliveDrab}{\textbackslash.}}}{1}
+           {\\\{}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\{}}}{1}
+           {\\\}}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\}}}}{1}
+           {\\(}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{(}}}{1}
+           {\\)}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{)}}}{1}
+           {\\\\}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\textbackslash)}}}{1}
+           {\\.}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{.}}}{1}
 }
 \lstset{
   postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
@@ -456,6 +466,7 @@
 %---------------------------------
 \newcommand{\myMIn}{\lstinline[style=MyMacroStyle,postbreak=]}
 \newcommand{\myRIn}{\lstinline[language=MyRegex]}
+\newcommand{\mySIn}{\lstinline[language=MyString]}
 \newcommand{\myTIn}{\lstinline[]}
 
 %---------------------------------
@@ -532,10 +543,36 @@
 %---------------------------------
 \DeclareCaptionType{myCodeEnvType}[List\-ing][List\-ing\-ver\-zei\-chnis]
 \newenvironment{myCodeEnv}{
-    \vspace{1em}%
+    \aftergroup\useignorespacesandallpars%
+    \par%
+    \vspace*{\baselineskip}%
     \captionsetup{type=myCodeEnvType}%
   }{%
+    \par%
+    \vspace*{\baselineskip}%
 }
+
+%---------------------------------
+% Ignore Spaces
+%---------------------------------
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+
+%---------------------------------
+% Make the counter global for paracol
+%---------------------------------
+\globalcounter{myCodeEnvType}
+\globalcounter{figure}
+\globalcounter{section}
 
 %---------------------------------
 % Microtype optimisations
@@ -576,3 +613,18 @@
   \tikz[overlay,remember picture]%
   \node[text=black,yshift=.25\baselineskip] (#1) {#2};%
 }
+
+%---------------------------------
+% Invisible non floating box for paracol to work with listings
+%---------------------------------
+\newtcolorbox{myInvBox}[1][]{
+    width=\linewidth,
+    boxsep=0cm,
+    breakable,
+    nobeforeafter,
+    enhanced jigsaw,
+    opacityfill=0,
+    size=minimal,
+    #1
+}
+

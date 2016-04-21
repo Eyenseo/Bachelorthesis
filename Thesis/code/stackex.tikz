@@ -1,0 +1,39 @@
+\begin{minipage}{.67\textwidth}
+  \begin{lstlisting}[style=MyMacroStyle, lastline=20, backgroundcolor=, frame=, numbers=none, escapechar=@]
+@\tikzmark{CodeStack1}{}@
+def main() {@\tikzmark{CodeStack2}{}@
+  var a;
+
+  if(a) {@\tikzmark{CodeStack3}{}@
+    ...
+  }
+}
+  \end{lstlisting}
+
+  \begin{tikzpicture}[overlay, remember picture]
+    \coordinate[right = 3cm of CodeStack1] (x);
+    \node[anchor=west] (Stack1) at (x) {
+      \begin{tabular}{@{}c@{ }L{.5cm}@{}c@{ }L{1cm}@{}c@{ }L{.3cm}@{}}
+        \myMin{Stack}: & \myMin{0} & Funktion: & \myMin{main} & Variable: & {}
+      \end{tabular}\tikzmark{StackDef1}{}
+    };
+    \node[anchor=west] (Stack2) at (x|-CodeStack2) {
+      \begin{tabular}{@{}c@{ }L{.5cm}@{}c@{ }L{1cm}@{}c@{ }L{.3cm}@{}}
+        \myMin{Stack}: & \myMin{1} & Funktion: & {}  & Variable: & \myMin{a}
+      \end{tabular}\tikzmark{StackDef2}{}
+    };
+    \node[anchor=west] (Stack3) at (x|-CodeStack3) {
+      \begin{tabular}{@{}c@{ }L{.5cm}@{}c@{ }L{1cm}@{}c@{ }L{.3cm}@{}}
+        \myMin{Stack}: & \myMin{2} & Funktion: & {} & Variable: & {}
+      \end{tabular}\tikzmark{StackDef3}{}
+    };
+
+    \draw[-stealth, thick, loosely dotted, black!50] (CodeStack1) to (Stack1);
+    \draw[-stealth, thick, loosely dotted, black!50] (CodeStack2) to (Stack2);
+    \draw[-stealth, thick, loosely dotted, black!50] (CodeStack3) to (Stack3);
+
+    \draw[-stealth, thick, black!50, in=0, out=0, looseness=4] (Stack2) to (Stack1);
+    \draw[-stealth, thick, black!50, in=0, out=0, looseness=1.5] (Stack3) to (Stack2);
+  \end{tikzpicture}
+  \vspace*{-3em}
+\end{minipage}

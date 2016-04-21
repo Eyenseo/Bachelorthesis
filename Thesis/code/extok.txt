@@ -1,0 +1,48 @@
+l:1  c:1  t:def
+l:1  c:5  t:fun
+l:1  c:8  t:(
+l:1  c:9  t:foo
+l:1  c:12 t:)
+l:1  c:14 t:{
+l:2  c:3  t:do
+l:2  c:6  t:{
+l:3  c:5  t:foo
+l:3  c:9  t:=
+l:3  c:11 t:foo
+l:3  c:15 t:+
+l:3  c:17 t:1.1
+l:3  c:20 t:;
+l:4  c:3  t:}
+l:4  c:5  t:while
+l:4  c:10 t:(
+l:4  c:11 t:!
+l:4  c:12 t:foo
+l:4  c:15 t:)
+l:4  c:16 t:;
+l:6  c:3  t:return
+l:6  c:10 t:foo
+l:6  c:13 t:;
+l:7  c:1  t:}
+l:9  c:1  t:def
+l:9  c:5  t:main
+l:9  c:9  t:(
+l:9  c:10 t:)
+l:9  c:12 t:{
+l:10 c:3  t:var
+l:10 c:7  t:foo
+l:10 c:11 t:=
+l:10 c:16 t:"1 "
+l:10 c:16 t:;
+l:12 c:3  t:return
+l:12 c:10 t:fun
+l:12 c:13 t:(
+l:12 c:14 t:foo
+l:12 c:17 t::
+l:12 c:18 t:foo
+l:12 c:21 t:)
+l:12 c:22 t:;
+l:13 c:1  t:}
+
+
+
+

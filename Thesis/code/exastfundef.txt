@@ -1,0 +1,14 @@
+@Define {
+  line: 1 column: 1 token: def
+  @Function {
+    line: 1 column: 5 token: fun
+    parameter:
+      @Variable {
+        line: 1 column: 9 token: foo
+      }
+    @Scope {
+      ...
+    }
+  }
+}
+

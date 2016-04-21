@@ -1,0 +1,9 @@
+Contition:
+  @UnaryOperator {
+    line: 4 column: 11 token: !
+    Operation: not
+      Operand:
+      @Variable {
+        line: 4 column: 12 token: foo
+      }
+  }

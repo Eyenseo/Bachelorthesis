@@ -1,0 +1,10 @@
+@Return {
+  line: 12 column: 3 token: return
+  @Callable {
+    line: 12 column: 10 token: fun
+    parameter:
+      foo: @Variable {
+        line: 12 column: 18 token: foo
+      }
+  }
+}

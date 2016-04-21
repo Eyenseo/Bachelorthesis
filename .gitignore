@@ -153,6 +153,7 @@ pythontex-files-*/
 
 
 !**/img/*.tikz
+!**/code/*.tikz
 
 Bundle.Macro/*
 !Bundle.Macro
@@ -163,3 +164,4 @@ Bundle.Macro/modules/*
 *.mp
 *.mps
 *.vpp*
+!*.vpp

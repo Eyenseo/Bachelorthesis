@@ -1,0 +1,38 @@
+{
+  \begin{tikzpicture}[railroad]
+    \node[StartEnd                           ] (start)    {};
+    \node[terminal,    right = of start      ] (for)      {for};
+    \node[terminal,    right = of for        ] (bo)       {(};
+
+    \node[coordinate,  right = of bo         ] (prevpr1)  {};
+    \node[nonterminal, right = of prevpr1    ] (vpr1)     {Werterz.};
+    \node[nonterminal, above = of vpr1       ] (def)      {Def.};
+    \node[coordinate,  right = of vpr1       ] (postvpr1) {};
+    \node[terminal,    right = of postvpr1   ] (sem1)     {;};
+
+    \node[coordinate,  right = of sem1       ] (prevpr2)  {};
+    \node[nonterminal, right = of prevpr2    ] (vpr2)     {Werterz.};
+    \node[coordinate,  right = of vpr2       ] (postvpr2) {};
+    \node[terminal,    right = of postvpr2   ] (sem2)     {;};
+
+    \node[coordinate,  below = 2cm of prevpr1] (prevpr3)  {};
+    \node[nonterminal, right = of prevpr3    ] (vpr3)     {Werterz.};
+    \node[coordinate,  right = of vpr3       ] (postvpr3) {};
+
+    \node[terminal,    right = of postvpr3   ] (bc)       {)};
+    \node[nonterminal, right = of bc         ] (scope)    {LoopScope};
+    \node[StartEnd,    right = of scope      ] (end)      {};
+
+    \graph[railroad] {
+      (start)->(for)->(bo)->(vpr1)->(sem1)->(vpr2)->(sem2);
+
+      (sem2)--[skip loop=-14mm] (prevpr3)->(vpr3)->(bc)->(scope)->(end);
+
+      (prevpr1)->[vh path](def)->[hv path](postvpr1);
+
+      (prevpr1) -> [skip loop=-7mm] (postvpr1);
+      (prevpr2) -> [skip loop=-7mm] (postvpr2);
+      (prevpr3) -> [skip loop=-7mm] (postvpr3);
+    };
+  \end{tikzpicture}
+}
