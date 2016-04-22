@@ -1,0 +1,9 @@
+Anonymous:9:5: In the 'main' function defined here:
+def main() {
+    ^
+Anonymous:12:3: At return defined here:
+  return fun(foo:fo);
+  ^
+Anonymous:12:18: Undefined variable 'fo'
+  return fun(foo:fo);
+                 ^

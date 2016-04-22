@@ -440,6 +440,8 @@
            {\\)}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{)}}}{1}
            {\\\\}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\textbackslash}}}{1}
            {\\.}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{.}}}{1}
+           {\\+}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{+}}}{1}
+           {\\-}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{-}}}{1}
 }
 \lstset{
   postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
@@ -528,13 +530,13 @@
 \newcommand{\myInput}[1]{%
   \adjustbox{max width=.9\linewidth}{%
     \scalebox{.9}{%
-      % \input{#1}%
+      \input{#1}%
     }%
   }%
 }%
 \newcommand{\myInputUnlimited}[1]{%
   \scalebox{.9}{%
-    % \input{#1}%
+    \input{#1}%
   }%
 }%
 

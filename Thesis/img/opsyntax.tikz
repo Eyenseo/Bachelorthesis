@@ -1,5 +1,8 @@
 {
   \begin{tikzpicture}[railroad]
+    %%%%%%%%%%%%%%%%%%
+    % Binary start
+    %%%%%%%%%%%%%%%%%%
     \node[
       StartEnd
     ] (start)
@@ -42,13 +45,13 @@
       terminal,
       node distance = 8mm,
       right = of preoperator,
-      label={[outer sep=-.3em]5}
-    ] (operator)
+      label={[outer sep=-.3em]8}
+    ] (opget)
     {>=};
     \node[
       coordinate,
       node distance = 8mm,
-      right = of operator
+      right = of opget
     ] (postoperator)
     {};
     \node[
@@ -82,6 +85,7 @@
     ] (end)
     {};
 
+
     \node[
       nonterminal,
       below = of lvp1
@@ -93,70 +97,108 @@
     ] (rvp2)
     {Werterz.};
 
+
+    %%%%%%%%%%%%%%%%%%
+    % Binary
+    %%%%%%%%%%%%%%%%%%
     \node[
       terminal,
-      above = of operator,
-      label={[outer sep=-.3em]4}
-    ] (op1)
+      above = of opget,
+      label={[outer sep=-.3em]7}
+    ] (opgt)
     {>};
     \node[
       terminal,
-      above = of op1,
-      label={[outer sep=-.3em]3}
-    ] (op2)
+      above = of opgt,
+      label={[outer sep=-.3em]6}
+    ] (opset)
     {<=};
     \node[
       terminal,
-      above = of op2,
-      label={[outer sep=-.3em]2}
-    ] (op3)
+      above = of opset,
+      label={[outer sep=-.3em]5}
+    ] (opst)
     {<};
     \node[
       terminal,
-      below = of operator,
-      label={[outer sep=-.3em]6}
-    ] (op5)
+      below = of opget,
+      label={[outer sep=-.3em]9}
+    ] (ope)
     {==};
     \node[
       terminal,
-      below = of op5,
-      label={[outer sep=-.3em]7}
-    ] (op6)
+      below = of ope,
+      label={[outer sep=-.3em]10}
+    ] (opne)
     {!=};
     \node[
       terminal,
-      below = of op6,
-      label={[outer sep=-.3em]8}
-    ] (op7)
+      below = of opne,
+      label={[outer sep=-.3em]11}
+    ] (opand)
     {\&\&};
     \node[
       terminal,
-      below = of op7,
-      label={[outer sep=-.3em]9}
-    ] (op8)
+      below = of opand,
+      label={[outer sep=-.3em]12}
+    ] (opor)
     {||};
+    \node[
+      terminal,
+      below = of opor,
+      label={[outer sep=-.3em]14}
+    ] (opas)
+    {=};
 
     \node[
-      terminal,
-      below = of op8,
-      label={[outer sep=-.3em]1}
-    ] (op9)
-    {!};
+      nonterminal,
+      label={[outer sep=-.3em]Variable}
+    ] (lvar) at (lvp2|-opas)
+    {Bezeichner};
+
+
+
+
+    %%%%%%%%%%%%%%%%%%
+    % Unary
+    %%%%%%%%%%%%%%%%%%
     \node[
       terminal,
-      below = of op9,
-      label={[outer sep=-.3em]10}
-    ] (op10)
+      above = of opst,
+      label={[outer sep=-.3em]13}
+    ] (opp)
+    {print};
+    \node[
+      terminal,
+      above = of opp,
+      label={[outer sep=-.3em]4}
+    ] (opto)
     {typeof};
     \node[
       terminal,
-      below = of op10,
-      label={[outer sep=-.3em]11}
-    ] (op11)
-    {print};
+      above = of opto,
+      label={[outer sep=-.3em]3}
+    ] (opn)
+    {!};
+    \node[
+      terminal,
+      above = of opn,
+      label={[outer sep=-.3em]2}
+    ] (opus)
+    {-};
+    \node[
+      terminal,
+      above = of opus,
+      label={[outer sep=-.3em]1}
+    ] (opua)
+    {+};
+
+    %%%%%%%%%%%%%%%%%%
+    % Unary Start
+    %%%%%%%%%%%%%%%%%%
     \node[
       StartEnd
-    ] (unstart) at (lbc|-op9)
+    ] (unstart) at (lbc|-opua)
     {};
     \node[
       coordinate
@@ -170,24 +212,28 @@
 
     \graph[railroad] {
       % main
-      (start)->(lbo)->(lvp1)->(lbc)->(operator)->(rbo)->(rvp1)->(rbc)->(end);
+      (start)->(lbo)->(lvp1)->(lbc)->(opget)->(rbo)->(rvp1)->(rbc)->(end);
 
       (poststart)->[vh path](lvp2)->[hv path](postlbc);
       (prerbo)->[vh path](rvp2)->[hv path](postrbc);
 
-      (preoperator)->[vh path](op1)->[hv path](postoperator);
-      (preoperator)->[vh path](op2)->[hv path](postoperator);
-      (preoperator)->[vh path](op3)->[hv path](postoperator);
-      (preoperator)->[vh path](op5)->[hv path](postoperator);
-      (preoperator)->[vh path](op6)->[hv path](postoperator);
-      (preoperator)->[vh path](op7)->[hv path](postoperator);
-      (preoperator)->[vh path](op8)->[hv path](postoperator);
+      (preoperator)->[vh path](opgt)->[hv path](postoperator);
+      (preoperator)->[vh path](opset)->[hv path](postoperator);
+      (preoperator)->[vh path](opst)->[hv path](postoperator);
+      (preoperator)->[vh path](ope)->[hv path](postoperator);
+      (preoperator)->[vh path](opne)->[hv path](postoperator);
+      (preoperator)->[vh path](opand)->[hv path](postoperator);
+      (preoperator)->[vh path](opor)->[hv path](postoperator);
+
+      (poststart)->[vh path](lvar)->(opas)->[hv path](postoperator);
 
       %unary
       (unstart)--(postunstart);
-      (postunstart)->(op9)->[hv path](postoperator);
-      (postunstart)->[vh path](op10)->[hv path](postoperator);
-      (postunstart)->[vh path](op11)->[hv path](postoperator);
+      (postunstart)->(opua)->[hv path](postoperator);
+      (postunstart)->[vh path](opus)->[hv path](postoperator);
+      (postunstart)->[vh path](opn)->[hv path](postoperator);
+      (postunstart)->[vh path](opto)->[hv path](postoperator);
+      (postunstart)->[vh path](opp)->[hv path](postoperator);
     };
   \end{tikzpicture}
 }

@@ -409,7 +409,7 @@
     %---------------------------------
     \subsubsection{Kontrollstrukturen}
     \label{sssec:Kontrollstrukturen}
-      Die Syntax von \myMIn$if/else$ \myMIn$do-/while$ und \myMIn$for$ aus den Abbildungen \ref{fig:ifsyntax}, \ref{fig:whilesyntax}, \ref{fig:dowhilesyntax} und \ref{fig:forsyntax} sollten wie erwartet aussehen.
+      Die Syntax von \myMIn$if/else$, \myMIn$do-/while$ und \myMIn$for$ aus den Abbildungen \ref{fig:ifsyntax}, \ref{fig:whilesyntax}, \ref{fig:dowhilesyntax} und \ref{fig:forsyntax} sollten wie erwartet aussehen.
       \begin{figure}[H]
         \centering
         \myInput{img/ifsyntax.tikz}
@@ -460,7 +460,7 @@
         \label{fig:opsyntax}
       \end{figure}
 
-      Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \myMIn$(a || b) && c$ folgender Weise interpretiert wird. Als erstes wird \myMIn$a$ ausgewertet. Wenn a \myMIn$false$ war, wird \myMIn$b$ ausgewertet, wenn eins der beiden \myMIn$true$ ergibt, wird \myMIn$c$ ausgewertet. Entgegen dessen wird bei \myMIn$a || b && c$ zuerst \myMIn$a$, und wenn \myMIn$a$ \myMIn$false$ war \myMIn$b$ und \myMIn$c$ ausgewertet. Es wird also von links nach rechts ausgewertet und es gibt eine Kurzschlusssemantik. Die Präzedenz der Operatoren ist -- abgesehen von \myMIn$!$ (der die höchste Priorität hat) die Reihenfolge aus der Grafik (siehe Nummerierung).
+      Geklammerte Ausdrücke werden zuerst vollständig ausgewertet, bevor der Operator angewendet wird. Das heißt, dass \myMIn$(a || b) && c$ folgender Weise interpretiert wird. Als erstes wird \myMIn$a$ ausgewertet. Wenn a \myMIn$false$ war, wird \myMIn$b$ ausgewertet, wenn eins der beiden \myMIn$true$ ergibt, wird \myMIn$c$ ausgewertet. Entgegen dessen wird bei \myMIn$a || b && c$ zuerst \myMIn$a$, und wenn \myMIn$a$ \myMIn$false$ war, \myMIn$b$ und \myMIn$c$ ausgewertet. Es wird also von links nach rechts ausgewertet und es gibt eine Kurzschlusssemantik. Die Präzedenz der Operatoren ist -- abgesehen von \myMIn$print$ (der vor \myMIn$=$ kommt) die Reihenfolge aus der Grafik (siehe Nummerierung).
 
       Zu den `normalen' Operatoren aus C, gibt es zudem noch den \myMIn$typeof$ Operator aus JavaScript. Dieser Operator wandelt den Typ der variable in einen \myMIn$string$ um (\myMinin{1}$\rightarrow$\myMinin{"int"}). Zudem gibt es den \myMIn$print$ Operator, der den Wert einer Variable ausgibt (zB. auf die Konsole) und als \myMIn$string$ zurückgibt.
 
@@ -925,7 +925,9 @@
     \label{sssec:Operator und Condition}
       Der Unterschied zwischen dem Parsen, von einem Operator und einer Condition ist, dass Operatoren geparst werden, wenn der linke Teil des Operators (im Fall, dass es sich um einen binären Operator handelt), schon geparst ist. Die Logik der \myMinin{ast::Operator} parse Methode muss dies berücksichtigen, die \myMinin{ast::Condition} parse Methode nutzt intern die \myMinin{ast::Operator} Methode um Operatoren zu unterstützen. Abgesehen von diesem Unterschied, können die beiden Methoden gleich behandelt werden.
 
-      Wenn der \myMinin{Parser} \myMinin{ast::Operator}en parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente (Operatoren und Werterzeuger) erstellt, die der \myMinin{Paser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem parsen allerdings nur als eine Liste angeordnet, da der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammenzusetzen hat. Die Liste wird dann, in dem zweiten Schritt, in einen Baum verwandelt. Das geschieht, in dem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist angewendet bzw. erstellt.
+      Wenn der \myMinin{Parser} \myMinin{ast::Operator}en parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente (Operatoren und Werterzeuger) erstellt, die der \myMinin{Paser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem parsen allerdings nur als eine Liste angeordnet, da der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammenzusetzen hat. Die Liste wird dann, in dem zweiten Schritt, in einen Baum verwandelt. Das geschieht, in dem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist, angewendet bzw. erstellt.
+
+      Operatoren richtig zu parsen ist eine der schwierigsten Aufgaben, beim Bau eines Parsers, da der zweite Schritt nicht nur die Präzedenz der Operatoren berücksichtigen muss, sondern auch die Auflösungsreihenfolge. Mit Ausnahme von dem Assignmentoperator, werden alle Binärenoperatoren von links nach rechts zusammengesetzt. Alle Unärenoperatoren werden von rechts nach links zusammengesetzt. Alle \myMIn$+$ und \myMIn$-$ Operatoren sind zu Beginn unär, und werden während des zweiten Schritts zu Binärenoperatoren, wenn sich ein Werterzeuger vor ihnen befindet. Operatoren, die kein Operanden haben, sind in diesem Fall keine Werterzeuger.
 
       Beide Methode umschließen ihre Logik mit einem \myMinin{try-catch} Block, um Informationen zu dem Kontext des Fehlers zu liefern.
 
@@ -935,6 +937,31 @@
         Die \myMinin{ast::Operator} Methode erwartet, dass -- in dem Fall, dass es sich um einen binären Operatoren handelt -- das zuletzt geparste Element ein Werterzeuger ist (\autoref{fig:vprsyntax}). Dieses wird als linkes Element des \myMinin{ast::Operator} gesetzt. Als nächstes erwartet die Methode, dass das nächste \myMinin{Token} auch ein Werterzeuger ist.
 
         Werterzeuger werden in dem \myMinin{ast::Operator}, sowie in anderen Klassen, die Werterzeuger als Attribute haben, als \myMinin{variant} gespeichert. Das die Werterzeuger, in einem \myMinin{variant} gespeichert werden, spiegelt sich nicht in dem generierten Text des AST wieder.
+
+        Die Datenstruktur nach dem ersten Schritt zeigt \autoref{fig:exastdowhilescopehalf}.
+        \columnratio{0.475}
+        \begin{paracol}{2}
+          \begin{myCodeEnv}
+            \centering
+            \begin{myInvBox}[width=.9\linewidth]
+              \lstinputlisting{code/exastdowhilescopehalf.txt}
+            \end{myInvBox}
+            \caption{Erster Schritt der Variablen Addition des Beispiels}
+            \label{fig:exastdowhilescopehalf}
+          \end{myCodeEnv}
+          \switchcolumn
+          \begin{myCodeEnv}
+            \centering
+            \begin{myInvBox}[width=.9\linewidth]
+              \lstinputlisting{code/exastdowhilescopehalftwo.txt}
+            \end{myInvBox}
+            \caption{Halber zweiter Schritt der Variablen Addition des Beispiels}
+            \label{fig:exastdowhilescopehalftwo}
+          \end{myCodeEnv}
+        \end{paracol}
+        \columnratio{0.7}
+
+        In dem zweiten Schritt wird die Liste von links bis zu dem \myMIn$+$ durchgegangen. Beim zusammensetzen des \myMIn$+$ greift dieses auf \myMIn$foo$ und auf den Double zu. Anschließend geht wird die Liste von rechts nach links bis zu dem \myMIn$=$ durchgegangen. Der \myMIn$=$ Operator greift dann, auf \myMIn$foo$ und den \myMIn$+$ Operator zu, der das andere \myMIn$foo$ und den Double enthält, was in \autoref{fig:exastdowhilescopehalftwo} zu sehen ist.
 
         Der generierte AST ist in \autoref{fig:exastdowhilescope} zu sehen.
         \begin{paracol}{2}
@@ -957,8 +984,7 @@
         \end{paracol}
 
       \paragraph{Unäroperator}
-        Im Fall, dass es sich um einen Unärenoperator handelt, wird der Operator gelesen (\myRIn$!|print|typeof$) und im Anschluss ein Werterzeuger erwartet.
-
+        Im Fall, dass es sich um einen Unärenoperator handelt, wird der Operator gelesen (\myRIn$\+|\-|!|print|typeof$) und im Anschluss ein Werterzeuger erwartet.
 
         Die \autoref{fig:exastdowhilecon} zeigt die geparste \myMinin{ast::Condition} aus Zeile 4 des Beispiels (\myMIn$} while(!foo);$).
         \begin{paracol}{2}
@@ -1074,12 +1100,20 @@
         \end{myCodeEnv}
       \end{paracol}
 
+    %---------------------------------
+    % Analyser
+    %---------------------------------
+    \subsubsection{Analyser}
+    \label{sssec:Analyser}
+      Nach dem der \myMinin{Parser} den AST geparst hat, nutzt dieser den \myMinin{Analyser}, um herauszufinden, ob sich in dem Baum Konstrukte befinden, die unerwünscht sind. Zum Beispiel, dass die \myMinin{main(...)} Methode manuell aufgerufen wird.
 
-  %---------------------------------
-  % Analyser
-  %---------------------------------
-  \subsection{Analyser}
-  \label{ssec:Analyser}
+      Wie zuvor beschrieben (siehe \autoref{sssec:Analyser Architektur}) nutzt der \myMinin{Analyser} ein Signal/Visitor System\footnote{
+        Das Signal System ist eine vorhandene Firmenbibliothek und wurde somit nicht während der Arbeit entwickelt.
+      }, um bei jedem beliebigen Element Funktionen auszuführen. In dem Fall, dass überprüft werden soll, ob die \myMinin{main()} Methode manuell aufgerufen wird, reicht es aus sich bei dem Signal anzumelden, welches \myMinin{ast::Callable} signalisiert. In der Funktion, die das Signal ausführt, wird dann überprüft, ob das \myMinin{Token} \myRIn$main$ gleicht. Wenn dem so ist, ist der AST nicht kompatible und eine Fehlermeldung wird in dem \myMinin{Analyser} zu der Fehlerliste hinzugefügt. Wenn der AST durchlaufen ist, und somit alle Prüfungen ausgeführt wurden, wird die Fehlerliste an den \myMinin{Parser} übergeben. Dieser schmeißt die Fehlerliste dann als Exception.
+
+      Der \myMinin{Analyser} baut während des Ablaufen des AST auch einen Stack auf. Dieser Stack gleicht dem des Interpreters, ist aber nur eine Liste von \myMinin{Token}s, da die Variablen und Funktionen nur auf Existenz geprüft werden müssen. Beim Prüfen, ob alle Variablen existieren, wird nachgesehen, ob in der Liste von Variablen ein \myMinin{Token} dem der \myMinin{ast::Variable} gleicht.
+
+      Ein Fehler den der \myMinin{Analyser} nicht prüfen kann ist, dass eine Funktion nicht existiert. Da der \myMinin{Interpreter} auf den \myMinin{CommandProvider} zugreift um Funktionen zu finden, und diese Funktionen durchaus durch ein Makro registriert werden können, ist ein solcher Fehler erst zur Laufzeit zu finden.
 
   %---------------------------------
   % Interpreter
@@ -1088,7 +1122,19 @@
   \label{ssec:Interpreter}
     Lorem ipsum dolor sit amet \ldots
 
-    Lorem ipsum dolor sit amet \ldots
+    %---------------------------------
+    % OperatorProvider
+    %---------------------------------
+    \subsubsection{OperatorProvider}
+    \label{sssec:OperatorProvider}
+      Lorem ipsum dolor sit amet \ldots
+
+    %---------------------------------
+    % Stack
+    %---------------------------------
+    \subsubsection{Stack}
+    \label{sssec:Stack}
+      Lorem ipsum dolor sit amet \ldots
 
 
   %---------------------------------
@@ -1096,6 +1142,26 @@
   %---------------------------------
   \subsection{Fehlermeldungen}
   \label{ssec:Fehlermeldungen}
+    Wenn in Zeile 3 das \myRIn$;$ vergessen wird, erhält man die Fehlermeldung aus \autoref{fig:error2} -- diese Fehlermeldung wird von dem \myMinin{Parser} ausgegeben und führt dazu, dass das parsen abgebrochen wird.
+
+    \begin{myCodeEnv}
+      \centering
+      \begin{myInvBox}[width=.9\linewidth]
+        \lstinputlisting{code/error2.txt}
+      \end{myInvBox}
+      \caption{Fehler bei unbekannter Variable}
+      \label{fig:error2}
+    \end{myCodeEnv}
+
+    Eine Fehlermeldung von dem \myMinin{Analyser} ist in \autoref{fig:error1} zu sehen -- weder in dem root \myMinin{ast::Scope} noch in der \myMinin{main()} Funktion ist eine Variable \myMinin{fo} definiert.
+    \begin{myCodeEnv}
+      \centering
+      \begin{myInvBox}[width=.9\linewidth]
+        \lstinputlisting{code/error1.txt}
+      \end{myInvBox}
+      \caption{Fehler bei unbekannter Variable}
+      \label{fig:error1}
+    \end{myCodeEnv}
 
 %---------------------------------
 % Evaluation
@@ -1119,8 +1185,6 @@
   \subsection{Ausblick}
   \label{ssec:Ausblick}
     \begin{enumerate}[ref=\autoref{ssec:Ausblick}: Punkt \arabic*]
-      \item Threading\\
-        Sofern alle Funktionen die ausgeführt werden sollen als thread-safe gekennzeichnet sind, kann das gesamte Macro parallel ausgeführt werden.
       \item Debugger / Stepping\\
         Es könnte ein Interface angeboten werde, mit dem man durch die Ausführung eines Macros Schritt für Schritt gehen kann.
       \item C++17 std::string\_view\\
@@ -1138,6 +1202,8 @@
         Ein weiterer Vorteil wäre, dass das Makro nicht als String einem anderen Makro bekannt sein muss oder als \myMinin{core::ConcreteCommand} implementiert sein muss, da der \myMinin{Interpreter} im den AST des anderen Makros weiter parsen würde. Dafür müsste der \myMinin{Interpreter} natürlich ein wenig angepasst werden, da er nun den `\myMinin{MakroProvider}' vor dem \myMinin{CommandProvider} nach einem passenden Makro fragen müsste.
       \item Besseres tokenizen und lexen von Zahlen.\label{enum:lexnumber}\\
         Momentan werden Zahlen sehr primitiv getokenized und gelext. C++ unterstützt Zahlen mit Wissenschaftlicher zu lexen -- dies wird nicht vom Tokenizer wie Parser unterstützt.
+      \item AST Optimierungen.\\
+        Ein AST kann genutzt werden, um den Code, den er repräsentiert, zu optimieren. Eine Optimierung wäre es zum Beispiel, dass Literals, die in arithmetischen Ausdrücken stehen, ausgerechnet werden.
     \end{enumerate}
 
 

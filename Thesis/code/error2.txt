@@ -1,0 +1,9 @@
+Anonymous:1:5: In the 'fun' function defined here:
+def fun(foo) {
+    ^
+Anonymous:2:3: In the do-while defined here:
+  do {
+  ^
+Anonymous:3:17: Expected a ';'
+    foo = foo + 1.1
+                ^

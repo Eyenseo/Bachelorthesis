@@ -1,0 +1,19 @@
+@Variable {
+  line: 3 column: 5 token: foo
+}
+@BinaryOperator {
+  line: 3 column: 9 token: =
+  Operation: assignment
+}
+@BinaryOperator {
+  line: 3 column: 15 token: +
+  Left operand:
+    @Variable {
+      line: 3 column: 11 token: foo
+    }
+  Operation: add
+  Right operand:
+    @Double {
+     ...
+    }
+}
