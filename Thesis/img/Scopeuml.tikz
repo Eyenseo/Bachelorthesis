@@ -61,10 +61,10 @@
     % item(iAssoc)("*")(obj.ne = If.s + (0, -3));
 
     pair a, b, c, d;
-    a = Scope.sw + (7, 0);
-    b = Scope.sw + (7, -20);
-    c = Scope.se + (-7, -20);
-    d = Scope.se + (-7, 0);
+    a = Scope.nw + (7, 0);
+    b = Scope.nw + (7, 20);
+    c = Scope.ne + (-7, 20);
+    d = Scope.ne + (-7, 0);
     link(aggregationUni)
       (a -- b -- c -- d);
     item(iAssoc)("*")(obj.ne = a + (8, -3));
