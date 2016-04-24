@@ -1,7 +1,7 @@
 \begin{tikzpicture}[railroad]
   \node[outer] (stackout0) {
     \begin{tikzpicture}
-      \node (s0)  {Stack: 0};
+      \node (s0)  {Stack:0 (root)};
       \node [outer, below=2mm of s0] (s0fundefo)  {
         \begin{tikzpicture}
           \node (s0fundeft)  {Fun.Def.};

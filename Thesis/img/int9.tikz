@@ -1,7 +1,7 @@
 \begin{tikzpicture}[railroad]
   \node[outer] (stackout2) {
     \begin{tikzpicture}
-      \node (s2stack)  {Stack: 2};
+      \node (s2stack)  {Stack:2 (fun)};
       % FUN DEF
       \node [outer, below=2mm of s2stack] (s2fundefo)  {
         \begin{tikzpicture}
