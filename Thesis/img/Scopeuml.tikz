@@ -46,7 +46,7 @@
     item(iAssoc)("*")(obj.ne = Operator.ne + (8, -3));
     link(aggregationUni)
       (Variable.n -- Scope.s);
-    item(iAssoc)("*")(obj.ne = Variable.n + (0, 8));
+    item(iAssoc)("*")(obj.ne = Variable.n + (0, 7));
     link(aggregationUni)
       (Define.nw -- Scope.se);
     item(iAssoc)("*")(obj.ne = Define.nw + (0, -3));
@@ -67,6 +67,6 @@
     d = Scope.ne + (-7, 0);
     link(aggregationUni)
       (a -- b -- c -- d);
-    item(iAssoc)("*")(obj.ne = a + (8, -3));
+    item(iAssoc)("*")(obj.ne = a + (8, 7));
   \end{mpost}
 }
