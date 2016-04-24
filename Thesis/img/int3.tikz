@@ -5,7 +5,7 @@
       \node [outer, below=2mm of s0] (s0fundefo)  {
         \begin{tikzpicture}
           \node (s0fundeft)  {Fun.Def.};
-          \node[inner, below=2mm of s0fundeft] (s0fundef)  {fun(foo)};
+          \node[inner, below=0 of s0fundeft] (s0fundef)  {fun(foo)};
           \node[inner, below=of s0fundef] (s0maindef)  {main()};
         \end{tikzpicture}
       };

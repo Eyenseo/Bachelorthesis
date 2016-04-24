@@ -3,7 +3,7 @@
     \node[StartEnd] (start) {};
     \node[terminal, right = of start] (bo) {\{};
     \node[coordinate, right = of bo] (postbo) {};
-    \node[nonterminal, right = of postbo] (als) {Allg. Str.};
+    \node[nonterminal, right = of postbo] (als) {Gem. Str.};
     \node[coordinate, right = of als] (prebc) {};
     \node[terminal, right = of prebc] (bc) {\}};
     \node[StartEnd, right = of bc] (end) {};

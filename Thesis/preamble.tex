@@ -234,8 +234,8 @@
 %---------------------------------
 % Minted inline
 %---------------------------------
-\newcommand{\myMinin}[1][breaklines,breakanywhere,breakanywheresymbolpre=]{\mintinline[#1]{c++}}
-\newcommand{\myMin}[1][breaklines,breakanywhere,breakanywheresymbolpre=]{\mintinline[#1]{text}}
+\newcommand{\myMinin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{c++}}
+\newcommand{\myMin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{text}}
 
 %---------------------------------
 % Horizontal line for title page
@@ -522,8 +522,8 @@
     edges=rounded corners,
     simple,
   },
-  inner/.style={nonterminal, text height=, text depth=},
-  outer/.style={terminal, rectangle, rounded corners=10pt, text height=, text depth=}
+  inner/.style={nonterminal, text height=, text depth=, node distance=2mm},
+  outer/.style={terminal, rectangle, rounded corners=5pt, text height=, text depth=, node distance=2mm}
 }
 
 %---------------------------------
