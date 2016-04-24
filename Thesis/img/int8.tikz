@@ -1,0 +1,35 @@
+\begin{tikzpicture}[railroad]
+  \node[outer] (stackout2) {
+    \begin{tikzpicture}
+      \node (s2stack)  {Stack: 2};
+      % FUN DEF
+      \node [outer, below=2mm of s2stack] (s2fundefo)  {
+        \begin{tikzpicture}
+          \node (s2fundeft)  {Fun.Def.};
+        \end{tikzpicture}
+      };
+      % ALIAS
+      \node [outer, below=of s2fundefo] (s2aliaso) {
+        \begin{tikzpicture}
+          \node (s2aname)  {Local};
+          \node[right=of s2aname] (s2aval)  {External};
+          \node[above = 2mm of $(s2aname.west)!0.5!(s2aval.east)$] (s2avardeft)  {Aliases};
+          \node[inner,below = of $(s2aname.west)!0.5!(s2aval.east)$] (s2afoov)  {
+            \begin{tikzpicture}
+              \node[inner, below=of s2aname] (s2af)  {foo};
+              \node[inner, below=of s2aval] (s2av)  {foo};
+            \end{tikzpicture}
+          };
+        \end{tikzpicture}
+      };
+      % VAR DEF
+      \node [outer, below=of s2aliaso] (s2vardefo) {
+        \begin{tikzpicture}
+          \node (s2vname)  {Name};
+          \node[right=of s2vname] (s2vval)  {Value};
+          \node[above = 2mm of $(s2vname.west)!0.5!(s2vval.east)$] (s2vvardeft)  {Var.Def.};
+        \end{tikzpicture}
+      };
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
