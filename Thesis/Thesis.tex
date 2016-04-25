@@ -299,7 +299,7 @@
     Die Syntax ist an C \autocite{C-std}, Python \autocite{Python-std}, JavaScript \autocite{Ecma-std} und Swift \autocite{Swift-std} angelegt. C liefert den größten Anteil der Syntax, von Python wurde \myMIn$def$ übernommen, von JavaScript \myMIn$var$ und die \emph{Named-Parameter}\footnote{
       Named-Parameter sind Parameter, die über einen Namen ihren Wert beim Funktionsaufruf zugewiesen bekommen. Die normale Wertzuweisungsstrategie ist, nach der Reihenfolge der Deklaration vorzugehen.
     }
-    Syntax \myMIn$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \myMIn$def$ und \myMIn$var$ sorgt dafür, dass die Programmierer nach den ersten drei Zeichen wissen, was der folgende Code tun wird. Die Makrosprache unterstützt Named-Parameter, weil das Command-Pattern so implementiert wurde, dass Parameter Aliasbezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nur schwer möglich. Somit sind die Named-Parameter der bestmögliche Kompromiss,weil diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben, was durch die Nutzung von \myMinin{map<T1, T2>} erforderlich ist.
+    Syntax \myMIn$fun(foo:gun());$ von Swift. Die Unterscheidung zwischen \myMIn$def$ und \myMIn$var$ sorgt dafür, dass die Programmierer nach den ersten drei Zeichen wissen, was der folgende Code ausführen wird. Die Makrosprache unterstützt Named-Parameter, weil das Command-Pattern so implementiert wurde, dass Parameter Aliasbezeichnungen benutzen können, um eine hohe Kompatibilität zwischen unabhängig entwickelten Modulen zu gewährleisten. Dies ist in der Makrosprache nur schwer möglich. Somit sind die Named-Parameter der bestmögliche Kompromiss,weil diese erlauben, die Parameter in beliebiger Reihenfolge anzugeben, was durch die Nutzung von \myMinin{map<T1, T2>} erforderlich ist.
 
     %---------------------------------
     % Syntax Grundlagen
@@ -307,6 +307,28 @@
     \subsubsection{Syntax Grundlagen}
     \label{sssec:Syntax Grundlagen}
       Bezeichner müssen dem regulären Ausdruck (Regex) aus \autoref{fig:idsyntax} entsprechen.
+
+      Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel, was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert, was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vornherein ausgeschlossen. Außerdem sind Bezeichner, die einem Keyword
+      (%
+        \myMIn$break$,
+        \myMIn$continue$,
+        \myMIn$def$,
+        \myMIn$do$,
+        \myMIn$else$,
+        \myMIn$for$,
+        \myMIn$if$,
+        \myMIn$print$,
+        \myMIn$return$,
+        \myMIn$typeof$,
+        \myMIn$var$,
+        \myMIn$while$%
+      ), einen Booleanwert (\myMIn$true$, \myMIn$false$) oder \myMIn$main$ entsprechen -- abgesehen von der einen \myMIn$main$ Methode -- verboten.
+      \begin{figure}[H]
+        \centering
+        \myInput{img/idsyntax.tikz}
+        \caption{Regulärer Ausdruck von Bezeichnern}
+        \label{fig:idsyntax}
+      \end{figure}
 
 \myQuestion{Ich habe die regex Erklärung hier herein geschrieben -- war das sinnvoll oder soll ich das lieber weglassen?}
       Regex:
@@ -320,28 +342,6 @@
         \item \myTIn$\d$ sind Nummernzeichen.
         \item \myMin{\} escaped das folgende Zeichen.
       \end{itemize}
-
-      Das heißt, dass Bezeichner nur aus kleinen Buchstaben, Nummern und Unterstrichen bestehen können und am Anfang einen Buchstaben haben müssen. Grund für diese drastische Einschränkung ist, dass der Code einheitlich aussehen soll (die erste Regel, was Bezeichnungen/Formatierung angeht ist, dass man sich an dem orientiert, was schon existiert). Um dies besser garantieren zu können, wurde die CamelCase Schreibweise von vornherein ausgeschlossen. Außerdem sind Bezeichner, die einem keyword
-      (%
-        \myMIn$break$,
-        \myMIn$def$,
-        \myMIn$do$,
-        \myMIn$else$,
-        \myMIn$for$,
-        \myMIn$if$,
-        \myMIn$print$,
-        \myMIn$return$,
-        \myMIn$typeof$,
-        \myMIn$var$,
-        \myMIn$while$%
-      ), einen Booleanwert (\myMIn$true$, \myMIn$false$) oder \myMIn$main$ entsprechen -- abgesehen von der einen \myMIn$main$ Methode -- verboten.
-
-      \begin{figure}[H]
-        \centering
-        \myInput{img/idsyntax.tikz}
-        \caption{Regulärer Ausdruck von Bezeichnern}
-        \label{fig:idsyntax}
-      \end{figure}
 
       Literals sind entweder Doubles, Integer, Strings oder Boolean Werte, wie \autoref{fig:litsyntax} zeigt. In Strings ist es möglich, besondere Zeichen zu escapen. Zum Beispiel kann ein Zeilenumbruch -- wie in anderen Programmiersprachen -- mit \myMIn$"\n"$ oder ein Tab mit \myMIn$"\t"$, erzeugt werden.
       \begin{figure}[H]
@@ -367,7 +367,7 @@
         \label{fig:returnsyntax}
       \end{figure}
 
-      Abbildungen \ref{fig:scopesyntax}, \ref{fig:loopscopesyntax} und \ref{fig:commonsyntax} zeigen die Syntax von Scope. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \myMIn$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarationsscopes -- die sich in einem Loop Scope befinden, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass der Syntax \myMIn$var foo; {var foo;}$ richtig ist -- das erste \myMIn$foo$, wird von dem zweiten verdeckt.
+      Abbildungen \ref{fig:scopesyntax}, \ref{fig:loopscopesyntax} und \ref{fig:commonsyntax} zeigen die Syntax von Scopes. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes nur darin unterscheiden, dass sie das \myMIn$break$ Keyword unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarationsscopes -- die sich in einem Loop Scope befinden, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass die Syntax \myMIn$var foo; {var foo;}$ richtig ist -- das erste \myMIn$foo$, wird von dem zweiten verdeckt.
       \begin{figure}[H]
         \centering
         \begin{minipage}{.45\linewidth}
@@ -586,7 +586,7 @@
           \label{fig:stackex}
         \end{figure}
 
-        Sollte der \myMinin{Stack} jedoch keine passende Funktion haben, wird der \myMinin{CommandProvider} nach einem passenden \myMinin{core::Command} gefragt, welcher dann in der C++ Ebene ausgeführt wird. Damit realisieren \myMinin{core::Command}s die \myMinin{ast::Callable} Funktionen genauso, wie \myMinin{ast::Function}, die aus dem Makro hervorgehen.
+        Sollte der \myMinin{Stack} jedoch keine passende Funktion haben, wird der \myMinin{CommandProvider} nach einem passenden \myMinin{core::Command} gefragt, welches dann in der C++ Ebene ausgeführt wird. Damit realisieren \myMinin{core::Command}s die \myMinin{ast::Callable} Funktionen genauso, wie \myMinin{ast::Function}, die aus dem Makro hervorgehen.
 
       \paragraph{Interpreter}
         Der Interpreter selber läuft den AST ab, erweitert den \myMinin{Stack} bei \myMinin{ast::Scope}s, fügt dem \myMinin{Stack} Variablen und Funktionen bei deren Definition (durch \myMinin{ast::Define}) zu und entfernt das \myMinin{Stack} Objekt, wenn er mit dem \myMinin{ast::Scope} fertig ist. \myMinin{ast::Condition}s werden mit Hilfe des \myMinin{OperatorProvider}s ausgewertet. Der Rest der \myMinin{ast} Klassen, lässt sich durch eine Verknüpfung der vorherigen Vorgehensweisen lösen.
@@ -631,9 +631,9 @@
     \label{sssec:Parser Architektur}
       Der \myMinin{Tokenizer} hat keinen Zustand, weil er nur einen stream von Zeichen aufteilen muss, und sollte daher nicht weiter beschrieben werden müssen. Dies gilt auch für alle \myMinin{ast} Klassen, weil diese POD Klassen sind und somit nur Daten verwalten.
 
-      Da der \myMinin{Parser} recursive decent implementiert wird, kann der \myMinin{Parser} ohne einen Zustand -- sprich Attribute -- auskommen. In diesem Fall kann darauf verzichtet werden, den \myMinin{Parser} als Klasse zu implementieren und anstelle dessen eine \myMinin{static} Funktion anbeten. Dies hat den Vorteil, dass der \myMinin{Parser} garantiert Thread-Safe ist, weil alle Daten von dem nativen Funktionsstack verwaltet werden.
+      Da der \myMinin{Parser} recursive decent implementiert wird, kann der \myMinin{Parser} ohne einen Zustand -- sprich Attribute -- auskommen. In diesem Fall kann darauf verzichtet werden, den \myMinin{Parser} als Klasse zu implementieren und anstelle dessen eine \myMinin{static} Funktion anbieten. Dies hat den Vorteil, dass der \myMinin{Parser} garantiert Thread-Safe ist, weil alle Daten von dem nativen Funktionsstack verwaltet werden.
 
-      Für nahezu alle \myMinin{ast} Klassen bzw. keywords sollte der \myMinin{Parser} eine Methode zum Parsen besitzen. Diese Modularität erlaubt es später, den \myMinin{Parser} leichter zu erweitern, bzw. Fehler zu lokalisieren können. Da jede Methode genau für einen Teil der Syntax zuständig ist und es keinen Objektzustand gibt, können die Methoden für sich betrachtet und überprüft werden.
+      Für nahezu alle \myMinin{ast} Klassen bzw. Keywords sollte der \myMinin{Parser} eine Methode zum Parsen besitzen. Diese Modularität erlaubt es später, den \myMinin{Parser} leichter zu erweitern, bzw. Fehler zu lokalisieren können. Da jede Methode genau für einen Teil der Syntax zuständig ist und es keinen Objektzustand gibt, können die Methoden für sich betrachtet und überprüft werden.
 
       Die Einstiegsmethode des \myMinin{Parser}s muss zusätzlich zu dem zu parsenden String den Namen des Makros bzw. der Datei übergeben bekommen. Dies sorgt dafür, dass die Fehlermeldungen für den Benutzer eindeutig zuzuordnen sind.
 
@@ -747,9 +747,9 @@
 %---------------------------------
 \section{Exemplarische Realisierung}
 \label{sec:Exemplarische Realisierung}
-  Um schnell Resultate zu sehen, wird die Implementierung nicht nur inkrementell, sondern auch test-driven \autocite{beck2003test} vorgenommen. Inkrementell bedeutet, dass nicht komplett vollständige Teile der Software genutzt werden, um abhängige Elemente zu entwickeln. Die inkrementelle Entwicklung von Software kommt aus der Agile Softwareentwicklung \autocite{cohen2003agile}. Dabei werden schnell Resultate gesehen. Zum Beispiel fallen Architektur Fehler schneller auf, wodurch grundlegende Probleme frühzeitig beseitigt werden können.
+  Um schnell Resultate zu sehen, wird die Implementierung nicht nur inkrementell, sondern auch test-driven \autocite{beck2003test} vorgenommen. Inkrementell bedeutet, dass nicht komplett vollständige Teile der Software genutzt werden, um abhängige Elemente zu entwickeln. Die inkrementelle Entwicklung von Software kommt aus der Agile Softwareentwicklung \autocite{cohen2003agile}, einer der Vorteile ist, dass Resultate schneller gesehen werden. Zum Beispiel fallen Architektur Fehler schneller auf, wodurch grundlegende Probleme frühzeitig beseitigt werden können.
 
-  Test-driven bedeutet, dass es für `alle' Funktionen einen Test gibt, den sie bestehen müssen. Das hat zur Folge, dass wenn eine neue Softwarekomponente entwickelt wird, diese schon `ausprobiert' werden kann, ohne dass die Teile der Software existieren, die diese Komponente benutzten. Zudem sind Fehler leichter zu lösen, weil diese erstens früh gefunden werden und zweitens deren Lösung durch Regressionstests auch auf Korrektheit überprüft werden können. Dadurch werden in den seltensten Fällen weitere Fehler durch Fehlerlösungen eingeführt. Test-driven bedeutet allerdings nicht, dass die Software am Ende komplett ausgetestet ist. Es bedeutet nur, dass Tests früher geschrieben werden, und dass es, im Vergleich zu anderen Entwicklungsmethoden, meistens mehr Tests gibt, die die Software auf Korrektheit überprüfen.
+  Test-driven bedeutet, dass es für `alle' Funktionen einen Test gibt, den sie bestehen müssen. Das hat zur Folge, dass wenn eine neue Softwarekomponente entwickelt wird, diese schon `ausprobiert' werden kann, ohne dass die Teile der Software bereits existieren müssen, die diese Komponente benutzten werden. Zudem sind Fehler leichter zu lösen, weil diese erstens früh gefunden werden und zweitens deren Lösung durch Regressionstests auch auf Korrektheit überprüft werden können. Dadurch werden in den seltensten Fällen weitere Fehler durch Fehlerlösungen eingeführt. Test-driven bedeutet allerdings nicht, dass die Software am Ende komplett ausgetestet ist. Es bedeutet nur, dass Tests früher geschrieben werden, und dass es, im Vergleich zu anderen Entwicklungsmethoden, meistens mehr Tests gibt, die die Software auf Korrektheit überprüfen.
 
   In den folgenden Unterkapiteln wird der Ablauf für das Makro aus \autoref{fig:exmacro} durchgegangen. Die Reihenfolge ist die, die in \autoref{fig:abstractarch} bereits beschrieben wurde.
   \begin{myCodeEnv}
@@ -817,7 +817,7 @@
         \begin{myInvBox}[width=.9\linewidth]
           \lstinputlisting{code/exastroot.txt}
         \end{myInvBox}
-        \caption{Root Scope des Beispieles}
+        \caption{Root Scope des Beispiels}
         \label{fig:exastroot}
       \end{myCodeEnv}
       \switchcolumn
@@ -867,7 +867,7 @@
         \end{paracol}
 
       \paragraph{Variable}
-        Wenn das geparste \myMinin{Token} \myRIn$var$ war, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Variable} übergeben. Diese erwartet als aktuelles \myMinin{Token} nur einen Bezeichner. Es ist also wichtig, dass zuerst probiert, wird eine \myMinin{ast::Funktion} zu parsen, und erst im Anschluss eine \myMinin{ast::Variable}.
+        Wenn das geparste \myMinin{Token} \myRIn$var$ war, wird die \myMinin{TokenList} an die Funktion für \myMinin{ast::Variable} übergeben. Diese erwartet als aktuelles \myMinin{Token} nur einen Bezeichner. Es ist also wichtig, dass zuerst eine \myMinin{ast::Funktion} probiert wird zu parsen und im Anschluss erst eine \myMinin{ast::Variable}.
 
         Vermutlich entgegen der Erwartungshaltung des Lesers wird hier nicht die Zuweisung behandelt, dies geschieht bei der \myMinin{ast::Operator} Funktion. Im Verlauf der Erklärung, wie Operatoren geparst werden, sollte es offensichtlich werden, wieso dies so ist.
 
@@ -880,7 +880,7 @@
     \label{sssec:Scope parsen}
       Die \myMinin{ast::Scope} Klasse ist eine der meist verwendeten Klassen aus dem \myMinin{ast} Paket. Die \myMinin{ast::Scope} Klasse macht sich \myMinin{variant<T1, T2, ..., Tn>} \autocite{cpp-variant} zu Nutze -- \myMinin{variant} ist eine typsichere Union. Der \myMinin{variant} Typ des \myMinin{ast::Scope}s hat als Templateparameter alle \myMinin{ast} Typen, die in einem Loop Scope auftreten können (\autoref{fig:loopscopesyntax}).
 
-      Die \myMinin{Parser} Methode erwartet, dass das aktuelle \myMinin{Token} \myRIn$\{$ entspricht. Wenn dem so ist, werden so lange alle \myMinin{ast} Klassen probiert geparst zu werden, bis ein \myMinin{Token} nicht aufgelöst werden kann. Dies ist entweder der Fall, wenn das Token \myRIn$\}$ ist -- somit dieses \myMinin{ast::Scope} schließt -- oder ein unerwartetes Token ist. Im letzteren Fall wird eine Excpetion geschmissen. Wenn eine Methode einen validen Wert zurück gibt, wird das Objekt dem Array des \myMinin{ast::Scope}s als Node hinzugefügt.
+      Die \myMinin{Parser} Methode erwartet, dass das aktuelle \myMinin{Token} \myRIn$\{$ entspricht. Wenn dem so ist, werden so lange alle \myMinin{ast} Klassen probiert geparst zu werden, bis ein \myMinin{Token} nicht aufgelöst werden kann. Dies ist entweder der Fall, wenn das Token \myRIn$\}$ ist -- somit dieses \myMinin{ast::Scope} schließt -- oder ein unerwartetes Token ist. Im letzteren Fall wird eine Exception geschmissen. Wenn eine Methode einen validen Wert zurück gibt, wird das Objekt dem Array des \myMinin{ast::Scope}s als Node hinzugefügt.
 
       Ähnlich wie in dem Railroad Diagramm aus \autoref{fig:commonsyntax} müssen einige \myMinin{ast} Elemente mit einem \myRIn$;$ gefolgt werden, weil sie auch in einem Kontext eingesetzt werden können, in dem kein \myRIn$;$ benötigt ist. Diese Token werden durch das Scope gelesen und finden sich nicht im AST wieder, weil sie keinen weiteren Wert haben. Sollten sie fehlen, wodurch Statements nicht zuverlässig geparst werden können, wird eine Exception geschmissen.
 
@@ -944,14 +944,14 @@
     \label{sssec:Operator und Condition parsen}
       Der Unterschied zwischen dem Parsen von einem Operator und einer Condition ist, dass Operatoren geparst werden, wenn der linke Teil des Operators (im Fall, dass es sich um einen binären Operator handelt), schon geparst ist. Die Logik der \myMinin{ast::Operator} parse Methode muss dies berücksichtigen -- die \myMinin{ast::Condition} parse Methode nutzt intern die \myMinin{ast::Operator} Methode, um Operatoren zu unterstützen. Abgesehen von diesem Unterschied können die beiden Methoden gleich behandelt werden.
 
-      Wenn der \myMinin{Parser} \myMinin{ast::Operator}en parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente (Operatoren und Werterzeuger) erstellt, die der \myMinin{Paser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem Parsen allerdings nur als eine Liste angeordnet, weil der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammenzusetzen hat. Die Liste wird dann, in dem zweiten Schritt, in einen Baum verwandelt. Das geschieht, indem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist, angewendet bzw. erstellt.
+      Wenn der \myMinin{Parser} \myMinin{ast::Operator}en parsed, passiert dies in zwei Schritten. Im ersten Schritt werden alle \myMinin{ast} Elemente (Operatoren und Werterzeuger) erstellt, die der \myMinin{Parser} aus den \myMinin{Token}s erstellen kann. Diese sind nach dem Parsen allerdings nur als eine Liste angeordnet, weil der \myMinin{Parser} nicht wissen kann, in welcher Reihenfolge er die \myMinin{Token}s zusammenzusetzen hat. Die Liste wird dann, in dem zweiten Schritt, in einen Baum verwandelt. Das geschieht, indem der Parser einen \myMinin{ast::Operator} mit seinen jeweiligen Operanden verbindet. Dabei wird die Präzedenz bzw. Reihenfolge, die in \autoref{fig:opsyntax} zu sehen ist, angewendet bzw. erstellt.
 
       Operatoren richtig zu parsen, ist eine der schwierigsten Aufgaben beim Bau eines Parsers, weil der zweite Schritt nicht nur die Präzedenz der Operatoren berücksichtigen muss, sondern auch die Auflösungsreihenfolge. Mit Ausnahme von dem Assignmentoperator, werden alle Binärenoperatoren von links nach rechts zusammengesetzt. Alle Unärenoperatoren werden von rechts nach links zusammengesetzt. Alle \myMIn$+$ und \myMIn$-$ Operatoren sind zu Beginn unär, und werden während des zweiten Schrittes zu Binärenoperatoren, wenn sich ein Werterzeuger vor ihnen befindet. Operatoren, die keinen Operanden haben, sind in diesem Fall keine Werterzeuger.
 
       Beide Methoden umschließen ihre Logik mit einem \myMinin{try-catch} Block, um Informationen zu dem Kontext des Fehlers zu liefern.
 
       \paragraph{Binäroperator}
-        In Zeile 3, des Beispieles (\myMIn$foo = foo + 1.1;$), sieht man den Fall, in dem der linke Operand von dem \myMinin{ast::Operator} schon geparst ist. \myMinin{foo} wurde als Variable geparst, weil dieser Parser ohne Vorausschauen implementiert wurde. Als nächstes Token ist \myTIn$=$ in der Liste, was das Parsen von einem binären Operator indiziert.
+        In Zeile 3, des Beispiels (\myMIn$foo = foo + 1.1;$), sieht man den Fall, in dem der linke Operand von dem \myMinin{ast::Operator} schon geparst ist. \myMinin{foo} wurde als Variable geparst, weil dieser Parser ohne Vorausschauen implementiert wurde. Als nächstes Token ist \myTIn$=$ in der Liste, was das Parsen von einem binären Operator indiziert.
 
         Falls es sich um einen binären \myMinin{ast::Operator} handelt, erwartet die ast::Operator Methode, dass das zuletzt geparste Element ein Werterzeuger ist (\autoref{fig:vprsyntax}). Dieses wird als linkes Element des \myMinin{ast::Operator} gesetzt. Als Nächstes erwartet die Methode, dass das nächste \myMinin{Token} auch ein Werterzeuger ist.
 
@@ -1029,7 +1029,7 @@
     %---------------------------------
     \subsubsection{Literals parsen}
     \label{sssec:Literals parsen}
-      Um Literals zu parsen, wendet der \myMinin{Parser} für String \myRIn$".*"$, Integer \myRIn$\d+$, Doubles \myRIn$\d*\.\d+$ und Booleans \myRIn$true|false$ als Regex an, um zu erkennen, ob ein \myMinin{Token} ein Literal beschreibt. Für den String reicht in diesem Fall der Regex aus, weil der \myMinin{Tokenizer} den String als ein \myMinin{Token} produziert hat.
+      Um Literals zu parsen bzw. zu erkennen, wendet der \myMinin{Parser} für Strings \myRIn$".*"$, Integer \myRIn$\d+$, Doubles \myRIn$\d*\.\d+$ und Booleans \myRIn$true|false$ als Regex an. Für den String reicht in diesem Fall der Regex aus, weil der \myMinin{Tokenizer} den String als ein \myMinin{Token} produziert hat.
 
       \begin{lrbox}{\myMinSavBox}
         \myMinin{"t\\tt"}$\rightarrow$\myMinin{"t\tt"}
@@ -1066,7 +1066,7 @@
     \label{sssec:Return parsen}
       Return ist leicht zu parsen, weil es nur einen Werterzeuger nach dem Keyword \myRIn$return$ erwartet.
 
-      Wie einige andere Methoden zuvor umschließt die \myMin{ast::return} Methode die Logik mit einem \myMinin{try-catch} Block.
+      Wie einige andere Methoden zuvor, umschließt die \myMin{ast::return} Methode die Logik mit einem \myMinin{try-catch} Block.
 
       \autoref{fig:exastreturn} zeigt Zeile 6 des Beispiels.
       \begin{paracol}{2}
@@ -1093,11 +1093,11 @@
     %---------------------------------
     \subsubsection{Funktionsaufruf parsen}
     \label{sssec:Funktionsaufruf parsen}
-      Um den Funktionsaufruf in Zeile 12 des Beispieles (\myMIn$return fun(foo:foo);$) zu parsen, erwartet die \myMinin{ast::Callable} Funktion, dass das erste \myMinin{Token} ein Bezeichner ist und darauf folgend (ohne Abstand) sich ein \myRIn$\($ befindet. Anschließend wird eine Komma getrennte Liste von Parameternamen zu Werterzeugern erwartet. Dabei ist der Parametername von dem Werterzeuger durch ein \myRIn$:$ getrennt. Auf diese Liste muss eine \myRIn$\)$ folgen.
+      Um den Funktionsaufruf in Zeile 12 des Beispiels (\myMIn$return fun(foo:foo);$) zu parsen, erwartet die \myMinin{ast::Callable} Funktion, dass das erste \myMinin{Token} ein Bezeichner ist und darauf folgend (ohne Abstand) sich ein \myRIn$\($ befindet. Anschließend wird eine Komma getrennte Liste von Parameternamen zu Werterzeugern erwartet. Dabei ist der Parametername von dem Werterzeuger durch ein \myRIn$:$ getrennt. Auf diese Liste muss eine \myRIn$\)$ folgen.
 
       Auch diese Methode umschließt die Logik mit einem \myMinin{try-catch} Block.
 
-      \autoref{fig:exastcall} zeigt das Ergebnis aus der Zeile 12 des Beispieles.
+      \autoref{fig:exastcall} zeigt das Ergebnis aus der Zeile 12 des Beispiels.
       \begin{paracol}{2}
         \begin{myCodeEnv}
           \centering
@@ -1122,7 +1122,7 @@
     %---------------------------------
     \subsubsection{Analyser}
     \label{sssec:Analyser}
-      Nachdem der \myMinin{Parser} den AST geparst hat, nutzt dieser den \myMinin{Analyser}, um herauszufinden, ob sich in dem Baum Konstrukte befinden, die unerwünscht sind -- zum Beispiel, dass die \myMinin{main(...)} Methode manuell aufgerufen wird.
+      Nachdem der \myMinin{Parser} den AST geparst hat, nutzt dieser den \myMinin{Analyser}, um herauszufinden, ob sich in dem Baum Konstrukte befinden, die unerwünscht sind -- zum Beispiel, das die \myMinin{main(...)} Methode manuell aufgerufen wird.
 
       Wie zuvor beschrieben (siehe \autoref{sssec:Analyser Architektur}) nutzt der \myMinin{Analyser} ein Signal/Visitor System\footnote{
         Das Signal System ist eine vorhandene Firmenbibliothek und wurde somit nicht während der Arbeit entwickelt.
@@ -1169,7 +1169,7 @@
             \begin{figure}[H]
               \centering
               \myInput{img/int2.tikz}
-              \caption{\myMinin{Stack} nach der \myMinin{fun(foo)} Deklaration}
+              \caption{\myMinin{Stack} nach der \myMinin[breaklines=false]{fun(foo)} Deklaration}
               \label{fig:int2}
             \end{figure}
         \end{minipage}%
@@ -1177,7 +1177,7 @@
           \begin{figure}[H]
             \centering
             \myInput{img/int3.tikz}
-            \caption{\myMinin{Stack} nach der \myMinin{main()} Deklaration}
+            \caption{\myMinin{Stack} nach der \myMinin[breaklines=false]{main()} Deklaration}
             \label{fig:int3}
           \end{figure}
         \end{minipage}
@@ -1217,7 +1217,7 @@
     %---------------------------------
     \subsubsection{Funktionsaufruf}
     \label{sssec:Funktionsaufruf}
-      Bei dem Funktionsaufruf (\myMinin{return fun(foo:foo);}), fragt der \myMinin{Interpreter} als erstes den \myMinin{Stack} nach einer Referenz eines \myMinin{ast::Function} Objektes, welches dem Funktionsaufruf gleicht. Es muss also eine Funktion definiert worden sein, die dem Bezeichner \myRIn$fun$ gleicht und einen Parameter namens \myRIn$foo$ besitzt. Im Anschluss erstellt der \myMinin{Interpreter} einen neuen \myMinin{Stack}, der den root \myMinin{Stack} als Pointer hat -- siehe \autoref{fig:intstack}. Wenn der neue \myMinin{Stack} den \myMinin{main()} \myMinin{Stack} als Pointer hätte, könnte der neue \myMinin{Stack} direkt auf alle Variablen aus der \myMinin{main()} Methode zugreifen. Dem neuen \myMinin{Stack} wird dann ein Alias names \myMinin{foo} hinzugefügt, der auf die \myMinin{foo} Variable aus dem \myMinin{main()} \myMinin{Stack} zeigt. Dies ist in \autoref{fig:int8} zu sehen. Nachdem der \myMinin{Stack} vorbereitet ist, wird das \myMinin{ast::Scope} der Funktionsdeklaration interpretiert.
+      Bei dem Funktionsaufruf (\myMinin{return fun(foo:foo);}), fragt der \myMinin{Interpreter} als erstes den \myMinin{Stack} nach einer Referenz eines \myMinin{ast::Function} Objektes, welches dem Funktionsaufruf gleicht. Es muss also eine Funktion definiert worden sein, die dem Bezeichner \myRIn$fun$ gleicht und einen Parameter namens \myRIn$foo$ besitzt. Im Anschluss erstellt der \myMinin{Interpreter} einen neuen \myMinin{Stack}, der den root \myMinin{Stack} als Pointer hat -- siehe \autoref{fig:intstack}. Wenn der neue \myMinin{Stack} den \myMinin{main()} \myMinin{Stack} als Pointer hätte, könnte der neue \myMinin{Stack} direkt auf alle Variablen aus der \myMinin{main()} Methode zugreifen. Dem neuen \myMinin{Stack} wird dann ein Alias mit dem Namen \myMinin{foo} hinzugefügt, der auf die \myMinin{foo} Variable aus dem \myMinin{main()} \myMinin{Stack} zeigt. Dies ist in \autoref{fig:int8} zu sehen. Nachdem der \myMinin{Stack} vorbereitet ist, wird das \myMinin{ast::Scope} der Funktionsdeklaration interpretiert.
 
       \begin{figure}[H]
         \centering
@@ -1227,7 +1227,7 @@
       \end{figure}
 
 
-      Sollte der \myMinin{Stack} keine passende Funktion haben, greift der \myMinin{Interpreter} auf den \myMinin{core::CommandProvider} zurück. Wenn dieser ein \myMinin{core::Command} zurück gibt, werden diesem die Argumente übergeben. Wenn der \myMinin{core::CommandProvider} auch kein passendes \myMinin{core::Command} für den Funktionsaufruf hat, wird eine Exception geschmissen, was zum Ende des Interpretierens führt. Da der Interpreter recursive decent implementiert ist, wird durch den Funktionsstack wieder ein Stack von Fehlermeldungen aufgebaut, der den Nutzer zuder Problemquelle führt.
+      Sollte der \myMinin{Stack} keine passende Funktion haben, greift der \myMinin{Interpreter} auf den \myMinin{core::CommandProvider} zurück. Wenn dieser ein \myMinin{core::Command} zurück gibt, werden diesem die Argumente übergeben. Wenn der \myMinin{core::CommandProvider} auch kein passendes \myMinin{core::Command} für den Funktionsaufruf hat, wird eine Exception geschmissen, was zum Ende des Interpretierens führt. Da der Interpreter recursive decent implementiert ist, wird durch den Funktionsstack wieder ein Stack von Fehlermeldungen aufgebaut, der dem Nutzer zur Problemquelle führt.
       \begin{figure}[H]
         \centering
         \myInput{img/int8.tikz}
@@ -1242,7 +1242,7 @@
     \label{sssec:Do-While}
       Ein \myMinin{ast::DoWhile} wird interpretiert, indem das \myMinin{ast::Scope} ausgeführt wird und im Anschluss die \myMinin{ast::Condition} ausgewertet wird. Sollte das Ergebnis \myMinin{true} sein, wird das \myMinin{ast::Scope} wieder ausgeführt und am Ende wieder die \myMinin{ast::Condition} geprüft.
 
-      Während der Ausführung ist es möglich, dass \myMinin{return} oder z.B. \myMinin{break} aufgerufen wird. Wenn eines dieser beiden Elemente interpretiert wird, wird eine Flag gesetzt, die der \myMinin{DoWhile} Methode mitteilt, das der Loop unterbrochen wird. Diese Logik findet sich in allen \myMinin{ast::Loop} und der \myMinin{ast::Scope} Methode wieder.
+      Während der Ausführung ist es möglich, dass \myMinin{return} oder z.B. \myMinin{break} aufgerufen wird. Wenn eines dieser beiden Elemente interpretiert wird, wird ein Flag gesetzt, das der \myMinin{DoWhile} Methode mitteilt, ob der Loop unterbrochen wurde. Diese Logik findet sich in allen \myMinin{ast::Loop} und der \myMinin{ast::Scope} Methode wieder.
 
     %---------------------------------
     % Operator
@@ -1251,9 +1251,9 @@
     \label{sssec:Operator}
       Um \myMinin{ast::Operator} Objekte zu interpretieren, löst der \myMinin{Interpreter} die Werterzeuger so weit auf, dass zwei \myMinin{any} Werte hat. Diese Werte werden, mit dem Operator als \myMinin{enum}, an den \myMinin{OperatorProvider} zum Evaluieren gegeben.
 
-      Der \myMinin{OperatorProvider} nutzt die Typinformation des \myMinin{any} Typs (\myMinin{typeid(T)}), um die richtige Funktion für die beiden Typen zu finden. Wenn keine passende Funktion gefunden wird, wird eine Exception geschmissen. Ansonsten werden die Werte an die Funktion gegeben und das Ergebnis an den \myMinin{Interpreter} retuned. In dem Fall des Beispieles (\myMinin{foo = foo + 1.1;}) wird die Funktion für \myMinin{std::string} und \myMinin{double} gesucht, die diese Typen addieren kann.
+      Der \myMinin{OperatorProvider} nutzt die Typinformation des \myMinin{any} Typs (\myMinin{typeid(T)}), um die richtige Funktion für die beiden Typen zu finden. Wenn keine passende Funktion gefunden wird, wird eine Exception geschmissen. Ansonsten werden die Werte an die Funktion gegeben und das Ergebnis an den \myMinin{Interpreter} returned. In dem Fall des Beispiels (\myMinin{foo = foo + 1.1;}) wird die Funktion für \myMinin{std::string} und \myMinin{double} gesucht, die diese Typen addieren kann.
 
-      Der Assignmentoperator wird nicht von dem \myMinin{OperatorProvider} angeboten, weil dieser abhängig von dem \myMinin{Stack} State ist. Wenn die Variable ein Alias ist (wie in dem Fall des Beispieles -- siehe \autoref{fig:int8}), muss dieser gelöscht werden und durch eine `echte' Variable ersetzt werden, bevor der Wert verändert werden kann.
+      Der Assignmentoperator wird nicht von dem \myMinin{OperatorProvider} angeboten, weil dieser abhängig von dem \myMinin{Stack} State ist. Wenn die Variable ein Alias ist (wie in dem Fall des Beispiels -- siehe \autoref{fig:int8}), muss dieser gelöscht werden und durch eine `echte' Variable ersetzt werden, bevor der Wert verändert werden kann.
 
       Die \autoref{fig:int9} zeigt das Ergebnis der zwei Operatoren -- der \myMinin{Stack} von dem \myMinin{DoWhile} wurde ausgelassen, weil dieser leer bleibt und deshalb als Proxy zu \myMin{Stack 2} dient.
       \begin{figure}[H]
@@ -1335,12 +1335,12 @@
       \item C++17 \myMinin{std::string_view}\\
         Um weniger Speicher zu verbrauchen und durch weniger Memory Allokationen schneller beim Tokenizen zu sein, könnte \myMinin{std::string_view} genutzt werden.
       \item Mehr Fehler von dem Parser\label{enum:Mehr Fehler}\\
-        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört, zu parsen, ist es mögliche, einen \myMinin{Stack} von Fehlermeldungen zu produzieren -- wie es in dem \myMinin{Analyser} gemacht wird. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang (\myTIn${$) , Scopeende(\myTIn$}$) oder Semikolon(\myTIn$;$) -- je nach dem, wo der Fehler aufgetreten ist, die Tokens verworfen und dann weiter geparst werden.\\
+        Anstelle, dass der Parser Exceptions nutzt und nach dem ersten Fehler aufhört, zu parsen, ist es mögliche, einen \myMinin{Stack} von Fehlermeldungen zu produzieren -- wie es in dem \myMinin{Analyser} gemacht wird. Nach einem Fehler müsste nur bis zum nächsten Scopeanfang (\myTIn${$) , Scopeende(\myTIn$}$) oder Semikolon(\myTIn$;$) -- je nachdem, wo der Fehler aufgetreten ist, die Tokens verworfen und dann weiter geparst werden.\\
         Eine weitere Variante ist es, AST Elemente als poisoned zu kennzeichnen, sodass alle Fehler, die in Verbindung mit dem Element auftreten, verworfen werden, weil es sehr wahrscheinlich ein Folgefehler ist.
 
         Dies hätte zur Folge, dass der Nutzer mehr Fehler auf einmal beseitigen könnte.
       \item Verkettete \myMinin{Stack} Liste in ein Array umwandeln\label{enum:linkedlist}\\
-        Wenn sich herausstellt, dass die verkettete Liste von dem \myMinin{Stack} zu langsam ist, kann der Interpreter ein Array nutzen, um die \myMinin{Stack}s zu speichern und die \myMinin{Stack}s Nutzen anstelle eines Pointers einen Offset, von dem sie aus die anderen \myMinin{Stack} fragen können. Der Vorteil von Arrays gegen LinktLists ist die wesentlich höhere Cache-Locality.
+        Wenn sich herausstellt, dass die verkettete Liste von dem \myMinin{Stack} zu langsam ist, kann der Interpreter ein Array nutzen, um die \myMinin{Stack}s zu speichern und die \myMinin{Stack}s nutzen, anstelle eines Pointers einen Offset, von dem sie aus die anderen \myMinin{Stack} fragen können. Der Vorteil von Arrays gegen verkettete Listen ist die wesentlich höhere Cache-Locality.
       \item Einen Makro AST Buffer bereitstellen.\label{enum:astbuffer}\\
         Da das Parsen und Validieren der Makros ziemlich langsam ist, ist es ratsam, einen Provider zu implementieren, der den Namen des Makros mit dem geparsten AST assoziiert. Der AST wird von dem \myMinin{Interpreter} nicht verändert, weswegen das Makro nur geparst werden muss, wenn es sich verändert hat.
 
