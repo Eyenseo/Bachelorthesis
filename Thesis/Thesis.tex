@@ -58,32 +58,32 @@
   \subsection*{Danksagung}
   \addcontentsline{toc}{subsection}{Danksagung}
   \label{ssec:Danksagung}
-\myTodo{Danke an Mutter, Vater und alle Profs} % TODO
+    Ich möchte mich bei meinen Eltern bedanken, die mich immer unterstützt haben und dafür sorgten, dass ich nicht in der Sonderschule ende! Meine Freunden und allen Menschen, die mich zu diesem Studium geführt haben, verdienen auch mehr als meinen Dank -- sonst wäre ich wohl Bauer geworden\ldots Ein großes Dankeschön gilt auch meinen Professoren und meinem Betreuer bei der P3-Group, die mich diese Arbeit schreiben ließen, die aus unterschiedlichen Gründen ungewöhnlich ist.
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[%
+        spy using outlines={%
+          circle,%
+          Cornsilk,%
+          magnification=2,%
+          size=3.5cm,%
+          connect spies%
+        }%
+      ]
+        \node{
+          \pgfimage[%
+            interpolate=true,%
+            width=.8\linewidth%
+          ]{%
+            img/bb%
+          }
+        };
+        \spy on (.1,-.3) in node [left] at (-2,1.9);
+      \end{tikzpicture}
+      \caption{\textit{``Das soll meine Zukunft sein?''}}
+    \end{figure}
 
-    % \begin{figure}[H]
-    %   \centering
-    %   \begin{tikzpicture}[%
-    %     spy using outlines={%
-    %       circle,%
-    %       Cornsilk,%
-    %       magnification=2,%
-    %       size=3.5cm,%
-    %       connect spies%
-    %     }%
-    %   ]
-    %     \node{
-    %       \pgfimage[%
-    %         interpolate=true,%
-    %         width=.8\linewidth%
-    %       ]{%
-    %         img/bb%
-    %       }
-    %     };
-    %     \spy on (.1,-.3) in node [left] at (-2,1.9);
-    %   \end{tikzpicture}
-
-    %   \caption{\textit{``Das soll meine Zukunft sein?''}}
-    % \end{figure}
+    Zuletzt bin ich aber vor allem dankbar, dass ich in einem Land lebe, welches momentan weder von Krieg, Anschlägen, Korruption oder Hungersnot geplagt ist.
 
 %---------------------------------
 % Einleitung
@@ -108,6 +108,16 @@
     Softwaresysteme haben oft das Problem, dass sie mit einigen zentralen Features anfangen, die fest definiert werden (sollten), bevor ein Vertrag geschlossen wird. Für weitere Funktionalität, die über die Vereinbarungen im Vertrag hinausgehen, muss der Vertrag erweitert werden. Wenn der Vertrag erfüllt ist, und im Anschluss weitere Wünsche aufkommen, muss ein weiterer Vertrag aufgesetzt werden und die vorher gelieferte Software muss angepasst, gegebenenfalls erweitert werden. Dies kann zur Folge haben, dass große Teile der Software umgeschrieben werden müssen oder sogar, dass die Architektur der gesamten Anwendung verändert werden muss.
 
     Wenn frühzeitig ein Makrosystem/-sprache und ein entsprechendes Erweiterungskonzept für Module bzw. Plugins eingeführt wird, ist die Wahrscheinlichkeit, dass der Kern der Applikation für Erweiterungen angefasst werden muss, wesentlich geringer. Durch diese Kombination kann einfach ein weiteres Modul geladen werden, welches die neuen Grundbausteine der Applikation hinzufügt. Diese können dann in einem neuen oder angepassten Makro genutzt werden, um den Wunsch der Kunden zu erfüllen. Im Falle, dass es keiner neuen Grundbausteine bedarf, reicht es sogar, nur ein Makro zu liefern. Die Vorteile dieser Methode sind, dass -- wenn man davon ausgeht, dass die benutzen Makros und Grundbausteine fehlerfrei durch ausreichendes Testen der Software sind -- keine neuen Bugs in den Kern der Software eingeführt werden können und somit immens zu der Stabilität der Software beigetragen wird. Ein weiterer Vorteil ist, dass die Makros mit wesentlich weniger Aufwand entwickelt werden können, weil sie sich auf einem höheren Level befinden. Für Kunden ist eine nutzbare Makrosprache auch interessant, weil sie zum Teil durch das hausinterne Personal Anforderungen an die Software realisieren können, ohne den langen Weg über eine Firma zu gehen. Dies bedeutet auch, dass die Software eine bessere Chance hat, die Zeit zu überdauern.
+
+  %---------------------------------
+  % Vorhandene Lösungen
+  %---------------------------------
+  \subsection{Vorhandene Lösungen}
+  \label{ssec:Vorhandene Lösungen}
+    ChaiScript \autocite{chai-script} ist eine der einzigen Scriptsprachen, die es direkt für C++ gibt. Das Projekt ist ungefähr 7 Jahre alt und ermöglicht C++ Programmierern, Funktionen und Daten über einen String (das Script) aufzurufen bzw. anzulegen.
+
+    ChaiScript bietet von Hause aus viele Funktionalitäten, die weit über den Bedarf für eine Makrosprache hinausgehen. Dies ist auch der Grund, wieso sich gegen die Nutzung von ChaiScript entschieden wurde. Da beliebige Funktionen aufgerufen werden können, bietet dies eine unangenehm große Fehlerquelle, wenn diese Funktionen den Zustand der Applikation verändern, ohne das dies Rückgängig gemacht werden können.
+\myQuestion{Reicht das? Ich kenne mich zu wenig mit dem Projekt aus, um einen Kompletten Vergleich zu schreiben.\\Es ist außerdem langsam zu kompilieren (1min für den Header, was explodieren kann...), nutzt virtuelle Methoden und Exceptions für den Kontrollfluss \emph{ihhh}.}
 
   %---------------------------------
   % Ziele der Arbeit
@@ -279,14 +289,12 @@
         \caption{Clang Fehlermeldung}
         \label{fig:clangerror}
       \end{myCodeEnv}
-\myFixme{Ref Section in implementation / architekture} % FIXME
 
 %---------------------------------
 % Konzeption
 %---------------------------------
 \section{Konzeption}
 \label{sec:Konzeption}
-\myFixme{Durchgängiges Beispiel?!?!!?}
   Dieses Kapitel beschäftigt sich mit der theoretischen Problemlösung.
 
   \myNamedRef{ssec:Syntax} beschreibt die Syntax, welche von dem Tokenizer und Parser umgewandelt werden soll. Im \myNamedRef{ssec:Grundarchitektur} wird die Grundarchitektur des Makrosystems beschrieben. Diese Grundarchitektur umfasst nur die grobe Architektur des Makrosystems, weil in dem \myNamedRef{ssec:Detaillierte Teilarchitekturen} auf die komplexeren Teile der Architektur eingegangen wird.
@@ -483,7 +491,6 @@
   %---------------------------------
   \subsection{Grundarchitektur}
   \label{ssec:Grundarchitektur}
-\myFixme{Durchgängiges Beispiel?!?!!?}
     Da das komplette UML Diagramm sehr unübersichtlich ist und nicht auf ein A2 Blatt passt, sind die folgenden Diagramme Ausschnitte aus dem Kompletten und spiegeln es zusammen wieder.
 
     \autoref{fig:toppackuml} zeigt die Abhängigkeiten der Pakete (namespaces) voneinander in dem Modul, welches die Makrofunktionalität anbieten soll. \myMinin{core} ist das Paket, indem das Command-Pattern aus dem \autoref{ssec:Diskussion des Problemfeldes} implementiert ist. Das \myMinin{pod} Paket enthält alle Klassen, die nur zur Verwaltung von Daten dienen (separation of concerns). Deswegen werden sie \emph{plain old data} (POD) oder auch \emph{passive data structure} (PDS) genannt. In dem \myMinin{pod} Paket befindet sich die \myMinin{Token} Klasse und das \myMinin{ast} Paket, d.h. alle Klassen, die den abstrakten Syntaxbaum ausmachen. In dem \myMinin{parser} Paket befinden sich der Tokenizer und Parser.
@@ -596,7 +603,6 @@
   %---------------------------------
   \subsection{Detaillierte Teilarchitekturen}
   \label{ssec:Detaillierte Teilarchitekturen}
-\myFixme{Durchgängiges Beispiel?!?!!?}
     Dieser Abschnitt bildet den Übergang vom theoretischen zum praktischen Teil, in dem hier die komplexeren Bestandteile der Architektur beschrieben werden. Um diese Teilarchitekturen beschreiben zu können, wird in \autoref{sssec:Die Programmiersprache} die Programmiersprache gewählt, in welcher das Makrosystem entwickelt wird. In den darauf folgenden Kapiteln wird die Architektur des \myMinin{Parser}s, \myMinin{OperatorProvider}s, \myMinin{Stack} und des \myMinin{Interpreter}s genauer betrachtet.
 
     %---------------------------------
@@ -1310,22 +1316,46 @@
 %---------------------------------
 \section{Evaluation}
 \label{sec:Evaluation}
-  % TODO compiler bugs
-  % TODO ChaiScript http://chaiscript.com/ --- May 25, 2009 23fc75c  --- schlechte Fehlermeldungen
-  % TODO ChaiScript kann zu viel (komplette Scriptsprache), aber biete kein einfaches Interface, (um die Commands von dem Command-Pattern zu implementieren). Ist header only -> lange compilezeiten. Theoretisch langsamer, da auf virtuelle Funktionen gebaut wurde. und Exception als kontrollfluss!
-  %
-  % Chaiscript lässt es zu funktionen aufzurufen die kein Command sind - also nicht wieder rückgängig gemacht werden können!
+  Das Ergebnis dieser Arbeit erfüllt alle Anforderungen wie Ziele, die diese Arbeit sich am Anfang gestellt hat zu lösen. In den folgenden zwei Kapiteln wird darauf eingegangen, was bei der Architektur und Implementation zu kurz gekommen ist, was verbessert werden kann oder gut gelöst wurde.
 
-\myFixme{Ich habe \href{http://chaiscript.com/}{http://chaiscript.com/} gefunden. Quasi das was ich hier mache, bloß das die 9 Jahre Zeit hatten -- ich habe also einen Referenzpunkt! :)} % FIXME Das solltest Du gleich am Anfang (Einleitung oder Problemstellung) nennen und darstellen, warum Du einen eigenen Ansatz entwickelst. „Related Work“ fehlt in Deiner Arbeit ja leider völlig (habe ich zugegebenermaßen auch aus den Augen verloren). % FIXME
+  %---------------------------------
+  % Architektur
+  %---------------------------------
+  \subsection{Architektur}
+  \label{ssec:Architektur}
+    Die entwickelte Architektur ist, meiner Ansicht nach, gut und auch für Erweiterungen gut platziert.
+
+    Das die Architektur gut erweiterbar ist, liegt aus meiner Sicht daran, dass es sich bei dem AST um PODs handelt. Damit ist die Logik von den Daten getrennt, was dafür sorgt, dass durch Veränderungen, an z.B. dem \myMinin{Parser} der \myMinin{Analyser} nicht betroffen ist und so keine Fehler bei diesem eingeführt werden können.
+
+    Ein weiterer positiver Punkt bei der Entwicklung der Klassen ist, dass \myMinin{variant} genutzt wurde. Durch die Nutzung von \myMinin{variant} sind Fehler, die durch \myMinin{union}s entstehen können minimiert worden und die Größe der Objekte hat nicht zu sehr darunter gelitten. Eine Alternative zu \myMinin{union}s und \myMinin{variant} wären \myMinin{virtual} Methoden -- diese sind allerdings langsamer.
+
+    Was im Nachhinein schlecht ist, ist das in dem \myMinin{pod} Paket sich keine POD Klassen nach dem C++ Standard befinden. Dies kann durchaus zu Verwirrung führen, wenn man POD Klassen nach dem Standard erwartet.
+
+  %---------------------------------
+  % Implementation
+  %---------------------------------
+  \subsection{Implementation}
+  \label{ssec:Implementation}
+    Die Implementierung ist ausreichend um Automatisierungen vorzunehmen, allerdings ist sie nicht vollständig genug, um sie für alles ohne Bedenken nutzen zu können.
+
+    Das Abhanden sein von Arrays ist eine klare Einschränkung, was die Kompatibilität angeht. Das es keine Arrays gibt beruht jedoch nur darauf, dass trotz eines straffen Zeitplans nicht genug Zeit vorhanden war, um auch diese zu implementieren. Da dies von vorn herein klar war, wurden die Arrays auch in dem \myNamedRef{ssec:Syntax} ausgelassen.
+
+    Einer der schwerwiegendsten Punkte ist, dass die Zeit nicht für ausgiebigere Tests gereicht hat und auch keine Performance Tests ausgeführt werden konnten. Die Testabdeckung ist somit nur ausreichend und definitiv nicht gut, wenn man dem Test-Driven-Development folgen will.
+
+    Ein, aus meiner Sicht, positiver Punkt der Implementierung ist, dass C++14 und Klassen, die in dem kommenden C++17 Standard enthalten sind, genutzt wurden um die Architektur umzusetzen. Dies hat nicht nur für eine klare bzw. saubere Implementation gesorgt, sondern sorgt auch dafür, dass Fehler die durch z.B. die Nutzung von \myMinin{union}s entstanden wären, ausgeschlossen sind.
 
 %---------------------------------
 % Zusammenfassung und Ausblick
 %---------------------------------
 \section{Zusammenfassung und Ausblick}
 \label{sec:Zusammenfassung und Ausblick}
+  Alles in Allem, bin ich sehr zufrieden mit dem Ergebnis. Mit einer Woche mehr für die Implementation, hätte man auch noch die Arrays implementieren können, aber auch ohne diese, ist
+  das Ergebnis dieser Arbeit gut einsetzbar.
+
+  Das folgende Kapitel enthält Punkte, die während der Implementierung aufgefallen sind und bei bedarf bzw. Zeit umgesetzt werden sollten.
 
   %---------------------------------
-  % Literatur
+  % Ausblick
   %---------------------------------
   \subsection{Ausblick}
   \label{ssec:Ausblick}
@@ -1354,20 +1384,19 @@
     \end{enumerate}
 
 
-\microtypesetup{protrusion=false} % disables protrusion locally in the document
 
 %---------------------------------
 % Literaturverzeichnis
 %---------------------------------
-% \section*{Literaturverzeichnis}
 \label{sec:Literaturverzeichnis}
+\microtypesetup{protrusion=false} % disables protrusion locally in the document
 \begingroup
 \sloppy
 \printbibliography[title={Literaturverzeichnis}, heading=bibintoc]
 \endgroup
 \listoffigures
 \listofmyCodeEnvTypes
-\microtypesetup{protrusion=true} % disables protrusion locally in the document
+\microtypesetup{protrusion=true} % enabels protrusion locally in the document
 
 
 %---------------------------------
