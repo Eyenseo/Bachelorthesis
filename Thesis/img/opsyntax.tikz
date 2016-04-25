@@ -43,15 +43,18 @@
     {};
     \node[
       terminal,
-      node distance = 8mm,
+      % node distance = 8mm,
       right = of preoperator,
-      label={[outer sep=-.3em]8}
-    ] (opget)
-    {>=};
+      label={[outer sep=-.3em]6},
+      align=center,
+    text height=,
+    text depth=,
+    ] (opcomp)
+    {<\emph{\tiny\,oder\,}<=\\>\emph{\tiny\,oder\,}>=};
     \node[
       coordinate,
-      node distance = 8mm,
-      right = of opget
+      % node distance = 8mm,
+      right = of opcomp
     ] (postoperator)
     {};
     \node[
@@ -85,7 +88,6 @@
     ] (end)
     {};
 
-
     \node[
       nonterminal,
       below = of lvp1
@@ -101,52 +103,42 @@
     %%%%%%%%%%%%%%%%%%
     % Binary
     %%%%%%%%%%%%%%%%%%
+    %TOP
     \node[
       terminal,
-      above = of opget,
-      label={[outer sep=-.3em]7}
-    ] (opgt)
-    {>};
-    \node[
-      terminal,
-      above = of opgt,
-      label={[outer sep=-.3em]6}
-    ] (opset)
-    {<=};
-    \node[
-      terminal,
-      above = of opset,
+      above = of opcomp,
       label={[outer sep=-.3em]5}
-    ] (opst)
-    {<};
+    ] (opadd)
+    {+\emph{\tiny\,oder\,}-};
     \node[
       terminal,
-      below = of opget,
-      label={[outer sep=-.3em]9}
-    ] (ope)
-    {==};
+      above = of opadd,
+      label={[outer sep=-.3em]4}
+    ] (opmu)
+    {*\emph{\tiny\,oder\,}/\emph{\tiny\,oder\,}\%};
+    %BOTTOM
     \node[
       terminal,
-      below = of ope,
-      label={[outer sep=-.3em]10}
-    ] (opne)
-    {!=};
+      below = of opcomp,
+      label={[outer sep=-.3em]7}
+    ] (opeq)
+    {==\emph{\tiny\,oder\,}!=};
     \node[
       terminal,
-      below = of opne,
-      label={[outer sep=-.3em]11}
+      below = of opeq,
+      label={[outer sep=-.3em]8}
     ] (opand)
     {\&\&};
     \node[
       terminal,
       below = of opand,
-      label={[outer sep=-.3em]12}
+      label={[outer sep=-.3em]9}
     ] (opor)
     {||};
     \node[
       terminal,
       below = of opor,
-      label={[outer sep=-.3em]14}
+      label={[outer sep=-.3em]11}
     ] (opas)
     {=};
 
@@ -164,41 +156,35 @@
     %%%%%%%%%%%%%%%%%%
     \node[
       terminal,
-      above = of opst,
-      label={[outer sep=-.3em]13}
+      above = of opmu,
+      label={[outer sep=-.3em]10}
     ] (opp)
     {print};
     \node[
       terminal,
       above = of opp,
-      label={[outer sep=-.3em]4}
+      label={[outer sep=-.3em]3}
     ] (opto)
     {typeof};
     \node[
       terminal,
       above = of opto,
-      label={[outer sep=-.3em]3}
+      label={[outer sep=-.3em]2}
     ] (opn)
     {!};
     \node[
       terminal,
       above = of opn,
-      label={[outer sep=-.3em]2}
-    ] (opus)
-    {-};
-    \node[
-      terminal,
-      above = of opus,
       label={[outer sep=-.3em]1}
-    ] (opua)
-    {+};
+    ] (opus)
+    {+\emph{\tiny\,oder\,}-};
 
     %%%%%%%%%%%%%%%%%%
     % Unary Start
     %%%%%%%%%%%%%%%%%%
     \node[
       StartEnd
-    ] (unstart) at (lbc|-opua)
+    ] (unstart) at (lbc|-opus)
     {};
     \node[
       coordinate
@@ -212,16 +198,14 @@
 
     \graph[railroad] {
       % main
-      (start)->(lbo)->(lvp1)->(lbc)->(opget)->(rbo)->(rvp1)->(rbc)->(end);
+      (start)->(lbo)->(lvp1)->(lbc)->(opcomp)->(rbo)->(rvp1)->(rbc)->(end);
 
       (poststart)->[vh path](lvp2)->[hv path](postlbc);
       (prerbo)->[vh path](rvp2)->[hv path](postrbc);
 
-      (preoperator)->[vh path](opgt)->[hv path](postoperator);
-      (preoperator)->[vh path](opset)->[hv path](postoperator);
-      (preoperator)->[vh path](opst)->[hv path](postoperator);
-      (preoperator)->[vh path](ope)->[hv path](postoperator);
-      (preoperator)->[vh path](opne)->[hv path](postoperator);
+      (preoperator)->[vh path](opeq)->[hv path](postoperator);
+      (preoperator)->[vh path](opmu)->[hv path](postoperator);
+      (preoperator)->[vh path](opadd)->[hv path](postoperator);
       (preoperator)->[vh path](opand)->[hv path](postoperator);
       (preoperator)->[vh path](opor)->[hv path](postoperator);
 
@@ -229,8 +213,7 @@
 
       %unary
       (unstart)--(postunstart);
-      (postunstart)->(opua)->[hv path](postoperator);
-      (postunstart)->[vh path](opus)->[hv path](postoperator);
+      (postunstart)->(opus)->[hv path](postoperator);
       (postunstart)->[vh path](opn)->[hv path](postoperator);
       (postunstart)->[vh path](opto)->[hv path](postoperator);
       (postunstart)->[vh path](opp)->[hv path](postoperator);
