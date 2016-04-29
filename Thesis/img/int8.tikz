@@ -17,7 +17,7 @@
           \node[inner,below = of $(s2aname.west)!0.5!(s2aval.east)$] (s2afoov)  {
             \begin{tikzpicture}
               \node[inner, below=of s2aname] (s2af)  {foo};
-              \node[inner, below=of s2aval] (s2av)  {foo};
+              \node[inner, below=of s2aval] (s2av)  {bar};
             \end{tikzpicture}
           };
         \end{tikzpicture}

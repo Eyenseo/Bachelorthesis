@@ -4,17 +4,20 @@
     \node[terminal, right = of start] (bo) {\{};
     \node[coordinate, right = of bo] (postbo) {};
     \node[nonterminal, right = of postbo] (als) {Gem. Str.};
-
-    \node[coordinate, right = of als] (postals) {};
-    \node[coordinate, right = of postals] (prebc) {};
+    \node[coordinate, node distance = 6mm, right = of als] (postals) {};
+    \node[coordinate, node distance = 6mm, right = of postals] (prebc) {};
     \node[terminal, right = of prebc] (bc) {\}};
     \node[StartEnd, right = of bc] (end) {};
 
-    \node[nonterminal, above = of als] (break){break};
-    \node[terminal, right = of break]  (postbr) {;};
+    \node[nonterminal, above = of als] (continue){continue};
+    \node[nonterminal, above = of continue] (break){break};
+
+    \node[terminal, ] at(continue-|postals) (postcon) {;};
+    \node[terminal, above = of postcon]  (postbr) {;};
 
     \graph[railroad] {
       (start)->(bo)->(als)->(bc)->(end);
+      (postbo)->[vh path](continue)->(postcon)->[hv path](prebc);
       (postbo)->[vh path](break)->(postbr)->[hv path](prebc);
       (postbo)<->[skip loop=-7mm](postals);
     };

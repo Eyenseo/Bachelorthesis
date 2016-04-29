@@ -62,7 +62,7 @@
 \usepackage{paracol} % paralell collumns
 \usepackage{mdframed} % Frames for text - used for breakable minted with background
 
-\usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize]{todonotes}
+\usepackage[prependcaption,colorinlistoftodos,textwidth=5.5cm,textsize=footnotesize,disable]{todonotes}
 
 \usepackage[many]{tcolorbox} % used to wrapp listings invisible - can produce nice colored boxes thou
 
@@ -329,8 +329,8 @@
 %---------------------------------
 \addto\extrasngerman{
   \def\sectionautorefname{Ka\-pi\-tel}
-  \def\subsectionautorefname{Un\-ter\-ka\-pi\-tel}
-  \def\subsubsectionautorefname{Un\-ter\-un\-ter\-ka\-pi\-tel}
+  \def\subsectionautorefname{Un\-ter\-ab\-schnitt}
+  \def\subsubsectionautorefname{Un\-ter\-ab\-schnitt}
 }
 \newcommand{\myNamedRef}[1]{%
   \hyperref[#1]{%
@@ -391,7 +391,7 @@
 \makeatother
 
 \lstdefinelanguage{MyMacro}{
-  keywords={var, def, return, if, while, do, else, break, for, print, typeof},
+  keywords={var, def, return, if, while, do, else, break, for, print, typeof, continue},
   ndkeywords={true, false},
   ndkeywordstyle=\color{Numbers},
   sensitive=false,

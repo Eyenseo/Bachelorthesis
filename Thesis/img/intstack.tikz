@@ -6,6 +6,6 @@
 
   \draw[-stealth, thick, black!50, in=-90, out=90, looseness=1.25] (s1) to node[midway, right] {parent} (s0);
   \draw[-stealth, thick, black!50, in=0, out=160, looseness=1.25] (s2)  to node[midway, right] {parent} (s0);
-  \draw[-stealth, thick, loosely dotted, black!50, in=-90, out=-160, looseness=1.25] (s2) to node[midway, above] {foo} (s1);
+  \draw[-stealth, thick, loosely dotted, black!50, in=-90, out=-160, looseness=1.25] (s2) to node[midway, above] {bar} (s1);
   \draw[-stealth, thick, black!50, in=-90, out=90, looseness=1.25] (s3) to node[midway, right] {parent} (s2);
 \end{tikzpicture}

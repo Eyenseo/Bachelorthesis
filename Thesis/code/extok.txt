@@ -29,7 +29,7 @@ l:9  c:9  t:(
 l:9  c:10 t:)
 l:9  c:12 t:{
 l:10 c:3  t:var
-l:10 c:7  t:foo
+l:10 c:7  t:bar
 l:10 c:11 t:=
 l:10 c:16 t:"1 "
 l:10 c:16 t:;
@@ -38,7 +38,7 @@ l:12 c:10 t:fun
 l:12 c:13 t:(
 l:12 c:14 t:foo
 l:12 c:17 t::
-l:12 c:18 t:foo
+l:12 c:18 t:bar
 l:12 c:21 t:)
 l:12 c:22 t:;
 l:13 c:1  t:}

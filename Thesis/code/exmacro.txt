@@ -7,7 +7,7 @@ def fun(foo) {
 }
 
 def main() {
-  var foo = "1 ";
+  var bar = "1 ";
 
-  return fun(foo:foo);
+  return fun(foo:bar);
 }

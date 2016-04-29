@@ -21,7 +21,7 @@
           \node[above = 2mm of $(s1vname.west)!0.5!(s1vval.east)$] (s1vardeft)  {Var.Def.};
           \node[inner,below =of $(s1vname.west)!0.5!(s1vval.east)$] (s1foov)  {
             \begin{tikzpicture}
-              \node[inner, below=of s1vname] (s1f)  {foo};
+              \node[inner, below=of s1vname] (s1f)  {bar};
               \node[inner, below=of s1vval] (s1v)  {\myMinin{"1 "}};
             \end{tikzpicture}
           };

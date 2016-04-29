@@ -6,4 +6,4 @@ Anonymous:2:3: In the do-while defined here:
   ^
 Anonymous:3:17: Expected a ';'
     foo = foo + 1.1
-                ^
+                   ^
