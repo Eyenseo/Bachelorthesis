@@ -1,25 +1,25 @@
 \begin{tikzpicture}[railroad]
   \node[outer] (stackout0) {
     \begin{tikzpicture}
-      \node (s0)  {Stack:0 (root)};
-      \node [outer, below=2mm of s0] (s0fundefo)  {
+      \node[inouttext] (s0)  {Stack:0 (root)};
+      \node [outer, below=2pt of s0] (s0fundefo)  {
         \begin{tikzpicture}
-          \node (s0fundeft)  {Fun.Def.};
-          \node[inner, below=0 of s0fundeft] (s0fundef)  {fun(foo)};
+          \node[inouttext] (s0fundeft)  {Fun.Def.};
+          \node[inner,inouttext, below=0 of s0fundeft] (s0fundef)  {fun(foo)};
         \end{tikzpicture}
       };
       \node [outer, below=of s0fundefo] (s0aliaso) {
         \begin{tikzpicture}
-          \node (s0aname)  {Local};
-          \node[right=of s0aname] (s0aval)  {External};
-          \node[above = 2mm of $(s0aname.west)!0.5!(s0aval.east)$] (s0avardeft)  {Aliases};
+          \node[inouttext] (s0aname)  {Local};
+          \node[inouttext,right=of s0aname] (s0aval)  {External};
+          \node[inouttext,above = 2pt of $(s0aname.west)!0.5!(s0aval.east)$] (s0avardeft)  {Aliases};
         \end{tikzpicture}
       };
       \node [outer, below=of s0aliaso] (s0vardefo) {
         \begin{tikzpicture}
-          \node (s0name)  {Name};
-          \node[right=of s0name] (s0val)  {Value};
-          \node[above = 2mm of $(s0name.west)!0.5!(s0val.east)$] (s0vardeft)  {Var.Def.};
+          \node[inouttext] (s0name)  {Name};
+          \node[inouttext,right=6mm of s0name] (s0val)  {Value};
+          \node[inouttext,above = 2pt of $(s0name.west)!0.5!(s0val.east)$] (s0vardeft)  {Var.Def.};
         \end{tikzpicture}
       };
     \end{tikzpicture}

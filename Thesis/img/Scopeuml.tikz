@@ -21,8 +21,8 @@
     % topToBottom(30)(If, Scope);
     leftToRight(30)(Return, Scope, Literal);
 
-    topToBottom(30)(If, Return, Operator, Loop);
-    topToBottom(30)(Callable, Literal, Define, Condition);
+    topToBottom(27)(If, Return, Operator, Loop);
+    topToBottom(27)(Callable, Literal, Define, Condition);
     % same.midy(If, Callable);
     same.midx(Scope, Variable);
     same.midy(Loop, Variable);

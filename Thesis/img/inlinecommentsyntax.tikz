@@ -1,0 +1,11 @@
+\begin{tikzpicture}[railroad]
+  \node[StartEnd] (start) {};
+  \node[terminal, right = of start] (beg) {/\textbackslash{}*};
+  \node[nonterminal, right = of beg] (any) {.*};
+  \node[terminal, right = of any] (stop) {\textbackslash{}*/};
+  \node[StartEnd, right = of stop] (end) {};
+
+  \graph[railroad] {
+    (start)->(beg)->(any)->(stop)->(end);
+  };
+\end{tikzpicture}

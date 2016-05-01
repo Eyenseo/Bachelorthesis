@@ -522,8 +522,10 @@
     edges=rounded corners,
     simple,
   },
-  inner/.style={nonterminal, text height=, text depth=, node distance=2mm},
-  outer/.style={terminal, rectangle, rounded corners=5pt, text height=, text depth=, node distance=2mm}
+  outer/.style={terminal, rectangle, rounded corners=5pt, text height=, text depth=, node distance=2mm,inner sep=3pt},
+  inner/.style={nonterminal, text height=, text depth=, node distance=2mm, outer sep=4pt, inner sep=3pt},
+  inner2/.style={nonterminal},
+  inouttext/.style={inner sep=3pt,outer sep=3pt, minimum height={.25em}}
 }
 
 %---------------------------------
