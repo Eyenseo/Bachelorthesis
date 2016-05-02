@@ -58,7 +58,10 @@
   \subsection*{Danksagung}
   \addcontentsline{toc}{subsection}{Danksagung}
   \label{ssec:Danksagung}
-    Ich möchte mich bei meinen Eltern bedanken, die mich immer unterstützt haben und dafür sorgten, dass ich nicht in der Sonderschule endete! Meine Freunde und alle Menschen, die mich zu diesem Studium geführt haben, verdienen auch mehr als meinen Dank -- sonst wäre ich wohl Bauer geworden. Ein großes Dankeschön gilt auch meinen Professoren und meinem Betreuer bei der P3-Group, die mich diese Arbeit schreiben ließen, die aus unterschiedlichen Gründen ungewöhnlich ist.
+    Ich möchte mich bei meinen Eltern bedanken, die mich immer unterstützt haben und dafür sorgten, dass ich nicht in der Sonderschule endete! Meine Freunde und alle Menschen, die mich zu diesem Studium geführt haben, verdienen auch mehr als meinen Dank -- sonst wäre ich wohl Bauer geworden. Ein großes Dankeschön gilt auch meinen Professoren
+Prof. Dr. Thorsten Teschke und
+Prof. Dr. Martin Hering-Bertram
+     sowie meinem Betreuer Mirko Wiechmann bei der P3-Group, die mich diese Arbeit schreiben ließen, die aus unterschiedlichen Gründen ungewöhnlich ist.
     \begin{figure}[H]
       \centering
       \begin{tikzpicture}[%
@@ -224,7 +227,7 @@
     \label{sssec:Das vorhandene System}
       Das vorhandene Softwaresystem ist eine C++ Anwendung, die mit Hilfe von Modulen ihre Funktionalität erweitern kann. Ein Teil des zentralen Herzstückes ist eine Implementierung des Command-Patterns, siehe \autoref{fig:commanduml}.
 
-      Der \myMinin{Receiver} stellt alle Objekte dar, die das \myMinin{ConcreteCommand} braucht, um seine Aufgabe zu erfüllen und ist -- so wie der \myMinin{Client}, der die Objekte darstellt, die ein \myMinin{Command} ausführen -- nicht Teil der Architektur. \myMinin{Client}s sind über den \myMinin{CommandProvider} in der Lage einen \myMinin{Invoker} zu bekommen, der ein konkretes \myMinin{Command} wrapped. Der \myMinin{Invoker} bekommt bei der Erzeugung über den Constructor den momentanen \myMinin{HistoryStack}. Wenn der \myMinin{Invoker} durch einen Aufruf aus einem \myMinin{Command} (auf den \myMinin{CommandProvider}) entstanden ist, ist es der \myMinin{HistoryStack} des \myMinin{Command}s. Ansonsten ist es der \myMinin{HistoryStack} des \myMinin{CommandProvider}s. Durch den \myMinin{HistoryStack} ist es möglich die Veränderungen von ausgeführten \myMinin{Command}s rückgängig zu machen oder wiederherzustellen. Dies wird zum Beispiel von dem \myMinin{Invoker} genutzt, wenn das aufgerufene \myMinin{Command} einen Fehler verursacht. An dem \myMinin{CommandProvider} können sich alle \myMinin{Command}s registrieren, die in anderen Teilen der Anwendung genutzt werden können.
+      Der \myMinin{Receiver} stellt alle Objekte dar, die das \myMinin{ConcreteCommand} braucht, um seine Aufgabe zu erfüllen und ist -- so wie der \myMinin{Client}, der die Objekte darstellt, die ein \myMinin{Command} ausführen -- nicht Teil der Architektur. \myMinin{Client}s sind über den \myMinin{CommandProvider} in der Lage einen \myMinin{Invoker} zu bekommen, der ein konkretes \myMinin{Command} wrapped. Der \myMinin{Invoker} bekommt bei der Erzeugung über den Konstruktor den momentanen \myMinin{HistoryStack}. Wenn der \myMinin{Invoker} durch einen Aufruf aus einem \myMinin{Command} (auf den \myMinin{CommandProvider}) entstanden ist, ist es der \myMinin{HistoryStack} des \myMinin{Command}s. Ansonsten ist es der \myMinin{HistoryStack} des \myMinin{CommandProvider}s. Durch den \myMinin{HistoryStack} ist es möglich die Veränderungen von ausgeführten \myMinin{Command}s rückgängig zu machen oder wiederherzustellen. Dies wird zum Beispiel von dem \myMinin{Invoker} genutzt, wenn das aufgerufene \myMinin{Command} einen Fehler verursacht. An dem \myMinin{CommandProvider} können sich alle \myMinin{Command}s registrieren, die in anderen Teilen der Anwendung genutzt werden können.
 
       \begin{figure}[H]
         \centering
@@ -362,7 +365,7 @@
         \end{figure}
 
       \paragraph{Scopes}
-        Abbildungen \ref{fig:scopesyntax}, \ref{fig:loopscopesyntax} und \ref{fig:commonsyntax} zeigen die Syntax von Scopes. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes darin unterscheiden, dass sie die \myMIn$break$ und \myMIn$continue$ Schlüsselwörter unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarationsscopes -- die sich in einem Loop Scope befinden, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass die Syntax \myMIn$var foo; {var foo;}$ richtig ist -- das erste \myMIn$foo$, wird von dem zweiten verdeckt.
+        Abbildungen \ref{fig:scopesyntax}, \ref{fig:loopscopesyntax} und \ref{fig:commonsyntax} zeigen die Syntax von Scopes. Scopes sind Bestandteile von Funktionen und Kontrollstrukturen, wobei sich Loop Scopes von normalen Scopes darin unterscheiden, dass sie die \myMIn$break$ und \myMIn$continue$ Schlüsselwörter unterstützen. Alle Scopes -- abgesehen von Funktionsdeklarations Scopes -- die sich in einem Loop Scope befinden, sind automatisch Loop Scopes. Scopes verhalten sich wie C Scopes, was bedeutet, dass die Syntax \myMIn$var foo; {var foo;}$ richtig ist -- das erste \myMIn$foo$, wird von dem zweiten verdeckt.
         \begin{figure}[H]
           \vspace*{-\baselineskip}
           \centering
@@ -568,7 +571,7 @@
       \paragraph{Analyser}
         Nachdem der \myMinin{Parser} die \myMinin{TokenList} in einen AST umgewandelt hat, wird der \myMinin{Analyser} genutzt, um den AST zu validieren. Dies muss geschehen, weil gewisse Fehler nicht aus der Syntax hervorgehen -- z.B., dass die \myMinin{main()} Methode nicht explizit aufgerufen werden darf. Zwar ist es möglich den \myMinin{Parser} zu erweitern, so dass er auch solche Fehler finden kann, allerdings ist es nicht die Aufgabe eines Parsers, etwas zu validieren.
 
-        Der \myMinin{Analyser} wird den AST ablaufen und vor und nach jedem AST Element ein Signal abschicken. Signale sind mit dem Visitor-Pattern \autocite[S.366]{Gamma:1995:DPE:186897} sehr eng verwand. Ein Visitor wird bei dem entsprechenden Signal registriert und durch das Absenden des Signale aufgerufen -- es können pro Signal mehrere Visitoren registriert werden. Wenn der \myMinin{Analyser} dann zum Beispiel einen Funktionsaufruf, auf die \myMinin{main()} Methode findet, kann er dies als Fehler melden. Im Gegensatz zu dem Visitor-Pattern werden bei Signalen alle Visitoren gesammelt und in einem Durchlauf abgearbeitet. Der Vorteil hierbei ist, das der AST nur einmal durchlaufen werden muss, was schneller ist und keine Nachteile mit sich bringt.
+        Der \myMinin{Analyser} wird den AST ablaufen und vor und nach jedem AST Element ein Signal abschicken. Signale sind mit dem Visitor-Pattern \autocite[S.366]{Gamma:1995:DPE:186897} sehr eng verwandt. Ein Visitor wird bei dem entsprechenden Signal registriert und durch das Absenden des Signale aufgerufen -- es können pro Signal mehrere Visitoren registriert werden. Wenn der \myMinin{Analyser} dann zum Beispiel einen Funktionsaufruf, auf die \myMinin{main()} Methode findet, kann er dies als Fehler melden. Im Gegensatz zu dem Visitor-Pattern werden bei Signalen alle Visitoren gesammelt und in einem Durchlauf abgearbeitet. Der Vorteil hierbei ist, das der AST nur einmal durchlaufen werden muss, was schneller ist und keine Nachteile mit sich bringt.
 
     %---------------------------------
     % Abstrakter Syntaxbaum Paket
@@ -758,7 +761,7 @@
       \begin{itemize}
         \item Wenn der \myMinin{Stack} keine entsprechende Funktion besitzt, wird der \myMinin{CommandProvider} nach einer Funktion gefragt. Das bedeutet, dass die nativen Funktionen von Funktionsdefinitionen in dem Makro überschrieben und auch unerreichbar werden können.
         \item Wenn eine Funkion interpretiert werden muss und diese von dem \myMinin{CommandProvider} kommt, werden die Parameter kopiert. Es ist durch die C++ Ebene vorgegeben und wird normalerweise durch Pointer beschleunigt. In der C++ Ebene ist es auch möglich die Move-Semantics\autocite[S.268 ff.]{C++14-std} aus C++11 anstelle von Pointern anzuwenden. Das ist allerdings nicht aus der Makro Ebene möglich.
-        \item Wenn eine Variable aus einem \myMinin{ast::Scope} returned wird, also ein Funktionsrückgabewert ist, kann dies ohne eine Kopie passieren. Dies ist dann möglich, wenn die Variable, die returned wird in dem \myMinin{Stack} angelegt wurde und keine Referenz ist.
+        \item Wenn eine Variable aus einem \myMinin{ast::Scope} zurückgegeben wird, also ein Funktionsrückgabewert ist, kann dies ohne eine Kopie passieren. Dies ist dann möglich, wenn die Variable, die zurückgegeben wird in dem \myMinin{Stack} angelegt wurde und keine Referenz ist.
       \end{itemize}
 
       Um einen \myMinin{ast::Operator} zu interpretieren, geht der \myMinin{Interpreter} durch folgende Schritte:
@@ -891,7 +894,7 @@
 
         Wenn Fehler beim Parsen auftreten -- zum Beispiel, dass kein Bezeichner oder das \myMinin{ast::Scope} fehlt -- wirft die Methode eine Exception, die bis zu der \myMinin{static} globalen Methode nach oben wandert. Das Parsen der Funktion ist von einem \myMinin{try-catch} Block umschlossen. Sollte also eine Exception geworfen werden, wird diese gefangen, und mit dem Dateinamen, Zeile, Spalte und Quellcode der Zeile erweitert, um dann weiter geworfen zu werden.
 
-        Das Ergebnis, von dem Beispiel (\myMIn$def fun(foo) {$), ist in \autoref{fig:exastfundef} zu sehen, \myMinin{ast::Define} (Zeile 1) enthält die \myMinin{ast::Function} (Zeile 3) mit ihren Parametern (Zeile 5 ff.) und dem Funktionsscope (Zeile 9).
+        Das Ergebnis, von dem Beispiel (\myMIn$def fun(foo) {$), ist in \autoref{fig:exastfundef} zu sehen, \myMinin{ast::Define} (Zeile 1) enthält die \myMinin{ast::Function} (Zeile 3) mit ihren Parametern (Zeile 5 ff.) und dem Funktions Scope (Zeile 9).
 
         \begin{paracol}{2}
           \begin{myCodeEnv}
@@ -1287,7 +1290,7 @@
     \label{sssec:Do-While}
       Ein \myMinin{ast::DoWhile} wird interpretiert, indem das \myMinin{ast::Scope} ausgeführt wird und im Anschluss die \myMinin{ast::Condition} ausgewertet wird. Sollte das Ergebnis \myMIn{true} sein, wird das \myMinin{ast::Scope} wieder ausgeführt und am Ende wieder die \myMinin{ast::Condition} geprüft.
 
-      Während der Ausführung ist es möglich, dass \myMIn{return} oder z.B. \myMIn{break} aufgerufen wird. Wenn ein solches Elemente interpretiert wird, wird ein Flag gesetzt, das der \myMinin{DoWhile} Methode mitteilt, ob der Loop unterbrochen wurde. Diese Logik findet sich in allen \myMinin{ast::Loop} und der \myMinin{ast::Scope} Methode wieder.
+      Während der Ausführung ist es möglich, dass \myMIn{return} oder z.B. \myMIn{break} aufgerufen wird. Wenn ein solches Element interpretiert wird, wird ein Flag gesetzt, das der \myMinin{DoWhile} Methode mitteilt, ob der Loop unterbrochen wurde. Diese Logik findet sich in allen \myMinin{ast::Loop} und der \myMinin{ast::Scope} Methode wieder.
 
     %---------------------------------
     % Operator
@@ -1408,7 +1411,7 @@
     Die Implementierung deckt die Anforderungen, die am Anfang der Arbeit gestellt wurden, ab und ermöglicht Nutzern, die vorhandene Software zu automatisieren. Sie ist allerdings nicht `fertig' in dem Sinn, dass alle nützlichen Funktionen implementiert sind.
 
     \paragraph{Arrays}
-    Das Abhandensein von Arrays ist eine klare Einschränkung, was die Kompatibilität angeht. Dass es keine Arrays gibt, beruht jedoch nur darauf, dass trotz eines straffen Zeitplans nicht genug Zeit vorhanden war, diese auch noch zu implementieren. Da dies von vornherein klar war, wurden die Arrays auch in dem \myNamedRef{ssec:Syntax} ausgelassen.
+    Das Fehlen von Arrays ist eine klare Einschränkung, was die Kompatibilität angeht. Dass es keine Arrays gibt, beruht jedoch nur darauf, dass trotz eines straffen Zeitplans nicht genug Zeit vorhanden war, diese auch noch zu implementieren. Da dies von vornherein klar war, wurden die Arrays auch in dem \myNamedRef{ssec:Syntax} ausgelassen.
 
     \paragraph{Tests}
     Ein problematischer Punkt der Implementierung ist die Testabdeckung. Die Implementierung wurde Test-Driven vorgenommen, allerdings sagt dies nichts über die Testabdeckung der Software aus. Aufgrund des jungen Alters der Software ist anzunehmen, dass viele Fehler wegen weniger Nutzung und nicht bedachter Fehlerursachen noch vorhanden sind. Als Bibliothek wurde Catch \autocite{catch-lib} verwendet.
