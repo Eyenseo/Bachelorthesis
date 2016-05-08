@@ -1,0 +1,91 @@
+%---------------------------------
+% Preamble
+%---------------------------------
+\input{preamble.tex}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Themen} % TODO good?
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Section no.1}
+  \begin{frame}{Technology}
+      Each frame should have a title.
+  \end{frame}
+
+  \begin{frame}{Technology}{Computer}
+      An optional subtitle is not supported
+  \end{frame}
+
+  \begin{frame}{}
+    Without title somethink is missing.
+  \end{frame}
+
+
+\section{Section no.2}
+  \begin{frame}{Animation}
+    \begin{itemize}[<+- | alert@+>]
+      \item \alert<4>{This is\only<4>{ really} important}
+      \item Now this
+      \item And now this
+    \end{itemize}
+  \end{frame}
+
+\section{Section no.3}
+  \begin{frame}{Tables}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      \textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
+      \hline
+      WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
+      \hline
+      SS 05 & Sascha Frank & \LaTeX \ Course serial \\
+      \hline
+    \end{tabular}
+  \end{frame}
+
+  \begin{frame}{Tables with pause}
+    \begin{tabular}{c c c}
+      A & B & C \\
+    \pause
+      1 & 2 & 3 \\
+    \pause
+      A & B & C \\
+    \end{tabular}
+  \end{frame}
+
+
+\section{Section no.4}
+  \begin{frame}{blocks}
+    \begin{block}{title of the bloc}
+      bloc text
+    \end{block}
+    \begin{exampleblock}{title of the bloc}
+      bloc text
+    \end{exampleblock}
+    \begin{alertblock}{title of the bloc}
+      bloc text
+    \end{alertblock}
+  \end{frame}
+
+
+  \begin{frame}[standout]
+    Fragen?
+  \end{frame}
+
+  \begin{frame}[standout]
+    Demo!
+  \end{frame}
+
+  \appendix
+
+  \begin{frame}[allowframebreaks]{Referenzen}
+    % \bibliography{demo} FIXME
+    % \bibliographystyle{abbrv} FIXME
+  \end{frame}
+\end{document}
+

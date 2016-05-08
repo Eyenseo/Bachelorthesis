@@ -1,0 +1,515 @@
+%---------------------------------
+% Meta Variables
+%---------------------------------
+\newcommand{\MetaInstitute}{Hochschule Bremen}
+\newcommand{\MetaUnit}{Bachelorarbeit}
+\newcommand{\MetaTask}{Kolloquium}
+\newcommand{\MetaTitle}{Konzeption und Implementierung einer Makrosprache in C++}
+\newcommand{\MetaAuthorName}{Roland}
+\newcommand{\MetaAuthorSurname}{J{\"a}ger}
+\newcommand{\MetaStudentNumber}{360\,956}
+\newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
+
+\documentclass[xcolor=svgnames]{beamer}
+\usepackage{appendixnumberbeamer}
+\usepackage{minted} % code highlighting
+\usepackage[T1]{fontenc} % utf8 <- produce real utf8 characters
+\usepackage[utf8]{inputenc} % utf8 <- accept utf8 input characters
+\usepackage{datetime}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes} % better quotes
+% \usepackage{hyperref} % hyper ref "addon"
+\usepackage{float} % better figure placement
+\usepackage{graphicx} % for pdf and other graphics
+\usepackage{silence}
+\usepackage[
+  backend=biber,
+  sortlocale=de_DE,
+  sortcites=true,
+  url=false,
+  doi=true,
+  eprint=false
+]{biblatex}
+\usepackage{anyfontsize} % mute warnings?
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}  % Subliminal refinements towards typographical perfection - eg. Hypernation
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+\usepackage{xspace} % set a space if not fullstop / end of sentence
+% \usepackage[all]{hypcap} % better linking/ref to floats
+\usepackage{tikz} % drawing pretty stuff
+\usepackage{ifthen} % controllflow
+\usepackage{xstring} % ma­nip­u­lat­ing strings
+\usepackage{calc} % calc support
+\usepackage{pgfopts} % metauml / gmp
+\usepackage[shellescape,latex]{gmp} % for meta uml interpretation
+\usepackage[justification=centering,format=plain]{caption} % Caption setup
+\usepackage{adjustbox} % Adjusts stuff if too big
+\usepackage[scale=.9,ttdefault=true]{sourcecodepro}
+
+\usepackage{listings} % code highlighting
+\usepackage{xinttools} % for expandable and non-expandable loops
+\usepackage{textcomp} % calculate support
+\usepackage{array} % for better tables
+
+\usepackage{paracol} % paralell collumns
+\usepackage{mdframed} % Frames for text - used for breakable minted with background
+
+\usepackage[many]{tcolorbox} % used to wrapp listings invisible - can produce nice colored boxes thou
+
+%---------------------------------
+% Silence Warning
+%---------------------------------
+\WarningFilter{biblatex}{Patching footnotes failed}
+\WarningFilter{beamerthememetropolis}{You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts}
+
+%---------------------------------
+% Beamer setup
+%---------------------------------
+\title{\texorpdfstring{\centering\MetaTitle}{\MetaTitle}}
+\author{\texorpdfstring{\MetaAuthor\hspace*{\fill}\today{\tiny\\[-.7em]\MetaStudentNumber}}{\MetaAuthor}}
+\date{\texorpdfstring{}{\today}} % we do not want a date
+\institute{\MetaInstitute}
+\titlegraphic{\vspace*{5.75cm}\centering\includegraphics[height=2cm]{img/hsb}}
+\beamertemplatenavigationsymbolsempty
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+%---------------------------------
+% TikZ libraries
+%---------------------------------
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{spy}
+\usetikzlibrary{graphs}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+%---------------------------------
+% Shut up I know
+%---------------------------------
+\pdfsuppresswarningpagegroup=1
+
+%---------------------------------
+% No Page break
+%---------------------------------
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty20\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+%---------------------------------
+% hyphen used between two capitals
+%---------------------------------
+\newcommand{\capitalhyphen}{%
+  \raisebox{0.24ex}{%
+    \resizebox{0.4em}{%
+      \height%
+    }{-}%
+  }%
+  \kern-0.07em%
+}
+
+%---------------------------------
+% Minted Code
+%---------------------------------
+\newcommand\myCMinco[5][cpp]{
+  {%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          frame=none,
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\small,
+          linenos,
+          firstline=#4,
+          lastline=#5,
+          breaklines,
+          breakanywhere,
+        ]{#1}{#3}%
+    \end{mdframed}
+  }
+}
+\newcommand\myMinco[5][cpp]{
+  {%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\small,
+          linenos,
+          firstline=#4,
+          lastline=#5,
+          breaklines,
+          breakanywhere,
+        ]{#1}{#3}%
+    \end{mdframed}
+  }
+}
+\newcommand\myCMincoLine[5][cpp]{
+  {%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false, backgroundcolor=LightGray!20!White]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\small,
+          linenos,
+          firstnumber=#4,
+          firstline=#4,
+          lastline=#5,
+        ]{#1}{#3}%
+    \end{mdframed}
+  }
+}
+\newcommand\myMincoLine[5][cpp]{
+  {%
+    \begin{mdframed}[innertopmargin=4pt, innerbottommargin=4pt, innerrightmargin=2pt, innerleftmargin=2pt, leftline=false, rightline=false]
+      \ifthenelse{\equal{#2}{}}{%
+      }{%
+        \noindent\texttt{#2}\\[-2em]%
+      }%
+      \inputminted[
+          numbersep=5pt,
+          framesep=2mm,
+          fontsize=\small,
+          linenos,
+          firstnumber=#4,
+          firstline=#4,
+          lastline=#5,
+        ]{#1}{#3}%
+    \end{mdframed}
+  }
+}
+
+%---------------------------------
+% Minted inline
+%---------------------------------
+\newcommand{\myMinin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{c++}}
+\newcommand{\myMin}[1][breaklines,breakbytokenanywhere]{\mintinline[#1]{text}}
+
+%---------------------------------
+% Table in table for new line
+%---------------------------------
+\newcommand{\specialcell}[2][c]{% acceps t, b and c for vertival alignment
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+%---------------------------------
+% Minted color scheme
+%---------------------------------
+\usemintedstyle{borland}
+
+%---------------------------------
+% Listings for Macro syntax
+%---------------------------------
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Keywords}{rgb}{0,0,0.6}
+\definecolor{Strings}{rgb}{0,0,1}
+\definecolor{Comments}{rgb}{.5,.5,.5}
+\definecolor{Numbers}{rgb}{0,0,1}
+
+
+\makeatletter
+\newif\iffirstchar\firstchartrue
+\newif\ifstartedbyadigit
+
+\lst@AddToHook{Output}%
+{%
+  \ifstartedbyadigit
+    \def\lst@thestyle{\color{Numbers}}%
+  \fi
+  \global\firstchartrue
+  \global\startedbyadigitfalse
+}
+\newcommand\processletter
+{%
+  \ifnum\lst@mode=\lst@Pmode
+    \iffirstchar%
+        \global\startedbyadigitfalse
+      \fi
+      \global\firstcharfalse
+    \fi
+}
+\newcommand\processdigit
+{%
+  \ifnum\lst@mode=\lst@Pmode
+      \iffirstchar
+        \global\startedbyadigittrue
+      \fi
+      \global\firstcharfalse
+  \fi
+}
+\newcommand\addtoletterdef[2]
+{%
+  \expandafter\lst@DefSaveDef
+  \expandafter{%
+  \expandafter`%
+  \expandafter#2%
+  \expandafter}%
+  \csname jubobs@#2\expandafter\endcsname
+  \expandafter{\csname jubobs@#2\endcsname #1}%
+}
+\makeatother
+
+\lstdefinelanguage{MyMacro}{
+  keywords={var, def, return, if, while, do, else, break, for, print, typeof, continue},
+  ndkeywords={true, false},
+  ndkeywordstyle=\color{Numbers},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  morestring=[b]"
+}
+\lstdefinestyle{MyMacroStyle}
+{
+  language=MyMacro,
+  keepspaces,
+  commentstyle=\color{Comments}\slshape,
+  stringstyle=\color{Strings},
+  keywordstyle={\color{Keywords}\bfseries},
+  alsoletter=0123456789.,
+  SelectCharTable=%
+      \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
+      \xintApplyInline{\addtoletterdef\processletter}{abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}%
+}
+\lstdefinelanguage{MyRegex}{
+  alsoletter={\\,*,\&,^},
+  basicstyle=\color{DarkGreen},
+  keywords={\\,\\.,\\(,\\)},
+  morekeywords=[2]{\\d,\\s},
+  keywordstyle=*\color{DarkGreen},
+  keywordstyle=[2]\color{DarkOrange},
+  sensitive=false,
+  postbreak=,
+  literate={[}{{\textcolor{DarkOrange}{[}}}{1}
+           {]}{{\textcolor{DarkOrange}{]}}}{1}
+           {*}{{\textcolor{DarkOrange}{*}}}{1}
+           {.}{{\textcolor{DarkOrange}{.}}}{1}
+           {+}{{\textcolor{DarkOrange}{+}}}{1}
+           {?}{{\textcolor{DarkOrange}{?}}}{1}
+           {-}{{\textcolor{DarkOrange}{-}}}{1}
+           {(}{{\textcolor{DarkOrange}{(}}}{1}
+           {)}{{\textcolor{DarkOrange}{)}}}{1}
+           {\{}{{\textcolor{DarkOrange}{\{}}}{1}
+           {\}}{{\textcolor{DarkOrange}{\}}}}{1}
+           {|}{{\textcolor{DarkOrange}{|}}}{1}
+           {\^}{{\textcolor{DarkOrange}{\textasciicircum{}}}}{1}
+           {\\\{}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\{}}}{1}
+           {\\\}}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\}}}}{1}
+           {\\(}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{(}}}{1}
+           {\\)}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{)}}}{1}
+           {\\\\}{\textcolor{DarkOrange}{\textbackslash}{\textcolor{DarkGreen}{\textbackslash}}}{1}
+           {\\.}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{.}}}{1}
+           {\\+}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{+}}}{1}
+           {\\-}{{\textcolor{DarkOrange}{\textbackslash}\textcolor{DarkGreen}{-}}}{1}
+}
+\lstset{
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
+  backgroundcolor=\color{LightGray!20!White},
+  extendedchars=true,
+  basicstyle=\small\ttfamily,
+  showstringspaces=false,
+  showspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=4pt,
+  tabsize=2,
+  breaklines=true,
+  showtabs=false,
+  captionpos=b,
+  frame=lines,
+  columns=fixed,
+  basewidth={.56em,.45em},
+  fontadjust=true,
+}
+
+%---------------------------------
+% listings inline
+%---------------------------------
+\newcommand{\myMIn}{\lstinline[style=MyMacroStyle,postbreak=]}
+\newcommand{\myRIn}{\lstinline[language=MyRegex]}
+\newcommand{\mySIn}{\lstinline[language=MyString]}
+\newcommand{\myTIn}{\lstinline[]}
+
+%---------------------------------
+% Tikz Railroad styles
+%---------------------------------
+\definecolor{nonterminal_color}{RGB}{255, 230, 179}
+\definecolor{terminal_color}{RGB}{230, 230, 230}
+\tikzset{
+  nonterminal/.style = {
+    rectangle,
+    rounded corners=3pt,
+    minimum size=6mm,
+    draw=nonterminal_color!80!black!95,
+    fill=nonterminal_color,
+    text height=1.5ex,
+    text depth=.25ex,
+    font=\ttfamily,
+  },
+  terminal/.style = {
+    rounded rectangle,
+    minimum size=6mm,
+    draw=terminal_color!80!black!95,
+    fill=terminal_color,
+    text height=1.5ex,
+    text depth=.25ex,
+    font=\ttfamily,
+  },
+  StartEnd/.style = {
+    circle,
+    minimum size=3mm,
+    draw=black!80,
+    fill=black!60,
+  },
+  skip loop/.style = {
+    to path={-- ++(0,#1) -| (\tikztotarget)}
+  },
+  hv path/.style = {
+    to path={-| (\tikztotarget)}
+  },
+  vh path/.style = {
+    to path={|- (\tikztotarget)}
+  },
+  railroad/.style = {
+    >=stealth',
+    black!50,
+    text=black,
+    thick,
+    node distance = 4mm
+  },
+  graphs/railroad/.style = {
+    edges=rounded corners,
+    simple,
+  },
+  outer/.style={terminal, rectangle, rounded corners=5pt, text height=, text depth=, node distance=2mm,inner sep=3pt},
+  inner/.style={nonterminal, text height=, text depth=, node distance=2mm, outer sep=4pt, inner sep=3pt},
+  inner2/.style={nonterminal},
+  inouttext/.style={inner sep=3pt,outer sep=3pt, minimum height={.25em}}
+}
+
+%---------------------------------
+% An option to toggle inputs - used for tikz graphics
+%---------------------------------
+\newcommand{\myInput}[1]{%
+  \adjustbox{max width=.9\linewidth}{%
+    \scalebox{.9}{%
+      \input{#1}%
+    }%
+  }%
+}%
+\newcommand{\myInputUnlimited}[1]{%
+  \scalebox{.9}{%
+    \input{#1}%
+  }%
+}%
+
+%---------------------------------
+% An Environment for code with captions
+%---------------------------------
+\DeclareCaptionType{myCodeEnvType}[List\-ing][List\-ing\-ver\-zei\-chnis]
+\newenvironment{myCodeEnv}{
+    \aftergroup\useignorespacesandallpars%
+    \par%
+    \vspace*{\baselineskip}%
+    \captionsetup{type=myCodeEnvType}%
+  }{%
+    \par%
+    \vspace*{\baselineskip}%
+}
+
+%---------------------------------
+% Ignore Spaces
+%---------------------------------
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+%---------------------------------
+% Make the counter global for paracol
+%---------------------------------
+\globalcounter{myCodeEnvType}
+\globalcounter{figure}
+\globalcounter{section}
+\globalcounter{footnote}
+
+%---------------------------------
+% Microtype optimisations
+%---------------------------------
+% http://www.khirevich.com/latex/microtype/
+\SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
+              {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
+               6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
+\SetExtraKerning[unit=space]
+    {encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
+    {\textendash={400,400}, % en-dash, add more space around it
+     "28={ ,150}, % left bracket, add space from right
+     "29={150, }, % right bracket, add space from left
+     \textquotedblleft={ ,150}, % left quotation mark, space from right
+     \textquotedblright={150, }} % right quotation mark, space from left
+\SetExtraKerning[unit=space]
+   {encoding={*}, family={qhv}, series={b}, size={large,Large}}
+   {1={-200,-200},
+    \textendash={400,400}}
+\SetTracking{encoding={*}, shape=sc}{20}
+
+%---------------------------------
+% Fixed width tabular
+%---------------------------------
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%---------------------------------
+% Tikz mark
+%---------------------------------
+\newcommand{\tikzmark}[2]{%
+  \tikz[overlay,remember picture]%
+  \node[text=black,yshift=.25\baselineskip] (#1) {#2};%
+}
+
+%---------------------------------
+% Invisible non floating box for paracol to work with listings
+%---------------------------------
+\newtcolorbox{myInvBox}[1][]{
+    width=\linewidth,
+    boxsep=0cm,
+    breakable,
+    nobeforeafter,
+    enhanced jigsaw,
+    opacityfill=0,
+    size=minimal,
+    #1
+}
+
+%---------------------------------
+% Savebox for one single special minted env
+%---------------------------------
+\newsavebox{\myMinSavBox}
+
+%---------------------------------
+% Fix hypernation
+%---------------------------------
+\hyphenation{Zei-len-um-bruch}
