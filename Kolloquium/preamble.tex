@@ -10,7 +10,11 @@
 \newcommand{\MetaStudentNumber}{360\,956}
 \newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
 
-\documentclass[xcolor=svgnames]{beamer}
+\documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=43]{beamer}
+% \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=169]{beamer}
+% \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=1610]{beamer}
+% \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=149]{beamer}
+\usepackage{pgfpages}
 \usepackage{appendixnumberbeamer}
 \usepackage{minted} % code highlighting
 \usepackage[T1]{fontenc} % utf8 <- produce real utf8 characters
@@ -76,6 +80,7 @@
 \beamertemplatenavigationsymbolsempty
 
 \usetheme[progressbar=frametitle]{metropolis}
+% \setbeameroption{show notes on second screen}
 
 %---------------------------------
 % TikZ libraries

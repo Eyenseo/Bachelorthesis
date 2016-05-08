@@ -5,84 +5,93 @@
 
 \begin{document}
 
+%---------------------------------
+% Titlepage
+%---------------------------------
 \maketitle
 
+%---------------------------------
+% Themen
+%---------------------------------
 \begin{frame}{Themen} % TODO good?
   \setbeamertemplate{section in toc}[sections numbered]
   \tableofcontents[hideallsubsections]
 \end{frame}
 
-\section{Section no.1}
-  \begin{frame}{Technology}
-      Each frame should have a title.
+% TODO C++ bitte möglichst klein halten. Interessanter ist ein Querschnitt durch die Arbeit, also von Anforderungen über Konzeption bis Realisierung und Eval - das kann (auch) man alles schön anhand von Konzepten machen, ohne sich in Programmiersprachendetails zu verlieren. Mir fallen da u.a. anderem ein: Makros, Command-Pattern, Architektur, die Kette Tokenizer -> Parser -> Interpreter, ... Fokussiere Dich auf zentrale Ideen - welche das sind, musst letztendlich Du entscheiden (Syntax würde ich ebenfalls klein halten (max. 1 Folie)).
+
+
+%---------------------------------
+% Was?
+%---------------------------------
+\section{Was?}
+
+%---------------------------------
+% Anforderungen
+%---------------------------------
+\section{Anforderungen}
+  % \begin{frame} FIXME
+  % \end{frame}
+
+%---------------------------------
+% Konzeption
+%---------------------------------
+\section{Konzeption}
+  %---------------------------------
+  % Syntax
+  %---------------------------------
+  \begin{frame}{Syntax}
   \end{frame}
 
-  \begin{frame}{Technology}{Computer}
-      An optional subtitle is not supported
+  %---------------------------------
+  % Klassen
+  %---------------------------------
+  \begin{frame}{Klassen}
   \end{frame}
 
-  \begin{frame}{}
-    Without title somethink is missing.
+\note{Everything you want}
+%---------------------------------
+% Realisierung
+%---------------------------------
+\section{Realisierung}
+  %---------------------------------
+  % Tokenizer
+  %---------------------------------
+  \begin{frame}{Tokenizer}
+  \end{frame}
+  %---------------------------------
+  % Parser
+  %---------------------------------
+  \begin{frame}{Parser} % TODO mention Analyser
+    \note{Analyser}
+  \end{frame}
+  %---------------------------------
+  % Interpreter
+  %---------------------------------
+  \begin{frame}{Interpreter}
+  \end{frame}
+  %---------------------------------
+  % Probleme
+  %---------------------------------
+  \begin{frame}{Probleme} % TODO Compiler Fehler, any
   \end{frame}
 
-
-\section{Section no.2}
-  \begin{frame}{Animation}
-    \begin{itemize}[<+- | alert@+>]
-      \item \alert<4>{This is\only<4>{ really} important}
-      \item Now this
-      \item And now this
-    \end{itemize}
-  \end{frame}
-
-\section{Section no.3}
-  \begin{frame}{Tables}
-    \begin{tabular}{|c|c|c|}
-      \hline
-      \textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
-      \hline
-      WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
-      \hline
-      SS 05 & Sascha Frank & \LaTeX \ Course serial \\
-      \hline
-    \end{tabular}
-  \end{frame}
-
-  \begin{frame}{Tables with pause}
-    \begin{tabular}{c c c}
-      A & B & C \\
-    \pause
-      1 & 2 & 3 \\
-    \pause
-      A & B & C \\
-    \end{tabular}
-  \end{frame}
-
-
-\section{Section no.4}
-  \begin{frame}{blocks}
-    \begin{block}{title of the bloc}
-      bloc text
-    \end{block}
-    \begin{exampleblock}{title of the bloc}
-      bloc text
-    \end{exampleblock}
-    \begin{alertblock}{title of the bloc}
-      bloc text
-    \end{alertblock}
-  \end{frame}
-
-
+%---------------------------------
+% Fragen
+%---------------------------------
   \begin{frame}[standout]
     Fragen?
   \end{frame}
 
-  \begin{frame}[standout]
-    Demo!
-  \end{frame}
+%---------------------------------
+% Demo
+%---------------------------------
+  \section{Demo}
 
   \appendix
-
+%---------------------------------
+% Referenzen
+%---------------------------------
   \begin{frame}[allowframebreaks]{Referenzen}
     % \bibliography{demo} FIXME
     % \bibliographystyle{abbrv} FIXME
