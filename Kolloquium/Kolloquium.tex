@@ -32,6 +32,40 @@
 % Was?
 %---------------------------------
 \section{Was?}
+  \begin{frame}
+    \begin{itemize}[<+- | alert@+>]
+      \item
+        Eine Programmiersprache
+        \note[item]<.>{
+          Eine Makrosprache ist mit euch bekannten Programmiersprachen zu vergleichen.
+        }
+        \note[item]<.>{
+          Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren. Das ist mit Fließbändern, die in der industriellen Revolution aufgekommen sind zu vergleichen.
+        }
+      \item
+        Eine Möglichkeit statische Systeme zu dynamischen umzuwandeln
+        \note[item]<.>{
+          Makros sind am Anfang Strings, die entweder von dem Benutzer erzeugt werden oder von einer Datei gelesen werden. Also nicht zur Zeit der Entwicklung, der Kompilierung oder der Auslieferung des Softwaresystems bekannt sein müssen.
+        }
+        \note[item]<.>{
+          Makros bieten es den Nutzer also an, eine Anwendung um ``Funktionalität'' zu erweitern, ohne das diese erweitert werden muss.
+        }
+      \item Kein Script
+        \note[item]<.>{
+          Das Ergebnis soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keines sein.
+        }
+        \note[item]<.>{
+          Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren.
+        }
+        \note[item]<.>{
+          Es ist ein kleiner Unterschied, der allerdings große Folgen hat. Da eine neue Funktionalität eine wesentlich größere API braucht, z.B. threads support.
+        }
+        \note[item]<.>{
+          Man könnte also sagen das Makros zu den schwächsten Programmiersprachen zählen.
+        }
+        \item \alert{\color{red} more?} % FIXME
+    \end{itemize}
+  \end{frame}
 
 %---------------------------------
 % Anforderungen
