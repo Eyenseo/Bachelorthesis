@@ -9,10 +9,10 @@
 % Titlepage
 %---------------------------------
 \maketitle
-\note[enumerate] {
-  \item Moin, ihr kennt alle meinen Namen und \ldots
-  \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erkläre. Das sind 800 Zeilen pro Minute \ldots
-}
+    \note[enumerate] {
+      \item Moin, ihr kennt alle meinen Namen und \ldots
+      \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erkläre. Das sind 800 Zeilen pro Minute \ldots
+    }
 
 %---------------------------------
 % Themen
@@ -21,10 +21,10 @@
   \setbeamertemplate{section in toc}[sections numbered]
   \tableofcontents[hideallsubsections]
 \end{frame}
-\note[enumerate] {
-  \item Da ich das allerdings keinem zumuten kann, werde ich in den folgenden Folien meine Arbeit sehr abstrakt erklären. Und in der Demo nur ein wenig auf den Code eingehen. Wodurch euch langweiliger C++ Code größten Teils erspart bleibt. Wer im Anschluss fragen zum Code hat -- ich werde gerne Fragen beantworten (und länger über den Code reden, als euch recht ist)
-  \item Ich habe nichts dagegen, wenn während der Präsentation Fragen gestellt werden -- für allgemeine Fragen bietet es sich an diese vor der Demo zu stellen.
-}
+    \note[enumerate] {
+      \item Da ich das allerdings keinem zumuten kann, werde ich in den folgenden Folien meine Arbeit sehr abstrakt erklären. Und in der Demo nur ein wenig auf den Code eingehen. Wodurch euch langweiliger C++ Code größten Teils erspart bleibt. Wer im Anschluss fragen zum Code hat -- ich werde gerne Fragen beantworten (und länger über den Code reden, als euch recht ist)
+      \item Ich habe nichts dagegen, wenn während der Präsentation Fragen gestellt werden -- für allgemeine Fragen bietet es sich an diese vor der Demo zu stellen.
+    }
 
 % TODO C++ bitte möglichst klein halten. Interessanter ist ein Querschnitt durch die Arbeit, also von Anforderungen über Konzeption bis Realisierung und Eval - das kann (auch) man alles schön anhand von Konzepten machen, ohne sich in Programmiersprachendetails zu verlieren. Mir fallen da u.a. anderem ein: Makros, Command-Pattern, Architektur, die Kette Tokenizer -> Parser -> Interpreter, ... Fokussiere Dich auf zentrale Ideen - welche das sind, musst letztendlich Du entscheiden (Syntax würde ich ebenfalls klein halten (max. 1 Folie)).
 
@@ -36,34 +36,34 @@
     \begin{itemize}[<+- | alert@+>]
       \item
         Eine Programmiersprache
-        \note[item]<.>{
-          Eine Makrosprache ist mit euch bekannten Programmiersprachen zu vergleichen.
-        }
-        \note[item]<.>{
-          Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren. Das ist mit Fließbändern, die in der industriellen Revolution aufgekommen sind zu vergleichen.
-        }
+            \note[item]<.>{
+              Eine Makrosprache ist mit euch bekannten Programmiersprachen zu vergleichen.
+            }
+            \note[item]<.>{
+              Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren. Das ist mit Fließbändern, die in der industriellen Revolution aufgekommen sind zu vergleichen.
+            }
       \item
         Eine Möglichkeit statische Systeme zu dynamischen umzuwandeln
-        \note[item]<.>{
-          Makros sind am Anfang Strings, die entweder von dem Benutzer erzeugt werden oder von einer Datei gelesen werden. Also nicht zur Zeit der Entwicklung, der Kompilierung oder der Auslieferung des Softwaresystems bekannt sein müssen.
-        }
-        \note[item]<.>{
-          Makros bieten es den Nutzer also an, eine Anwendung um ``Funktionalität'' zu erweitern, ohne das diese erweitert werden muss.
-        }
+            \note[item]<.>{
+              Makros sind am Anfang Strings, die entweder von dem Benutzer erzeugt werden oder von einer Datei gelesen werden. Also nicht zur Zeit der Entwicklung, der Kompilierung oder der Auslieferung des Softwaresystems bekannt sein müssen.
+            }
+            \note[item]<.>{
+              Makros bieten es den Nutzer also an, eine Anwendung um ``Funktionalität'' zu erweitern, ohne das diese erweitert werden muss.
+            }
       \item Kein Script
-        \note[item]<.>{
-          Das Ergebnis soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keines sein.
-        }
-        \note[item]<.>{
-          Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren.
-        }
-        \note[item]<.>{
-          Es ist ein kleiner Unterschied, der allerdings große Folgen hat. Da eine neue Funktionalität eine wesentlich größere API braucht, z.B. threads support.
-        }
-        \note[item]<.>{
-          Man könnte also sagen das Makros zu den schwächsten Programmiersprachen zählen.
-        }
-        \item \alert{\color{red} more?} % FIXME
+            \note[item]<.>{
+              Das Ergebnis soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keines sein.
+            }
+            \note[item]<.>{
+              Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren.
+            }
+            \note[item]<.>{
+              Es ist ein kleiner Unterschied, der allerdings große Folgen hat. Da eine neue Funktionalität eine wesentlich größere API braucht, z.B. threads support.
+            }
+            \note[item]<.>{
+              Man könnte also sagen das Makros zu den schwächsten Programmiersprachen zählen.
+            }
+      \item \alert{\color{red} more?} % FIXME
     \end{itemize}
   \end{frame}
 
