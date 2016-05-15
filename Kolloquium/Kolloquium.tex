@@ -372,7 +372,166 @@
     \end{itemize}
   \end{frame}
 
-\note{Everything you want}
+  %---------------------------------
+  % AST Klassenhierarchie
+  %---------------------------------
+  \begin{frame}{AST Klassenhierarchie}
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:0,0) (commanduml-cat_surprised) {\includegraphics[width=.6\linewidth]{img/grumpy_cat}};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Zu weiteren UML Diagrammen.
+        }
+        \note[item]<.>{
+          Für meinen Geschmack helfen die Diagramme nicht genug, sind aber die beste Möglichkeit anderen Menschen klar zu machen, was für Abhängigkeiten zwischen den Elementen existieren.
+        }
+
+    \begin{actionenv}<+->
+      \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+        \node at(current page.center) (ASTuml) {%
+          \scalebox{.9}{%
+            \myInput{img/ASTuml.tikz}%
+          }
+        };
+      \end{tikzpicture}%
+          \note[item]<.>{
+            Die AST Klassenhierarchie.
+          }
+          \note[item]<.>{
+            Alle abstrakten Syntax Klassen haben die \textbf{AST} Klasse als Elternklasse. Diese hat ein \textbf{Token}, welches das Stück des Makros enthält, welches das Objekt repräsentieren soll.
+          }
+    \end{actionenv}
+  \end{frame}
+
+  \begin{frame}{AST Scope}
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+      \node at(current page.center) (Scopeuml) {%
+        \scalebox{.7}{%
+          \myInput{img/Scopeuml.tikz}%
+        }
+      };
+    \end{tikzpicture}%
+        \note[item]{
+          Die Scope Abhängigkeiten.
+        }
+        \note[item]{
+          Das \textbf{Scope} kann Instanzen von allen Klassen aufnehmen.
+        }
+        \note[item]{
+          Durch die Aufnahme von anderen AST Instanzen wird hier ein Teil des Baumes erstellt.
+        }
+  \end{frame}
+
+  \begin{frame}{AST Klassen}
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+      \node at(current page.center) (Conditionuml) {%
+        \scalebox{.7}{%
+          \myInput{img/Conditionuml.tikz}%
+        }
+      };
+    \end{tikzpicture}%
+        \note[item]{
+          Die restlichen Abhängigkeiten der AST Klassen.
+        }
+        \note[item]{
+          Dieses UML Diagramm zeigt die restlichen Abhängigkeiten der Klassen -- die meisten Verbindungen sollten Selbstverständlich sein.
+        }
+        \note[item]{
+          Eine \textbf{Funktion} hat ein \textbf{Scope}. Ein \textbf{Loop} hat ein \textbf{Scope} und eine \textbf{Condition} und eine Condition kann aus \textbf{Operatoren}, \textbf{Funktionsaufrufen} usw. bestehen.
+        }
+  \end{frame}
+
+  \begin{frame}{Parser Klassen}
+    \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+      \node at(current page.center) (parserpackuml) {%
+        \scalebox{.7}{%
+          \myInput{img/parserpackuml.tikz}%
+        }
+      };
+    \end{tikzpicture}%
+        \note[item]{
+          Die Parser Klassen.
+        }
+        \note[item]{
+          Der \textbf{Parser} nutzt den \textbf{Tokenizer} um eine \textbf{TokenList} von dem Makrostring zu erstellen.
+        }
+        \note[item]{
+          Diese TokenListe wandelt er dann in einen \textbf{AST} um.
+        }
+        \note[item]{
+          Der produzierte AST wird dann von dem \textbf{Analyser} überprüft.
+        }
+  \end{frame}
+
+  \begin{frame}{Interpreter Klassen}
+    \begin{uncoverenv}<+-+>%
+      \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+        \node at(current page.center) (interpreterpackuml) {%
+            \myInput{img/interpreterpackuml.tikz}%
+        };
+      \end{tikzpicture}%
+          \note[item]<.>{
+            Die Interpreter Klassen.
+          }
+          \note[item]<.>{
+            Der \textbf{Interpreter} nutzt den \textbf{Parser} um einen AST zu erzeugen. den er dann interpretieren kann
+          }
+          \note[item]<.>{
+            Um dies zu tun, muss der Interpreter auch Daten verwalten. Das wird von dem \textbf{Stack} übernommen.
+          }
+          \note[item]<.>{
+            Der Stack bildet -- mit Instanzen von sich selber -- einen Stack.\ldots
+          }
+    \end{uncoverenv}
+    \begin{uncoverenv}<+-+(1)>%
+      \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+        \node at(current page.center) (stackex) {%
+            \myInput{img/stackex.tikz}%
+        };
+      \end{tikzpicture}%
+          \note[item]<.>{
+            Diese Art und Weise einen Stack aufzubauen ist normal in C++ oder C++.
+          }
+          \note[item]<.>{
+            Der Stack wird durch die drei Stack Instanzen (\textbf{1, 2 und 3}) gebildet.
+          }
+          \note[item]<.>{
+            Ein späteres Beispiel wird wahrscheinlich mehr Aufschluss über die Funktionsweise bringen. \ldots (Denn dafür wisst ihr noch zu wenig.)
+          }
+
+      \begin{uncoverenv}<+>%
+        \begin{tikzpicture}[overlay, remember picture]%
+          \node[anchor=center] at (page cs:.5,-.5) (commanduml-no_you_didnt_cat) {\reflectbox{\includegraphics[width=.5\linewidth]{img/no_you_didnt_cat}}};
+        \end{tikzpicture}%
+      \end{uncoverenv}%
+          \note[item]<.>{
+            Denn dafür wisst ihr noch zu wenig. Nehmt es erst einmal so hin.
+          }
+    \end{uncoverenv}
+
+    \begin{uncoverenv}<+-+>%
+      \begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]%
+        \node at(current page.center) (interpreterpackuml) {%
+            \myInput{img/interpreterpackuml.tikz}%
+        };
+      \end{tikzpicture}%
+          \note[item]<.>{
+            Der \textbf{OperatorProvider} wird von dem Interpreter genutzt um die \textbf{Operator}en -- wie $+$ und $-$ auf Variablen anzuwenden.
+          }
+          \note[item]<.>{
+            Die Nutzung eines OperatorProviders sorgt dafür, dass Operatoren für beliebige Datentypen angeboten werden können, ohne den Interpreter anzupassen.
+          }
+          \note[item]<.>{
+            Der Code, des OperatorProviders ist sehr Interessant -- leider haben wir nicht genug Zeit um diesen durchzugehen. Deswegen muss ich euch mit dem any Typ abspeisen, der auch hier ein wichtiger Eckpunkt ist.
+          }
+          \note[item]<.>{
+            Im Funktionsaufrufe auszuführen -- die nicht zu selber definierten Funktionen führen -- nutzt der Interpreter den \textbf{CommandProvider}.
+          }
+    \end{uncoverenv}
+  \end{frame}
+
 %---------------------------------
 % Realisierung
 %---------------------------------
@@ -405,6 +564,9 @@
   \begin{frame}[standout]
     Fragen?
   \end{frame}
+      \note[itemize]{
+        \item \textbf{Katzen:} Ich habe genug theoretische und zum teil langweilige Präsentationen in meinem Studium gesehen. Dem Trend wollte ich nicht folgen -- und auch wenn meine Präsentation nicht so viel Wissen vermittelt hat, hatte sie zumindest Katzen. Wer reine Theorie will, ist mit meiner THesis besser beraten als mit mir.
+      }
 
 %---------------------------------
 % Demo

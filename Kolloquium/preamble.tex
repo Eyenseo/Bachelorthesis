@@ -10,7 +10,7 @@
 \newcommand{\MetaStudentNumber}{360\,956}
 \newcommand{\MetaAuthor}{\MetaAuthorName~\MetaAuthorSurname}
 
-\documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=43]{beamer}
+\documentclass[xcolor=svgnames, hyperref={bookmarks=false}, aspectratio=43]{beamer}
 % \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=169]{beamer}
 % \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=1610]{beamer}
 % \documentclass[xcolor=svgnames,hyperref={bookmarks=false},aspectratio=149]{beamer}
@@ -25,7 +25,7 @@
 % \usepackage{hyperref} % hyper ref "addon"
 \usepackage{float} % better figure placement
 \usepackage{graphicx} % for pdf and other graphics
-\usepackage{silence}
+\usepackage{silence} % Error / Warning filter
 \usepackage[
   backend=biber,
   sortlocale=de_DE,
@@ -63,6 +63,13 @@
 
 \usepackage[many]{tcolorbox} % used to wrapp listings invisible - can produce nice colored boxes thou
 
+\usepackage{tabto} % For tab to
+
+%---------------------------------
+% Use artivle for emp
+%---------------------------------
+\usempxclass{article}
+
 %---------------------------------
 % Silence Warning
 %---------------------------------
@@ -80,7 +87,7 @@
 \beamertemplatenavigationsymbolsempty
 
 \usetheme[progressbar=frametitle]{metropolis}
-% \setbeameroption{show notes on second screen}
+\setbeameroption{show notes on second screen}
 
 %---------------------------------
 % TikZ libraries
@@ -284,9 +291,10 @@
 {
   language=MyMacro,
   keepspaces,
-  commentstyle=\color{Comments}\slshape,
-  stringstyle=\color{Strings},
-  keywordstyle={\color{Keywords}\bfseries},
+  basicstyle=\small\color{black}\ttfamily,
+  commentstyle=\color{Comments}\slshape\ttfamily,
+  stringstyle=\color{Strings}\ttfamily,
+  keywordstyle={\color{Keywords}\bfseries\ttfamily},
   alsoletter=0123456789.,
   SelectCharTable=%
       \xintApplyInline{\addtoletterdef\processdigit}{0123456789}%
@@ -413,15 +421,11 @@
 %---------------------------------
 \newcommand{\myInput}[1]{%
   \adjustbox{max width=.9\linewidth}{%
-    \scalebox{.9}{%
-      \input{#1}%
-    }%
+    \input{#1}%
   }%
 }%
 \newcommand{\myInputUnlimited}[1]{%
-  \scalebox{.9}{%
-    \input{#1}%
-  }%
+  \input{#1}%
 }%
 
 %---------------------------------
@@ -518,3 +522,34 @@
 % Fix hypernation
 %---------------------------------
 \hyphenation{Zei-len-um-bruch}
+
+
+% Defining a new coordinate system for the page:
+%   \node at (page cs:0.5,0.3) {0.5,0.3};
+%
+% --------------------------
+% |(-1,1)    (0,1)    (1,1)|
+% |                        |
+% |(-1,0)    (0,0)    (1,0)|
+% |                        |
+% |(-1,-1)   (0,-1)  (1,-1)|
+% --------------------------
+\makeatletter
+\def\parsecomma#1,#2\endparsecomma{\def\page@x{#1}\def\page@y{#2}}
+\tikzdeclarecoordinatesystem{page}{
+    \parsecomma#1\endparsecomma
+    \pgfpointanchor{current page}{north east}
+    % Save the upper right corner
+    \pgf@xc=\pgf@x%
+    \pgf@yc=\pgf@y%
+    % save the lower left corner
+    \pgfpointanchor{current page}{south west}
+    \pgf@xb=\pgf@x%
+    \pgf@yb=\pgf@y%
+    % Transform to the correct placement
+    \pgfmathparse{(\pgf@xc-\pgf@xb)/2.*\page@x+(\pgf@xc+\pgf@xb)/2.}
+    \expandafter\pgf@x\expandafter=\pgfmathresult pt
+    \pgfmathparse{(\pgf@yc-\pgf@yb)/2.*\page@y+(\pgf@yc+\pgf@yb)/2.}
+    \expandafter\pgf@y\expandafter=\pgfmathresult pt
+}
+\makeatother
