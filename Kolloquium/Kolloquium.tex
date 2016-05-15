@@ -11,7 +11,7 @@
 \maketitle
     \note[enumerate] {
       \item Moin, ihr kennt alle meinen Namen und \ldots
-      \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erkläre. Das sind 800 Zeilen pro Minute \ldots
+      \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erkläre. Das sind 750 Zeilen pro Minute \ldots
     }
 
 %---------------------------------
@@ -68,6 +68,61 @@
             }
             \note[item]<.>{
               Man könnte also sagen das Makros zu den schwächsten Programmiersprachen zählen.
+            }
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{Was ist die Gegebenheiten?}
+    \begin{itemize}[<+- | alert@+>]
+      \item
+        C++
+            \note[item]<.>{
+              Die Anwendung, für diese Makrosprache entwickelt wird ist in C++ geschrieben.
+            }
+            \note[item]<.>{
+              Das hat den Vorteil, dass die Anwendung das Potenzial hat extrem effizient und schnell zu arbeiten.
+            }
+            \note[item]<.>{
+              Ein Nachteil ist, dass C++ eine statische Sprache ist -- also nach dem Kompilieren nicht verändert werden kann, was ausgeführt werden soll. Wäre sie in z.B. Python geschrieben, wären Makros nur ein Python Script welches geladen und abgearbeitet wird.
+            }
+      \item<+- | alert@+-+(1)>
+        Command-Pattern\tikzmark{cmd-pattern}{}%
+            \note[item]<.>{
+              Das Command-Pattern der Anwendung ist die Schnittstelle die die Makrosprache nutzt um die Anwendung zu verändern.
+            }
+        \begin{uncoverenv}<+->%
+          \begin{tikzpicture}[overlay, remember picture]%
+            \node[right=-2of cmd-pattern] (commanduml) {%
+              \myInput{img/commanduml.tikz}%
+            };
+          \end{tikzpicture}%
+          \begin{uncoverenv}<.>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \node[anchor=north east] (commanduml-cat_surprised) {\includegraphics[width=.5\linewidth]{img/cat_surprised}};
+            \end{tikzpicture}%
+          \end{uncoverenv}%
+              \note[item]<.>{
+                Nur weil wir die 750 Zeilen pro Minute sein lassen, heißt es nicht das es einfach wird!
+              }
+              \note[item]<.>{
+                Aber es sieht schlimmer aus als es ist\ldots
+              }
+          \action{}
+        \end{uncoverenv}
+            \note[item]<.>{
+              Der \myMin{Invoker} wird an den \myMin{Client} geben, der den \myMin{CommandProvider} nach einem \myMin{Command} fragt.
+            }
+            \note[item]<.>{
+              Der \myMin{Client} kann z.B ein Knopf in einer GUI sein.
+            }
+            \note[item]<.>{
+              Der \myMin{HistoryStack} sorgt dafür, dass \myMin{Command}s rückgängig gemacht bzw. wiederhergestellt werden können.
+            }
+            \note[item]<.>{
+              Das \myMin{Command} ist die Elternklasse von dem Konkreten Command welches seine Funktionalität in der \myMin{execute} Methode implementiert.
+            }
+            \note[item]<.>{
+              Wichtig zu beachten ist die \myMin{map<string, any>} von dem \myMin{Command} diese erlaubt es beliebig viele Daten, mit beliebigen Datentypen, typsicher als Parameter zu übergeben -- ohne die Methodensignatur zu verändern.
             }
     \end{itemize}
   \end{frame}
