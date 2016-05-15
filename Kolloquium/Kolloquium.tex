@@ -157,12 +157,16 @@
 % Anforderungen
 %---------------------------------
 \section{Anforderungen}
+    \note[enumerate]{
+      \item Anforderungen an die Lösung\ldots
+    }
+
   \begin{frame}{Anforderungen}
     \begin{itemize}
       \item<+- | alert@+-+(1)>
         Dynamisches Typesystem
             \note[item]<.>{
-              Die Makros sollten davon profitieren, dass die Commands Rückgabewerte und Parameter haben. Das heißt, dass es eine Möglichkeit geben muss, dass ``unbekannte'' Datentypen zwischengespeichert werden müssen.
+              Die Makros sollten davon profitieren, dass die Commands Rückgabewerte und Parameter haben. Das heißt, dass es eine Möglichkeit geben muss, dass ``unbekannte'' Datentypen zwischengespeichert werden.
             }
             \note[item]<.>{
               Es soll also möglich sein so etwas zu schreiben \ldots
@@ -175,7 +179,7 @@
               Hier wird der Variable \myMin{a} beim ersten Mal ein Integer zugewiesen und beim zweiten Mal ein String.
             }
             \note[item]<.>{
-              Die Lösung für das zwischenspeichern ist der any Typ der der von dem Command-Pattern genutzt wird. Dieser wird in C++17 enthalten sein.
+              Die Lösung für das zwischenspeichern ist der any Typ der der von dem Command-Pattern genutzt wird.
             }
       \item<+- | alert@+-+(1)>
         Kontrollfluss
@@ -209,10 +213,10 @@
               Durch \myMIn$def$ wird automatisch klar, das eine Funktion definiert wird und \myMIn$var$ definiert eine Variable.
             }
             \note[item]<.>{
-              Da die Implementation des CommandPatterns eine Map nutzt um die Command Parameter anzugeben, nutzt der Syntax named parameter.
+              Da die Implementation des CommandPatterns eine Map nutzt, um die Command Parameter anzugeben, habe ich mich entschieden nutzt named parameter zu nutzen, um das überladen von Funktionen anhand der Parameternamen zu ermöglichen .
             }
             \note[item]<.>{
-              Aber Syntax nur ein kleiner Punkt\ldots
+              Aber in meine Augen ist Syntax nur ein kleiner Punkt\ldots
             }
 
         \begin{uncoverenv}<+->%
@@ -222,10 +226,13 @@
           \vspace{-6em}
         \end{uncoverenv}
             \note[item]<.>{
-              Wenn der Nutzer einen Fehler macht, soll dieser möglichst einfach zu finden sein.
+              Wenn der Nutzer einen Fehler macht, soll dieser möglichst einfach zu finden sein -- man will mit einem Tool arbeiten und nicht gegen ein Tool kämpfen müssen.
             }
             \note[item]<.>{
-              Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern woher sie kommen.
+              Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern auch woher sie kommen.
+            }
+            \note[item]<.>{
+              In dem Beispiel wurde ein Semikolon in der main Methode vergessen, was durch die Beiden Fehlermeldungen schnell deutlich wird.
             }
         \onslide<+->
             \note[item]<.>{
