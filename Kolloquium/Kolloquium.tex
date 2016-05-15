@@ -32,7 +32,19 @@
 % Was?
 %---------------------------------
 \section{Was?}
+    \note[itemize]{
+      \item Was?
+    }
+
+  %---------------------------------
+  % Was ist eine Makrosprache?
+  %---------------------------------
   \begin{frame}{Was ist eine Makrosprache?}
+    \pause
+        \note[item]<.>{
+          Was ist eine Makrosprache?
+        }
+
     \begin{itemize}[<+- | alert@+>]
       \item
         Eine Programmiersprache
@@ -40,53 +52,67 @@
               Eine Makrosprache ist mit euch bekannten Programmiersprachen zu vergleichen.
             }
             \note[item]<.>{
-              Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren. Das ist mit Fließbändern, die in der industriellen Revolution aufgekommen sind zu vergleichen.
+              Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren.
             }
             \note[item]<.>{
-              Makros führen also Befehle aus, die der Nutzer hätte ausführen können und baut nicht auf einer anderen Programmiersprache auf, sondern auf den Befehlen die die Anwendung anbietet. Das ist mit den Befehlen von Sprachen zu vergleichen, die eine Virtuelle Maschine nutzen. Im Fall der Makrosprache ist die Anwendung die Virtuelle Maschine. Es macht (sollte) also kein Unterschied (machen), ob ein Makro auf Windows geschrieben wurde und dann auf Linux oder XOS ausgeführt wird.
+              Makros führen also Befehle aus, die der Nutzer hätte ausführen können und bauten nicht auf einer anderen Programmiersprache auf. Das ist mit den Befehlen von Sprachen zu vergleichen, die eine Virtuelle Maschine nutzen. Im Fall der Makrosprache ist die Anwendung die Virtuelle Maschine. Es sollte also kein Unterschied machen, ob ein Makro auf Windows geschrieben wurde und dann auf Linux oder XOS ausgeführt wird.
             }
 
       \item
         Eine Möglichkeit statische Systeme zu dynamischen umzuwandeln
             \note[item]<.>{
-              Makros sind Strings, also eine Reihenfolge von Zeichen, die erst zur Laufzeit der Anwendung erstellt werden. Diese werden entweder von dem Benutzer erzeugt oder z.B. von einer Datei gelesen. Das bedeutet, dass die Strings nicht zur Zeit der Entwicklung bzw. der Kompilierung oder der Auslieferung des Softwaresystems bekannt sein müssen.
+              Makros sind dynamisch.
             }
             \note[item]<.>{
-              Makros bieten es den Nutzer also an, eine Anwendung um ``Funktionalität'' zu erweitern, ohne das diese erweitert werden muss.
+              Makros sind Strings -- also eine Reihenfolge von Zeichen -- die erst zur Laufzeit der Anwendung erstellt werden. Diese werden entweder von dem Benutzer erzeugt oder z.B. von einer Datei gelesen. Das bedeutet, dass die Strings nicht zur Zeit der Entwicklung bzw. der Kompilierung oder der Auslieferung des Softwaresystems bekannt sein müssen.
+            }
+            \note[item]<.>{
+              Makros bieten den Nutzer an, eine Anwendung um Funktionen zu erweitern, ohne das die Anwendung erweitert werden muss.
             }
 
       \item
         Kein Script
             \note[item]<.>{
-              Das Ergebnis soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keines sein.
+              Eine Makrosprache soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keine sein.
             }
             \note[item]<.>{
-              Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren.
+              Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren. Also ein Subset von Script darstellen
             }
             \note[item]<.>{
-              Es ist ein kleiner Unterschied, der allerdings große Folgen hat. Eine Scriptsprache sollte eine wesentlich größere API anbieten, z.B. call-backs und threads support. Diese beiden würden ermöglichen es Scripten anzubieten, die nicht durch den Benutzer direkt angestoßen werden können und asynchron ihre Funktionen ausführen.
-            }
-            \note[item]<.>{
-              Man könnte also sagen das Makros zu den schwächsten Programmiersprachen zählen.
+              Es ist ein kleiner Unterschied -- der allerdings große Folgen hat. Eine Scriptsprache sollte eine wesentlich größere API anbieten, z.B. call-backs und threads support. Diese beiden würden Scripts ermöglichen, die nicht durch den Benutzer direkt angestoßen werden und asynchron ihre Funktionen ausführen -- z.B. eine automatische Sicherung nach 5 Minuten.
             }
     \end{itemize}
   \end{frame}
 
-  \begin{frame}{Was ist die Gegebenheiten?}
+  %---------------------------------
+  % Was war die Gegebenheiten?
+  %---------------------------------
+  \begin{frame}{Was war die Gegebenheiten?}
+    \pause
+        \note[item]<.>{
+          Was war gegeben?
+        }
+
     \begin{itemize}[<+- | alert@+>]
       \item
         C++
             \note[item]<.>{
-              Die Anwendung, für diese Makrosprache entwickelt wird ist in C++ geschrieben.
+              Die Anwendung, für die diese Makrosprache entwickelt wurde, ist in C++ geschrieben.
             }
             \note[item]<.>{
               Das hat den Vorteil, dass die Anwendung das Potenzial hat extrem effizient und schnell zu arbeiten.
             }
             \note[item]<.>{
-              Ein Nachteil ist, dass C++ eine statische Sprache ist -- also nach dem Kompilieren nicht verändert werden kann, was ausgeführt werden soll. Wäre sie in z.B. Python geschrieben, wären Makros nur ein Python Script welches geladen und abgearbeitet wird.
+              Ein Nachteil ist, dass C++ eine statische Sprache ist -- also nach dem Kompilieren nicht verändert werden kann was ausgeführt werden soll.
             }
-      \item<+- | alert@+-+(1)>
+            \note[item]<.>{
+              Wäre sie in z.B. Python geschrieben, wären Makros nur ein Python Script welches geladen und abgearbeitet werden würde. (Was ziemlich einfach wäre zu implementieren.)
+            }
+      \item<+- | alert@+-+(2)>
         Command-Pattern\tikzmark{cmd-pattern}{}%
+            \note[item]<.>{
+              Ein zentrales Element ist eine implementation des CommandPatterns.
+            }
             \note[item]<.>{
               Das Command-Pattern der Anwendung ist die Schnittstelle die die Makrosprache nutzt um die Anwendung zu verändern.
             }
@@ -110,19 +136,19 @@
           \action{}
         \end{uncoverenv}
             \note[item]<.>{
-              Der \myMin{Invoker} wird an den \myMin{Client} geben, der den \myMin{CommandProvider} nach einem \myMin{Command} fragt.
+              Der \textbf{Invoker} wird von dem \textbf{CommandProvider} an den \textbf{Client} gegeben, der den nach dieser nach einem \textbf{Command} gefragt hat.
             }
             \note[item]<.>{
-              Der \myMin{Client} kann z.B ein Knopf in einer GUI sein.
+              Der \textbf{Client} kann z.B ein Knopf in einer GUI sein.
             }
             \note[item]<.>{
-              Der \myMin{HistoryStack} sorgt dafür, dass \myMin{Command}s rückgängig gemacht bzw. wiederhergestellt werden können.
+              Der \textbf{HistoryStack} sorgt dafür, dass \textbf{Command}s rückgängig gemacht bzw. wiederhergestellt werden können.
             }
             \note[item]<.>{
-              Das \myMin{Command} ist die Elternklasse von dem Konkreten Command welches seine Funktionalität in der \myMin{execute} Methode implementiert.
+              Das \textbf{Command} ist die Elternklasse von dem \textbf{ConcreteCommand} welches seine Funktionalität in der \textbf{execute} Methode implementiert.
             }
             \note[item]<.>{
-              Wichtig zu beachten ist die \myMin{map<string, any>} von dem \myMin{Command} diese erlaubt es beliebig viele Daten, mit beliebigen Datentypen, typsicher als Parameter zu übergeben -- ohne die Methodensignatur zu verändern.
+              Wichtig zu beachten ist die \textbf{map<string, any>} von dem \textbf{Command} diese erlaubt es beliebig viele Daten, mit beliebigen Datentypen, typsicher als Parameter zu übergeben -- ohne die Methodensignatur zu verändern. Der any Typ wird in C++17 enthalten sein.
             }
     \end{itemize}
   \end{frame}
