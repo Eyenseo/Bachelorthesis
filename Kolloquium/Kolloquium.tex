@@ -215,16 +215,96 @@
 % Konzeption
 %---------------------------------
 \section{Konzeption}
-  %---------------------------------
-  % Syntax
-  %---------------------------------
-  \begin{frame}{Syntax}
-  \end{frame}
+  \begin{frame}{Was wird entwickelt werden?}
+    \begin{itemize}[<+- | alert@+>]
+      \item<+- | alert@+-+(1)>
+        Tokenizer~\tikzmark{tokenizer}{}%
+            \note[item]<.>{
+              Ein Tokenizer.
+            }
+            \note[item]<.>{
+              Der Tokenizer muss den String / das Makro zu einer Liste von Tokens verwandeln.
+            }
+        \begin{uncoverenv}<+-+>%
+          \begin{tikzpicture}[overlay, remember picture,railroad]%
+            \node[right=0of tokenizer, anchor=north west, yshift=1.45em] (tokenizerMacro) {%
+              \begin{myInvBox}[width=.36\linewidth]%
+                \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro_2.txt}%
+              \end{myInvBox}%
+            };%
+            \node[right=1of tokenizerMacro] (tokenizerTokens) {%
+              \begin{myInvBox}[width=.9\linewidth]%
+                \lstinputlisting[backgroundcolor=, numbers=none, frame=,]{img/exmacro_2_tok.txt}%
+              \end{myInvBox}%
+            };%
+            \graph[railroad]{(tokenizerMacro)->(tokenizerTokens);};%
+          \end{tikzpicture}%
+        \end{uncoverenv}%
+            \note[item]<.>{
+              Wichtig ist, das bei dem erstellen der Liste keine Informationen verloren gehen.
+            }
+            \note[item]<.>{
+              Die Reihenfolge wird durch das tokenizen zwar nicht verändert aber überflüssige Leerzeichen und Zeilenumbrüche gehen verloren.
+            }
+            \note[item]<.>{
+              Diese sind für Fehlermeldungen extrem wichtig und müssen für die Tokens mitgespeichert werden.
+            }
 
-  %---------------------------------
-  % Klassen
-  %---------------------------------
-  \begin{frame}{Klassen}
+      \item<+- | alert@+-+(1)>
+        Parser\tikzmark{parser}{}%
+            \note[item]<.>{
+              Ein Parser.
+            }
+            \note[item]<.>{
+              Der Parser ist dafür zuständig, dass die Liste von Tokens in einen abstrakten Syntaxbaum umgewandelt werden.
+              \ldots
+            }%
+        \begin{uncoverenv}<+-+>%
+          \begin{tikzpicture}[overlay, remember picture, railroad]%
+            \node[anchor=north west, yshift=3.45em] at ($(tokenizerMacro.west)$ |- parser) (parserMacro) {%
+              \begin{myInvBox}[width=.28\linewidth]%
+                \lstinputlisting[backgroundcolor=, numbers=none, frame=,]{img/exmacro_2_tok.txt}%
+              \end{myInvBox}%
+            };%
+            \node[right=.5of parserMacro] (parserTokens) {%
+              \begin{myInvBox}[width=.9\linewidth]%
+                \lstinputlisting[backgroundcolor=, numbers=none, frame=,]{img/exmacro_2_ast.txt}%
+              \end{myInvBox}%
+            };%
+            \graph[railroad]{(parserMacro)->($(parserTokens.west)+(0:.6)$);};%
+            \end{tikzpicture}%
+        \end{uncoverenv}%
+            \note[item]<.>{
+              Das heißt, das der Parser die Tokens diese Form überführen muss.
+            }%
+      \item<+- | alert@+-+(1)>
+        Analyser\tikzmark{analyser}{}%
+            \note[item]<.>{
+              Der Analyser ist dafür da um Fehler zu finden, die nicht aus dem Parsen hervorgehen. Also Fehler die nicht syntaktisch sind, oder nur schwer beim Parsen zu finden sind.
+              \ldots
+            }
+        \begin{uncoverenv}<+-+>%
+          \begin{tikzpicture}[overlay, remember picture]%
+            \node[anchor=north west, yshift=1em] at ($(tokenizerMacro.west)$ |- analyser) (analyserMacro) {%
+              \myMIn$def fun()\{ break; \}$
+            };%
+          \end{tikzpicture}%
+        \end{uncoverenv}
+            \note[item]<.>{
+              Ein Beispiel wäre die Funktion \myMin{fun}. Der AST kann den Code darstellen. Eine Funktionsdefinition, die in dem Funktionsscope ein break Element hat.
+            }
+            \note[item]<.>{
+              Bloß macht dies wenig Sinn, da \myMin{break} nur in Schleifen eine Funktion hat.
+            }
+      \item
+        Interpreter
+            \note[item]<.>{
+              Ein Interpreter.
+            }
+            \note[item]<.>{
+              Der Interpreter interpretiert den AST, den der Parser erzeugt hat und ist die Komponente bzw. der Client der die Commands ausführen wird, die er von dem CommandProvider bekommen hat.
+            }
+    \end{itemize}
   \end{frame}
 
 \note{Everything you want}
