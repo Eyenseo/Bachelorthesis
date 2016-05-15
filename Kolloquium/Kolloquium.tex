@@ -248,10 +248,18 @@
 % Konzeption
 %---------------------------------
 \section{Konzeption}
-  \begin{frame}{Was wird entwickelt werden?}
+    \note[enumerate]{
+      \item Konzeption
+      \item Was musste alles entwickelt werden?
+    }
+
+  %---------------------------------
+  % Was wurde entwickelt?
+  %---------------------------------
+  \begin{frame}{Was wurde entwickelt?}
     \begin{itemize}[<+- | alert@+>]
       \item<+- | alert@+-+(1)>
-        Tokenizer~\tikzmark{tokenizer}{}%
+        Tokenizer
             \note[item]<.>{
               Ein Tokenizer.
             }
@@ -259,8 +267,8 @@
               Der Tokenizer muss den String / das Makro zu einer Liste von Tokens verwandeln.
             }
         \begin{uncoverenv}<+-+>%
-          \begin{tikzpicture}[overlay, remember picture,railroad]%
-            \node[right=0of tokenizer, anchor=north west, yshift=1.45em] (tokenizerMacro) {%
+          \begin{tikzpicture}[overlay, remember picture, railroad]%
+            \node[anchor=west, yshift=-1em] at (page cs:-.35,0) (tokenizerMacro) {%
               \begin{myInvBox}[width=.36\linewidth]%
                 \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro_2.txt}%
               \end{myInvBox}%
@@ -283,6 +291,17 @@
               Diese sind für Fehlermeldungen extrem wichtig und müssen für die Tokens mitgespeichert werden.
             }
 
+      \item
+        \temporal<.>{}{Abstrakter Syntaxbaum}{AST}
+            \note[item]<.>{
+              Klassen die einen abstrakten Syntaxbaum bilden mussten erstellt werden.
+            }
+            \note[item]<.>{
+              Ein Abstrakter Syntaxbaum beschreibt den Syntax aus dem Makro, ohne  Informationsverlust. ASTs werden genutzt, da es einfacher ist mit ihnen als Datenstruktur zu arbeiten als mit einem String.
+            }
+            \note[item]<.>{
+              Die meisten Elemente des Syntaxes lassen sich in einem AST wiederfinden. Prominente Ausnahmen sind Klammern, Semikolons und Leerzeichen.
+            }
       \item<+- | alert@+-+(1)>
         Parser\tikzmark{parser}{}%
             \note[item]<.>{
@@ -294,7 +313,7 @@
             }%
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture, railroad]%
-            \node[anchor=north west, yshift=3.45em] at ($(tokenizerMacro.west)$ |- parser) (parserMacro) {%
+            \node[anchor=west, yshift=-1em] at (page cs:-.35,0) (parserMacro) {%
               \begin{myInvBox}[width=.28\linewidth]%
                 \lstinputlisting[backgroundcolor=, numbers=none, frame=,]{img/exmacro_2_tok.txt}%
               \end{myInvBox}%
@@ -310,21 +329,31 @@
             \note[item]<.>{
               Das heißt, das der Parser die Tokens diese Form überführen muss.
             }%
+            \note[item]<.>{
+              Die @-Symbole weisen auf eine Objektinstanz hin und das was in den Klammern eingeschlossen ist, ist ein Bestandteil des Umschließenden Objektes.
+            }%
       \item<+- | alert@+-+(1)>
         Analyser\tikzmark{analyser}{}%
             \note[item]<.>{
-              Der Analyser ist dafür da um Fehler zu finden, die nicht aus dem Parsen hervorgehen. Also Fehler die nicht syntaktisch sind, oder nur schwer beim Parsen zu finden sind.
+              Ein Analyser.
+            }
+            \note[item]<.>{
+              Der Analyser ist dafür da, um Fehler zu finden, die nicht aus dem Parsen hervorgehen. Also Fehler die nicht syntaktisch sind, oder nur schwer beim Parsen zu finden sind.
               \ldots
             }
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture]%
-            \node[anchor=north west, yshift=1em] at ($(tokenizerMacro.west)$ |- analyser) (analyserMacro) {%
+            \node[coordinate] at (page cs:-0.35,0) (analyserMacroHelper);
+            \node[anchor=north west, yshift=.6em] at (analyserMacroHelper |- analyser) (analyserMacro) {%
               \myMIn$def fun()\{ break; \}$
             };%
           \end{tikzpicture}%
         \end{uncoverenv}
             \note[item]<.>{
-              Ein Beispiel wäre die Funktion \myMin{fun}. Der AST kann den Code darstellen. Eine Funktionsdefinition, die in dem Funktionsscope ein break Element hat.
+              Ein Beispiel wäre die Funktion \myMin{fun}.
+              }
+            \note[item]<.>{
+              Der AST kann den Code darstellen. Eine Funktionsdefinition, die in dem Funktionsscope ein break Element hat.
             }
             \note[item]<.>{
               Bloß macht dies wenig Sinn, da \myMin{break} nur in Schleifen eine Funktion hat.
@@ -335,7 +364,10 @@
               Ein Interpreter.
             }
             \note[item]<.>{
-              Der Interpreter interpretiert den AST, den der Parser erzeugt hat und ist die Komponente bzw. der Client der die Commands ausführen wird, die er von dem CommandProvider bekommen hat.
+              Der Interpreter interpretiert den AST, den der Parser erzeugt hat und ist die Komponente -- bzw. der Client aus dem CommandPattern -- der die Commands ausführen wird.
+            }
+            \note[item]<.>{
+              Somit kommen wir zu wir \ldots (zu weiteren UML Diagrammen)
             }
     \end{itemize}
   \end{frame}
