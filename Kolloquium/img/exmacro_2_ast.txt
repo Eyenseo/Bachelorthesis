@@ -1,0 +1,14 @@
+@Define {
+  token: def
+  @Function {
+    token: fun
+    parameter:
+      @Variable {
+        token: foo
+      }
+    @Scope {
+      ...
+    }
+  }
+}
+

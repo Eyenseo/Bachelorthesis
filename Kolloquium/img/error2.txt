@@ -1,0 +1,6 @@
+Anon:9:5: In the 'main' function defined here:
+def main() {
+    ^
+Anon:12:22: Expected a ';'
+  return fun(foo:bar)
+                     ^

@@ -1,0 +1,67 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.AST("AST")()();
+    Class.Scope("Scope")()();
+    Class.Variable("Variable")()();
+    Class.Return("Return")()();
+    Class.Literal("Literal")()();
+    Class.Operator("Operator")()();
+    Class.Define("Define")()();
+    Class.Function("Function")()();
+    Class.Callable("Callable")()();
+    Class.Loop("Loop")()();
+    Class.Condition("Condition")()();
+    Class.If("If")()();
+    Class.Token("Token")()();
+
+    Package.ast("ast")(AST, Scope, Variable, Return, Literal, Operator, Define, Function, Callable, Loop, Condition, If);
+    Package.pod("pod")(ast, Token);
+
+    ast.top  = pod.top - 20;
+    pod.bottom =  ast.bottom - 10;
+
+    topToBottom(30)(Function, Return, Operator);
+    topToBottom(30)(Scope, AST, Variable);
+    topToBottom(30)(Callable, Literal, Define, );
+    leftToRight(30)(Return, AST, Literal);
+    leftToRight(30)(Condition, Function, Scope, Callable, If);
+    leftToRight(30)(Loop, Operator);
+    leftToRight(30)(Callable, If);
+    leftToRight(70)(Define, Token);
+
+    same.midx(Loop, Condition);
+
+    drawObjects(pod);
+
+    link(inheritance)
+      (Function.se -- AST.nw);
+    link(inheritance)
+      (Scope.s -- AST.n);
+    link(inheritance)
+      (Callable.sw -- AST.ne);
+    link(inheritance)
+      (Return.e -- AST.w);
+    link(inheritance)
+      (Literal.w -- AST.e);
+    link(inheritance)
+      (Operator.ne -- AST.sw);
+    link(inheritance)
+      (Variable.n -- AST.s);
+    link(inheritance)
+      (Define.nw -- AST.se);
+    link(inheritance)
+      (Loop.ne -- AST.sw);
+    link(inheritance)
+      (Condition.se -- AST.nw);
+    link(inheritance)
+      (If.sw -- AST.ne);
+
+    link(aggregationUni)
+      (Token.w -- AST.se);
+    item(iAssoc)("1")(obj.ne = Token.w + (0, -3));
+  \end{mpost}
+}

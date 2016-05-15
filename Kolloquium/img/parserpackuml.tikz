@@ -1,0 +1,49 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.AST("AST")()();
+
+    Class.Analyser("Analyser")()();
+    Class.Parser("Parser")()();
+    Class.Tokenizer("Tokenizer")()();
+    Class.TokenList("TokenList")()();
+    Class.Token("Token")()();
+
+    Package.ast("ast")(AST);
+    Package.parser("parser")(Analyser,Parser, Tokenizer);
+    Package.pod("pod")(Token, TokenList, ast);
+
+    leftToRight(30)(Tokenizer, TokenList, Token);
+    topToBottom(30)(Analyser, Parser, Tokenizer);
+    same.midx(AST, Token);
+    same.midy(Tokenizer, Token);
+    Parser.top = AST.top;
+    pod.top = ast.top + 20;
+    pod.bottom = parser.bottom;
+
+    drawObjects(parser, pod, token);
+
+    link(compositionUni)
+      (Token.w -- TokenList.e);
+    item(iAssoc)("*")(obj.ne = Token.w + (0, -3));
+
+    link(compositionUni)
+      (Tokenizer.n -- Parser.s);
+    item(iAssoc)("1")(obj.ne = Tokenizer.n + (10,8));
+    link(compositionUni)
+      (Analyser.s -- Parser.n);
+    item(iAssoc)("1")(obj.ne = Analyser.s + (10,-1));
+
+    pair Parser_e_one, Parser_e_two, AST_w_one;
+    Parser_e_one = Parser.e + (0,2);
+    Parser_e_two = Parser.e + (0,-2);
+    AST_w_one = AST.w + (0,2);
+
+    link(dependency)(Tokenizer.e -- TokenList.w);
+    link(dependency)(Parser_e_one -- AST_w_one);
+    link(dependency)(pathManhattanX(Parser_e_two, TokenList.n));
+  \end{mpost}
+}

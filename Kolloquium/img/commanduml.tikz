@@ -1,0 +1,84 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+
+    Class.Client("Client")()();
+    Class.Receiver("Receiver")()();
+    Class.CommandProvider("CommandProvider")()("Invoker get(string command)","void undo()","void redo()");
+    Class.Invoker("Invoker")()("any execute(map<string, any> arguments)");
+    Class.HistoryStack("HistoryStack")()("void undo()","void redo()");
+    Class.ConcreteCommand("ConcreteCommand")()("any execute(map<string, any> arguments)","Command clone()");
+
+    Interface.Command("Command")("any execute(map<string, any> arguments)","Command clone()","void undo()","void redo()");
+    classStereotypes.Command("<<abstract>>");
+
+    Receiver.info.foreColor := (0.965, 0.965, 0.965);
+    Client.info.foreColor := (0.965, 0.965, 0.965);
+    ConcreteCommand.info.foreColor := (0.965, 0.965, 0.965);
+
+
+    topToBottom(100)(CommandProvider, Command);
+    topToBottom(30)(Command, ConcreteCommand);
+    leftToRight(30)(CommandProvider, Client);
+    leftToRight(30)(Receiver, ConcreteCommand);
+
+    Invoker.top = .5[CommandProvider.top, Command.top - Invoker.height] ;
+    Invoker.right = .5[CommandProvider.left, Command.left] + 40;
+
+    same.midy(Invoker, HistoryStack);
+    HistoryStack.left = .5[CommandProvider.right, Command.right];
+
+
+    drawObjects(Command, CommandProvider, Invoker, HistoryStack, ConcreteCommand, Client, Receiver);
+
+
+    link(inheritance)
+      (ConcreteCommand.n -- Command.s);
+
+
+    link(aggregationUni)
+      (pathManhattanX(Command.w, Invoker.s));
+    item(iAssoc)("1")(obj.n = Command.w + (-3, -3));
+    link(aggregationUni)
+      (pathManhattanY(HistoryStack.s, Command.e));
+    item(iAssoc)("1")(obj.n = HistoryStack.s + (7, -1));
+    link(aggregationUni)
+      (CommandProvider.e -- Client.w);
+    item(iAssoc)("1")(obj.n = CommandProvider.e + (3, -3));
+    link(aggregationUni)
+      (Receiver.e -- ConcreteCommand.w);
+    link(aggregationUni)
+      (HistoryStack.w  -- Invoker.e);
+    item(iAssoc)("1")(obj.n = HistoryStack.w + (-3, -3));
+
+    link(aggregation)
+      (Command.n -- CommandProvider.s);
+    item(iAssoc)("*")(obj.n = Command.n + (7, 6));
+    item(iAssoc)("1")(obj.n = CommandProvider.s + (-7, -8));
+
+    pair a, b, h_one, h_two, h_three, h_four;
+    a = CommandProvider.s + (12, 0);
+    b = CommandProvider.s - (12, 0);
+
+    link(aggregationUni)
+      (pathStepY(HistoryStack.n, a, 15));
+    item(iAssoc)("1")(obj.n = HistoryStack.n + (7, 8));
+
+
+    h_one = HistoryStack.ne + (0, -6);
+    h_two = HistoryStack.ne + (20, -6);
+    h_three = HistoryStack.se + (20, 6);
+    h_four = HistoryStack.se + (0, 6);
+
+    link(aggregationUni)
+      (h_one -- h_two -- h_three -- h_four);
+    item(iAssoc)("1")(obj.n = h_one + (3, -3));
+
+    link(dependency)
+      (pathStepY(b, Invoker.n, -20));
+
+  \end{mpost}
+}

@@ -1,0 +1,7 @@
+def main() {              def fun(foo) {
+  var bar = "1 ";           do {
+                              foo = foo + 1.1;
+  return fun(foo:bar)       } while(!foo);
+}
+                            return foo;
+                          }

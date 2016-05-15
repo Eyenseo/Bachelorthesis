@@ -1,0 +1,62 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.Variable("Variable")()();
+    Class.Operator("Operator")()();
+    Class.Condition("Condition")()();
+    Class.If("If")()();
+    Class.Loop("Loop")()();
+    Class.Scope("Scope")()();
+    Class.Callable("Callable")()();
+    Class.Literal("Literal")()();
+
+    Class.Function("Function")()();
+
+    Package.ast("ast")(Variable, Operator, Condition, If, Loop, Scope, Callable, Literal, Function);
+
+    leftToRight(30)(Operator, Condition, Scope);
+    leftToRight(30)(Callable, Variable);
+    topToBottom(30)(Variable, Operator, Literal);
+    topToBottom(30)(Loop, Condition, If);
+    topToBottom(30)(Function, Scope);
+
+    drawObjects(ast);
+
+    link(aggregationUni)
+      (Callable.se -- Operator.nw);
+    link(aggregationUni)
+      (Variable.s -- Operator.n);
+    link(aggregationUni)
+      (Literal.n -- Operator.s);
+    pair a, b, c, d;
+    a = Operator.nw + (0, -3);
+    b = Operator.nw + (-15, -3);
+    c = Operator.sw + (-15, 3);
+    d = Operator.sw + (0, 3);
+    link(aggregationUni)
+      (a -- b -- c -- d);
+    link(aggregationUni)
+      (Operator.e -- Condition.w);
+
+    link(aggregationUni)
+      (Variable.se -- Condition.nw);
+    link(aggregationUni)
+      (Callable.se -- Condition.nw);
+    link(aggregationUni)
+      (Literal.ne -- Condition.sw);
+
+    link(aggregationUni)
+      (Condition.n -- Loop.s);
+    link(aggregationUni)
+      (Scope.nw -- Loop.se);
+    link(aggregationUni)
+      (Condition.s -- If.n);
+    link(aggregationUni)
+      (Scope.sw -- If.ne);
+    link(aggregationUni)
+      (Scope.n -- Function.s);
+  \end{mpost}
+}

@@ -1,0 +1,7 @@
+l:1  c:1  t:def
+l:1  c:5  t:fun
+l:1  c:8  t:(
+l:1  c:9  t:foo
+l:1  c:12 t:)
+l:1  c:14 t:{
+l:2  c:3  t:do

@@ -1,0 +1,101 @@
+{
+  \begin{mpost}[mpsettings=input metauml;]
+    iClass.foreColor := (1, 0.92, 0.7);
+    iInterface.foreColor := (1, 0.9, 0.7);
+    iPackage.foreColor := (0.9, 0.9, 0.9);
+
+    Class.OperatorProvider("OperatorProvider")()();
+    Interface.OperatorInt("Operator")()();
+    classStereotypes.OperatorInt("<<interface>>");
+    Class.Interpreter("Interpreter")()();
+    Class.Stack("Stack")()();
+    Class.Parser("Parser")()();
+    Class.Scope("Scope")()();
+    Class.Operator("Operator")()();
+    Class.Callable("Callable")()();
+
+    Package.ast("ast")(Callable, Scope, Operator);
+    Package.pod("pod")(ast);
+    Package.parser("parser")(Parser);
+    Package.interpreter("interpreter")(OperatorProvider, OperatorInt, Interpreter, Stack);
+    Package.macro("macro")(pod, parser, interpreter);
+
+    Class.CommandProvider("CommandProvider")()();
+    Interface.Command("Command")()();
+    classStereotypes.Command("<<interface>>");
+    Package.core("core")(CommandProvider, Command);
+
+
+    % Packages
+    %%%%%%
+    same.midx(Command, Callable);
+    core.bottom = macro.top + 30;
+
+    % CORE
+    %%%%%%
+    leftToRight(120)(CommandProvider, Command);
+
+    % Macro
+    %%%%%%
+    leftToRight(40)(Parser, Interpreter);
+
+    pod.left = interpreter.right + 20;
+
+    % ast
+    topToBottom(30)(Scope, Operator);
+    leftToRight(30)(Scope, Callable);
+    same.midx(Scope, Operator);
+    same.midy(Stack, Scope);
+    same.midy(OperatorInt, Operator);
+    pod.top = macro.top - 20;
+    ast.top = pod.top - 20;
+    pod.bottom = ast.bottom - 5;
+    macro.bottom = pod.bottom - 5;
+
+    % interpreter
+    topToBottom(30)(Interpreter, OperatorProvider);
+    leftToRight(30)(OperatorProvider, OperatorInt);
+    same.midx(Stack,OperatorInt);
+    same.midy(Stack,Interpreter);
+
+    %%%%%%
+    % Draw
+    %%%%%%
+    drawObjects(macro, core);
+
+    link(aggregationUni)
+      (OperatorProvider.n -- Interpreter.s);
+    link(aggregationUni)
+      (Parser.e -- Interpreter.w);
+
+    pair Interpreter_e_one, Interpreter_e_two, Stack_w_one;
+    Interpreter_e_one = Interpreter.e + (0, -2);
+    Interpreter_e_two = Interpreter.e + (0, 2);
+    Stack_w_one = Stack.w + (0, -2);
+    link(aggregationUni)
+      (Stack_w_one -- Interpreter_e_one);
+    link(aggregationUni)
+      (pathManhattanY(CommandProvider.s, Interpreter_e_two));
+
+    link(aggregationUni)
+      (OperatorInt.w -- OperatorProvider.e);
+    item(iAssoc)("*")(obj.ne = OperatorInt.w + (0, -3));
+    link(aggregationUni)
+      (Command.w-- CommandProvider.e);
+    item(iAssoc)("*")(obj.ne = Command.w + (0, -3));
+    link(realization)
+      (Stack.e -- Scope.w);
+    link(realization)
+      (OperatorInt.e -- Operator.w);
+    link(realization)
+      (Command.s -- Callable.n);
+
+    pair stack_a, stack_b, stack_c, stack_d;
+    stack_a = Stack.sw + (3, 0);
+    stack_b = Stack.sw + (3, -20);
+    stack_c = Stack.se + (-3, -20);
+    stack_d = Stack.se + (-3, 0);
+    link(aggregationUni)
+      (stack_a -- stack_b -- stack_c -- stack_d);
+  \end{mpost}
+}
