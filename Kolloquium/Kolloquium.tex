@@ -268,7 +268,7 @@
             }
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture, railroad]%
-            \node[anchor=west, yshift=-1em] at (page cs:-.35,0) (tokenizerMacro) {%
+            \node[anchor=west, yshift=-1em] at (page cs:-.4,0) (tokenizerMacro) {%
               \begin{myInvBox}[width=.36\linewidth]%
                 \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro_2.txt}%
               \end{myInvBox}%
@@ -313,7 +313,7 @@
             }%
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture, railroad]%
-            \node[anchor=west, yshift=-1em] at (page cs:-.35,0) (parserMacro) {%
+            \node[anchor=west, yshift=-1em] at (page cs:-.4,0) (parserMacro) {%
               \begin{myInvBox}[width=.28\linewidth]%
                 \lstinputlisting[backgroundcolor=, numbers=none, frame=,]{img/exmacro_2_tok.txt}%
               \end{myInvBox}%
@@ -343,7 +343,7 @@
             }
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture]%
-            \node[coordinate] at (page cs:-0.35,0) (analyserMacroHelper);
+            \node[coordinate] at (page cs:-.4,0) (analyserMacroHelper){};
             \node[anchor=north west, yshift=.6em] at (analyserMacroHelper |- analyser) (analyserMacro) {%
               \myMIn$def fun()\{ break; \}$
             };%
