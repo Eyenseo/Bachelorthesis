@@ -131,8 +131,85 @@
 % Anforderungen
 %---------------------------------
 \section{Anforderungen}
-  % \begin{frame} FIXME
-  % \end{frame}
+  \begin{frame}{Anforderungen}
+    \begin{itemize}
+      \item<+- | alert@+-+(1)>
+        Dynamisches Typesystem
+            \note[item]<.>{
+              Die Makros sollten davon profitieren, dass die Commands Rückgabewerte und Parameter haben. Das heißt, dass es eine Möglichkeit geben muss, dass ``unbekannte'' Datentypen zwischengespeichert werden müssen.
+            }
+            \note[item]<.>{
+              Es soll also möglich sein so etwas zu schreiben \ldots
+            }
+        \begin{uncoverenv}<+->%
+          \tabto{4.5cm}
+          \myMIn$var a = 10; a = "10";$
+        \end{uncoverenv}
+            \note[item]<.>{
+              Hier wird der Variable \myMin{a} beim ersten Mal ein Integer zugewiesen und beim zweiten Mal ein String.
+            }
+            \note[item]<.>{
+              Die Lösung für das zwischenspeichern ist der any Typ der der von dem Command-Pattern genutzt wird. Dieser wird in C++17 enthalten sein.
+            }
+      \item<+- | alert@+-+(1)>
+        Kontrollfluss
+            \note[item]<.>{
+              Makros sollten eine Möglichkeit haben, auf den zustand der Anwendung zu reagieren.
+
+              Ein Beispiel wäre \ldots
+            }
+        \begin{uncoverenv}<+->%
+          \tabto{4.5cm}
+          \myMIn$if(has_unsaved()) \{ save(); \}$
+        \end{uncoverenv}
+            \note[item]<.>{
+              Das ein Makro nur probiert zu speichern, wenn es etwas zum speichern gibt. Generell sollte speichern schnell gehen, allerdings kann es passieren, dass eine mehrere Gigabyte große Datei geschrieben werden muss, was man dem Nutzer nicht zumuten möchte.
+            }
+      \item<+- | alert@+-+(2)>
+        Benutzerfreundlichkeit\tikzmark{user-x}{}%
+            \note[item]<.>{
+              Die Makrosprache soll für den Benutzer leicht zu verstehen sein \ldots
+            }
+        \begin{uncoverenv}<+-+>%
+          \begin{myInvBox}[width=.9\linewidth]
+            \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro.txt}
+          \end{myInvBox}
+          \vspace{-10em}
+        \end{uncoverenv}
+            \note[item]<.>{
+              Der Syntax sollte deutlich machen was passiert.
+            }
+            \note[item]<.>{
+              Durch \myMIn$def$ wird automatisch klar, das eine Funktion definiert wird und \myMIn$var$ definiert eine Variable.
+            }
+            \note[item]<.>{
+              Da die Implementation des CommandPatterns eine Map nutzt um die Command Parameter anzugeben, nutzt der Syntax named parameter.
+            }
+            \note[item]<.>{
+              Aber Syntax nur ein kleiner Punkt\ldots
+            }
+
+        \begin{uncoverenv}<+->%
+          \begin{myInvBox}[width=.9\linewidth]
+            \lstinputlisting[backgroundcolor=, numbers=none, frame=]{img/error2.txt}
+          \end{myInvBox}
+          \vspace{-6em}
+        \end{uncoverenv}
+            \note[item]<.>{
+              Wenn der Nutzer einen Fehler macht, soll dieser möglichst einfach zu finden sein.
+            }
+            \note[item]<.>{
+              Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern woher sie kommen.
+            }
+        \onslide<+->
+            \note[item]<.>{
+              Neben der Wartbarkeit war auch die Macht dieser Makrosprache wichtig.
+            }
+            \note[item]<.>{
+              Wie der Syntax gezeigt hat, geht die Sprache in die Richtung von Scripts, man kann Funktionen anlegen, primitive Datentypen nutzen und hat Kontrollstrukturen zur Verfügung. Da die Makros letztendlich nur auf Commands arbeiten können, ist das Gefahrenpotenzial, was von unwissenden Nutzern ausgeht größtenteils eingeschränkt.
+            }
+    \end{itemize}
+  \end{frame}
 
 %---------------------------------
 % Konzeption
