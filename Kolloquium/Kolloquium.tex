@@ -11,7 +11,7 @@
 \maketitle
     \note[enumerate] {
       \item Moin, ihr kennt alle meinen Namen und \ldots
-      \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erkläre. Das sind 750 Zeilen pro Minute \ldots
+      \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erklären. Das sind 750 Zeilen pro Minute \ldots
     }
 
 %---------------------------------
@@ -22,7 +22,8 @@
   \tableofcontents[hideallsubsections]
 \end{frame}
     \note[enumerate] {
-      \item Da ich das allerdings keinem zumuten kann, werde ich in den folgenden Folien meine Arbeit sehr abstrakt erklären. Und in der Demo nur ein wenig auf den Code eingehen. Wodurch euch langweiliger C++ Code größten Teils erspart bleibt. Wer im Anschluss fragen zum Code hat -- ich werde gerne Fragen beantworten (und länger über den Code reden, als euch recht ist)
+      \item Da ich das allerdings keinem zumuten kann, werde ich in den folgenden Folien meine Arbeit sehr abstrakt erklären. Und in der Demo nur ein wenig auf den Code eingehen. Wodurch euch C++ Code größten Teils erspart bleibt.
+      \item Wer im Anschluss fragen zum Code hat -- ich werde gerne Fragen beantworten (und wahrscheinlich länger über den Code reden, als euch recht ist).
       \item Ich habe nichts dagegen, wenn während der Präsentation Fragen gestellt werden -- für allgemeine Fragen bietet es sich an diese vor der Demo zu stellen.
     }
 
@@ -33,7 +34,7 @@
 %---------------------------------
 \section{Was?}
     \note[itemize]{
-      \item Was?
+      \item Fangen wir mit einer einfachen Frage an: `Was?'. \ldots
     }
 
   %---------------------------------
@@ -55,7 +56,10 @@
               Makros werden genutzt, um eintönige Arbeitsabläufe zu automatisieren.
             }
             \note[item]<.>{
-              Makros führen also Befehle aus, die der Nutzer hätte ausführen können und bauten nicht auf einer anderen Programmiersprache auf. Das ist mit den Befehlen von Sprachen zu vergleichen, die eine Virtuelle Maschine nutzen. Im Fall der Makrosprache ist die Anwendung die Virtuelle Maschine. Es sollte also kein Unterschied machen, ob ein Makro auf Windows geschrieben wurde und dann auf Linux oder XOS ausgeführt wird.
+              Makros führen also Befehle aus, die der Nutzer hätte ausführen können. Somit ist eine Makrosprache eine der höchsten (abstraktesten) Programmiersprachen.
+            }
+            \note[item]<.>{
+              Zu vergleichen ist das am ehesten mit den Sprachen, die eine Virtuelle Maschine nutzen. Im Fall der Makrosprache ist die Anwendung die Virtuelle Maschine. Es sollte also kein Unterschied machen, ob ein Makro auf Windows geschrieben wurde und dann auf Linux oder XOS ausgeführt wird.
             }
 
       \item
@@ -76,10 +80,10 @@
               Eine Makrosprache soll keine Scriptsprache sein. Zwar kann sich eine Makrosprache wie ein Script anfühlen, sollte aber keine sein.
             }
             \note[item]<.>{
-              Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren. Also ein Subset von Script darstellen
+              Der Unterschied von Makros und Scripts liegt vor allem darin, dass Scripts komplett neue Funktionalitäten erzeugen und Makros genutzt werden um vorhandene Funktionen zu automatisieren. -- Also ein Subset von Script darstellen.
             }
             \note[item]<.>{
-              Es ist ein kleiner Unterschied -- der allerdings große Folgen hat. Eine Scriptsprache sollte eine wesentlich größere API anbieten, z.B. call-backs und threads support. Diese beiden würden Scripts ermöglichen, die nicht durch den Benutzer direkt angestoßen werden und asynchron ihre Funktionen ausführen -- z.B. eine automatische Sicherung nach 5 Minuten.
+              Es ist ein kleiner Unterschied -- der allerdings große Folgen hat. Eine Scriptsprache sollte eine wesentlich größere API anbieten, z.B. call-backs und threads support. Diese beiden würden Scripts ermöglichen, die nicht durch den Benutzer direkt angestoßen werden müssen und asynchron ihre Funktionen ausführen -- z.B. eine automatische Sicherung nach 5 Minuten.
             }
     \end{itemize}
   \end{frame}
@@ -106,7 +110,7 @@
               Ein Nachteil ist, dass C++ eine statische Sprache ist -- also nach dem Kompilieren nicht verändert werden kann was ausgeführt werden soll.
             }
             \note[item]<.>{
-              Wäre sie in z.B. Python geschrieben, wären Makros nur ein Python Script welches geladen und abgearbeitet werden würde. (Was ziemlich einfach wäre zu implementieren.)
+              Wäre sie in z.B. Python geschrieben, wären Makros nur ein weiteres Python Script welches geladen und abgearbeitet werden würde. (Was ziemlich einfach wäre zu implementieren.)
             }
       \item<+- | alert@+-+(2)>
         Command-Pattern\tikzmark{cmd-pattern}{}%
@@ -114,7 +118,7 @@
               Ein zentrales Element ist eine implementation des CommandPatterns.
             }
             \note[item]<.>{
-              Das Command-Pattern der Anwendung ist die Schnittstelle die die Makrosprache nutzt um die Anwendung zu verändern.
+              Das Command-Pattern der Anwendung, ist die Schnittstelle, die die Makrosprache nutzt, um mit der Anwendung zu interagieren.
             }
         \begin{uncoverenv}<+->%
           \begin{tikzpicture}[overlay, remember picture]%
@@ -134,12 +138,12 @@
                 Ich werde euch die wichtigsten Elemente präsentieren, die bei der Entwicklung der Makrosprache, bzw. Programmiersprache, durchlaufen wurden.
               }
               \note[item]<.>{
-                Dazu zählt auch dieses UMl Diagramm, welches eine wichtige Grundlage ist. -- Aber es sieht schlimmer aus als es ist\ldots
+                Dazu zählt auch dieses UMl Diagramm, welches eine wichtige Grundlage ist. -- Es sieht schlimmer aus als es ist\ldots
               }
           \action{}
         \end{uncoverenv}
             \note[item]<.>{
-              Der \textbf{Invoker} wird von dem \textbf{CommandProvider} an den \textbf{Client} gegeben, der den nach dieser nach einem \textbf{Command} gefragt hat.
+              Der \textbf{Invoker} wird von dem \textbf{CommandProvider} an den \textbf{Client} gegeben, der den nach nach einem \textbf{Command} gefragt hat.
             }
             \note[item]<.>{
               Der \textbf{Client} kann z.B ein Knopf in einer GUI sein.
@@ -148,7 +152,7 @@
               Der \textbf{HistoryStack} sorgt dafür, dass \textbf{Command}s rückgängig gemacht bzw. wiederhergestellt werden können.
             }
             \note[item]<.>{
-              Das \textbf{Command} ist die Elternklasse von dem \textbf{ConcreteCommand} welches seine Funktionalität in der \textbf{execute} Methode implementiert.
+              Das \textbf{Command} ist die Elternklasse von dem \textbf{ConcreteCommand} welche ihre Funktionalität in der \textbf{execute} Methode implementiert.
             }
             \note[item]<.>{
               Wichtig zu beachten ist die \textbf{map<string, any>} von dem \textbf{Command} diese erlaubt es beliebig viele Daten, mit beliebigen Datentypen, typsicher als Parameter zu übergeben -- ohne die Methodensignatur zu verändern. Der any Typ wird in C++17 enthalten sein.
@@ -175,14 +179,14 @@
               Es soll also möglich sein so etwas zu schreiben \ldots
             }
         \begin{uncoverenv}<+->%
-          \tabto{4.5cm}
+          \tabto{4.6cm}
           \myMIn$var a = 10; a = "10";$
         \end{uncoverenv}
             \note[item]<.>{
               Hier wird der Variable \myMin{a} beim ersten Mal ein Integer zugewiesen und beim zweiten Mal ein String.
             }
             \note[item]<.>{
-              Die Lösung für das zwischenspeichern ist der any Typ der der von dem Command-Pattern genutzt wird.
+              Die Lösung für das zwischenspeichern ist der any Typ, der von dem Command-Pattern genutzt wird.
             }
       \item<+- | alert@+-+(1)>
         Kontrollfluss
@@ -191,58 +195,64 @@
 
               Ein Beispiel wäre \ldots
             }
-        \begin{uncoverenv}<+->%
-          \tabto{4.5cm}
-          \myMIn$if(has_unsaved()) \{ save(); \}$
+        \begin{uncoverenv}<+->
+          \tabto{4.6cm}
+          \myMIn$if(has_unsaved()) \{ save(); \}$\hspace*{-4cm} % Fixes unwanted linebreak
         \end{uncoverenv}
             \note[item]<.>{
-              Das ein Makro nur probiert zu speichern, wenn es etwas zum speichern gibt. Generell sollte speichern schnell gehen, allerdings kann es passieren, dass eine mehrere Gigabyte große Datei geschrieben werden muss, was man dem Nutzer nicht zumuten möchte.
+              Das ein Makro nur probiert zu speichern, wenn es etwas zum speichern gibt.
+            }
+            \note[item]<.>{
+              Generell sollte speichern schnell gehen, allerdings kann es passieren, dass eine mehrere Gigabyte große Datei geschrieben werden muss, was dem Nutzer nicht zumuten ist.
             }
       \item<+- | alert@+-+(2)>
-        Benutzerfreundlichkeit\tikzmark{user-x}{}%
+        Benutzerfreundlichkeit
             \note[item]<.>{
               Die Makrosprache soll für den Benutzer leicht zu verstehen sein \ldots
             }
-        \begin{uncoverenv}<+-+>%
+        \begin{uncoverenv}<+-+>
           \begin{myInvBox}[width=.9\linewidth]
             \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro.txt}
           \end{myInvBox}
           \vspace{-10em}
         \end{uncoverenv}
             \note[item]<.>{
-              Der Syntax sollte deutlich machen was passiert.
+              Der Syntax sollte also deutlich machen, was passieren wird.
             }
             \note[item]<.>{
               Durch \myMIn$def$ wird automatisch klar, das eine Funktion definiert wird und \myMIn$var$ definiert eine Variable.
             }
             \note[item]<.>{
-              Da die Implementation des CommandPatterns eine Map nutzt, um die Command Parameter anzugeben, habe ich mich entschieden nutzt named parameter zu nutzen, um das überladen von Funktionen anhand der Parameternamen zu ermöglichen .
+              Da die Implementation des CommandPatterns eine Map nutzt, um die Command Parameter anzugeben, habe ich mich entschieden named parameter zu nutzen, um das überladen von Funktionen anhand der Parameternamen zu ermöglichen. (\textbf{foo:bar})
             }
             \note[item]<.>{
               Aber in meine Augen ist Syntax nur ein kleiner Punkt\ldots
             }
 
-        \begin{uncoverenv}<+->%
+        \begin{uncoverenv}<+->
           \begin{myInvBox}[width=.9\linewidth]
             \lstinputlisting[backgroundcolor=, numbers=none, frame=]{img/error2.txt}
           \end{myInvBox}
           \vspace{-6em}
         \end{uncoverenv}
             \note[item]<.>{
-              Wenn der Nutzer einen Fehler macht, soll dieser möglichst einfach zu finden sein -- man will mit einem Tool arbeiten und nicht gegen ein Tool kämpfen müssen.
+              Wenn der Nutzer einen Fehler macht, soll dieser möglichst einfach zu finden sein -- man will mit einem Tool arbeiten, nicht dagegen kämpfen.
             }
             \note[item]<.>{
-              Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern auch woher sie kommen.
+              Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern auch wo und weshalb.
             }
             \note[item]<.>{
-              In dem Beispiel wurde ein Semikolon in der main Methode vergessen, was durch die Beiden Fehlermeldungen schnell deutlich wird.
+              In dem Beispiel wurde ein Semikolon in der main Methode vergessen, was die beiden Fehlermeldungen schnell deutlich machen.
             }
         \onslide<+->
             \note[item]<.>{
               Neben der Wartbarkeit war auch die Macht dieser Makrosprache wichtig.
             }
             \note[item]<.>{
-              Wie der Syntax gezeigt hat, geht die Sprache in die Richtung von Scripts, man kann Funktionen anlegen, primitive Datentypen nutzen und hat Kontrollstrukturen zur Verfügung. Da die Makros letztendlich nur auf Commands arbeiten können, ist das Gefahrenpotenzial, was von unwissenden Nutzern ausgeht größtenteils eingeschränkt.
+              Wie der Syntax gezeigt hat, geht die Sprache in die Richtung von Scripts, man kann Funktionen anlegen, primitive Datentypen nutzen und hat Kontrollstrukturen zur Verfügung.
+            }
+            \note[item]<.>{
+              Da die Makros letztendlich nur auf Commands arbeiten können, ist das Gefahrenpotenzial -- was von unwissenden Nutzern ausgeht -- größtenteils eingeschränkt.
             }
     \end{itemize}
   \end{frame}
@@ -253,7 +263,7 @@
 \section{Konzeption}
     \note[enumerate]{
       \item Konzeption
-      \item Was musste alles entwickelt werden?
+      \item Die folgende Liste zeigt nicht nur, was entwickelt werden musste, sondern bildet auch den Ablauf beim Ausführen eines Makros ab.
     }
 
   %---------------------------------
@@ -267,7 +277,7 @@
               Ein Tokenizer.
             }
             \note[item]<.>{
-              Der Tokenizer muss den String / das Makro zu einer Liste von Tokens verwandeln.
+              Der Tokenizer muss den String / das Makro zu einer Liste von Tokens verwandeln \ldots
             }
         \begin{uncoverenv}<+-+>%
           \begin{tikzpicture}[overlay, remember picture, railroad]%
@@ -285,10 +295,10 @@
           \end{tikzpicture}%
         \end{uncoverenv}%
             \note[item]<.>{
-              Wichtig ist, das bei dem erstellen der Liste keine Informationen verloren gehen.
+              Wichtig ist, dass bei dem erstellen der Liste, keine Informationen verloren gehen.
             }
             \note[item]<.>{
-              Die Reihenfolge wird durch das tokenizen zwar nicht verändert aber überflüssige Leerzeichen und Zeilenumbrüche gehen verloren.
+              Die Reihenfolge wird durch das Tokenizen zwar nicht verändert, allerdings gehen überflüssige Leerzeichen und Zeilenumbrüche verloren.
             }
             \note[item]<.>{
               Diese sind für Fehlermeldungen extrem wichtig und müssen für die Tokens mitgespeichert werden.
@@ -297,13 +307,13 @@
       \item
         \temporal<.>{}{Abstrakter Syntaxbaum}{AST}
             \note[item]<.>{
-              Klassen die einen abstrakten Syntaxbaum bilden mussten erstellt werden.
+              Klassen die einen abstrakten Syntaxbaum bilden.
             }
             \note[item]<.>{
-              Ein Abstrakter Syntaxbaum beschreibt den Syntax aus dem Makro, ohne  Informationsverlust. ASTs werden genutzt, da es einfacher ist mit ihnen als Datenstruktur zu arbeiten als mit einem String.
+              Ein Abstrakter Syntaxbaum beschreibt den Syntax aus dem Makro, ohne  Informationsverlust. ASTs werden genutzt, da es einfacher ist mit ihnen als Datenstruktur zu arbeiten, als mit einem String.
             }
             \note[item]<.>{
-              Die meisten Elemente des Syntaxes lassen sich in einem AST wiederfinden. Prominente Ausnahmen sind Klammern, Semikolons und Leerzeichen.
+              Die meisten Elemente des Syntaxes lassen sich als Klasseninstanzen in dem AST wiederfinden. Prominente Ausnahmen sind Klammern, Semikolons und Leerzeichen.
             }
       \item<+- | alert@+-+(1)>
         Parser\tikzmark{parser}{}%
@@ -330,10 +340,10 @@
             \end{tikzpicture}%
         \end{uncoverenv}%
             \note[item]<.>{
-              Das heißt, das der Parser die Tokens diese Form überführen muss.
+              Das heißt, dass der Parser, die Tokens in diese Form überführen muss.
             }%
             \note[item]<.>{
-              Die @-Symbole weisen auf eine Objektinstanz hin und das was in den Klammern eingeschlossen ist, ist ein Bestandteil des Umschließenden Objektes.
+              Die \textbf{@-Symbole} weisen auf eine Objektinstanz hin und das was in den Klammern eingeschlossen ist, ist ein Bestandteil des umschließenden Objektes.
             }%
       \item<+- | alert@+-+(1)>
         Analyser\tikzmark{analyser}{}%
@@ -364,10 +374,10 @@
       \item
         Interpreter
             \note[item]<.>{
-              Ein Interpreter.
+              Letztlich bedarf es einem Interpreter.
             }
             \note[item]<.>{
-              Der Interpreter interpretiert den AST, den der Parser erzeugt hat und ist die Komponente -- bzw. der Client aus dem CommandPattern -- der die Commands ausführen wird.
+              Der Interpreter interpretiert den AST, den der Parser erzeugt hat und ist die Komponente -- bzw. der Client aus dem CommandPattern -- der die Commands ausführt.
             }
             \note[item]<.>{
               Somit kommen wir zu wir \ldots (zu weiteren UML Diagrammen)
@@ -388,7 +398,10 @@
           Zu weiteren UML Diagrammen.
         }
         \note[item]<.>{
-          Für meinen Geschmack helfen die Diagramme nicht genug, sind aber die beste Möglichkeit anderen Menschen klar zu machen, was für Abhängigkeiten zwischen den Elementen existieren.
+          Für meinen Geschmack helfen die Diagramme nicht genug.
+        }
+        \note[item]<.>{
+          Sie sind aber die beste Möglichkeit, die ich kenne, anderen Menschen mein Wissen, über die Datenstrukturen, zu übertragen.
         }
 
     \begin{actionenv}<+->
@@ -436,13 +449,10 @@
       };
     \end{tikzpicture}%
         \note[item]{
-          Die restlichen Abhängigkeiten der AST Klassen.
-        }
-        \note[item]{
           Dieses UML Diagramm zeigt die restlichen Abhängigkeiten der Klassen -- die meisten Verbindungen sollten Selbstverständlich sein.
         }
         \note[item]{
-          Eine \textbf{Funktion} hat ein \textbf{Scope}. Ein \textbf{Loop} hat ein \textbf{Scope} und eine \textbf{Condition} und eine Condition kann aus \textbf{Operatoren}, \textbf{Funktionsaufrufen} usw. bestehen.
+          Eine \textbf{Funktion} besteht aus einem \textbf{Scope}. Ein \textbf{Loop} besteht aus einem \textbf{Scope} und einer \textbf{Condition}. Eine \textbf{Condition} kann aus \textbf{Variablen}, \textbf{Funktionsaufrufen} usw. bestehen.
         }
   \end{frame}
 
@@ -476,16 +486,16 @@
         };
       \end{tikzpicture}%
           \note[item]<.>{
-            Die Interpreter Klassen.
+            Letztlich die Interpreter Klassen.
           }
           \note[item]<.>{
-            Der \textbf{Interpreter} nutzt den \textbf{Parser} um einen AST zu erzeugen. den er dann interpretieren kann
+            Der \textbf{Interpreter} nutzt den \textbf{Parser} um einen AST zu erzeugen, den er dann interpretieren kann.
           }
           \note[item]<.>{
             Um dies zu tun, muss der Interpreter auch Daten verwalten. Das wird von dem \textbf{Stack} übernommen.
           }
           \note[item]<.>{
-            Der Stack bildet -- mit Instanzen von sich selber -- einen Stack.\ldots
+            Der Stack bildet einen Stack mit Instanzen von sich selber \ldots
           }
     \end{uncoverenv}
     \begin{uncoverenv}<+-+(1)>%
@@ -495,10 +505,10 @@
         };
       \end{tikzpicture}%
           \note[item]<.>{
-            Diese Art und Weise einen Stack aufzubauen ist normal in C++ oder C++.
+            Diese Art und Weise einen Stack aufzubauen ist normal in C oder C++.
           }
           \note[item]<.>{
-            Der Stack wird durch die drei Stack Instanzen (\textbf{1, 2 und 3}) gebildet.
+            In dem Beispiel wird der Stack durch die drei Stack Instanzen (\textbf{1, 2 und 3}) gebildet.
           }
           \note[item]<.>{
             Ein späteres Beispiel wird wahrscheinlich mehr Aufschluss über die Funktionsweise bringen. \ldots (Denn dafür wisst ihr noch zu wenig.)
@@ -510,7 +520,7 @@
         \end{tikzpicture}%
       \end{uncoverenv}%
           \note[item]<.>{
-            Denn dafür wisst ihr noch zu wenig. Nehmt es erst einmal so hin.
+            Denn dafür wisst ihr noch zu wenig. Nehmt es erst einmal so hin, das dies Sinnvoll ist.
           }
     \end{uncoverenv}
 
@@ -530,7 +540,7 @@
             Der Code, des OperatorProviders ist sehr Interessant -- leider haben wir nicht genug Zeit um diesen durchzugehen. Deswegen muss ich euch mit dem any Typ abspeisen, der auch hier ein wichtiger Eckpunkt ist.
           }
           \note[item]<.>{
-            Im Funktionsaufrufe auszuführen -- die nicht zu selber definierten Funktionen führen -- nutzt der Interpreter den \textbf{CommandProvider}.
+            Um Funktionsaufrufe auszuführen -- die nicht zu selber definierten Funktionen führen -- nutzt der Interpreter den \textbf{CommandProvider}.
           }
     \end{uncoverenv}
   \end{frame}
@@ -539,6 +549,11 @@
 % Realisierung
 %---------------------------------
 \section{Realisierung}
+    \note[enumerate]{
+      \item Das war die trockene Theorie.
+      \item In den Folgenden Folien werde ich an dem Vorherigen Beispiel die einzelnen Schritte erklären, die beim Interpretieren durchlaufen werden.
+    }
+
   %---------------------------------
   % Tokenizer
   %---------------------------------
