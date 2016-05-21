@@ -10,7 +10,7 @@
 %---------------------------------
 \maketitle
     \note[enumerate] {
-      \item Moin, ihr kennt alle meinen Namen und \ldots
+      \item Moin, ich denke ihr kennt alle meinen Namen (\textbf{\MetaAuthor}) und \ldots
       \item Da wir nur wenig Zeit haben, muss ich euch in den nächsten 20 min $15.000$ Zeilen Code erklären. Das sind 750 Zeilen pro Minute \ldots
     }
 
@@ -22,9 +22,9 @@
   \tableofcontents[hideallsubsections]
 \end{frame}
     \note[enumerate] {
-      \item Da ich das allerdings keinem zumuten kann, werde ich in den folgenden Folien meine Arbeit sehr abstrakt erklären. Und in der Demo nur ein wenig auf den Code eingehen. Wodurch euch C++ Code größten Teils erspart bleibt.
-      \item Wer im Anschluss Fragen zum Code hat -- ich werde gerne Fragen beantworten (und wahrscheinlich länger über den Code reden, als euch recht ist).
-      \item Fragen können vor und nach der Demo gestellt werde. Nachdem meine Professoren ihre Fragen gestellt haben, werde ich auch gerne Fragen von den Zuschauern beantworten, da ich möchte, dass jeder etwas von meiner Präsentation mitnehmen kann.
+      \item Das kann ich allerdings keinem zumuten, weshalb ich in den folgenden Folien meine Arbeit sehr abstrakt erklären werde. In der Demo werde ich auch nur ein wenig auf den Code eingehen. Wodurch euch C++ Code größten Teils erspart bleibt.
+      \item Wer im Anschluss Fragen zum Code hat -- ich werde gerne Fragen beantworten (und wahrscheinlich länger über C++ reden, als euch recht ist).
+      \item Fragen zu der Präsentation und der Demo können vor und nach der Demo gestellt werde. Nachdem meine Professoren ihre Fragen gestellt haben, werde ich auch gerne Fragen von den Zuschauern beantworten, da ich möchte, dass jeder etwas von meiner Präsentation mitnehmen kann.
     }
 
 % TODO C++ bitte möglichst klein halten. Interessanter ist ein Querschnitt durch die Arbeit, also von Anforderungen über Konzeption bis Realisierung und Eval - das kann (auch) man alles schön anhand von Konzepten machen, ohne sich in Programmiersprachendetails zu verlieren. Mir fallen da u.a. anderem ein: Makros, Command-Pattern, Architektur, die Kette Tokenizer -> Parser -> Interpreter, ... Fokussiere Dich auf zentrale Ideen - welche das sind, musst letztendlich Du entscheiden (Syntax würde ich ebenfalls klein halten (max. 1 Folie)).
@@ -570,10 +570,26 @@
   %---------------------------------
   \begin{frame}{Interpreter}
   \end{frame}
+
+
   %---------------------------------
   % Probleme
   %---------------------------------
   \begin{frame}{Probleme} % TODO Compiler Fehler, any
+  \end{frame}
+
+% A Parser for Things
+% is a Function from Strings
+% to Lists of Pairs
+% of Things and Strings
+
+% – Fritz Ruehr
+
+  %---------------------------------
+  % Ähnliche Werke
+  %---------------------------------
+  \begin{frame}{Ähnliche Werke} % TODO Compiler Fehler, any
+  ChaiScript ... % TODO
   \end{frame}
 
 %---------------------------------
