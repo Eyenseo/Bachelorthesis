@@ -568,38 +568,304 @@
   % Tokenizer
   %---------------------------------
   \begin{frame}{Tokenizer}
+    \pause
+        \note[item]<.>{
+          Der Tokenizer hat drei Hauptartenarten von Tokens
+        }
+    \begin{itemize}[<+- | alert@+>]
+      \item
+        Normale Tokens
+            \note[item]<.>{
+              Normale Tokens werden durch alle Zeichen getrennt, die keine Buchstaben, Zahlen oder Unterstriche sind.
+            }
+            \note[item]<.>{
+               Oder durch sich selber ein Token bilden  z.B. eine Klammer.
+            }
+
+      \item<+- | alert@+-+(1)>
+        Strings\tikzmark{TokenizerString}{}
+            \note[item]<.>{
+              Strings sind besonders, \ldots (da sie ein Token bilden müssen)
+            }
+        \begin{uncoverenv}<+-+>%
+          \begin{tikzpicture}[overlay, remember picture]%
+            \node[coordinate] at (page cs:-.2,0) (TokenizerStringHelper){};
+            \node[anchor=north west, yshift=.6em] at (TokenizerStringHelper |- TokenizerString) (TokenizerStringCode) {%
+              \myMIn$print("print(\\"Hallo Welt!\\"")$
+            };%
+          \end{tikzpicture}%
+        \end{uncoverenv}
+            \note[item]<.>{
+              Da sie ein Token bilden müssen. Sonst würden die Leerzeichen verloren gehen.
+            }
+            \note[item]<.>{
+              Außerdem müssen die Anführungszeichen richtig interpretiert werden.
+            }
+
+      \item<+- | alert@+-+(1)>
+        Floats\tikzmark{TokenizerFloat}{}
+            \note[item]<.>{
+              Dezimalzahlen sind -- ähnlich wie Strings -- besondere Tokens\ldots (Da die beiden Teile der Zahl durch ein Punkt getrennt werden.)
+            }
+
+
+        \begin{uncoverenv}<+-+>%
+          \begin{tikzpicture}[overlay, remember picture]%
+            \node[coordinate] at (page cs:-.2,0) (TokenizerFloatHelper){};
+            \node[anchor=north west, yshift=.6em] at (TokenizerFloatHelper |- TokenizerFloat) (TokenizerFloatCode) {%
+              \myMinin{0.1} oder \myMinin{.1234}
+            };%
+          \end{tikzpicture}%
+        \end{uncoverenv}
+            \note[item]<.>{
+              Da die beiden Teile der Zahl durch ein Punkt getrennt werden.
+            }
+    \end{itemize}
   \end{frame}
+
   %---------------------------------
   % Parser
   %---------------------------------
-  \begin{frame}{Parser} % TODO mention Analyser
-    \note{Analyser}
+  \begin{frame}{Parser}
+    \pause
+        \note[item]<.>{
+          Kommen wir zu den Parser.
+        }
+        \note[item]<.>{
+          Der Parser ist der komplexeste Teil der Arbeit -- aus Zeitgründen werde ich nur zwei wichtige Punkte anschneiden und ansonsten behaupten, das es einfach funktioniert.
+        }
+    \begin{itemize}[<+- | alert@+>]
+      \item
+        Recursive descent
+            \note[item]<.>{
+              Der Parser wurde recursive descent implementiert.
+            }
+            \note[item]<.>{
+              Das heißt, dass die Grammatik der Sprache durch Funktionsaufrufe abgebildet wird. Anstelle von Zustandsübergangstabellen.
+            }
+
+      \item<+- | alert@+-+(2)>
+        Operatoren\tikzmark{ParserOperator}{}
+            \note[item]<.>{
+              Ein schwieriger Punkt beim parsen ist das zusammenstellen der Operatoren\ldots
+            }
+
+          \begin{uncoverenv}<+-+>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \node[coordinate] at (page cs:-.2,0) (ParserOperatorHelper){};
+              \node[anchor=north west, yshift=.6em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
+                \myMIn$var foo = 1 - 1;$
+              };%
+            \end{tikzpicture}%
+          \end{uncoverenv}
+            \note[item]<.>{
+              Der Ablauf wäre wie folgt:
+            }
+            \note[item]<.>{
+              Parsen einer Variablen Deklaration(\textbf{var}). In dieser Funktion wird die Funktion zum Wertzuweisung parsen(\textbf{=}) aufgerufen. Welche dann die Funktion zum parsen eines Literals(\textbf{1}) aufruft. Diese returned zurück zur Zuweisungsfunktion, die dann die Funktion zum parsen von Operatoren(\textbf{-}) aufruft. Welche wiederum ein die Funktion für Literals(\textbf{1}) aufruft.
+            }
+            \note[item]<.>{
+              Durch diese Reihenfolge wird allerdings kein Baum erzeugt, sondern eine Liste. Von Literal operator Literal.
+            }
+            \note[item]<.>{
+              Die Liste muss durch einen zweiten Schritt in der Operator Funktion dann zu einem Operator mit zwei Literals umgewandelt werden.
+            }
+
+          \begin{uncoverenv}<+-+>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \node[coordinate] at (page cs:-.2,0) (ParserOperatorHelper){};
+              \node[anchor=north west, yshift=.6em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
+                \myMIn$var foo = 1 --- 1;$
+              };%
+            \end{tikzpicture}%
+          \end{uncoverenv}
+            \note[item]<.>{
+              Und hier?
+            }
+            \note[item]<.>{
+              Hier wird der zweite Literal zweimal negiert und dann vom ersten abgezogen.
+            }
+            \note[item]<.>{
+              Wie genau das Abläuft kann ich leider aus Zeitgründen nicht zeigen.
+            }
+    \end{itemize}
   \end{frame}
+
   %---------------------------------
-  % Interpreter
+  % Parser
   %---------------------------------
   \begin{frame}{Interpreter}
+    \pause
+        \note[item]<.>{
+          Womit wir beim Interpreter wären.
+        }
+        \note[item]<.>{
+          Der Interpreter ist sehr einfach -- um nicht primitiv zu sagen -- wodurch er wenig Logik besitzt, die zu erklären ist.
+        }
+    \begin{itemize}[<+- | alert@+>]
+      \item Läuft den AST ab
+          \note[item]<.>{
+            Der Interpreter läuft den generierten AST ab.
+          }
+      \item \myMin{OperatorProvider}
+          \note[item]<.>{
+            Macht sich den OperatorProvider für Operationen zunutze
+          }
+      \item \myMin{CommandProvider}
+          \note[item]<.>{
+            Ruft Commands über den CommandProvider auf
+          }
+      \item \myMin{Stack}
+          \note[item]<.>{
+            Und überlässt die Daten und Funktionsverwaltung dem Stack.
+          }
+    \end{itemize}
   \end{frame}
 
 
-  %---------------------------------
-  % Probleme
-  %---------------------------------
-  \begin{frame}{Probleme} % TODO Compiler Fehler, any
-  \end{frame}
+  \begin{frame}{Interpreter/Stack}
+    \pause
+        \note[item]<.>{
+          Somit kommen wir zum Letzten Teil -- dem Stack bzw. was beim interpretieren passiert.
+        }
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int1.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_0)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Der rote Punkt gibt die Zeile an, welche gerade interpretiert wird bzw. den Stack verändert.
+        }
+        \note[item]<.>{
+          Am Anfang gibt es eine Root Node.\ldots
+        }
 
-% A Parser for Things
-% is a Function from Strings
-% to Lists of Pairs
-% of Things and Strings
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int2.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_1)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Als erstes definiert der Interpreter die Funktionen eines Scopes, bevor er anfängt diese zu interpretieren.
+        }
+        \note[item]<.>{
+          Dadurch kann \textbf{main}\ldots( vor \textbf{foo} definiert werden.)
+        }
 
-% – Fritz Ruehr
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int3.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_7)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+         Vor \textbf{foo} definiert werden.
+        }
 
-  %---------------------------------
-  % Ähnliche Werke
-  %---------------------------------
-  \begin{frame}{Ähnliche Werke} % TODO Compiler Fehler, any
-  ChaiScript ... % TODO
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int5.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_2)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Als nächstes wird die \textbf{main} Methode aufgerufen.
+        }
+        \note[item]<.>{
+          Dadurch wird eine neue Stack Instanz erzeugt, in der eine Variable \textbf{bar} angelegt wird.\ldots
+        }
+
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int6.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_2)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Der der String ``Eins Leerzeichen'' wird bar zugewiesen.
+        }
+
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int8.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_4)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Danach wird \textbf{fun} aufgerufen, wodurch wieder eine Stack Instanz zu dem Stack hinzugefügt wird.
+        }
+        \note[item]<.>{
+          Der Stackinstanz wird \textbf{foo} als Alias auf \textbf{bar} mitgegeben.
+        }
+
+
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.4,0) (stack int) {\myInput{img/intstack.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_4)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Es gibt nun also zwei Stacks die jeweils aus zwei Stack Instanzen bestehen -- bzw. im nächsten Schritt aus zwei und drei.
+        }
+        \note[item]<.>{
+          Wieso?
+        }
+        \note[item]<.>{
+          Wenn es nur einen Stack geben würde -- der \textbf{fun Stack} also den \textbf{main Stack} haben würde, könnte man aus fun bar verändern. Das will man aber nicht.
+        }
+
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int9.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_9)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Bei dem referenzieren von foo -- also bar -- ist nur lesen erlaubt.
+        }
+        \note[item]<.>{
+          Das heißt nach dem Addieren von dem String ``eins Leerzeichen'' und der Dezimalzahl ``1.1'' der Alias gelöscht und eine Variable foo angelegt wird, die das Ergebnis speichert.
+        }
+        \note[item]<.>{
+          Abgesehen von Scope Sicherheit bietet dieses Verfahren weniger Speicherverbrauch und sollte deswegen schneller sein.
+        }
+
+    \begin{uncoverenv}<+-+(1)>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:.5,0) (stack int) {\myInput{img/int10.tikz}};
+        \node[anchor=center] at (page cs:-.5,0) (stack code) {\lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/int_macro.txt}};
+        \node[anchor=center,red,fill,circle,inner sep=.3ex] (at_pos) at ($(int_macro_l_4)-(0:.4)$){};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Nach dem return aus fun, ist als bar unverändert.
+        }
+        \note[item]<.>{
+          Und der String aus fun wird in die C++ Ebene returned.
+        }
+
+    \begin{uncoverenv}<+>%
+      \begin{tikzpicture}[overlay, remember picture]%
+        \node[anchor=center] at (page cs:0,0) (finish-sleepy) {\includegraphics[width=.4\linewidth]{img/sleepy_cat}};
+      \end{tikzpicture}%
+    \end{uncoverenv}%
+        \note[item]<.>{
+          Ihr habt es geschafft!
+        }
+        \note[item]<.>{
+          Welche Fragen wollt ihr nun schon stellen, bevor ich die kurze Demo zeige?
+        }
   \end{frame}
 
 %---------------------------------
@@ -617,13 +883,15 @@
 %---------------------------------
   \section{Demo}
 
-  \appendix
 %---------------------------------
-% Referenzen
+% Weitere Fragen
 %---------------------------------
-  \begin{frame}[allowframebreaks]{Referenzen}
-    % \bibliography{demo} FIXME
-    % \bibliographystyle{abbrv} FIXME
+  \begin{frame}[standout]
+    Weitere Fragen?
   \end{frame}
+      \note[itemize]{
+        \item \textbf{Katzen:} Ich habe genug theoretische und zum teil langweilige Präsentationen in meinem Studium gesehen. Dem Trend wollte ich nicht folgen -- und auch wenn meine Präsentation nicht so viel Wissen vermittelt hat, hatte sie zumindest Katzen. Wer reine Theorie will, ist mit meiner THesis besser beraten als mit mir.
+      }
+
 \end{document}
 
