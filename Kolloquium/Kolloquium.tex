@@ -181,7 +181,7 @@
             \note[item]<.>{
               Durch das dynamische Typsystem soll es also möglich sein, so etwas zu schreiben \ldots
             }
-        \begin{uncoverenv}<+->%
+        \begin{uncoverenv}<+-+>%
           \tabto{4.6cm}
           \myMIn$var a = 10; a = "10";$
         \end{uncoverenv}
@@ -198,7 +198,7 @@
 
               Ein Beispiel wäre \ldots
             }
-        \begin{uncoverenv}<+->
+        \begin{uncoverenv}<+-+>
           \tabto{4.6cm}
           \myMIn$if(has_unsaved()) \{ save(); \}$\hspace*{-4cm} % Fixes unwanted linebreak
         \end{uncoverenv}
@@ -213,11 +213,14 @@
             \note[item]<.>{
               Außerdem soll die Makrosprache für den Benutzer leicht zu verstehen sein. Da der Benutzer auch der Endkunde sein kann \ldots
             }
-        \begin{uncoverenv}<+-+>
-          \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro.txt}
-          \end{myInvBox}
-          \vspace{-10em}
+        \begin{uncoverenv}<+>
+          \begin{tikzpicture}[overlay, remember picture]%
+            \node[anchor=north] at (page cs:-0.0125,-0.1) (usability exmacro) {
+              \begin{myInvBox}[width=.9\linewidth]
+                \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,]{img/exmacro.txt}
+              \end{myInvBox}
+            };%
+          \end{tikzpicture}%
         \end{uncoverenv}
             \note[item]<.>{
               Der Syntax sollte also deutlich machen, was passieren wird.
@@ -231,11 +234,14 @@
             \note[item]<.>{
               Aber in meine Augen ist Syntax nur ein kleiner Punkt der Benutzerfreundlichkeit \ldots
             }
-        \begin{uncoverenv}<+->
-          \begin{myInvBox}[width=.9\linewidth]
-            \lstinputlisting[backgroundcolor=, numbers=none, frame=]{img/error2.txt}
-          \end{myInvBox}
-          \vspace{-5em}
+        \begin{uncoverenv}<+>
+         \begin{tikzpicture}[overlay, remember picture]%
+            \node[anchor=north] at (page cs:-0.0125,-0.1) (usability error2) {
+              \begin{myInvBox}[width=.9\linewidth]
+                \lstinputlisting[backgroundcolor=, numbers=none, frame=]{img/error2.txt}
+              \end{myInvBox}
+            };%
+          \end{tikzpicture}%
         \end{uncoverenv}
             \note[item]<.>{
               In dem Beispiel wurde ein Semikolon in der main Methode vergessen, was die beiden Fehlermeldungen schnell deutlich machen.
@@ -246,16 +252,17 @@
             \note[item]<.>{
               Die Fehlermeldungen müssen dem Nutzer nicht nur sagen was falsch ist, sondern auch wo und weshalb.
             }
-        \onslide<+->
-            \note[item]<.>{
-              Neben der Wartbarkeit, war auch die Macht dieser Makrosprache wichtig.
-            }
-            \note[item]<.>{
-              Wie der Syntax gezeigt hat, geht die Sprache in die Richtung von Scripts, man kann Funktionen anlegen, primitive Datentypen nutzen und hat Kontrollstrukturen zur Verfügung.
-            }
-            \note[item]<.>{
-              Da die Makros letztendlich nur auf Commands arbeiten können, ist das Gefahrenpotenzial -- was von unwissenden Nutzern ausgeht -- größtenteils eingeschränkt.
-            }
+        \item<+- | alert@+>
+          Wartbarkeit und Macht
+              \note[item]<.>{
+                Neben der Wartbarkeit, war auch die Macht dieser Makrosprache wichtig.
+              }
+              \note[item]<.>{
+                Wie der Syntax gezeigt hat, geht die Sprache in die Richtung von Scripts, man kann Funktionen anlegen, primitive Datentypen nutzen und hat Kontrollstrukturen zur Verfügung.
+              }
+              \note[item]<.>{
+                Da die Makros letztendlich nur auf Commands arbeiten können, ist das Gefahrenpotenzial -- was von unwissenden Nutzern ausgeht -- größtenteils eingeschränkt.
+              }
     \end{itemize}
   \end{frame}
 
