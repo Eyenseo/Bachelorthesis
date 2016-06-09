@@ -176,7 +176,7 @@
               Die Makros sollten davon profitieren, dass die Commands Rückgabewerte und Parameter haben. Das heißt, dass es eine Möglichkeit geben muss, dass ``unbekannte'' Datentypen zwischengespeichert werden.
             }
             \note[item]<.>{
-              Unbekannt impliziert, dass die Makrosprache mit allen Datentypen arbeiten können muss.
+              Unbekannt impliziert, dass die Makrosprache mit allen Datentypen arbeiten können muss, nicht nur den primitiven, die als Literals in dem Makro erstellt werden können.
             }
             \note[item]<.>{
               Durch das dynamische Typsystem soll es also möglich sein, so etwas zu schreiben \ldots
@@ -186,7 +186,7 @@
           \myMIn$var a = 10; a = "10";$
         \end{uncoverenv}
             \note[item]<.>{
-              Hier wird der Variable \myMin{a} beim ersten Mal ein Integer zugewiesen und beim zweiten Mal ein String.
+              Hier wird der Variable \textbf{a} beim ersten Mal ein Integer zugewiesen und beim zweiten Mal ein String.
             }
             \note[item]<.>{
               Die Lösung für das zwischenspeichern ist der any Typ, der von dem Command-Pattern genutzt wird.
@@ -226,7 +226,7 @@
               Der Syntax sollte also deutlich machen, was passieren wird.
             }
             \note[item]<.>{
-              Durch \myMIn$def$ wird automatisch klar, das eine Funktion definiert wird und \myMIn$var$ definiert eine Variable.
+              Durch \textbf$def$ wird automatisch klar, das eine Funktion definiert wird und \textbf$var$ definiert eine Variable.
             }
             \note[item]<.>{
               Da die Implementation des CommandPatterns eine Map nutzt, um die Parameter des Commands anzugeben, habe ich mich entschieden named parameter zu nutzen (\textbf{foo:bar}). Diese schreiben keine Reihenfolge vor und ermöglichen das überladen von Funktionen anhand der Parameternamen.
@@ -304,7 +304,7 @@
           \end{tikzpicture}%
         \end{uncoverenv}%
             \note[item]<.>{
-              Wichtig ist, dass bei dem erstellen der Liste, keine Informationen verloren gehen.
+              Wichtig ist, dass bei dem erstellen der Liste, keine nützlichen Informationen verloren gehen.
             }
             \note[item]<.>{
               Zwar wird die Reihenfolge durch das Tokenizen nicht verändert, allerdings gehen überflüssige Leerzeichen und Zeilenumbrüche verloren.
@@ -352,7 +352,7 @@
             \end{tikzpicture}%
         \end{uncoverenv}%
             \note[item]<.>{
-              Das heißt, dass der Parser, die Tokens in \textbf{diese} Form überführen muss.
+              Das heißt das der Parser die Tokens in \textbf{diese} Form überführen muss.
             }%
             \note[item]<.>{
               Die \textbf{@-Symbole} weisen auf eine AST Objektinstanz hin.
@@ -373,18 +373,18 @@
           \begin{tikzpicture}[overlay, remember picture]%
             \node[coordinate] at (page cs:-.4,0) (analyserMacroHelper){};
             \node[anchor=north west, yshift=.6em] at (analyserMacroHelper |- analyser) (analyserMacro) {%
-              \myMIn$def fun()\{ break; \}$
+              \myMIn$def gun()\{ break; \}$
             };%
           \end{tikzpicture}%
         \end{uncoverenv}
             \note[item]<.>{
-              Ein Beispiel wäre die Funktion \myMin{fun}.
+              Ein Beispiel wäre die Funktion \textbf{gun}.
               }
             \note[item]<.>{
               Der AST kann den Code darstellen. Eine Funktionsdefinition, die in dem Funktionsscope ein break Element hat.
             }
             \note[item]<.>{
-              Bloß macht dies wenig Sinn, da \myMin{break} nur in Schleifen eine Funktion hat.
+              Bloß macht dies wenig Sinn, da \textbf{break} nur in Schleifen eine Funktion hat.
             }
             \note[item]<.>{
               Es ist also wichtig dem Nutzer zu sagen, dass das was er geschrieben hat höchst wahrscheinlich nicht das ist, was er erwartet.
@@ -528,7 +528,7 @@
         };
       \end{tikzpicture}%
           \note[item]<.>{
-            In diesem Beispiel wird der Stack durch die drei Stack Instanzen (\textbf{0, 1 und 2}) gebildet.
+            \textbf{Hier} wird der Stack durch die drei Stack Instanzen (\textbf{0, 1 und 2}) gebildet.
           }
           \note[item]<.>{
             Ein späteres Beispiel wird wahrscheinlich mehr Aufschluss über die Funktionsweise und Vorteile bringen.
@@ -547,10 +547,10 @@
             Die Nutzung eines OperatorProviders sorgt dafür, dass Operatoren für beliebige Datentypen angeboten werden können, ohne den Interpreter anzupassen.
           }
           \note[item]<.>{
-            Der Code, des OperatorProviders ist sehr Interessant -- leider haben wir nicht genug Zeit um diesen durchzugehen. Weshalb ich euch wieder mit dem any Typ abspeisen muss, der auch hier ein wichtiger Eckpunkt ist.
+            Der Code des OperatorProviders ist sehr Interessant -- leider haben wir nicht genug Zeit um diesen durchzugehen. Weshalb ich euch wieder mit dem any Typ abspeisen muss, der auch hier ein wichtiger Eckpunkt ist.
           }
           \note[item]<.>{
-            Um Funktionsaufrufe auszuführen -- die nicht zu selber definierten Funktionen aus dem Makro führen -- nutzt der Interpreter den \textbf{CommandProvider}.
+            Um Funktionsaufrufe auszuführen -- die nicht zu selber definierten Funktionen aus dem Makro führen -- nutzt der Interpreter den \textbf{CommandProvider}, die letztendlich die Komponente sind, die die Anwendung verändern.
           }
     \end{uncoverenv}
   \end{frame}
@@ -643,7 +643,9 @@
             \note[item]<.>{
               Das heißt, dass die Grammatik der Sprache durch Funktionsaufrufe abgebildet wird. Anstelle von Zustandsübergangstabellen.
             }
-
+            \note[item]<.>{
+              Was das bedeutet, zeige ich an dem folgenden Punkt.
+            }
       \item<+- | alert@+-+(2)>
         Operatoren\tikzmark{ParserOperator}{}
             \note[item]<.>{
@@ -655,6 +657,13 @@
               \node[coordinate] at (page cs:-.2,0) (ParserOperatorHelper){};
               \node[anchor=north west, yshift=.6em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
                 \myMIn$var foo = 1 - 1;$
+
+
+
+                % FIXME each step with line to symbolise scope!!!!
+
+
+
               };%
             \end{tikzpicture}%
           \end{uncoverenv}
@@ -662,7 +671,7 @@
               Der Ablauf wäre wie folgt:
             }
             \note[item]<.>{
-              Parsen einer Variablen Deklaration(\textbf{var}). In dieser Funktion wird die Funktion zum Wertzuweisung parsen(\textbf{=}) aufgerufen. Welche dann die Funktion zum parsen eines Literals(\textbf{1}) aufruft. Diese returned zurück zur Zuweisungsfunktion, die dann die Funktion zum parsen von Operatoren(\textbf{-}) aufruft. Welche wiederum ein die Funktion für Literals(\textbf{1}) aufruft.
+              Parsen einer Variablen Deklaration(\textbf{var}). In dieser Funktion wird die Funktion zum Wertzuweisung -- bzw. Operator -- parsen(\textbf{=}) aufgerufen. Welche dann die Funktion zum parsen eines Literals(\textbf{1}) aufruft. Diese returned zurück zur Zuweisungsfunktion, die dann die Funktion zum parsen von Operatoren(\textbf{-}) aufruft. Welche wiederum ein die Funktion für Literals(\textbf{1}) aufruft.
             }
             \note[item]<.>{
               Durch diese Reihenfolge wird allerdings kein Baum erzeugt, sondern eine Liste. Von Literal operator Literal.
@@ -683,7 +692,7 @@
               Und hier?
             }
             \note[item]<.>{
-              Hier wird der zweite Literal zweimal negiert und dann vom ersten abgezogen.
+              Hier wird das zweite Literal zweimal negiert und dann vom ersten abgezogen.
             }
             \note[item]<.>{
               Wie genau das Abläuft kann ich leider aus Zeitgründen nicht zeigen.
@@ -739,7 +748,7 @@
           Der rote Punkt gibt die Zeile an, welche gerade interpretiert wird bzw. den Stack verändert.
         }
         \note[item]<.>{
-          Am Anfang gibt es eine Root Node.\ldots
+          Am Anfang gibt es eine Root Node, die durch die root Stack Instanz abgebildet wird\ldots
         }
 
     \begin{uncoverenv}<+>%
@@ -750,7 +759,7 @@
       \end{tikzpicture}%
     \end{uncoverenv}%
         \note[item]<.>{
-          Als erstes definiert der Interpreter die Funktionen eines Scopes, bevor er anfängt diese zu interpretieren.
+          Als ersten Schritt definiert der Interpreter die Funktionen eines Scopes, bevor er anfängt diese zu interpretieren.
         }
         \note[item]<.>{
           Dadurch kann \textbf{main}\ldots( vor \textbf{foo} definiert werden.)
@@ -789,7 +798,7 @@
       \end{tikzpicture}%
     \end{uncoverenv}%
         \note[item]<.>{
-          Der der String ``Eins Leerzeichen'' wird bar zugewiesen.
+          Der String ``Eins Leerzeichen'' wird bar zugewiesen.
         }
 
     \begin{uncoverenv}<+>%
@@ -800,7 +809,7 @@
       \end{tikzpicture}%
     \end{uncoverenv}%
         \note[item]<.>{
-          Danach wird \textbf{fun} aufgerufen, wodurch wieder eine Stack Instanz zu dem Stack hinzugefügt wird.
+          Danach wird \textbf{fun} aufgerufen, wodurch wieder eine Stack Instanz (\textbf{fun}) zu dem Stack hinzugefügt wird.
         }
         \note[item]<.>{
           Der Stackinstanz wird \textbf{foo} als Alias auf \textbf{bar} mitgegeben.
@@ -821,7 +830,7 @@
           Wieso?
         }
         \note[item]<.>{
-          Wenn es nur einen Stack geben würde -- der \textbf{fun Stack} also den \textbf{main Stack} haben würde, könnte man aus fun bar verändern. Das will man aber nicht.
+          Wenn es nur einen Stack geben würde -- der \textbf{fun Stack} also den \textbf{main Stack} haben würde, könnte man aus der fun Funktion die bar Variable verändern. Das will man aber nicht.
         }
 
     \begin{uncoverenv}<+>%
@@ -835,10 +844,10 @@
           Bei dem referenzieren von foo -- also bar -- ist nur lesen erlaubt.
         }
         \note[item]<.>{
-          Das heißt nach dem Addieren von dem String ``eins Leerzeichen'' und der Dezimalzahl ``1.1'' der Alias gelöscht und eine Variable foo angelegt wird, die das Ergebnis speichert.
+          Das heißt nach dem Addieren von dem String ``Eins Leerzeichen'' und der Dezimalzahl ``1.1'', wird der Alias gelöscht und eine Variable foo angelegt, die das Ergebnis speichert wird.
         }
         \note[item]<.>{
-          Abgesehen von Scope Sicherheit bietet dieses Verfahren weniger Speicherverbrauch und sollte deswegen schneller sein.
+          Abgesehen von Scope Sicherheit bietet dieses Verfahren weniger Speicherverbrauch und sollte deswegen generell schneller sein.
         }
 
     \begin{uncoverenv}<+-+(1)>%
@@ -857,7 +866,7 @@
 
     \begin{uncoverenv}<+>%
       \begin{tikzpicture}[overlay, remember picture]%
-        \node[anchor=center] at (page cs:0,0) (finish-sleepy) {\includegraphics[width=.4\linewidth]{img/sleepy_cat}};
+        \node[anchor=center] at (page cs:0,0) (finish-sleepy) {\includegraphics[width=.5\linewidth]{img/sleepy_cat}};
       \end{tikzpicture}%
     \end{uncoverenv}%
         \note[item]<.>{
