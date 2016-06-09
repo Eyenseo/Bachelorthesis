@@ -652,39 +652,94 @@
               Ein schwieriger Punkt beim parsen ist das zusammenstellen der Operatoren\ldots
             }
 
-          \begin{uncoverenv}<+-+>%
+           \definecolor{myLineColor0}{RGB}{255,185,20}
+           \definecolor{myLineColor1}{RGB}{255,42,82}
+           \definecolor{myLineColor2}{RGB}{164,36,232}
+           \definecolor{myLineColor3}{RGB}{62,87,255}
+           \definecolor{myLineColor4}{RGB}{72,208,224}
+           \definecolor{myLineColor5}{RGB}{17,171,63}
+
+          \begin{uncoverenv}<+-+(7)>%
             \begin{tikzpicture}[overlay, remember picture]%
               \node[coordinate] at (page cs:-.2,0) (ParserOperatorHelper){};
-              \node[anchor=north west, yshift=.6em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
-                \myMIn$var foo = 1 - 1;$
-
-
-
-                % FIXME each step with line to symbolise scope!!!!
-
-
-
+              \node[anchor=north west, xshift=-2em,yshift=1.3em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
+                \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/parser_operator1.txt}
               };%
             \end{tikzpicture}%
           \end{uncoverenv}
-            \note[item]<.>{
-              Der Ablauf wäre wie folgt:
-            }
-            \note[item]<.>{
-              Parsen einer Variablen Deklaration(\textbf{var}). In dieser Funktion wird die Funktion zum Wertzuweisung -- bzw. Operator -- parsen(\textbf{=}) aufgerufen. Welche dann die Funktion zum parsen eines Literals(\textbf{1}) aufruft. Diese returned zurück zur Zuweisungsfunktion, die dann die Funktion zum parsen von Operatoren(\textbf{-}) aufruft. Welche wiederum ein die Funktion für Literals(\textbf{1}) aufruft.
-            }
-            \note[item]<.>{
-              Durch diese Reihenfolge wird allerdings kein Baum erzeugt, sondern eine Liste. Von Literal operator Literal.
-            }
-            \note[item]<.>{
-              Die Liste muss durch einen zweiten Schritt in der Operator Funktion dann zu einem Operator mit zwei Literals umgewandelt werden.
-            }
+              \note[item]<.>{
+                Der Ablauf wäre wie folgt\ldots
+              }
+
+          \begin{uncoverenv}<+-+(6)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor0, cap=round, very thick] ($(op_p_1.west)-(0,.1)$) -- ($(op_p_4.west)-(0,.1)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Parsen einer Deklaration(\textbf{var}).
+              }
+          \begin{uncoverenv}<+-+(5)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor1, cap=round, very thick] ($(op_p_3.west)-(0,.2)$) -- ($(op_p_4.west)-(0,.2)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Für die Variable(\textbf{foo}).
+              }
+          \begin{uncoverenv}<+-+(4)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor2, cap=round, very thick] ($(op_p_5.west)-(0,.3)$) -- ($(op_p_12.west)-(0,.3)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Nach dieser Funktion wird die Funktion zum Wertzuweisung -- bzw. Operator -- parsen(\textbf{=}) aufgerufen.
+              }
+          \begin{uncoverenv}<+-+(3)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor3, cap=round, very thick] ($(op_p_7.west)-(0,.4)$) -- ($(op_p_8.west)-(0,.4)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Welche dann die Funktion zum parsen eines Literals(\textbf{1}) aufruft. Diese returned zurück zur Zuweisungsoperatorfunktion.
+              }
+          \begin{uncoverenv}<+-+(2)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor4, cap=round, very thick] ($(op_p_9.west)-(0,.5)$) -- ($(op_p_12.west)-(0,.5)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Die dann die Funktion zum parsen vom Binären-Operatoren(\textbf{-}) aufruft.
+              }
+          \begin{uncoverenv}<+-+(1)>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[myLineColor5, cap=round, very thick] ($(op_p_11.west)-(0,.6)$) -- ($(op_p_12.west)-(0,.6)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Welche wiederum die Funktion für Literals(\textbf{1}) aufruft.
+              }
+              \note[item]<.>{
+                Durch diese Reihenfolge wird allerdings kein Baum erzeugt, sondern eine Liste. Von Definition, Operator, Literal, Operator und Literal.
+              }
+          \begin{uncoverenv}<+-+>%
+            \begin{tikzpicture}[overlay, remember picture]%
+              \draw[gray, line width=5mm, cap=round, opacity=0.3] ($(op_p_3.west)-(0,.4)$) -- ($(op_p_13.west)-(0,.4)$);
+              \draw[gray, line width=3mm, cap=round, opacity=0.3] ($(op_p_7.west)-(0,.5)$) -- ($(op_p_13.west)-(0,.5)$);
+            \end{tikzpicture}%
+          \end{uncoverenv}
+              \note[item]<.>{
+                Die Liste muss durch einen zweiten Schritt in den Operator Funktion zu einem Operator mit zwei Literals und einem Operator mit einer Variable und einem Operator umgewandelt werden.
+              }
+              \note[item]<.>{
+                Es werden also die jeweiligen linken Werterzeuger -- also Variable und Literal -- zu dem rechten Operator gezogen. Dafür muss der Zuweisungsoperator sogar in die Definition der Variable greifen.
+              }
 
           \begin{uncoverenv}<+-+>%
             \begin{tikzpicture}[overlay, remember picture]%
               \node[coordinate] at (page cs:-.2,0) (ParserOperatorHelper){};
-              \node[anchor=north west, yshift=.6em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
-                \myMIn$var foo = 1 --- 1;$
+              \node[anchor=north west, xshift=-2em,yshift=1.3em] at (ParserOperatorHelper |- ParserOperator) (ParserOperatorCode) {%
+                \lstinputlisting[style=MyMacroStyle, backgroundcolor=, numbers=none, frame=,escapechar=°]{img/parser_operator2.txt}
               };%
             \end{tikzpicture}%
           \end{uncoverenv}
