@@ -1,0 +1,11 @@
+\begin{tikzpicture}[railroad, node distance=6mm]
+  \node[terminal] (s0) {Stack:0 (root)};
+  \node[terminal, below=of s0] (s1) {Stack:1 (main)};
+  \node[terminal, right=of s1] (s2) {Stack:2 (fun)};
+  \node[terminal, below=of s2] (s3) {Stack:3 (while)};
+
+  \draw[-stealth, thick, black!50, in=-90, out=90, looseness=1.25] (s1) to node[midway, right] {parent} (s0);
+  \draw[-stealth, thick, black!50, in=0, out=160, looseness=1.25] (s2)  to node[midway, right] {parent} (s0);
+  \draw[-stealth, thick, loosely dotted, black!50, in=-90, out=-160, looseness=1.25] (s2) to node[midway, above] {bar} (s1);
+  \draw[-stealth, thick, black!50, in=-90, out=90, looseness=1.25] (s3) to node[midway, right] {parent} (s2);
+\end{tikzpicture}

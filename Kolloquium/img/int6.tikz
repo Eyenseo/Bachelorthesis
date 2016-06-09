@@ -1,0 +1,32 @@
+\begin{tikzpicture}[railroad]
+  \node[outer] (stackout1) {
+    \begin{tikzpicture}
+      \node[inouttext,] (s1stack)  {Stack:1 (main)};
+      \node [outer, below=2pt of s1stack] (s1fundefo)  {
+        \begin{tikzpicture}
+          \node[inouttext,] (s1fundeft)  {Fun.Def.};
+        \end{tikzpicture}
+      };
+      \node [outer, below=of s1fundefo] (s1aliaso) {
+        \begin{tikzpicture}
+          \node[inouttext,] (s1aname)  {Local};
+          \node[inouttext,right=of s1aname] (s1aval)  {External};
+          \node[inouttext,above = 2pt of $(s1aname.west)!0.5!(s1aval.east)$] (s1avardeft)  {Aliases};
+        \end{tikzpicture}
+      };
+      \node [outer, below=of s1aliaso] (s1vardefo) {
+        \begin{tikzpicture}
+          \node[inouttext,] (s1vname)  {Name};
+          \node[inouttext,right=6mm of s1vname] (s1vval)  {Value};
+          \node[inouttext,above = 2pt of $(s1vname.west)!0.5!(s1vval.east)$] (s1vardeft)  {Var.Def.};
+          \node[inner,below = 3pt of $(s1vname.west)!0.5!(s1vval.east)$] (s1foov)  {
+            \begin{tikzpicture}
+              \node[inner,inouttext, below=of s1vname] (s1f)  {bar};
+              \node[inner,inouttext, below=of s1vval] (s1v)  {\myMinin{"1 "}};
+            \end{tikzpicture}
+          };
+        \end{tikzpicture}
+      };
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
