@@ -2,7 +2,7 @@
 °\tikzmark{int_macro_l_1}{}°def main() {
 °\tikzmark{int_macro_l_2}{}°  var bar = "1 ";
 °\tikzmark{int_macro_l_3}{}°
-°\tikzmark{int_macro_l_4}{}°  return fun(foo:bar)
+°\tikzmark{int_macro_l_4}{}°  return fun(foo:bar);
 °\tikzmark{int_macro_l_5}{}°}
 °\tikzmark{int_macro_l_6}{}°
 °\tikzmark{int_macro_l_7}{}°def fun(foo) {

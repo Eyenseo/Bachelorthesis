@@ -1,0 +1,27 @@
+°
+\tikzmark{op_p_1}{}
+°var°
+\tikzmark{op_p_2}{}
+° °
+\tikzmark{op_p_3}{}
+°foo°
+\tikzmark{op_p_4}{}
+° °
+\tikzmark{op_p_5}{}
+°=°
+\tikzmark{op_p_6}{}
+° °
+\tikzmark{op_p_7}{}
+°1°
+\tikzmark{op_p_8}{}
+° °
+\tikzmark{op_p_9}{}
+°-°
+\tikzmark{op_p_10}{}
+° °
+\tikzmark{op_p_11}{}
+°1°
+\tikzmark{op_p_12}{}
+°;°
+\tikzmark{op_p_13}{}
+°
